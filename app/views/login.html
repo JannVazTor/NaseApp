@@ -1,0 +1,30 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col 16 s12">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Login</span>
+          <div class="divider">
+          </div>
+          <form class="form-login" action="" method="" role="form">
+                <div class="input-field col s12">
+                  <input id="username" type="text" class="validate" data-ng-model="loginData.username">
+                  <label for="username">Usuario</label>
+                </div>
+                <div class="input-field col s12">
+                  <input id="password" type="password" class="validate" data-ng-model="loginData.password">
+                  <label for="password">Contraseña</label>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit" data-ng-click="login()">
+                  Enviar
+                </button>
+              <div data-ng-hide="message == '' " class="alert alert-danger">
+                {{message}}
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

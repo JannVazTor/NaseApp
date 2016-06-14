@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection"/>
+    <!--<link rel="stylesheet" href="bower_components/angular-material/angular-material.css" media="screen" title="no title" charset="utf-8">-->
+  </head>
+  <body ng-app="naseNutAppApp">
+    <nav>
+      <div class="nav-wrapper green">
+        <a href="#/" class="brand-logo">Nase Nuez App</a>
+        <a href="#/" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/#/login">Login</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="/#/login">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+
+  <div>
+    <div ng-view=""></div>
+  </div>
+
+    <footer class="page-footer green">
+      <div class="container">
+        <div class="row">
+          <div class="col 16 s12">
+            <h5 class="white-text">Nase Content</h5>
+            <p class="gray-text text-lighten-4">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </div>
+          <div class="col 14 offset-12 s12">
+            <h5 class="white-text">Enlaces</h5>
+            <ul>
+              <li><a href="#" class="grey-text text-lighten-3">NaseWeb</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2016 Copyright Text
+        </div>
+      </div>
+    </footer>
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+    <script src="bower_components/Materialize/dist/js/materialize.min.js"></script>
+    <!--<script src="bower_components/angular-material/angular-material.js"></script>-->
+
+        <script src="scripts/app.js"></script>
+
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/loginController.js"></script>
+        <script src="scripts/controllers/signupController.js"></script>
+
+        <script src="scripts/services/authService.js"></script>
+        <script src="scripts/services/authInterceptorService.js"></script>
+
+        <script type="text/javascript">
+          $( document ).ready(function(){$(".button-collapse").sideNav();})
+        </script>
+</body>
+</html>
