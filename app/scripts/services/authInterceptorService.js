@@ -1,25 +1,28 @@
-'use strict'
-app.factory('authInterceptorService',function($q, $location, localStorageService){
-  var authInterceptorServiceFactory = {};
+(function () {
+  'use strict'
+  angular.module('naseNutAppApp').factory('authInterceptorService', function ($q, $location, localStorageService) {
 
-  var _request = function(config){
-    config.headers = config.headers || {};
-    var authData = localStorageService.get('authorizationData');
-    if (authData) {
-      config.headers.Authorization = 'Bearer ' + authData.token;
-    }
-    return config;
-  };
+    var _request = function (config) {
+      config.headers = config.headers || {};
+      var authData = localStorageService.get('authorizationData');
+      if (authData) {
+        config.headers.Authorization = 'Bearer ' + authData.token;
+      }
+      return config;
+    };
 
-  var _responseError = function(rejection){
+    var _responseError = function (rejection) {
       if (rejection.status === 401) {
         $location.path('/login');
       }
-      return $q.rejection(rejection);
-  };
+      return $q.reject(rejection);
+    };
 
-  authInterceptorServiceFactory.request = _request;
-  authInterceptorServiceFactory.responseError = _responseError;
+    return {
+      request: _request,
+      responseError: _responseError
+    };
+  });
+})();
 
-  return authInterceptorServiceFactory;
-});
+

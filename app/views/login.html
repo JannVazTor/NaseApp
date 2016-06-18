@@ -1,30 +1,36 @@
-
-<div class="container">
-  <div class="row">
-    <div class="col 16 s12">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Login</span>
-          <div class="divider">
+<div class="card">
+  <form class="form-horizontal" role="form">
+    <div class="card-header">
+      <h2>Login</h2>
+    </div>
+    <div class="card-body card-padding">
+      <div class="form-group">
+        <label for="iusername" class="col-sm-2 control-label">Usuario</label>
+        <div class="col-sm-10">
+          <div class="fg-line">
+            <input type="text" class="form-control input-sm" id="iusername" placeholder="Nombre de Usuario" data-ng-model="loginData.username">
           </div>
-          <form class="form-login" action="" method="" role="form">
-                <div class="input-field col s12">
-                  <input id="username" type="text" class="validate" data-ng-model="loginData.username">
-                  <label for="username">Usuario</label>
-                </div>
-                <div class="input-field col s12">
-                  <input id="password" type="password" class="validate" data-ng-model="loginData.password">
-                  <label for="password">Contraseña</label>
-                </div>
-                <button class="btn waves-effect waves-light" type="submit" data-ng-click="login()">
-                  Enviar
-                </button>
-              <div data-ng-hide="message == '' " class="alert alert-danger">
-                {{message}}
-              </div>
-            </form>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ipassword" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+
+          <div class="fg-line">
+            <input type="password" class="form-control input-sm" id="ipassword" placeholder="Password" data-ng-model="loginData.password">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary btn-sm" data-ng-click="login()">Entrar</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <div data-ng-hide="message==''" class="alert alert-danger">
+          {{message}}
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
