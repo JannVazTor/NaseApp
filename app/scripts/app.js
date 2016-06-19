@@ -41,6 +41,21 @@
         .state('home',{
           url: '/home',
           templateUrl: 'views/home.html'
+        })
+        .state('receptionAdd',{
+          url: '/reception',
+          templateUrl: 'views/receptionAdd.html',
+          controller: 'receptionController'
+        })
+        .state('receptionManage',{
+          url: '/reception',
+          templateUrl: 'views/receptionManage.html',
+          controller: 'receptionController'
+        })
+        .state('cylinder',{
+          url: '/cylinder',
+          templateUrl: 'views/cylinder.html',
+          controller: 'cylinderController'
         });
       $urlRouterProvider.otherwise('/');
     })

@@ -78,15 +78,17 @@
                 <ul class="main-menu">
                     <li class="active"><a href="index.html"><i class="md md-home"></i> Home</a></li>
 
-                    <li><a ui-sref="users"><i class="md md-format-underline"></i> Usuarios</a></li>
+                    <li><a ui-sref="users"><i class="md md-people"></i> Usuarios</a></li>
 
-                    <li><a ui-sref="producers"><i class="md md-now-widgets"></i> Productores</a></li>
+                    <li><a ui-sref="producers"><i class="md md-people-outline"></i> Productores</a></li>
+
+                    <li><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
 
                     <li class="sub-menu">
-                        <a href=""><i class="md md-view-list"></i> Tables</a>
+                        <a href=""><i class="md md-assignment"></i> Recepciones</a>
                         <ul>
-                            <li><a href="tables.html">Normal Tables</a></li>
-                            <li><a href="data-tables.html">Data Tables</a></li>
+                            <li><a ui-sref="receptionAdd">Alta de Recepciones</a></li>
+                            <li><a ui-sref="receptionManage">Gestion de Recepciones</a></li>
                         </ul>
                     </li>
 
@@ -141,6 +143,7 @@
             </div>
         </section>
     </section>
+    <div ui-view="userUpdateModal"></div>
 
     <!-- Javascript Libraries -->
     <script src="scripts/js/jquery-2.1.1.min.js"></script>
@@ -160,6 +163,7 @@
     <script src="vendors/waves/waves.min.js"></script>
     <script src="vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
     <script src="vendors/bootgrid/jquery.bootgrid.min.js"></script>
+    <script src="vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
 
     <script src="scripts/js/flot-charts/curved-line-chart.js"></script>
     <script src="scripts/js/flot-charts/line-chart.js"></script>
@@ -188,12 +192,16 @@
     <script src="scripts/controllers/loginController.js"></script>
     <script src="scripts/controllers/userController.js"></script>
     <script src="scripts/controllers/producerController.js"></script>
+    <script src="scripts/controllers/receptionController.js"></script>
+    <script src="scripts/controllers/cylinderController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>
     <script src="scripts/services/roleService.js"></script>
     <script src="scripts/services/userService.js"></script>
     <script src="scripts/services/producerService.js"></script>
+    <script src="scripts/services/cylinderService.js"></script>
+    <script src="scripts/services/receptionService.js"></script>
 </body>
 
 </html>

@@ -8,7 +8,15 @@
                 <label for="iusername" class="col-sm-2 control-label">Usuario</label>
                 <div class="col-sm-10">
                     <div class="fg-line">
-                        <input type="text" class="form-control input-sm" id="iusername" placeholder="Nombre de Usuario" data-ng-model="registration.userName">
+                        <input type="text" class="form-control input-sm" id="iusername" placeholder="Nombre de Usuario" data-ng-model="registration.UserName">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="useremail" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <div class="fg-line">
+                        <input type="text" class="form-control input-sm" id="useremail" placeholder="email" data-ng-model="registration.Email">
                     </div>
                 </div>
             </div>
@@ -16,7 +24,7 @@
                 <label for="ipassword" class="col-sm-2 control-label">Contraseña</label>
                 <div class="col-sm-10">
                     <div class="fg-line">
-                        <input type="password" class="form-control input-sm" id="ipassword" placeholder="contraseña" data-ng-model="registration.password">
+                        <input type="password" class="form-control input-sm" id="ipassword" placeholder="contraseña" data-ng-model="registration.Password">
                     </div>
                 </div>
             </div>
@@ -24,7 +32,7 @@
                 <label for="icpassword" class="col-sm-2 control-label">Confirmar contraseña</label>
                 <div class="col-sm-10">
                     <div class="fg-line">
-                        <input type="password" class="form-control input-sm" id="icpassword" placeholder="confirmar contraseña" data-ng-model="registration.confirmPassword">
+                        <input type="password" class="form-control input-sm" id="icpassword" placeholder="confirmar contraseña" data-ng-model="registration.ConfirmPassword">
                     </div>
                 </div>
             </div>
@@ -32,9 +40,9 @@
                 <label for="sroles" class="col-sm-2 control-label">Roles</label>
                 <div class="col-sm-10">
                     <div class="fg-line select">
-                        <select class="form-control" ng-model="selectedRole" ng-options="role.Name for role in roles">
-              <option value="role"></option>
-            </select>
+                        <select class="form-control" ng-model="registration.RoleId">
+                            <option ng-repeat="role in roles" ng-selected="registration.RoleId == role.Id" value="{{role.Id}}">{{role.Name}}</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -81,10 +89,10 @@
                 <td>{{user.UserName}}</td>
                 <td>{{user.Role}}</td>
                 <td>
-                    <button class="btn btn-icon command-edit">
+                    <button class="btn btn-icon command-edit" data-toggle="modal" onclick="location.href='#modalWider'">
                         <span class="md md-edit"></span>
                     </button>
-                    <button class="btn btn-icon command-delete">
+                    <button class="btn btn-icon command-delete" ng-click="deleteUser(user.Id)">
                         <span class="md md-delete"></span>
                     </button>
                 </td>
@@ -92,3 +100,4 @@
         </tbody>
     </table>
 </div>
+
