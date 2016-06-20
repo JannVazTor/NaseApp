@@ -48,7 +48,7 @@
           controller: 'receptionController'
         })
         .state('receptionManage',{
-          url: '/reception',
+          url: '/receptionM',
           templateUrl: 'views/receptionManage.html',
           controller: 'receptionController'
         })
@@ -56,6 +56,16 @@
           url: '/cylinder',
           templateUrl: 'views/cylinder.html',
           controller: 'cylinderController'
+        })
+        .state('remissionManage',{
+          url: '/remissionM',
+          templateUrl: 'views/remissionManage.html',
+          controller: 'remissionController'
+        })
+        .state('remissionAdd',{
+          url: '/remission',
+          templateUrl: 'views/remissionAdd.html',
+          controller: 'remissionController'
         });
       $urlRouterProvider.otherwise('/');
     })
