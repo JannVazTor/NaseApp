@@ -1,61 +1,147 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" type="text/css" href="bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection"/>
-    <!--<link rel="stylesheet" href="bower_components/angular-material/angular-material.css" media="screen" title="no title" charset="utf-8">-->
-  </head>
-  <body ng-app="naseNutAppApp">
-    <nav>
-      <div class="nav-wrapper green">
-        <a href="#/" class="brand-logo">Nase Nuez App</a>
-        <a href="#/" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="/#/login">Login</a></li>
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css" media="screen" title="no title"
+        charset="utf-8">
+    <link rel="stylesheet" href="styles/app.min.css">
+    <link rel="stylesheet" href="vendors/animate-css/animate.min.css">
+    <link rel="stylesheet" href="vendors/farbtastic/farbtastic.css">
+    <link rel="stylesheet" href="vendors/summernote/summernote.css">
+    <link rel="stylesheet" href="vendors/bootgrid/jquery.bootgrid.min.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <style>
+        #fixedbuttonRight {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+        #fixedbuttonLeft {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+        }
+    </style>
+</head>
+
+<body ng-app="naseNutAppApp">
+    <header id="header">
+        <ul class="header-inner">
+            <li id="menu-trigger" data-trigger="#sidebar">
+                <div class="line-wrap">
+                    <div class="line top"></div>
+                    <div class="line center"></div>
+                    <div class="line bottom"></div>
+                </div>
+            </li>
+            <li class="logo hidden-xs">
+                <a href="index.html">Material Admin</a>
+            </li>
+            <li class="pull-right">
+                <ul class="top-menu">
+                    <li id="top" class="logo">
+                        <a ui-sref="login">Ingresar</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
-        <ul class="side-nav" id="mobile-demo">
-          <li><a href="/#/login">Login</a></li>
-        </ul>
-      </div>
-    </nav>
+    </header>
+    <section id="main">
+        <aside id="sidebar">
+            <div class="sidebar-inner">
+                <div class="profile-menu">
+                    <a href="" data-toggle="dropdown">
+                        <div class="profile-pic">
+                            <img src="img/profile-pics/8.jpg" alt="">
+                        </div>
+                        <div class="profile-info">
+                            UserName
+                            <i class="md md-arrow-drop-down"></i>
+                        </div>
+                    </a>
 
-  <div>
-    <div ng-view=""></div>
-  </div>
+                    <ul class="main-menu">
+                        <li>
+                            <a href=""><i class="md md-person"></i> View Profile</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="md md-settings-input-antenna"></i> Privacy Settings</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="md md-settings"></i> Settings</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="md md-history"></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="main-menu">
+                    <li class="active"><a ui-sref="home"><i class="md md-home"></i> Home</a></li>
 
-    <footer class="page-footer green">
-      <div class="container">
-        <div class="row">
-          <div class="col 16 s12">
-            <h5 class="white-text">Nase Content</h5>
-            <p class="gray-text text-lighten-4">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-          </div>
-          <div class="col 14 offset-12 s12">
-            <h5 class="white-text">Enlaces</h5>
-            <ul>
-              <li><a href="#" class="grey-text text-lighten-3">NaseWeb</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-copyright">
-        <div class="container">
-          © 2016 Copyright Text
-        </div>
-      </div>
-    </footer>
+                    <li><a ui-sref="users"><i class="md md-people"></i> Usuarios</a></li>
 
-    <script src="bower_components/jquery/dist/jquery.js"></script>
+                    <li><a ui-sref="producers"><i class="md md-people-outline"></i> Productores</a></li>
+
+                    <li><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
+
+                    <li class="sub-menu">
+                        <a href=""><i class="md md-assignment"></i> Recepciones</a>
+                        <ul>
+                            <li><a ui-sref="receptionAdd">Alta de Recepciones</a></li>
+                            <li><a ui-sref="receptionManage">Gestion de Recepciones</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a ui-sref="remission"><i class="md md-description"></i> Remisiones</a></li>
+                </ul>
+            </div>
+        </aside>
+        <section id="content">
+            <div class="container">
+                <!-- Page injection   :   Dashboard-->
+                <div ui-view></div>
+            </div>
+        </section>
+        <button id="fixedbuttonRight" class="btn btn-primary btn-icon">
+            <i class="md md-home"></i>
+        </button>
+    </section>
+
+    <!-- Javascript Libraries -->
+    <script src="scripts/js/jquery-2.1.1.min.js"></script>
+    <script src="scripts/js/bootstrap.min.js"></script>
+
+    <script src="vendors/flot/jquery.flot.min.js"></script>
+    <script src="vendors/flot/jquery.flot.resize.min.js"></script>
+    <script src="vendors/flot/plugins/curvedLines.js"></script>
+    <script src="vendors/sparklines/jquery.sparkline.min.js"></script>
+    <script src="vendors/easypiechart/jquery.easypiechart.min.js"></script>
+
+    <script src="vendors/fullcalendar/lib/moment.min.js"></script>
+    <script src="vendors/fullcalendar/fullcalendar.min.js"></script>
+    <script src="vendors/simpleWeather/jquery.simpleWeather.min.js"></script>
+    <script src="vendors/auto-size/jquery.autosize.min.js"></script>
+    <script src="vendors/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="vendors/waves/waves.min.js"></script>
+    <script src="vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
+    <script src="vendors/bootgrid/jquery.bootgrid.min.js"></script>
+    <script src="vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+
+    <script src="scripts/js/flot-charts/curved-line-chart.js"></script>
+    <script src="scripts/js/flot-charts/line-chart.js"></script>
+    <script src="scripts/js/charts.js"></script>
+
+    <script src="scripts/js/datatable.js"></script>
+    <script src="scripts/js/charts.js"></script>
+    <script src="scripts/js/functions.js"></script>
+
+    <!--AngularJs-->
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -66,21 +152,25 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
-    <script src="bower_components/Materialize/dist/js/materialize.min.js"></script>
-    <!--<script src="bower_components/angular-material/angular-material.js"></script>-->
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
-        <script src="scripts/app.js"></script>
+    <script src="scripts/app.js"></script>
 
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/loginController.js"></script>
-        <script src="scripts/controllers/signupController.js"></script>
+    <script src="scripts/controllers/loginController.js"></script>
+    <script src="scripts/controllers/userController.js"></script>
+    <script src="scripts/controllers/producerController.js"></script>
+    <script src="scripts/controllers/receptionController.js"></script>
+    <script src="scripts/controllers/cylinderController.js"></script>
+    <script src="scripts/controllers/remissionController.js"></script>
 
-        <script src="scripts/services/authService.js"></script>
-        <script src="scripts/services/authInterceptorService.js"></script>
-
-        <script type="text/javascript">
-          $( document ).ready(function(){$(".button-collapse").sideNav();})
-        </script>
+    <script src="scripts/services/authService.js"></script>
+    <script src="scripts/services/authInterceptorService.js"></script>
+    <script src="scripts/services/roleService.js"></script>
+    <script src="scripts/services/userService.js"></script>
+    <script src="scripts/services/producerService.js"></script>
+    <script src="scripts/services/cylinderService.js"></script>
+    <script src="scripts/services/receptionService.js"></script>
+    <script src="scripts/services/remissionService.js"></script>
 </body>
+
 </html>
