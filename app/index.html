@@ -21,6 +21,7 @@
             bottom: 20px;
             right: 20px;
         }
+        
         #fixedbuttonLeft {
             position: fixed;
             bottom: 20px;
@@ -70,12 +71,6 @@
                             <a href=""><i class="md md-person"></i> View Profile</a>
                         </li>
                         <li>
-                            <a href=""><i class="md md-settings-input-antenna"></i> Privacy Settings</a>
-                        </li>
-                        <li>
-                            <a href=""><i class="md md-settings"></i> Settings</a>
-                        </li>
-                        <li>
                             <a href=""><i class="md md-history"></i> Logout</a>
                         </li>
                     </ul>
@@ -90,14 +85,30 @@
                     <li><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
 
                     <li class="sub-menu">
-                        <a href=""><i class="md md-assignment"></i> Recepciones</a>
+                        <a href=""><i class="md md-view-module"></i>Parillas</a>
+                        <ul>
+                            <li><a ui-sref="grillIssue">Salida de Parillas</a></li>
+                            <li><a ui-sref="grillManage">Inventario de Parillas</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href=""><i class="md md-assignment"></i>Recepciones</a>
                         <ul>
                             <li><a ui-sref="receptionAdd">Alta de Recepciones</a></li>
                             <li><a ui-sref="receptionManage">Gestion de Recepciones</a></li>
                         </ul>
                     </li>
 
-                    <li><a ui-sref="remission"><i class="md md-description"></i> Remisiones</a></li>
+                    <li><a ui-sref="remissionManage"><i class="md md-description"></i> Remisiones</a></li>
+                   
+                    <li class="sub-menu">
+                        <a href=""><i class="md md-my-library-books"></i>Reportes</a>
+                        <ul>
+                            <li><a href="">Reporte diario de proceso</a></li>
+                            <li><a href="">Reporte de produccion por productor</a></li>
+                            <li><a href="">Resumen final primeras</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </aside>
@@ -162,6 +173,8 @@
     <script src="scripts/controllers/receptionController.js"></script>
     <script src="scripts/controllers/cylinderController.js"></script>
     <script src="scripts/controllers/remissionController.js"></script>
+    <script src="scripts/controllers/grillController.js"></script>
+    <script src="scripts/controllers/samplingController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>
@@ -171,6 +184,8 @@
     <script src="scripts/services/cylinderService.js"></script>
     <script src="scripts/services/receptionService.js"></script>
     <script src="scripts/services/remissionService.js"></script>
+    <script src="scripts/services/grillService.js"></script>
+    <script src="scripts/services/samplingService.js"></scripts>
 </body>
 
 </html>
