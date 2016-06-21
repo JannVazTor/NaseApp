@@ -18,7 +18,7 @@
         };
 
         $scope.redirectAddRemission = function (receptionId) {
-            remissionService.setProducerId = $scope.reception.ProducerId;
+            receptionService.ProducerId = receptionId;
             $state.go('remissionAdd');
         };
 
