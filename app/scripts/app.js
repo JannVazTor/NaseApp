@@ -44,12 +44,12 @@
         })
         .state('receptionAdd',{
           url: '/reception',
-          templateUrl: 'views/receptionAdd.html',
+          templateUrl: 'views/reception/receptionAdd.html',
           controller: 'receptionController'
         })
         .state('receptionManage',{
           url: '/receptionM',
-          templateUrl: 'views/receptionManage.html',
+          templateUrl: 'views/reception/receptionManage.html',
           controller: 'receptionController'
         })
         .state('cylinder',{
@@ -59,13 +59,33 @@
         })
         .state('remissionManage',{
           url: '/remissionM',
-          templateUrl: 'views/remissionManage.html',
+          templateUrl: 'views/remission/remissionManage.html',
           controller: 'remissionController'
         })
         .state('remissionAdd',{
           url: '/remission',
-          templateUrl: 'views/remissionAdd.html',
+          templateUrl: 'views/remission/remissionAdd.html',
           controller: 'remissionController'
+        })
+        .state('grillAdd',{
+          url: '/grill',
+          templateUrl: 'views/grill/grillAdd.html1',
+          controller: 'grillController'
+        })
+        .state('grillManage',{
+          url: '/grillM',
+          templateUrl: 'views/grill/grillManage.html',
+          controller: 'grillController'
+        })
+        .state('sampling',{
+          url: '/sampling',
+          templateUrl: 'views/sampling.html',
+          controller: 'samplingController'
+        })
+        .state('grillIssue',{
+          url: '/grillI',
+          templateUrl: 'views/grill/grillIssue.html',
+          controller: 'grillController'
         });
       $urlRouterProvider.otherwise('/');
     })
