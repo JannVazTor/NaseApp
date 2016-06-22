@@ -52,7 +52,7 @@
                 <tr ng-repeat="producer in producers | filter:searchUser">
                     <td>{{producer.ProducerName}}</td>
                     <td>
-                        <button class="btn btn-icon command-delete" ng-click="deleteProducer(producer.Id)">
+                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(producer.Id)">
                         <span class="md md-delete"></span>
                     </button>
                     </td>

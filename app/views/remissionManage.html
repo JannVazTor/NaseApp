@@ -13,7 +13,6 @@
                 </div>
             </div>
         </div>
-
         <table id="data-table-command" class="table table-striped table-vmiddle">
             <thead>
                 <tr>
@@ -45,10 +44,10 @@
                     <td>{{remission.Driver}}</td>
                     <td>{{remission.Elaborate}}</td>
                     <td>
-                        <button class="btn btn-icon command-edit">
+                        <button class="btn btn-icon command-edit" >
                         <span class="md md-edit"></span>
                     </button>
-                        <button class="btn btn-icon command-delete" ng-click="deleteRemission(remission.Id)">
+                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(remission.Id)">
                         <span class="md md-delete"></span>
                     </button>
                     </td>

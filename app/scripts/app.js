@@ -66,6 +66,11 @@
           url: '/remission',
           templateUrl: 'views/remissionAdd.html',
           controller: 'remissionController'
+        })
+        .state('receptionUpdate',{
+          url: '/receptionU',
+          templateUrl: 'views/receptionUpdate.html',
+          controller: 'receptionController'
         });
       $urlRouterProvider.otherwise('/');
     })

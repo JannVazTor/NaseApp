@@ -9,7 +9,7 @@
                     <label for="iusername" class="col-sm-2 control-label">Nombre</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="iusername" placeholder="Nombre del cilindro" data-ng-model="cylinder.CylinderName">
+                            <input required type="text" class="form-control input-sm" id="iusername" placeholder="Nombre del cilindro" data-ng-model="cylinder.CylinderName">
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <tr ng-repeat="cylinder in cylinders | filter:searchUser">
                     <td>{{cylinder.CylinderName}}</td>
                     <td>
-                        <button class="btn btn-icon command-delete" ng-click="deleteCylinder(cylinder.Id)">
+                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(cylinder.Id)">
                         <span class="md md-delete"></span>
                     </button>
                     </td>

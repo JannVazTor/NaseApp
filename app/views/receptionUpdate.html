@@ -1,7 +1,6 @@
-
 <div class="animated bounceInRight">
     <div class="card">
-        <form name="receptionForm" class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Alta de Recepciones</h2>
             </div>
@@ -20,8 +19,7 @@
                     <label for="fieldName" class="col-sm-2 control-label">Nombre del Campo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="fieldName" name="FieldName" placeholder="nombre del campo" data-ng-model="reception.FieldName">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.FieldName.$error.required">Nombre del Campo es requerido.</small>
+                            <input type="text" required class="form-control input-sm" id="fieldName" placeholder="nombre del campo" data-ng-model="reception.FieldName">
                         </div>
                     </div>
                 </div>
@@ -29,8 +27,7 @@
                     <label for="variety" class="col-sm-2 control-label">Variedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="variety" name="Variety" placeholder="variedad" data-ng-model="reception.Variety">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.Variety.$error.required">Variedad es requerido.</small>
+                            <input type="text" required class="form-control input-sm" id="variety" placeholder="variedad" data-ng-model="reception.Variety">
                         </div>
                     </div>
                 </div>
@@ -46,9 +43,7 @@
                     <label for="receivedFromField" class="col-sm-2 control-label">Kilos recibidos de campo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="number" step="any" ng-class="{error: !receptionForm.$pristine && receptionForm.ReceivedFromField.$error.required}" class="form-control input-sm" name="ReceivedFromField" id="receivedFromField" placeholder="kilos recibidos" data-ng-model="reception.ReceivedFromField">
-                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionForm.$pristine && receptionForm.ReceivedFromField.$error.number">Tiene que ser un valor númerico.</small>
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.ReceivedFromField.$error.required">Kilos recibidos de campo es requerido.</small>
+                            <input required type="number" step="any" class="form-control input-sm" id="receivedFromField" placeholder="kilos recibidos" data-ng-model="reception.ReceivedFromField">
                         </div>
                     </div>
                 </div>
@@ -56,8 +51,7 @@
                     <label for="humidity" class="col-sm-2 control-label">Humedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" step="any" class="form-control input-sm" id="humidity" name="HumidityPercent" placeholder="humedad" data-ng-model="reception.HumidityPercent">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.HumidityPercent.$error.number">Tiene que ser un valor númerico.</small>
+                            <input type="number" step="any" class="form-control input-sm" id="humidity" placeholder="humedad" data-ng-model="reception.HumidityPercent">
                         </div>
                     </div>
                 </div>
@@ -65,8 +59,7 @@
                     <label for="heatHoursDrying" class="col-sm-2 control-label">Horas de calor por secado</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" step="any" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado" name="HeatHoursDrying" data-ng-model="reception.HeatHoursDrying">
-                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionForm.$pristine && receptionForm.HeatHoursDrying.$error.number">Tiene que ser un valor númerico.</small>
+                            <input type="number" step="any" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado" data-ng-model="reception.HeatHoursDrying">
                         </div>
                     </div>
                 </div>
@@ -90,7 +83,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveReception()" ng-disabled="!receptionForm.$valid">Guardar</button>
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="UpdateReception()">Guardar</button>
                     </div>
                 </div>
                 <div class="form-group">

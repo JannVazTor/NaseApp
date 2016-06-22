@@ -47,10 +47,10 @@
                     <td>{{reception.EntryDate}}</td>
                     <td>{{reception.HeatHoursDrying}}</td>
                     <td>
-                        <button class="btn btn-icon command-edit">
+                        <button class="btn btn-icon command-edit" ng-click="redirectUpdate(reception)">
                         <span class="md md-edit"></span>
                     </button>
-                        <button class="btn btn-icon command-delete" ng-click="deleteReception(reception.Id)">
+                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(reception.Id)">
                         <span class="md md-delete"></span>
                     </button>
                     </td>
