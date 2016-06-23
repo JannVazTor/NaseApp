@@ -7,8 +7,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css" media="screen" title="no title"
-        charset="utf-8">
     <link rel="stylesheet" href="styles/app.min.css">
     <link rel="stylesheet" href="vendors/animate-css/animate.min.css">
     <link rel="stylesheet" href="vendors/farbtastic/farbtastic.css">
@@ -87,8 +85,10 @@
                     <li class="sub-menu">
                         <a href=""><i class="md md-view-module"></i>Parillas</a>
                         <ul>
+                            <li><a ui-sref="grillAdd">Alta de Parillas</a></li>
                             <li><a ui-sref="grillIssue">Salida de Parillas</a></li>
-                            <li><a ui-sref="grillManage">Inventario de Parillas</a></li>
+                            <li><a ui-sref="grillManage">Inventario de Proceso</a></li>
+                            <li><a ui-sref="grillInvAct">Inventario Actual</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -100,7 +100,7 @@
                     </li>
 
                     <li><a ui-sref="remissionManage"><i class="md md-description"></i> Remisiones</a></li>
-                   
+
                     <li class="sub-menu">
                         <a href=""><i class="md md-my-library-books"></i>Reportes</a>
                         <ul>
@@ -113,10 +113,7 @@
             </div>
         </aside>
         <section id="content">
-            <div class="container">
-                <!-- Page injection   :   Dashboard-->
-                <div ui-view></div>
-            </div>
+            <div ui-view></div>
         </section>
         <button id="fixedbuttonRight" class="btn btn-primary btn-icon">
             <i class="md md-home"></i>
@@ -162,7 +159,6 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
-    <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
     <script src="scripts/app.js"></script>

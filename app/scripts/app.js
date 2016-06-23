@@ -18,7 +18,6 @@
       'ngSanitize',
       'ngTouch',
       'LocalStorageModule',
-      'angular-loading-bar',
       'ui.router'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -68,8 +67,8 @@
           controller: 'remissionController'
         })
         .state('grillAdd',{
-          url: '/grill',
-          templateUrl: 'views/grill/grillAdd.html1',
+          url: '/grillA',
+          templateUrl: 'views/grill/grillAdd.html',
           controller: 'grillController'
         })
         .state('grillManage',{
@@ -85,6 +84,11 @@
         .state('grillIssue',{
           url: '/grillI',
           templateUrl: 'views/grill/grillIssue.html',
+          controller: 'grillController'
+        })
+        .state('grillInvAct',{
+          url: '/grillIA',
+          templateUrl: 'views/grill/grillInvAct.html',
           controller: 'grillController'
         });
       $urlRouterProvider.otherwise('/');
