@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillController', function ($scope, producerService, grillService) {
+    angular.module('naseNutAppApp').controller('grillController', function ($scope, $state, producerService, grillService, receptionAndGrillService) {
         $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
@@ -23,6 +23,12 @@
             });
         };
 
+        $scope.redirectReceptionToGrill = function (Id) {
+            receptionAndGrillService.addGrillToReception = true;
+            receptionAndGrillService.grillId = Id;
+            $state.go('receptionManage');
+        };
+
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 $scope.producers = response.data;
@@ -31,10 +37,10 @@
             });
         };
 
-        var GetAllGrills = function(){
-            grillService.getAll().then(function(response){
+        var GetAllGrills = function () {
+            grillService.getAll().then(function (response) {
                 $scope.grills = response.data;
-            },function(response){
+            }, function (response) {
                 $scope.message = "la obtencion de parrillas fallo.";
             });
         }

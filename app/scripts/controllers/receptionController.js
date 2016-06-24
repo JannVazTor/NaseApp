@@ -1,17 +1,22 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $state, receptionService, producerService, cylinderService) {
+    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $state, receptionService, producerService, cylinderService, receptionAndGrillService) {
         $scope.selectedRole = {};
         $scope.receptions = [];
         $scope.producers = [];
         $scope.savedSuccesfully = false;
-        defaultReception();
-        $scope.reception = receptionService.reception;
-
+        $scope.AddGrillToReception = receptionService.addGrillToReception;
         
-        $scope.redirectAddRemission = function (reception) {
-            receptionService.reception = reception;
-            $state.go('remissionAdd');
+        $scope.reception = {
+            Variety: "",
+            ReceivedFromField: "",
+            CylinderId: "",
+            FieldName: "",
+            CarRegistration: "",
+            HeatHoursDrying: "",
+            HumidityPercent: "",
+            Observations: "",
+            ProducerId: "",
         };
 
         $scope.redirectUpdate = function (xreception) {
@@ -27,6 +32,14 @@
                 $scope.message = "ocurrio un error y el registro no pudo ser guardado."
             });
         }
+
+        $scope.addReceptionToGrill = function(receptionId, checked){
+            if(checked){
+                receptionAndGrillService.addReceptionToGrill(receptionId, receptionService.grillId);
+            }else{
+                receptionAndGrillService.removeReceptionToGrill(receptionId, receptionService.grillId);
+            }
+        };
 
         $scope.saveReception = function () {
             receptionService.save($scope.reception).then(function (response) {

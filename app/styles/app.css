@@ -15254,7 +15254,8 @@ a.thumbnail.active {
   margin: 0;
 }
 .command-edit,
-.command-delete {
+.command-delete,
+.command {
   background: #fff;
   border: 1px solid #eee !important;
 }
