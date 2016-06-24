@@ -37,31 +37,36 @@
           templateUrl: 'views/producers.html',
           controller: 'producerController'
         })
-        .state('home',{
+        .state('home', {
           url: '/home',
           templateUrl: 'views/home.html'
         })
-        .state('receptionAdd',{
+        .state('receptionAdd', {
           url: '/reception',
           templateUrl: 'views/reception/receptionAdd.html',
           controller: 'receptionController'
         })
-        .state('receptionManage',{
+        .state('receptionManage', {
           url: '/receptionM',
           templateUrl: 'views/reception/receptionManage.html',
           controller: 'receptionController'
         })
-        .state('cylinder',{
+        .state('cylinder', {
           url: '/cylinder',
           templateUrl: 'views/cylinder.html',
           controller: 'cylinderController'
         })
-        .state('remissionManage',{
+        .state('remissionManage', {
           url: '/remissionM',
           templateUrl: 'views/remission/remissionManage.html',
-          controller: 'remissionController'
+          controller: 'remissionController',
+          onExit: function($stateParams, $state, receptionAndGrillService){
+            $state.transition.then(toState => {
+                receptionAndGrillService.addGrillToReception = true;
+            })
+          }
         })
-        .state('remissionAdd',{
+        .state('remissionAdd', {
           url: '/remission',
           templateUrl: 'views/remission/remissionAdd.html',
           controller: 'remissionController'
@@ -80,22 +85,22 @@
           templateUrl: 'views/grill/grillAdd.html',
           controller: 'grillController'
         })
-        .state('grillManage',{
+        .state('grillManage', {
           url: '/grillM',
           templateUrl: 'views/grill/grillManage.html',
           controller: 'grillController'
         })
-        .state('sampling',{
+        .state('sampling', {
           url: '/sampling',
           templateUrl: 'views/sampling.html',
           controller: 'samplingController'
         })
-        .state('grillIssue',{
+        .state('grillIssue', {
           url: '/grillI',
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillController'
         })
-        .state('grillInvAct',{
+        .state('grillInvAct', {
           url: '/grillIA',
           templateUrl: 'views/grill/grillInvAct.html',
           controller: 'grillController'

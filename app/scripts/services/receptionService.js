@@ -17,7 +17,11 @@
         };
    
         var _getAll = function () {
-            return $http.get(apiPath + 'api/reception/getAll');
+            return $http.get(apiPath + 'api/reception/getAll').success(function(data){
+                data.forEach(function(element) {
+                    element.IsAlreadyAssigned = false;
+                });
+            });
         }
 
         var _save = function (data) {
