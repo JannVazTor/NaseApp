@@ -18,6 +18,7 @@
             <thead>
                 <tr>
                     <th data-column-id="">Remision</th>
+                    <th data-column-id="">Id</th>
                     <th data-column-id="">Folio</th>
                     <th data-column-id="">Productor</th>
                     <th data-column-id="">Campo</th>
@@ -34,11 +35,12 @@
             <tbody>
                 <tr ng-repeat="reception in receptions | filter:searchUser">
                     <td>
-                        <button class="btn btn-icon" ng-click="redirectAddRemission(reception.Id)">
+                        <button class="btn btn-icon" ng-click="redirectAddRemission(reception)">
                             <span class="md md-add"></span>
                         </button>
                     </td>
                     <td>{{reception.Id}}</td>
+                    <td>{{reception.Folio}}</td>
                     <td>{{reception.ProducerName}}</td>
                     <td>{{reception.FieldName}}</td>
                     <td>{{reception.Variety}}</td>
@@ -64,6 +66,13 @@
                             <input id="{{reception.Id}}" type="checkbox" hidden="hidden" ng-model="reception.IsAlreadyAssigned" ng-change="addReceptionToGrill(reception.Id, reception.IsAlreadyAssigned)">
                             <label for="{{reception.Id}}" class="ts-helper"></label>
                         </div>
+                    <td>
+                        <button class="btn btn-icon command-edit" ng-click="redirectUpdate(reception)">
+                        <span class="md md-edit"></span>
+                    </button>
+                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(reception.Id)">
+                        <span class="md md-delete"></span>
+                    </button>
                     </td>
                 </tr>
             </tbody>

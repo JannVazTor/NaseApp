@@ -8,6 +8,8 @@
                 <div class="form-group">
                     <label for="producers" class="col-sm-2 control-label">Productores</label>
                     <div class="col-sm-10">
+                        <div class="fg-line disabled">
+                            <input required readonly type="text" class="form-control input-sm" id="reception" placeholder="recepcion" data-ng-model="remission.ReceptionId">
                         <div class="fg-line select">
                             <select class="form-control" ng-model="grill.Producer">
                             <option ng-repeat="producer in producers" ng-selected="grill.Producer == producer.ProducerName" value="{{producer.ProducerName}}">{{producer.ProducerName}}</option>
@@ -19,6 +21,7 @@
                     <label for="field" class="col-sm-2 control-label">Campo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
+                            <input required type="text" class="form-control input-sm" id="cultivation" placeholder="cultivo" data-ng-model="remission.Cultivation">
                             <input type="text" class="form-control input-sm" id="field" placeholder="campo" data-ng-model="grill.FieldName">
                         </div>
                     </div>
@@ -27,7 +30,11 @@
                     <label for="variety" class="col-sm-2 control-label">Variedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
+<<<<<<< HEAD
+                            <input required type="text" class="form-control input-sm" id="batch" placeholder="huerta o lote" data-ng-model="remission.Batch">
+=======
                             <input type="text" class="form-control input-sm" id="variety" placeholder="variedad" data-ng-model="grill.Variety">
+>>>>>>> refs/remotes/origin/Pancho
                         </div>
                     </div>
                 </div>
@@ -35,7 +42,11 @@
                     <label for="quality" class="col-sm-2 control-label">Calidad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
+<<<<<<< HEAD
+                            <input required type="number" step="any" class="form-control input-sm" id="quantity" placeholder="cantidad" data-ng-model="remission.Quantity">
+=======
                             <input type="text" class="form-control input-sm" id="quality" placeholder="calidad" data-ng-model="grill.Quality">
+>>>>>>> refs/remotes/origin/Pancho
                         </div>
                     </div>
                 </div>
@@ -43,14 +54,19 @@
                     <label for="sacks" class="col-sm-2 control-label">Sacos</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
+<<<<<<< HEAD
+                            <input required type="text" class="form-control input-sm" id="butler" placeholder="mayordomo" data-ng-model="remission.Butler">
+=======
                             <input type="text" class="form-control input-sm" id="sacks" placeholder="sacos" data-ng-model="grill.Sacks">
+>>>>>>> refs/remotes/origin/Pancho
                         </div>
-                    </div>
+                    </div> 
                 </div>
                 <div class="form-group">
                     <label for="kilos" class="col-sm-2 control-label">Kilos</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
+                            <input required type="number" class="form-control input-sm" id="transportNumber" placeholder="Nombre de Usuario" data-ng-model="remission.TransportNumber">
                             <input type="text" class="form-control input-sm" id="kilos" placeholder="kilos" data-ng-model="grill.Kilos">
                         </div>
                     </div>
@@ -59,6 +75,7 @@
                     <label for="size" class="col-sm-2 control-label">Tamaño</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
+                            <input required type="text" class="form-control input-sm" id="driver" placeholder="conductor" data-ng-model="remission.Driver">
                             <input type="text" class="form-control input-sm" id="size" placeholder="tamaño" data-ng-model="grill.Size">
                         </div>
                     </div>
@@ -67,6 +84,7 @@
                     <label for="date" class="col-sm-2 control-label">Fecha</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
+                            <input required type="text" class="form-control input-sm" id="elaborate" placeholder="elaboro" data-ng-model="remission.Elaborate">
                             <input type="text" class="form-control input-sm" id="date" placeholder="fecha" data-ng-model="grill.DateCapture">
                         </div>
                     </div>
