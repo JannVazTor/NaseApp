@@ -5,8 +5,9 @@
         $scope.receptions = [];
         $scope.producers = [];
         $scope.savedSuccesfully = false;
-        $scope.AddGrillToReception = receptionService.addGrillToReception;
-        
+        $scope.Grills = [];
+        $scope.AddGrillToReception = receptionAndGrillService.addGrillToReception;
+        $scope.GrillId = receptionAndGrillService.grillId;
         $scope.reception = {
             Variety: "",
             ReceivedFromField: "",
@@ -16,7 +17,7 @@
             HeatHoursDrying: "",
             HumidityPercent: "",
             Observations: "",
-            ProducerId: "",
+            ProducerId: ""
         };
 
         $scope.redirectAddRemission = function (receptionId) {
@@ -24,11 +25,11 @@
             $state.go('remissionAdd');
         };
 
-        $scope.addReceptionToGrill = function(receptionId, checked){
-            if(checked){
-                receptionAndGrillService.addReceptionToGrill(receptionId, receptionService.grillId);
-            }else{
-                receptionAndGrillService.removeReceptionToGrill(receptionId, receptionService.grillId);
+        $scope.addReceptionToGrill = function (receptionId, checked) {
+            if (checked) {
+                receptionAndGrillService.addReceptionToGrill(receptionId, receptionAndGrillService.grillId);
+            } else {
+                receptionAndGrillService.removeReceptionToGrill(receptionId, receptionAndGrillService.grillId);
             }
         };
 
@@ -74,6 +75,9 @@
         var GetAllReceptions = function () {
             receptionService.getAll().then(function (response) {
                 $scope.receptions = response.data;
+                response.data.forEach(function (element) {
+                    element.IsAlreadyAssigned = element.Grills.indexOf($scope.GrillId) === -1 ? false : true;
+                }, this);
             }, function (response) {
                 $scope.message = "la obtencion de las recepciones fallo";
             });

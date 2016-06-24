@@ -27,6 +27,7 @@
                     <th data-column-id="">Cilindro</th>
                     <th data-column-id="">Fecha de Captura</th>
                     <th data-column-id="">Horas de Secado</th>
+                    <th>Parrillas</th>
                     <th data-column-id="">Opciones</th>
                 </tr>
             </thead>
@@ -46,6 +47,7 @@
                     <td>{{reception.Cylinder}}</td>
                     <td>{{reception.EntryDate}}</td>
                     <td>{{reception.HeatHoursDrying}}</td>
+                    <td>{{reception.Grills}}</td>
                     <td ng-hide="AddGrillToReception">
                         <button class="btn btn-icon command-edit">
                             <span class="md md-edit"></span>
@@ -59,7 +61,7 @@
                     </td>
                     <td ng-show="AddGrillToReception">
                         <div class="toggle-switch">
-                            <input id="{{reception.Id}}" type="checkbox" hidden="hidden" ng-model="checked" ng-change="addReceptionToGrill(reception.Id, checked)">
+                            <input id="{{reception.Id}}" type="checkbox" hidden="hidden" ng-model="reception.IsAlreadyAssigned" ng-change="addReceptionToGrill(reception.Id, reception.IsAlreadyAssigned)">
                             <label for="{{reception.Id}}" class="ts-helper"></label>
                         </div>
                     </td>
