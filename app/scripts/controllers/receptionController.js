@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $state, receptionService, producerService, cylinderService, grillService) {
+    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $state, receptionService, producerService, cylinderService, receptionAndGrillService) {
         $scope.selectedRole = {};
         $scope.receptions = [];
         $scope.producers = [];
@@ -26,9 +26,9 @@
 
         $scope.addReceptionToGrill = function(receptionId, checked){
             if(checked){
-                receptionService.addReceptionToGrill(receptionId, grillService.grillId);
+                receptionAndGrillService.addReceptionToGrill(receptionId, receptionService.grillId);
             }else{
-                receptionService.removeReceptionToGrill(receptionId, grillService.grillId);
+                receptionAndGrillService.removeReceptionToGrill(receptionId, receptionService.grillId);
             }
         };
 

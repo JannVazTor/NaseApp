@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillController', function ($scope, $state, producerService, grillService, receptionService) {
+    angular.module('naseNutAppApp').controller('grillController', function ($scope, $state, producerService, grillService, receptionAndGrillService) {
         $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
@@ -23,9 +23,9 @@
             });
         };
 
-        $scope.redirectReceptionToGrill = function (grillId) {
-            receptionService.addGrillToReception = true;
-            receptionService.grillId = grillId;
+        $scope.redirectReceptionToGrill = function (Id) {
+            receptionAndGrillService.addGrillToReception = true;
+            receptionAndGrillService.grillId = Id;
             $state.go('receptionManage');
         };
 
