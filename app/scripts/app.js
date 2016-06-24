@@ -18,7 +18,6 @@
       'ngSanitize',
       'ngTouch',
       'LocalStorageModule',
-      'angular-loading-bar',
       'ui.router'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -67,15 +66,13 @@
           templateUrl: 'views/remission/remissionAdd.html',
           controller: 'remissionController'
         })
-<<<<<<< HEAD
         .state('receptionUpdate',{
           url: '/receptionU',
           templateUrl: 'views/receptionUpdate.html',
-          controller: 'receptionController'
-=======
+          controller: 'receptionController'})
         .state('grillAdd',{
-          url: '/grill',
-          templateUrl: 'views/grill/grillAdd.html1',
+          url: '/grillA',
+          templateUrl: 'views/grill/grillAdd.html',
           controller: 'grillController'
         })
         .state('grillManage',{
@@ -92,7 +89,11 @@
           url: '/grillI',
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillController'
->>>>>>> refs/remotes/origin/master
+        })
+        .state('grillInvAct',{
+          url: '/grillIA',
+          templateUrl: 'views/grill/grillInvAct.html',
+          controller: 'grillController'
         });
       $urlRouterProvider.otherwise('/');
     })
