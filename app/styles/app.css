@@ -10,6 +10,13 @@ html {
 body {
   margin: 0;
 }
+.error {
+  border-color: red;
+}
+ 
+.warning {
+  border-color: yellow;
+}
 article,
 aside,
 details,
