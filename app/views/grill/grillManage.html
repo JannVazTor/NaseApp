@@ -54,11 +54,14 @@
                     <td>{{grill.Sampling.TotalWeightOfEdibleNuts}}</td>
                     <td>{{grill.Status}}</td>
                     <td>
-                        <button class="btn btn-icon command-edit">
+                    <button class="btn btn-icon command-edit">
                         <span class="md md-edit"></span>
                     </button>
-                        <button class="btn btn-icon command-delete" ng-click="deleteReception(reception.Id)">
+                    <button class="btn btn-icon command-delete" ng-click="deleteReception(reception.Id)">
                         <span class="md md-delete"></span>
+                    </button> 
+                    <button class="btn btn-icon command" ng-click="redirectReceptionToGrill(grill.Id)">
+                        <span class="md md-assignment"></span>
                     </button>
                     </td>
                 </tr>

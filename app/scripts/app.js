@@ -16,9 +16,9 @@
       'ngMessages',
       'ngResource',
       'ngSanitize',
-      'ngTouch',
       'LocalStorageModule',
-      'ui.router'
+      'ui.router',
+      'ngMaterial'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $stateProvider
