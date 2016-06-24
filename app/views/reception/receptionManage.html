@@ -46,13 +46,22 @@
                     <td>{{reception.Cylinder}}</td>
                     <td>{{reception.EntryDate}}</td>
                     <td>{{reception.HeatHoursDrying}}</td>
-                    <td>
+                    <td ng-hide="AddGrillToReception">
                         <button class="btn btn-icon command-edit">
-                        <span class="md md-edit"></span>
-                    </button>
+                            <span class="md md-edit"></span>
+                        </button>
                         <button class="btn btn-icon command-delete" ng-click="deleteReception(reception.Id)">
-                        <span class="md md-delete"></span>
-                    </button>
+                            <span class="md md-delete"></span>
+                        </button>
+                        <button class="btn btn-icon command-edit" ng-click="redirectReceptionToGrill">
+                            <span class="md md-view-module"></span>
+                        </button>
+                    </td>
+                    <td ng-show="AddGrillToReception">
+                        <div class="toggle-switch">
+                            <input id="{{reception.Id}}" type="checkbox" hidden="hidden" ng-model="checked" ng-change="addReceptionToGrill(reception.Id, checked)">
+                            <label for="{{reception.Id}}" class="ts-helper"></label>
+                        </div>
                     </td>
                 </tr>
             </tbody>

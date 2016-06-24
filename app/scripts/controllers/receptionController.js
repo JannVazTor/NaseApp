@@ -1,10 +1,12 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $state, receptionService, producerService, cylinderService) {
+    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $state, receptionService, producerService, cylinderService, receptionAndGrillService) {
         $scope.selectedRole = {};
         $scope.receptions = [];
         $scope.producers = [];
         $scope.savedSuccesfully = false;
+        $scope.AddGrillToReception = receptionService.addGrillToReception;
+        
         $scope.reception = {
             Variety: "",
             ReceivedFromField: "",
@@ -20,6 +22,14 @@
         $scope.redirectAddRemission = function (receptionId) {
             receptionService.ProducerId = receptionId;
             $state.go('remissionAdd');
+        };
+
+        $scope.addReceptionToGrill = function(receptionId, checked){
+            if(checked){
+                receptionAndGrillService.addReceptionToGrill(receptionId, receptionService.grillId);
+            }else{
+                receptionAndGrillService.removeReceptionToGrill(receptionId, receptionService.grillId);
+            }
         };
 
         $scope.saveReception = function () {
