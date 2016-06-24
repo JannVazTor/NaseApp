@@ -1,9 +1,8 @@
-
 <div class="animated bounceInRight">
     <div class="card">
         <form name="receptionForm" class="form-horizontal" role="form">
             <div class="card-header">
-                <h2>Alta de Recepciones</h2>
+                <h2>Actualizar Recepción</h2>
             </div>
             <div class="card-body card-padding">
                 <div class="form-group">
@@ -11,17 +10,8 @@
                     <div class="col-sm-10">
                         <div class="fg-line select">
                             <select class="form-control" ng-model="reception.ProducerId">
-                            <option ng-repeat="producer in producers" ng-selected="reception.ProducerId == producer.Id" value="{{producer.Id}}">{{producer.ProducerName}}</option>
+                            <option ng-repeat="producer in producers"  value="{{producer.Id}}">{{producer.ProducerName}}</option>
                         </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="fieldName" class="col-sm-2 control-label">Folio</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="folio" name="Folio" placeholder="Folio" data-ng-model="reception.Folio">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.Folio.$error.required">Folio es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -66,7 +56,7 @@
                     <label for="humidity" class="col-sm-2 control-label">Humedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number"  step="any" class="form-control input-sm" id="humidity" name="HumidityPercent" placeholder="humedad" data-ng-model="reception.HumidityPercent">
+                            <input type="number" min="1" step="any" class="form-control input-sm" id="humidity" name="HumidityPercent" placeholder="humedad" data-ng-model="reception.HumidityPercent">
                             <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.HumidityPercent.$error.number">Tiene que ser un valor númerico.</small>
                         </div>
                     </div>
@@ -90,18 +80,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="producers" class="col-sm-2 control-label">Cilindros</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line select">
-                            <select class="form-control" ng-model="reception.CylinderId">
-                            <option ng-repeat="cylinder in cylinders" ng-selected="reception.CylinderId == cylinder.Id" value="{{cylinder.Id}}">{{cylinder.CylinderName}}</option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveReception()" ng-disabled="!receptionForm.$valid">Guardar</button>
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="UpdateReception()" ng-disabled="!receptionForm.$valid">Guardar</button>
                     </div>
                 </div>
                 <div class="form-group">

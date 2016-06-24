@@ -1,6 +1,6 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form class="form-horizontal" role="form">
+        <form name="Productores" class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Alta de Productores</h2>
             </div>
@@ -9,13 +9,14 @@
                     <label for="iusername" class="col-sm-2 control-label">Nombre</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="iusername" placeholder="Nombre de Usuario" data-ng-model="producer.producerName">
+                            <input type="text" required class="form-control input-sm" id="iusername" placeholder="Nombre de Usuario" data-ng-model="producer.producerName">
+                            
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveProducer()">Guardar</button>
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveProducer()" ng-disabled="!Productores.$valid">Guardar</button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,7 +53,7 @@
                 <tr ng-repeat="producer in producers | filter:searchUser">
                     <td>{{producer.ProducerName}}</td>
                     <td>
-                        <button class="btn btn-icon command-delete" ng-click="deleteProducer(producer.Id)">
+                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(producer.Id)">
                         <span class="md md-delete"></span>
                     </button>
                     </td>
