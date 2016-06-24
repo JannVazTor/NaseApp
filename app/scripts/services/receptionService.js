@@ -3,7 +3,7 @@
     angular.module('naseNutAppApp').factory('receptionService', function ($http, apiPath) {
         var _ProducerId = "";
         var _reception = {
-            ID : "",
+            Id : "",
             Variety: "",
             ReceivedFromField: "",
             CylinderId: "",
@@ -13,6 +13,7 @@
             HumidityPercent: "",
             Observations: "",
             ProducerId: "",
+            Folio: ""
         };
    
         var _getAll = function () {
@@ -30,7 +31,7 @@
         
         return {
             ProducerId: _ProducerId,
-            recep: _reception,
+            reception: _reception,
             getAll: _getAll,
             save: _save,
             delete: _delete,

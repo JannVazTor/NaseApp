@@ -44,7 +44,7 @@
                     <td>{{remission.Driver}}</td>
                     <td>{{remission.Elaborate}}</td>
                     <td>
-                        <button class="btn btn-icon command-edit" >
+                        <button class="btn btn-icon command-edit" ng-click="redirectUpdate(remission)">
                         <span class="md md-edit"></span>
                     </button>
                         <button class="btn btn-icon command-delete" ng-click="confirmationDelete(remission.Id)">

@@ -1,6 +1,6 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form class="form-horizontal" role="form">
+        <form name="Cilindros" class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Alta de Cilindros</h2>
             </div>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveCylinder()">Guardar</button>
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveCylinder()" ng-disabled="!Cilindros.$valid">Guardar</button>
                     </div>
                 </div>
                 <div class="form-group">

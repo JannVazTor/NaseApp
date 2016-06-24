@@ -5,15 +5,17 @@
         $scope.receptions = [];
         $scope.producers = [];
         $scope.savedSuccesfully = false;
-        $scope.reception = receptionService.recep;
+        defaultReception();
+        $scope.reception = receptionService.reception;
 
-        $scope.redirectAddRemission = function (receptionId) {
-            receptionService.recep.Id = receptionId;
+        
+        $scope.redirectAddRemission = function (reception) {
+            receptionService.reception = reception;
             $state.go('remissionAdd');
         };
 
-        $scope.redirectUpdate = function (reception) {
-            receptionService.recep = reception;
+        $scope.redirectUpdate = function (xreception) {
+            receptionService.reception = xreception;
             $state.go('receptionUpdate');
         };
 
@@ -87,7 +89,20 @@
                 $scope.message = "la obtencion de las recepciones fallo";
             });
         };
-
+        function defaultReception(){
+            $scope.reception.ID = "";
+            $scope.reception.Variety= "";
+            $scope.reception.ReceivedFromField= "";
+            $scope.reception.CylinderId= "";
+            $scope.reception.FieldName= "";
+            $scope.reception.CarRegistration= "";
+            $scope.reception.HeatHoursDrying= "";
+            $scope.reception.HumidityPercent= "";
+            $scope.reception.Observations= "";
+            $scope.reception.ProducerId= "";
+            $scope.reception.Folio= "";
+        
+        }
         GetAllReceptions();
         GetAllProducers();
         GetAllCylinders();

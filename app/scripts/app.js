@@ -66,9 +66,14 @@
           templateUrl: 'views/remission/remissionAdd.html',
           controller: 'remissionController'
         })
+        .state('remissionUpdate',{
+          url: '/remissionU',
+          templateUrl: 'views/remission/remissionUpdate.html',
+          controller: 'remissionController'
+        })
         .state('receptionUpdate',{
           url: '/receptionU',
-          templateUrl: 'views/receptionUpdate.html',
+          templateUrl: 'views/reception/receptionUpdate.html',
           controller: 'receptionController'})
         .state('grillAdd',{
           url: '/grillA',
