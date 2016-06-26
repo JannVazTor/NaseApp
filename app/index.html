@@ -7,14 +7,13 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css" media="screen" title="no title"
-        charset="utf-8">
     <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/dist/sweetalert.css">
     <link rel="stylesheet" href="styles/app.min.css">
     <link rel="stylesheet" href="vendors/animate-css/animate.min.css">
     <link rel="stylesheet" href="vendors/farbtastic/farbtastic.css">
     <link rel="stylesheet" href="vendors/bootgrid/jquery.bootgrid.min.css">
-    <link rel="stylesheet" href="bower_components\angular-material\angular-material.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="styles/datetimepicker.css">
     <link rel="shortcut icon" href="favicon.ico">
     <style>
         #fixedbuttonRight {
@@ -116,7 +115,9 @@
             </div>
         </aside>
         <section id="content">
-            <div ui-view></div>
+            <div>
+                <div ui-view></div>
+            </div>
         </section>
         <button id="fixedbuttonRight" class="btn btn-primary btn-icon">
             <i class="md md-home"></i>
@@ -129,8 +130,10 @@
     <script src="vendors/nicescroll/jquery.nicescroll.min.js"></script>
     <script src="vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
     <script src="vendors/bootgrid/jquery.bootgrid.min.js"></script>
+    <script src="vendors/moment/moment.min.js"></script>
     <script src="scripts/js/functions.js"></script>
-    
+    <script src="vendors/input-mask/input-mask.min.js"></script>
+    <script src="vendors/waves/waves.min.js"></script>
     <!--AngularJs-->
     <script src="bower_components/sweetalert/dist/sweetalert.min.js"> </script>
     <script src="bower_components/angular/angular.js"></script>
@@ -144,7 +147,10 @@
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <!--AngularMaterial-->
-    <script src="bower_components\angular-material\angular-material.js"></script>
+
+    <script src="scripts/js/datetimepicker.js"></script>
+    <script src="scripts/js/datetimepicker.templates.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
 
     <script src="scripts/app.js"></script>
 
@@ -168,6 +174,7 @@
     <script src="scripts/services/grillService.js"></script>
     <script src="scripts/services/samplingService.js"></script>
     <script src="scripts/services/receptionAndGrillService.js"></script>
+    <script src="scripts/services/clearService.js"></script>
 </body>
 
 </html>
