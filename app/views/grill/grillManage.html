@@ -52,7 +52,12 @@
                     <td>{{grill.Sampling.WalnutNumber}}</td>
                     <td>{{grill.Sampling.Performance}}</td>
                     <td>{{grill.Sampling.TotalWeightOfEdibleNuts}}</td>
-                    <td>{{grill.Status}}</td>
+                    <td>
+                        <div class="toggle-switch">
+                            <input id="{{grill.Id + 1}}" type="checkbox" hidden="hidden" ng-model="grill.Status" ng-change="changeStatus(grill.Status, grill.Id)">
+                            <label for="{{grill.Id + 2}}" class="ts-helper"></label>
+                        </div>
+                    </td>
                     <td ng-hide="IsGrillToReception">
                         <button class="btn btn-icon command-edit">
                                 <span class="md md-edit"></span>
