@@ -6,6 +6,7 @@
         $scope.grills = [];
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.ReceptionId = receptionAndGrillService.receptionId;
+        $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
         $scope.grill = {
             DateCapture: "",
             Size: "",
@@ -40,7 +41,7 @@
 
         $scope.addGrillToReception = function (grillId, checked) {
             if (checked) {
-                receptionAndGrillService.addGrillToReception(grillId, receptionAndGrillService.receptionId).then(function (response) {
+                receptionAndGrillService.addGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
                     ShowSimpleToast('EL registro se agrego correctamente.');
                 }, function (response) {
                     $.each($scope.grills, function (i) {
@@ -52,7 +53,7 @@
                     ShowSimpleToast('Ocurrio un error y el registro no pudo ser asignado.');
                 });
             } else {
-                receptionAndGrillService.removeGrillToReception(grillId, receptionAndGrillService.receptionId).then(function (response) {
+                receptionAndGrillService.removeGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
                     ShowSimpleToast('el registro se removio satisfactoriamente.');
                 }, function (response) {
                     $.each($scope.grills, function (i) {
@@ -78,7 +79,7 @@
             grillService.getAll().then(function (response) {
                 $scope.grills = response.data;
                 response.data.forEach(function (element) {
-                    element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionId) === -1 ? false : true;
+                    element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionFolio) === -1 ? false : true;
                 }, this);
             }, function (response) {
                 $scope.message = "la obtencion de parrillas fallo.";

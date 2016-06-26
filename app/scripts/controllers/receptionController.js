@@ -1,13 +1,16 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('receptionController', function ($scope, $mdToast, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService) {
+        //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
         $scope.producers = [];
-        $scope.savedSuccesfully = false;
         $scope.Grills = [];
+        //Data shared
+        $scope.savedSuccesfully = false;
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.GrillId = receptionAndGrillService.grillId;
+        //Object model
         $scope.reception = {
             Variety: "",
             ReceivedFromField: "",
@@ -20,9 +23,10 @@
             ProducerId: ""
         };
         
-        $scope.redirectReceptionToGrill = function(Id){
+        $scope.redirectReceptionToGrill = function(receptionFolio, receptionId){
             receptionAndGrillService.IsGrillToReception = true;
-            receptionAndGrillService.receptionId = Id;
+            receptionAndGrillService.receptionId = receptionId;
+            receptionAndGrillService.receptionFolio = receptionFolio;
             $state.go('grillManage');
         };
 
@@ -47,7 +51,7 @@
 
         $scope.addReceptionToGrill = function (receptionId, checked) {
             if (checked) {
-                receptionAndGrillService.addReceptionToGrill(receptionId, receptionAndGrillService.grillId).then(function (response) {
+                receptionAndGrillService.addReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
                     ShowSimpleToast('EL registro se agrego correctamente.');
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
@@ -59,7 +63,7 @@
                     ShowSimpleToast('Ocurrio un error y el registro no pudo ser asignado.');
                 });
             } else {
-                receptionAndGrillService.removeReceptionToGrill(receptionId, receptionAndGrillService.grillId).then(function (response) {
+                receptionAndGrillService.removeReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
                     ShowSimpleToast('el registro se removio satisfactoriamente.');
                 }, function (response) {
                      $.each($scope.receptions, function (i) {
@@ -96,6 +100,7 @@
                 });
 
         };
+
         $scope.deleteReception = function (receptionId) {
             receptionService.delete(receptionId).then(function (response) {
                 $scope.message = "El registro fue eliminado  de manera exitosa."

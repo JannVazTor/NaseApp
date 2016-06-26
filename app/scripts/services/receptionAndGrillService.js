@@ -8,6 +8,8 @@
 
         var _IsGrillToReception = false;
 
+        var _receptionFolio = "";
+
         var _addReceptionToGrill = function (receptionId, grillId) {
             return $http.put(apiPath + 'api/reception/addReceptionToGrill/' + receptionId + '/' + grillId);
         }
@@ -31,7 +33,8 @@
             addReceptionToGrill: _addReceptionToGrill,
             removeReceptionToGrill: _removeReceptionToGrill,
             addGrillToReception: _addGrillToReception,
-            removeGrillToReception: _removeGrillToReception
+            removeGrillToReception: _removeGrillToReception,
+            receptionFolio: _receptionFolio
         };
     });
 })();
