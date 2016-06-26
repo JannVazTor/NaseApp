@@ -18,7 +18,8 @@
       'ngSanitize',
       'LocalStorageModule',
       'ui.router',
-      'ngMaterial'
+      'ngMaterial',
+      'ui.bootstrap.datetimepicker'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $stateProvider
@@ -107,9 +108,10 @@
         });
       $urlRouterProvider.otherwise('/');
     })
-    .config(function ($httpProvider) {/*
-      $httpProvider.defaults.useXDomain = true;
+    .config(function ($httpProvider) {
+      /*$httpProvider.defaults.useXDomain = true;
       delete $httpProvider.defaults.headers.common['X-Requested-With'];*/
+      $httpProvider.useApplyAsync(true);
       $httpProvider.interceptors.push('authInterceptorService');
     })
     .run(['authService', function (authService) {

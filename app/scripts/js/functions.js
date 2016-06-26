@@ -563,7 +563,7 @@ $(document).ready(function(){
     
     //Welcome Message (not for login page)
     if (!$('.login-content')[0]) {
-        notify('Welcome back Mallinda Hollaway', 'inverse');
+        notify('Welcome back!', 'inverse');
     }
 
     /*
