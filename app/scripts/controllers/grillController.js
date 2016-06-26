@@ -22,7 +22,10 @@
             clearService.clearReceptionAndGrillService();
             onStateChange();
         });
-
+        $scope.redirectAddSampling = function (grillId) {
+            grillService.id = grillId;
+            $state.go('samplingAdd');
+        };
         $scope.saveGrill = function () {
             $scope.grill.DateCapture = $('#grillDate').val();
             grillService.save($scope.grill).then(function (response) {

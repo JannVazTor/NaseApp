@@ -1,7 +1,7 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').factory('grillService', function ($http, apiPath) {
-        
+        var _Id = "";
         var _getAll = function () {
             return $http.get(apiPath + 'api/grill/getAll');
         }
@@ -13,6 +13,7 @@
         }
 
         return {
+            id: _Id,
             getAll: _getAll,
             save: _save,
             delete: _delete
