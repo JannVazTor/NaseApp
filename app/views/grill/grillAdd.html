@@ -1,6 +1,6 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form class="form-horizontal" role="form">
+        <form name="grillForm" class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Parrillas</h2>
             </div>
@@ -16,83 +16,80 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="field" class="col-sm-2 control-label">Campo</label>
-                        <div class="col-sm-10">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="field" placeholder="campo" data-ng-model="grill.FieldName">
+                </div>
+                <div class="form-group">
+                    <label for="date" class="col-sm-2 control-label">Fecha</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="grillDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#"><i class="md md-event"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <datetimepicker data-ng-model="data.dateDropDownLink" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="variety" class="col-sm-2 control-label">Variedad</label>
-                        <div class="col-sm-10">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="variety" placeholder="variedad" data-ng-model="grill.Variety">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="quality" class="col-sm-2 control-label">Calidad</label>
-                        <div class="col-sm-10">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="quality" placeholder="calidad" data-ng-model="grill.Quality">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="sacks" class="col-sm-2 control-label">Sacos</label>
-                        <div class="col-sm-10">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="sacks" placeholder="sacos" data-ng-model="grill.Sacks">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="kilos" class="col-sm-2 control-label">Kilos</label>
-                        <div class="col-sm-10">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="kilos" placeholder="kilos" data-ng-model="grill.Kilos">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="size" class="col-sm-2 control-label">Tamaño</label>
-                        <div class="col-sm-10">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="size" placeholder="tamaño" data-ng-model="grill.Size">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="date" class="col-sm-2 control-label">Fecha</label>
-                        <div class="col-sm-10">
-                            <div class="fg-line">
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle" id="datetimeGrill" role="button" data-toggle="dropdown" data-target="#" href="#">
-                                        <div class="input-group"><input type="text" class="form-control" data-ng-model="data.dateDropDownInput">
-                                            <span
-                                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                        </div>
-                                    </a>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                        <datetimepicker data-ng-model="data.dateDropDownInput" data-datetimepicker-config="{ dropdownSelector: '#datetimeGrill' }" />
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveGrill()">Guardar</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-ng-hide="message==''" class="alert alert-danger">
-                            {{message}}
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="field" class="col-sm-2 control-label">Campo</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="field" placeholder="campo" data-ng-model="grill.FieldName">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="variety" class="col-sm-2 control-label">Variedad</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="variety" placeholder="variedad" data-ng-model="grill.Variety">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="quality" class="col-sm-2 control-label">Calidad</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="quality" placeholder="calidad" data-ng-model="grill.Quality">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sacks" class="col-sm-2 control-label">Sacos</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="sacks" placeholder="sacos" data-ng-model="grill.Sacks">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="kilos" class="col-sm-2 control-label">Kilos</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="kilos" placeholder="kilos" data-ng-model="grill.Kilos">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="size" class="col-sm-2 control-label">Tamaño</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="size" placeholder="tamaño" data-ng-model="grill.Size">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveGrill()">Guardar</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div data-ng-hide="message===''" class="alert alert-danger">
+                        {{message}}
+                    </div>
+                </div>
+            </div>
         </form>
-        </div>
     </div>
+</div>

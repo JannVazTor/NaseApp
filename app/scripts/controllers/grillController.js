@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillController', function ($scope, $mdToast,$state, producerService, grillService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('grillController', function ($filter, $scope, $mdToast, $state, producerService, grillService, receptionAndGrillService, clearService) {
         $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
@@ -23,6 +23,7 @@
         });
 
         $scope.saveGrill = function () {
+            $scope.grill.DateCapture = $('#grillDate').val();
             grillService.save($scope.grill).then(function (response) {
                 $scope.savedSuccessfully = true;
                 $scope.message = "La parrilla a sido guardada de manera exitosa";
