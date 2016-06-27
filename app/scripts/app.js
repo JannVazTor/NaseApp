@@ -29,12 +29,12 @@
           controller: 'loginController'
         })
         .state('users', {
-          url: '/users',
+          url: '/usuarios',
           templateUrl: 'views/users.html',
           controller: 'userController'
         })
         .state('producers', {
-          url: '/producers',
+          url: '/productores',
           templateUrl: 'views/producers.html',
           controller: 'producerController'
         })
@@ -42,23 +42,29 @@
           url: '/home',
           templateUrl: 'views/home.html'
         })
+        .state('cylinder', {
+          url: '/cilindros',
+          templateUrl: 'views/cylinder.html',
+          controller: 'cylinderController'
+        })
+        /*Receptions*/
         .state('receptionAdd', {
-          url: '/reception',
+          url: '/recepcionAlta',
           templateUrl: 'views/reception/receptionAdd.html',
           controller: 'receptionController'
         })
         .state('receptionManage', {
-          url: '/receptionM',
+          url: '/recepcionGestion',
           templateUrl: 'views/reception/receptionManage.html',
           controller: 'receptionController'
         })
-        .state('cylinder', {
-          url: '/cylinder',
-          templateUrl: 'views/cylinder.html',
-          controller: 'cylinderController'
-        })
+        .state('receptionUpdate',{
+          url: '/receptionModificar',
+          templateUrl: 'views/reception/receptionUpdate.html',
+          controller: 'receptionController'})
+        /*Remissions*/
         .state('remissionManage', {
-          url: '/remissionM',
+          url: '/remisionGestion',
           templateUrl: 'views/remission/remissionManage.html',
           controller: 'remissionController',
           onExit: function($stateParams, $state, receptionAndGrillService){
@@ -68,43 +74,41 @@
           }
         })
         .state('remissionAdd', {
-          url: '/remission',
+          url: '/remisionAlta',
           templateUrl: 'views/remission/remissionAdd.html',
           controller: 'remissionController'
         })
         .state('remissionUpdate',{
-          url: '/remissionU',
+          url: '/remisionModificar',
           templateUrl: 'views/remission/remissionUpdate.html',
           controller: 'remissionController'
         })
-        .state('receptionUpdate',{
-          url: '/receptionU',
-          templateUrl: 'views/reception/receptionUpdate.html',
-          controller: 'receptionController'})
+        /*Grills*/
         .state('grillAdd',{
-          url: '/grillA',
+          url: '/parrillasAlta',
           templateUrl: 'views/grill/grillAdd.html',
           controller: 'grillController'
         })
         .state('grillManage', {
-          url: '/grillM',
+          url: '/parrillasGestion',
           templateUrl: 'views/grill/grillManage.html',
           controller: 'grillController'
         })
-        .state('sampling', {
-          url: '/sampling',
-          templateUrl: 'views/sampling.html',
-          controller: 'samplingController'
-        })
         .state('grillIssue', {
-          url: '/grillI',
+          url: '/inventarioSalidas',
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillController'
         })
-        .state('grillInvAct', {
-          url: '/grillIA',
-          templateUrl: 'views/grill/grillInvAct.html',
-          controller: 'grillController'
+        .state('grillCurrentInv', {
+          url: '/inventarioActual',
+          templateUrl: 'views/grill/grillCurrentInv.html',
+          controller: 'grillCurrentInvController'
+        })
+        /*Sampling*/
+        .state('sampling', {
+          url: '/muestreo',
+          templateUrl: 'views/sampling.html',
+          controller: 'samplingController'
         });
       $urlRouterProvider.otherwise('/');
     })

@@ -22,7 +22,7 @@
             Observations: "",
             ProducerId: ""
         };
-        
+
         $scope.redirectReceptionToGrill = function(receptionFolio, receptionId){
             receptionAndGrillService.IsGrillToReception = true;
             receptionAndGrillService.receptionId = receptionId;

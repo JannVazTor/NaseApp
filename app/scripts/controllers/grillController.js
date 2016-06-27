@@ -39,6 +39,34 @@
             $state.go('receptionManage');
         };
 
+        $scope.changeStatus = function (status, grillId) {
+            if (status) {
+                grillService.changeStatus(grillId, 1).then(function (response) {
+                    ShowSimpleToast('El status se cambio correctamente.');
+                }, function (response) {
+                    $.each($scope.grills, function (i) {
+                        if ($scope.grills[i].Id === grillId) {
+                            $scope.grills[i].Status = false;
+                            return false;
+                        }
+                    });
+                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser asignado.');
+                });
+            } else {
+                grillService.changeStatus(grillId, 0).then(function (response) {
+                    ShowSimpleToast('El status se cambio correctamente.');
+                }, function (response) {
+                    $.each($scope.grills, function (i) {
+                        if ($scope.grills[i].Id === grillId) {
+                            $scope.grills[i].Status = true;
+                            return false;
+                        }
+                    });
+                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser asignado.');
+                });
+            }
+        };
+
         $scope.addGrillToReception = function (grillId, checked) {
             if (checked) {
                 receptionAndGrillService.addGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
@@ -65,6 +93,21 @@
                     ShowSimpleToast('Ocurrio un error y el registro no pudo ser removido.')
                 });
             }
+        };
+
+        $scope.deleteGrill = function (grillId) {
+            grillService.delete(grillId).then(function (response) {
+                $scope.message = "El registro fue eliminado  de manera exitosa."
+                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
+                $.each($scope.grills, function (i) {
+                    if ($scope.grills[i].Id === grillId) {
+                        $scope.grills.splice(i, 1);
+                        return false;
+                    }
+                });
+            }, function (response) {
+                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+            });
         };
 
         var GetAllProducers = function () {

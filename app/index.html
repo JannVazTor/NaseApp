@@ -27,6 +27,9 @@
             bottom: 20px;
             left: 20px;
         }
+        .contentC{
+            margin-top: 50px;
+        }
     </style>
 </head>
 
@@ -41,7 +44,7 @@
                 </div>
             </li>
             <li class="logo hidden-xs">
-                <a href="index.html">Material Admin</a>
+                <a ui-sref="home">NASE NUEZ APP</a>
             </li>
             <li class="pull-right">
                 <ul class="top-menu">
@@ -90,7 +93,7 @@
                             <li><a ui-sref="grillAdd">Alta de Parillas</a></li>
                             <li><a ui-sref="grillIssue">Salida de Parillas</a></li>
                             <li><a ui-sref="grillManage">Inventario de Proceso</a></li>
-                            <li><a ui-sref="grillInvAct">Inventario Actual</a></li>
+                            <li><a ui-sref="grillCurrentInv">Inventario Actual</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -115,7 +118,7 @@
             </div>
         </aside>
         <section id="content">
-            <div>
+            <div class="contentC">
                 <div ui-view></div>
             </div>
         </section>
@@ -162,6 +165,7 @@
     <script src="scripts/controllers/remissionController.js"></script>
     <script src="scripts/controllers/grillController.js"></script>
     <script src="scripts/controllers/samplingController.js"></script>
+    <script src="scripts/controllers/grillCurrentInvController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>

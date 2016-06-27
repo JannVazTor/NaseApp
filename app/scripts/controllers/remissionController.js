@@ -14,6 +14,7 @@
                 $scope.message = "ocurrio un error al intentar guardar el registro.";
             });
         };
+        
          $scope.redirectUpdate = function (remission) {
             remissionService.remission = remission;
             $state.go('remissionUpdate');
