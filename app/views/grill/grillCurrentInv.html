@@ -1,7 +1,7 @@
 <div class="animated bounceInRight">
     <div class="card">
         <div class="card-header">
-            <h2>Parillas de Nuez Procesadas</h2>
+            <h2>Parillas en Existencia</h2>
         </div>
         <div class="col-sm-12 actionbar">
             <div class="form-group">
@@ -31,14 +31,12 @@
                     <th>No.Nueces</th>
                     <th>Rendimiento</th>
                     <th>Total</th>
-                    <th>Status</th>
-                    <th>Operaciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="grill in grills | filter:searchUser">
                     <td>{{grill.Id}}</td>
-                    <td>{{grill.DateCapture}}</td>
+                    <td>{{grill.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
                     <td>{{grill.Receptions}}</td>
                     <td>{{grill.Size}}</td>
                     <td>{{grill.Sacks}}</td>
@@ -52,29 +50,6 @@
                     <td>{{grill.Sampling.WalnutNumber}}</td>
                     <td>{{grill.Sampling.Performance}}</td>
                     <td>{{grill.Sampling.TotalWeightOfEdibleNuts}}</td>
-                    <td>
-                        <div class="toggle-switch">
-                            <input id="{{grill.Id + g}}" type="checkbox" hidden="hidden" ng-model="grill.Status" ng-change="changeStatus(grill.Status, grill.Id)">
-                            <label for="{{grill.Id + g}}" class="ts-helper"></label>
-                        </div>
-                    </td>
-                    <td ng-hide="IsGrillToReception">
-                        <button class="btn btn-icon command-edit">
-                                <span class="md md-edit"></span>
-                            </button>
-                        <button class="btn btn-icon command-delete" ng-click="deleteGrill(grill.Id)">
-                                <span class="md md-delete"></span>
-                            </button>
-                        <button class="btn btn-icon command-edit" ng-click="redirectReceptionToGrill(grill.Id)">
-                                <span class="md md-assignment"></span>
-                            </button>
-                    </td>
-                    <td ng-show="IsGrillToReception">
-                        <div class="toggle-switch">
-                            <input id="{{grill.Id}}" type="checkbox" hidden="hidden" ng-model="grill.IsAlreadyAssigned" ng-change="addGrillToReception(grill.Id, grill.IsAlreadyAssigned)">
-                            <label for="{{grill.Id}}" class="ts-helper"></label>
-                        </div>
-                    </td>
                 </tr>
             </tbody>
         </table>
