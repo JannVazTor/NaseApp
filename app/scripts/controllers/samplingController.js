@@ -4,7 +4,7 @@
         $scope.message = "";
         $scope.samplings = [];
         $scope.sampling = samplingService.sampling;
-  
+        $('#samplingDate').val($scope.sampling.DateCapture);
         $scope.saveSampling = function () {
             $scope.sampling.DateCapture = $('#samplingDate').val();
             samplingService.save($scope.sampling).then(function (response) {   

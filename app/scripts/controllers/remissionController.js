@@ -3,10 +3,12 @@
     angular.module('naseNutAppApp').controller('remissionController', function ($scope, $state, remissionService, receptionService) {
         $scope.remissions = [];
         $scope.message = "";
-        $scope.folio = receptionService.reception.Folio;
+        $scope.folio = receptionService.folio;
         $scope.remission = remissionService.remission;
         
+        
         $scope.saveRemission = function () {
+           
             remissionService.save($scope.remission).then(function (response) {
                 swal("Correcto","Se agrego correctmente","success");
                 defaultRemission();

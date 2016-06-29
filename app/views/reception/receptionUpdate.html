@@ -1,6 +1,6 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form name="receptionForm" class="form-horizontal" role="form">
+        <form name="receptionUForm" class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Actualizar Recepción</h2>
             </div>
@@ -9,9 +9,23 @@
                     <label for="producers" class="col-sm-2 control-label">Productores</label>
                     <div class="col-sm-10">
                         <div class="fg-line select">
-                            <select class="form-control" ng-model="reception.ProducerId">
-                            <option ng-repeat="producer in producers"  value="{{producer.Id}}">{{producer.ProducerName}}</option>
+                            <select required class="form-control" ng-model="receptionU.ProducerId" ng-selected="receptionU.ProducerId == producer.Id"  ng-options="producer as producer.ProducerName for producer in producers track by producer.Id">
+                           
                         </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="EntryDate" class="col-sm-2 control-label">Fecha</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" required disabled class="form-control input-sm" id="EntryDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#"><i class="md md-event"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <datetimepicker data-ng-model="data.dateDropDownLink" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -19,8 +33,8 @@
                     <label for="fieldName" class="col-sm-2 control-label">Nombre del Campo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="fieldName" name="FieldName" placeholder="nombre del campo" data-ng-model="reception.FieldName">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.FieldName.$error.required">Nombre del Campo es requerido.</small>
+                            <input type="text" required class="form-control input-sm" id="fieldName" name="FieldName" placeholder="nombre del campo" data-ng-model="receptionU.FieldName">
+                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.FieldName.$error.required">Nombre del Campo es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -28,8 +42,8 @@
                     <label for="variety" class="col-sm-2 control-label">Variedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="variety" name="Variety" placeholder="variedad" data-ng-model="reception.Variety">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.Variety.$error.required">Variedad es requerido.</small>
+                            <input type="text" required class="form-control input-sm" id="variety" name="Variety" placeholder="variedad" data-ng-model="receptionU.Variety">
+                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.Variety.$error.required">Variedad es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -37,8 +51,8 @@
                     <label for="carRegistration" class="col-sm-2 control-label">Camion/Placas</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="carRegistration" name="CarRegistration" placeholder="matricula" data-ng-model="reception.CarRegistration">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.CarRegistration.$error.required">Las placas son requerido.</small>
+                            <input type="text" class="form-control input-sm" id="carRegistration" name="CarRegistration" placeholder="matricula" data-ng-model="receptionU.CarRegistration">
+                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.CarRegistration.$error.required">Las placas son requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -46,9 +60,9 @@
                     <label for="receivedFromField" class="col-sm-2 control-label">Kilos recibidos de campo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="number" min="1" step="any" ng-class="{error: !receptionForm.$pristine && receptionForm.ReceivedFromField.$error.required}" class="form-control input-sm" name="ReceivedFromField" id="receivedFromField" placeholder="kilos recibidos" data-ng-model="reception.ReceivedFromField">
-                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionForm.$pristine && receptionForm.ReceivedFromField.$error.number">Tiene que ser un valor númerico.</small>
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.ReceivedFromField.$error.required">Kilos recibidos de campo es requerido.</small>
+                            <input required type="number" min="1" step="any" ng-class="{error: !receptionUForm.$pristine && receptionUForm.ReceivedFromField.$error.required}" class="form-control input-sm" name="ReceivedFromField" id="receivedFromField" placeholder="kilos recibidos" data-ng-model="receptionU.ReceivedFromField">
+                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionUForm.$pristine && receptionUForm.ReceivedFromField.$error.number">Tiene que ser un valor númerico.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.ReceivedFromField.$error.required">Kilos recibidos de campo es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -56,8 +70,8 @@
                     <label for="humidity" class="col-sm-2 control-label">Humedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="1" step="any" class="form-control input-sm" id="humidity" name="HumidityPercent" placeholder="humedad" data-ng-model="reception.HumidityPercent">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.HumidityPercent.$error.number">Tiene que ser un valor númerico.</small>
+                            <input type="number" min="1" step="any" class="form-control input-sm" id="humidity" name="HumidityPercent" placeholder="humedad" data-ng-model="receptionU.HumidityPercent">
+                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.HumidityPercent.$error.number">Tiene que ser un valor númerico.</small>
                         </div>
                     </div>
                 </div>
@@ -65,8 +79,8 @@
                     <label for="heatHoursDrying" class="col-sm-2 control-label">Horas de calor por secado</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="1" step="any" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado" name="HeatHoursDrying" data-ng-model="reception.HeatHoursDrying">
-                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionForm.$pristine && receptionForm.HeatHoursDrying.$error.number">Tiene que ser un valor númerico.</small>
+                            <input type="number" min="1" step="any" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado" name="HeatHoursDrying" data-ng-model="receptionU.HeatHoursDrying">
+                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionUForm.$pristine && receptionUForm.HeatHoursDrying.$error.number">Tiene que ser un valor númerico.</small>
                         </div>
                     </div>
                 </div>
@@ -74,14 +88,14 @@
                     <label for="observations" class="col-sm-2 control-label">Observaciones</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <textarea class="form-control auto-size" placeholder="observaciones..." name="Observations" data-ng-model="reception.Observations"></textarea>
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.Observations.$error.required">Observaciones son requerido.</small>
+                            <textarea required class="form-control auto-size" placeholder="observaciones..." name="Observations" data-ng-model="receptionU.Observations"></textarea>
+                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.Observations.$error.required">Observaciones son requerido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="UpdateReception()" ng-disabled="!receptionForm.$valid">Guardar</button>
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="UpdateReception()" ng-disabled="!receptionUForm.$valid">Guardar</button>
                     </div>
                 </div>
                 <div class="form-group">

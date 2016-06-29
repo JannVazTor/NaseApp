@@ -102,6 +102,11 @@
           templateUrl: 'views/grill/grillInvAct.html',
           controller: 'grillController'
         })
+        .state('grillUpdate', {
+          url: '/grillU',
+          templateUrl: 'views/grill/grillUpdate.html',
+          controller: 'grillController'
+        })
         .state('samplingManage', {
           url: '/samplingM',
           templateUrl: 'views/sampling/samplingManage.html',

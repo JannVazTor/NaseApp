@@ -10,7 +10,7 @@
             TransportNumber: "",
             Driver: "",
             Elaborate: "",
-            ReceptionId : receptionService.reception.Id
+            ReceptionId: receptionService.ProducerId
         };
 
         var _getAll = function () {
