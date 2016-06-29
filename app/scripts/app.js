@@ -19,7 +19,9 @@
       'LocalStorageModule',
       'ui.router',
       'ngMaterial',
-      'ui.bootstrap.datetimepicker'
+      'ui.bootstrap.datetimepicker',
+      'datatables',
+      'datatables.buttons'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $stateProvider
