@@ -40,9 +40,8 @@
             grill: _grill,
             getAll: _getAll,
             save: _save,
-            delete: _delete,
             changeStatus: _changeStatus,
-            getAllCurrentInv: _getAllCurrentInv
+            getAllCurrentInv: _getAllCurrentInv,
             delete: _delete,
             update: _update
         };
