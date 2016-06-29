@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillCurrentInvController', function ($scope, grillService) {
+    angular.module('naseNutAppApp').controller('grillCurrentInvController', function ($scope, grillService, DTOptionsBuilder, DTColumnBuilder) {
         $scope.message = "";
         $scope.grills = [];
 
@@ -12,5 +12,16 @@
             });
         };
         GetAllGrills();
+
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(grillService.getAllCurrentInv())
+            .withDOM('frtip')
+            .withPaginationType('full_numbers')
+            .withButtons([
+                'copy',
+                'excel',
+                'pdf',
+                'csv',
+                'print'
+            ]);
     });
 })();
