@@ -38,6 +38,7 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "angular-bootstrap-datetimepicker": "^1.0.1"
+    "angular-bootstrap-datetimepicker": "^1.0.1",
+    "angular-material": "^1.1.0-rc.5"
   }
 }

@@ -2,9 +2,11 @@
     'use strict'
     angular.module('naseNutAppApp').factory('receptionService', function ($http, apiPath) {
         var _ProducerId = "";
+        var _Folio = "";
         var _reception = {
             Id : "",
             Variety: "",
+            EntryDate: "",
             ReceivedFromField: "",
             CylinderId: "",
             FieldName: "",
@@ -37,6 +39,7 @@
         
         return {
             ProducerId: _ProducerId,
+            folio: _Folio,
             reception: _reception,
             getAll: _getAll,
             save: _save,

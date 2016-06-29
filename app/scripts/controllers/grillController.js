@@ -17,11 +17,32 @@
             Producer: "",
             FieldName: ""
         };
-
+        
+        $scope.grillU = grillService.grill;
+        $('#grillDate').val($scope.grillU.DateCapture); 
         var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
             clearService.clearReceptionAndGrillService();
             onStateChange();
         });
+        $scope.redirectAddSampling = function (grillId) {
+            grillService.id = grillId;
+            $state.go('samplingAdd');
+        };
+         $scope.redirectUpdate = function (grillId, grill) {
+            grillService.id = grillId;
+            grillService.grill = grill;
+            $state.go('grillUpdate');
+        };
+        
+        $scope.UpdateGrill= function () {
+            $scope.grillU.DateCapture = $('#grillDate').val();
+            grillService.update(grillService.id, $scope.grillU).then(function (response) {
+                $scope.message = "El registro fue Actualizado  de manera exitosa."
+                $state.go('grillManage');
+            }, function (response) {
+                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+            });
+        }
 
         $scope.saveGrill = function () {
             $scope.grill.DateCapture = $('#grillDate').val();
@@ -109,7 +130,36 @@
                 $scope.message = "Ocurrio un error al intentar eliminar el registro.";
             });
         };
+        $scope.confirmationDelete = function (grillId) {
+            swal({
+                title: "Estas seguro?",
+                text: "Tú eliminaras la recepcion: " + grillId + "!!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+                function () {
+                    $scope.deleteGrill(grillId);
+                });
 
+        };
+
+        $scope.deleteGrill = function (grillId) {
+            grillService.delete(grillId).then(function (response) {
+                $scope.message = "El registro fue eliminado  de manera exitosa."
+                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
+                $.each($scope.grills, function (i) {
+                    if ($scope.grills[i].Id === grillId) {
+                        $scope.grills.splice(i, 1);
+                        return false;
+                    }
+                });
+            }, function (response) {
+                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+            });
+        };
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 $scope.producers = response.data;
