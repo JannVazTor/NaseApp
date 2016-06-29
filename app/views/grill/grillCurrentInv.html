@@ -3,17 +3,7 @@
         <div class="card-header">
             <h2>Parillas en Existencia</h2>
         </div>
-        <div class="col-sm-12 actionbar">
-            <div class="form-group">
-                <label for="isearch" class="col-sm-2 control-label">Buscar</label>
-                <div class="col-sm-12">
-                    <div class="fg-line">
-                        <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchUser">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <table id="data-table-command" class="table table-striped table-vmiddle">
+        <table datatable="ng" dt-options="dtOptions" class="row-border hover">
             <thead>
                 <tr>
                     <th>Id</th>
