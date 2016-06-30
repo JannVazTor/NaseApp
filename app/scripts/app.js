@@ -17,8 +17,8 @@
       'ngResource',
       'ngSanitize',
       'LocalStorageModule',
-      'ui.router',
-      'ngMaterial',
+      'ui.router',/*
+      'ngMaterial',*/
       'ui.bootstrap.datetimepicker',
       'datatables',
       'datatables.buttons'
