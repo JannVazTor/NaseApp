@@ -17,11 +17,11 @@
       'ngResource',
       'ngSanitize',
       'LocalStorageModule',
-      'ui.router',/*
-      'ngMaterial',*/
+      'ui.router',
       'ui.bootstrap.datetimepicker',
       'datatables',
-      'datatables.buttons'
+      'datatables.buttons',
+      'toastr'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $stateProvider
@@ -60,18 +60,19 @@
           templateUrl: 'views/reception/receptionManage.html',
           controller: 'receptionController'
         })
-        .state('receptionUpdate',{
+        .state('receptionUpdate', {
           url: '/receptionModificar',
           templateUrl: 'views/reception/receptionUpdate.html',
-          controller: 'receptionController'})
+          controller: 'receptionController'
+        })
         /*Remissions*/
         .state('remissionManage', {
           url: '/remisionGestion',
           templateUrl: 'views/remission/remissionManage.html',
           controller: 'remissionController',
-          onExit: function($stateParams, $state, receptionAndGrillService){
+          onExit: function ($stateParams, $state, receptionAndGrillService) {
             $state.transition.then(toState => {
-                receptionAndGrillService.addGrillToReception = true;
+              receptionAndGrillService.addGrillToReception = true;
             })
           }
         })
@@ -80,17 +81,12 @@
           templateUrl: 'views/remission/remissionAdd.html',
           controller: 'remissionController'
         })
-        .state('remissionUpdate',{
+        .state('remissionUpdate', {
           url: '/remisionModificar',
           templateUrl: 'views/remission/remissionUpdate.html',
           controller: 'remissionController'
         })
-        .state('receptionUpdate',{
-          url: '/receptionU',
-          templateUrl: 'views/reception/receptionUpdate.html',
-          controller: 'receptionController'
-        })
-        .state('grillAdd',{
+        .state('grillAdd', {
           url: '/parrillasAlta',
           templateUrl: 'views/grill/grillAdd.html',
           controller: 'grillController'
@@ -105,10 +101,10 @@
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillController'
         })
-        .state('grillInvAct', {
-          url: '/grillIA',
-          templateUrl: 'views/grill/grillInvAct.html',
-          controller: 'grillController'
+        .state('grillCurrentInv', {
+          url: '/parrillasInventarioActual',
+          templateUrl: 'views/grill/grillCurrentInv.html',
+          controller: 'grillCurrentInvController'
         })
         .state('grillUpdate', {
           url: '/grillU',
@@ -137,6 +133,14 @@
       delete $httpProvider.defaults.headers.common['X-Requested-With'];*/
       $httpProvider.useApplyAsync(true);
       $httpProvider.interceptors.push('authInterceptorService');
+    })
+    .config(function (toastrConfig) {
+      angular.extend(toastrConfig, {
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: false,
+        preventOpenDuplicates: false,
+        target: 'body'
+      });
     })
     .run(['authService', function (authService) {
       authService.fillAuthData();
