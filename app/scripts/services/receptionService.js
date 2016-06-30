@@ -12,7 +12,7 @@
         var _delete = function (id) {
             return $http.delete(apiPath + 'api/reception/' + id);
         }
-        
+
         return {
             ProducerId: _ProducerId,
             getAll: _getAll,

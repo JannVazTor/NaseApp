@@ -86,6 +86,11 @@
           url: '/grillI',
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillController'
+        })
+        .state('humidity',{
+          url: '/humidity',
+          templateUrl: 'views/humidity.html',
+          controller: 'humidityController'
         });
       $urlRouterProvider.otherwise('/');
     })
