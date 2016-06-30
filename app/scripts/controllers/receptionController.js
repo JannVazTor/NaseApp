@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $state, receptionService, producerService, cylinderService) {
+    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $state, receptionService, producerService, cylinderService, humidityService) {
         $scope.selectedRole = {};
         $scope.receptions = [];
         $scope.producers = [];
@@ -18,7 +18,7 @@
         };
 
         $scope.redirectAddRemission = function (receptionId) {
-            receptionService.ProducerId = receptionId;
+            receptionService.ReceptionId = receptionId;
             $state.go('remissionAdd');
         };
 
@@ -43,6 +43,12 @@
             }, function (response) {
                 $scope.message = "Ocurrio un error al intentar eliminar el registro.";
             });
+        };
+
+        $scope.redirectAddHumidity = function (receptionId, cylinderId) {
+            receptionService.CylinderId = cylinderId;
+            receptionService.ReceptionId = receptionId;
+            $state.go('humidity');
         };
 
         var GetAllProducers = function () {

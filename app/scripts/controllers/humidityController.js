@@ -7,7 +7,7 @@
     $scope.humidity = {
         HumidityPercent: "",
         CylinderId: "",
-        ReceptionId: humidityService.ReceptionId
+        ReceptionId: receptionService.ProducerId
     };
 
 
@@ -18,12 +18,6 @@
         $scope.message = "la obtención de registros de humedad fallo.";
       });
     };
-    $scope.getReceptions = function (CylinderId) {
-        humidityService.getReceptionsByCylinder(CylinderId).then(function (response) {
-        $scope.receptions = response.data;
-
-    })
-  };
 
     $scope.saveHumidity = function () {
       humidityService.save($scope.humidity).then(function (response) {
@@ -46,8 +40,6 @@
           $scope.message = "Ocurrio un error y el registro no pudo ser eliminado.";
       });
   };
-
-
     var GetAllCylinders = function () {
         cylinderService.getAll().then(function (response) {
             $scope.cylinders = response.data;

@@ -1,7 +1,8 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').factory('receptionService', function ($http, apiPath) {
-        var _ProducerId = "";
+        var _ReceptionId = "";
+        var _CylinderId = "";
 
         var _getAll = function () {
             return $http.get(apiPath + 'api/reception/getAll');
@@ -14,7 +15,8 @@
         }
 
         return {
-            ProducerId: _ProducerId,
+            ReceptionId: _ReceptionId,
+            CylinderId: _CylinderId,
             getAll: _getAll,
             save: _save,
             delete: _delete
