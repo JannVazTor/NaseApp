@@ -17,7 +17,7 @@
         <table id="data-table-command" class="table table-striped table-vmiddle">
             <thead>
                 <tr>
-                    <th data-column-id="">Remision</th>
+                    <th data-column-id="">Id</th>
                     <th data-column-id="">Folio</th>
                     <th data-column-id="">Productor</th>
                     <th data-column-id="">Campo</th>
@@ -27,17 +27,14 @@
                     <th data-column-id="">Cilindro</th>
                     <th data-column-id="">Fecha de Captura</th>
                     <th data-column-id="">Horas de Secado</th>
+                    <th>Parrillas</th>
                     <th data-column-id="">Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="reception in receptions | filter:searchUser">
-                    <td>
-                        <button class="btn btn-icon" ng-click="redirectAddRemission(reception.Id)">
-                            <span class="md md-add"></span>
-                        </button>
-                    </td>
                     <td>{{reception.Id}}</td>
+                    <td>{{reception.Folio}}</td>
                     <td>{{reception.ProducerName}}</td>
                     <td>{{reception.FieldName}}</td>
                     <td>{{reception.Variety}}</td>
@@ -46,6 +43,7 @@
                     <td>{{reception.Cylinder}}</td>
                     <td>{{reception.EntryDate}}</td>
                     <td>{{reception.HeatHoursDrying}}</td>
+<<<<<<< HEAD
                     <td>
                         <button class="btn btn-icon command-edit">
                         <span class="md md-edit"></span>
@@ -55,6 +53,28 @@
                     </button>
                     <button class="btn btn-icon command-edit">
                         <span class="md md-cloud-queue" ng-click="redirectAddHumidity(reception.Id, reception.CylinderId)"
+=======
+                    <td>{{reception.Grills}}</td>
+                    <td ng-hide="IsGrillToReception">
+                        <button class="btn btn-icon command-edit" ng-click="redirectUpdate(reception)">
+                            <span class="md md-edit"></span>
+                        </button>
+                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(reception.Id)">
+                            <span class="md md-delete"></span>
+                        </button>
+                        <button class="btn btn-icon command-edit" ng-click="redirectReceptionToGrill(reception.Folio, reception.Id)">
+                            <span class="md md-view-module"></span>
+                        </button>
+                        <button class="btn btn-icon command-edit" ng-click="redirectAddRemission(reception.Id, reception.Folio)">
+                            <span class="md md-description"></span>
+                        </button>
+                    </td>
+                    <td ng-show="IsGrillToReception">
+                        <div class="toggle-switch">
+                            <input id="{{reception.Id}}" type="checkbox" hidden="hidden" ng-model="reception.IsAlreadyAssigned" ng-change="addReceptionToGrill(reception.Id, reception.IsAlreadyAssigned)">
+                            <label for="{{reception.Id}}" class="ts-helper"></label>
+                        </div>
+>>>>>>> origin/master
                     </td>
                 </tr>
             </tbody>

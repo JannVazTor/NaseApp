@@ -2,22 +2,14 @@
     <div class="card">
         <form name="remissionForm" class="form-horizontal" role="form">
             <div class="card-header">
-                <h2>Alta de Remisiones</h2>
+                <h2>Actualizar Remisión</h2>
             </div>
             <div class="card-body card-padding">
-                <div class="form-group">
-                    <label for="folio" class="col-sm-2 control-label">Folio</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line disabled">
-                            <input type="text" readonly class="form-control input-sm" id="folio"  data-ng-model="folio">
-                        </div>
-                    </div>
-                </div>
                 <div class="form-group">
                     <label for="cultivation" class="col-sm-2 control-label">Cultivo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="cultivation" name="Cultivation" placeholder="cultivo" data-ng-model="remission.Cultivation">
+                            <input required type="text" class="form-control input-sm" id="cultivation" name="Cultivation" placeholder="cultivo" data-ng-model="remission.Cultivation">
                             <small class="help-block has-error" style="color:red" ng-show="!remissionForm.$pristine && remissionForm.Cultivation.$error.required">Cultivo es requerido.</small>
                         </div>
                     </div>
@@ -26,7 +18,7 @@
                     <label for="batch" class="col-sm-2 control-label">Huerta/Lote</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="batch" placeholder="huerta o lote" name="Batch" data-ng-model="remission.Batch">
+                            <input required type="text" class="form-control input-sm" id="batch" placeholder="huerta o lote" name="Batch" data-ng-model="remission.Batch">
                             <small class="help-block has-error" style="color:red" ng-show="!remissionForm.$pristine && remissionForm.Batch.$error.required">Huerta o lote es requerido.</small>
                         </div>
                     </div>
@@ -35,7 +27,7 @@
                     <label for="quantity" class="col-sm-2 control-label">Cantidad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="1" step="any" class="form-control input-sm" id="quantity" placeholder="cantidad" name="Quantity" data-ng-model="remission.Quantity">
+                            <input required type="number" min="1" step="any" class="form-control input-sm" id="quantity" placeholder="cantidad" name="Quantity" data-ng-model="remission.Quantity">
                             <small class="help-block has-error" style="color:red" ng-show="!remissionForm.$pristine && remissionForm.Quantity.$error.required">Cantidad es requerido.</small>
                             <small class="help-block has-error" style="color:yellow" ng-show="!remissionForm.$pristine && remissionForm.Quantity.$error.number">Cantidad debe ser campo númerico.</small>
                         </div>
@@ -45,7 +37,7 @@
                     <label for="butler" class="col-sm-2 control-label">Mayordomo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="butler" placeholder="mayordomo" name="Butler" data-ng-model="remission.Butler">
+                            <input required type="text" class="form-control input-sm" id="butler" placeholder="mayordomo" name="Butler" data-ng-model="remission.Butler">
                             <small class="help-block has-error" style="color:red" ng-show="!remissionForm.$pristine && remissionForm.Butler.$error.required">Mayordomo es requerido.</small>
                         </div>
                     </div>
@@ -54,7 +46,7 @@
                     <label for="transportNumber" class="col-sm-2 control-label">Transporte No.</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="1" class="form-control input-sm" id="transportNumber" placeholder="Nombre de Usuario" name="TransportNumber" data-ng-model="remission.TransportNumber">
+                            <input required type="number" min="1" class="form-control input-sm" id="transportNumber" placeholder="Nombre de Usuario" data-ng-model="remission.TransportNumber">
                             <small class="help-block has-error" style="color:red" ng-show="!remissionForm.$pristine && remissionForm.TransportNumber.$error.required">Número Transporte es requerido.</small>
                             <small class="help-block has-error" style="color:yellow" ng-show="!remissionForm.$pristine && remissionForm.TransportNumber.$error.number">Debe ser campo númerico.</small>
                         </div>
@@ -64,7 +56,7 @@
                     <label for="driver" class="col-sm-2 control-label">Conductor</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="driver" placeholder="conductor" name="Driver" data-ng-model="remission.Driver">
+                            <input required type="text" class="form-control input-sm" id="driver" placeholder="conductor" name="Driver" data-ng-model="remission.Driver">
                             <small class="help-block has-error" style="color:red" ng-show="!remissionForm.$pristine && remissionForm.Driver.$error.required">Conductor es requerido.</small>
                         </div>
                     </div>
@@ -73,14 +65,14 @@
                     <label for="elaborate" class="col-sm-2 control-label">Elaboro</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="elaborate" placeholder="elaboro" name="Elaborate" data-ng-model="remission.Elaborate">
+                            <input required type="text" class="form-control input-sm" id="elaborate" placeholder="elaboro" name="Elaborate" data-ng-model="remission.Elaborate">
                             <small class="help-block has-error" style="color:red" ng-show="!remissionForm.$pristine && remissionForm.Elaborate.$error.required">Elaboro es campo requerido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveRemission()" ng-disabled="!remissionForm.$valid">Guardar</button>
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="UpdateRemission()" ng-disabled="!remissionForm.$valid">Actualizar</button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -90,6 +82,7 @@
                 </div>
             </div>
         </form>
+        
     </div>
 
     <button id="fixedbuttonLeft" type="submit" class="btn bgm-teal btn-icon" data-ng-click="redirectToReception()">

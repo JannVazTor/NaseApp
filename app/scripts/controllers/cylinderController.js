@@ -26,10 +26,25 @@
                 $scope.message = "No se pudo guardar el cilindro";
             });
         };
-
+        $scope.confirmationDelete =  function(cylinderId){
+            swal({
+            title: "Estas seguro?",
+            text: "Tú eliminaras el cilindro: " + cylinderId +"!!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+            },
+            function(){
+                $scope.deleteCylinder(cylinderId);
+            });
+            
+        };
         $scope.deleteCylinder = function (cylinderId) {
             cylinderService.delete(cylinderId).then(function (response) {
                 $scope.message = "El registro se elimino de manera exitosa.";
+                swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
                 $.each($scope.cylinders, function (i) {
                     if ($scope.cylinders[i].Id === cylinderId) {
                         $scope.cylinders.splice(i, 1);

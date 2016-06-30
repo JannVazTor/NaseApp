@@ -16,10 +16,12 @@
       'ngMessages',
       'ngResource',
       'ngSanitize',
-      'ngTouch',
       'LocalStorageModule',
-      'angular-loading-bar',
-      'ui.router'
+      'ui.router',
+      'ngMaterial',
+      'ui.bootstrap.datetimepicker',
+      'datatables',
+      'datatables.buttons'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $stateProvider
@@ -29,74 +31,118 @@
           controller: 'loginController'
         })
         .state('users', {
-          url: '/users',
+          url: '/usuarios',
           templateUrl: 'views/users.html',
           controller: 'userController'
         })
         .state('producers', {
-          url: '/producers',
+          url: '/productores',
           templateUrl: 'views/producers.html',
           controller: 'producerController'
         })
-        .state('home',{
+        .state('home', {
           url: '/home',
           templateUrl: 'views/home.html'
         })
-        .state('receptionAdd',{
-          url: '/reception',
-          templateUrl: 'views/reception/receptionAdd.html',
-          controller: 'receptionController'
-        })
-        .state('receptionManage',{
-          url: '/receptionM',
-          templateUrl: 'views/reception/receptionManage.html',
-          controller: 'receptionController'
-        })
-        .state('cylinder',{
-          url: '/cylinder',
+        .state('cylinder', {
+          url: '/cilindros',
           templateUrl: 'views/cylinder.html',
           controller: 'cylinderController'
         })
-        .state('remissionManage',{
-          url: '/remissionM',
-          templateUrl: 'views/remission/remissionManage.html',
-          controller: 'remissionController'
+        /*Receptions*/
+        .state('receptionAdd', {
+          url: '/recepcionAlta',
+          templateUrl: 'views/reception/receptionAdd.html',
+          controller: 'receptionController'
         })
-        .state('remissionAdd',{
-          url: '/remission',
+        .state('receptionManage', {
+          url: '/recepcionGestion',
+          templateUrl: 'views/reception/receptionManage.html',
+          controller: 'receptionController'
+        })
+        .state('receptionUpdate',{
+          url: '/receptionModificar',
+          templateUrl: 'views/reception/receptionUpdate.html',
+          controller: 'receptionController'})
+        /*Remissions*/
+        .state('remissionManage', {
+          url: '/remisionGestion',
+          templateUrl: 'views/remission/remissionManage.html',
+          controller: 'remissionController',
+          onExit: function($stateParams, $state, receptionAndGrillService){
+            $state.transition.then(toState => {
+                receptionAndGrillService.addGrillToReception = true;
+            })
+          }
+        })
+        .state('remissionAdd', {
+          url: '/remisionAlta',
           templateUrl: 'views/remission/remissionAdd.html',
           controller: 'remissionController'
         })
+        .state('remissionUpdate',{
+          url: '/remisionModificar',
+          templateUrl: 'views/remission/remissionUpdate.html',
+          controller: 'remissionController'
+        })
+        .state('receptionUpdate',{
+          url: '/receptionU',
+          templateUrl: 'views/reception/receptionUpdate.html',
+          controller: 'receptionController'
+        })
         .state('grillAdd',{
-          url: '/grill',
-          templateUrl: 'views/grill/grillAdd.html1',
+          url: '/parrillasAlta',
+          templateUrl: 'views/grill/grillAdd.html',
           controller: 'grillController'
         })
-        .state('grillManage',{
-          url: '/grillM',
+        .state('grillManage', {
+          url: '/parrillasGestion',
           templateUrl: 'views/grill/grillManage.html',
           controller: 'grillController'
         })
-        .state('sampling',{
-          url: '/sampling',
-          templateUrl: 'views/sampling.html',
-          controller: 'samplingController'
-        })
-        .state('grillIssue',{
-          url: '/grillI',
+        .state('grillIssue', {
+          url: '/inventarioSalidas',
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillController'
         })
+<<<<<<< HEAD
         .state('humidity',{
           url: '/humidity',
           templateUrl: 'views/humidity.html',
           controller: 'humidityController'
+=======
+        .state('grillInvAct', {
+          url: '/grillIA',
+          templateUrl: 'views/grill/grillInvAct.html',
+          controller: 'grillController'
+        })
+        .state('grillUpdate', {
+          url: '/grillU',
+          templateUrl: 'views/grill/grillUpdate.html',
+          controller: 'grillController'
+        })
+        .state('samplingManage', {
+          url: '/samplingM',
+          templateUrl: 'views/sampling/samplingManage.html',
+          controller: 'samplingController'
+        })
+        .state('samplingAdd', {
+          url: '/samplingA',
+          templateUrl: 'views/sampling/samplingAdd.html',
+          controller: 'samplingController'
+        })
+        .state('samplingUpdate', {
+          url: '/samplingU',
+          templateUrl: 'views/sampling/samplingUpdate.html',
+          controller: 'samplingController'
+>>>>>>> origin/master
         });
       $urlRouterProvider.otherwise('/');
     })
-    .config(function ($httpProvider) {/*
-      $httpProvider.defaults.useXDomain = true;
+    .config(function ($httpProvider) {
+      /*$httpProvider.defaults.useXDomain = true;
       delete $httpProvider.defaults.headers.common['X-Requested-With'];*/
+      $httpProvider.useApplyAsync(true);
       $httpProvider.interceptors.push('authInterceptorService');
     })
     .run(['authService', function (authService) {

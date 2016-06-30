@@ -1,0 +1,47 @@
+<div class="animated bounceInRight">
+    <div class="card">
+        <div class="card-header">
+            <h2>Parillas en Existencia</h2>
+        </div>
+        <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Fecha de Captura</th>
+                    <th>Recepciones</th>
+                    <th>Tamaño</th>
+                    <th>Sacos</th>
+                    <th>Kilos</th>
+                    <th>Calidad</th>
+                    <th>Variedad</th>
+                    <th>Productor</th>
+                    <th>Campo</th>
+                    <th>Peso de la Muestra</th>
+                    <th>Humedad</th>
+                    <th>No.Nueces</th>
+                    <th>Rendimiento</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="grill in grills | filter:searchUser">
+                    <td>{{grill.Id}}</td>
+                    <td>{{grill.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{grill.Receptions}}</td>
+                    <td>{{grill.Size}}</td>
+                    <td>{{grill.Sacks}}</td>
+                    <td>{{grill.Kilos}}</td>
+                    <td>{{grill.Quality}}</td>
+                    <td>{{grill.Variety}}</td>
+                    <td>{{grill.Producer}}</td>
+                    <td>{{grill.FieldName}}</td>
+                    <td>{{grill.Sampling.SampleWeight}}</td>
+                    <td>{{grill.Sampling.HumidityPercent}}</td>
+                    <td>{{grill.Sampling.WalnutNumber}}</td>
+                    <td>{{grill.Sampling.Performance}}</td>
+                    <td>{{grill.Sampling.TotalWeightOfEdibleNuts}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

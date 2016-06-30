@@ -26,10 +26,25 @@
                 $scope.message = "No se pudo guardar el productor";
             });
         };
-
+        $scope.confirmationDelete =  function(producerId){
+            swal({
+            title: "Estas seguro?",
+            text: "Tú eliminaras el productor: " + producerId +"!!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+            },
+            function(){
+                $scope.deleteProducer(producerId);
+            });
+            
+        };
         $scope.deleteProducer = function (producerId) {
             producerService.delete(producerId).then(function (response) {
                 $scope.message = "El registro se borro de manera exitosa."
+                swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
                 $.each($scope.producers, function (i) {
                     if ($scope.producers[i].Id === producerId) {
                         $scope.producers.splice(i, 1);

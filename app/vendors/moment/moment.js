@@ -2989,7 +2989,7 @@
 
 
     // Set default locale, other locale will inherit from English.
-    moment.locale('en', {
+    moment.locale('es', {
         ordinalParse: /\d{1,2}(th|st|nd|rd)/,
         ordinal : function (number) {
             var b = number % 10,
