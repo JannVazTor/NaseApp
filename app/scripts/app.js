@@ -85,7 +85,11 @@
           templateUrl: 'views/remission/remissionUpdate.html',
           controller: 'remissionController'
         })
-        /*Grills*/
+        .state('receptionUpdate',{
+          url: '/receptionU',
+          templateUrl: 'views/reception/receptionUpdate.html',
+          controller: 'receptionController'
+        })
         .state('grillAdd',{
           url: '/parrillasAlta',
           templateUrl: 'views/grill/grillAdd.html',
@@ -101,15 +105,29 @@
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillController'
         })
-        .state('grillCurrentInv', {
-          url: '/inventarioActual',
-          templateUrl: 'views/grill/grillCurrentInv.html',
-          controller: 'grillCurrentInvController'
+        .state('grillInvAct', {
+          url: '/grillIA',
+          templateUrl: 'views/grill/grillInvAct.html',
+          controller: 'grillController'
         })
-        /*Sampling*/
-        .state('sampling', {
-          url: '/muestreo',
-          templateUrl: 'views/sampling.html',
+        .state('grillUpdate', {
+          url: '/grillU',
+          templateUrl: 'views/grill/grillUpdate.html',
+          controller: 'grillController'
+        })
+        .state('samplingManage', {
+          url: '/samplingM',
+          templateUrl: 'views/sampling/samplingManage.html',
+          controller: 'samplingController'
+        })
+        .state('samplingAdd', {
+          url: '/samplingA',
+          templateUrl: 'views/sampling/samplingAdd.html',
+          controller: 'samplingController'
+        })
+        .state('samplingUpdate', {
+          url: '/samplingU',
+          templateUrl: 'views/sampling/samplingUpdate.html',
           controller: 'samplingController'
         });
       $urlRouterProvider.otherwise('/');

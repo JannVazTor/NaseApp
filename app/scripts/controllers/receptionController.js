@@ -20,18 +20,25 @@
             HeatHoursDrying: "",
             HumidityPercent: "",
             Observations: "",
-            ProducerId: ""
+            ProducerId: "",
+            EntryDate: ""
         };
-
+        $scope.receptionU = receptionService.reception;
+         $('#EntryDate').val($scope.receptionU.EntryDate);
         $scope.redirectReceptionToGrill = function(receptionFolio, receptionId){
             receptionAndGrillService.IsGrillToReception = true;
             receptionAndGrillService.receptionId = receptionId;
             receptionAndGrillService.receptionFolio = receptionFolio;
             $state.go('grillManage');
         };
-
-        $scope.redirectUpdate = function (xreception) {
-            receptionService.reception = xreception;
+         $scope.redirectAddRemission = function (id,folio) {
+            receptionService.ProducerId = id;
+            receptionService.folio = folio;
+            
+            $state.go('remissionAdd');
+        };
+        $scope.redirectUpdate = function (reception) {
+            receptionService.reception = reception;
             $state.go('receptionUpdate');
         };
 
@@ -41,7 +48,7 @@
         });
 
         $scope.UpdateReception = function () {
-            receptionService.update($scope.reception.Id, $scope.reception).then(function (response) {
+            receptionService.update($scope.receptionU.Id, $scope.receptionU).then(function (response) {
                 $scope.message = "El registro fue Actualizado  de manera exitosa."
                 $state.go('receptionManage');
             }, function (response) {
@@ -78,6 +85,7 @@
         };
 
         $scope.saveReception = function () {
+            $scope.reception.EntryDate = $('#EntryDate').val();
             receptionService.save($scope.reception).then(function (response) {
                 $scope.savedSuccesfully = true;
                 $state.go('receptionManage');

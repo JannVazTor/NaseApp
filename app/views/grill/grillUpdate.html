@@ -1,6 +1,6 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form name="grillForm" class="form-horizontal" role="form">
+        <form name="grillUForm" class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Parrillas</h2>
             </div>
@@ -10,8 +10,8 @@
                     <div class="col-sm-10">
                         <div class="fg-line disabled">
                             <div class="fg-line select">
-                                <select class="form-control" ng-model="grill.Producer">
-                            <option ng-repeat="producer in producers" ng-selected="grill.Producer == producer.ProducerName" value="{{producer.ProducerName}}">{{producer.ProducerName}}</option>
+                                <select required class="form-control" ng-model="grillU.Producer">
+                                <option ng-repeat="producer in producers" ng-selected="grillU.Producer == producer.ProducerName" value="{{producer.ProducerName}}">{{producer.ProducerName}}</option>
                         </select>
                             </div>
                         </div>
@@ -21,11 +21,7 @@
                     <label for="date" class="col-sm-2 control-label">Fecha</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-<<<<<<< HEAD
-                            <input type="text" class="form-control input-sm" id="grillDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'d' }}">
-=======
                             <input type="text" disabled required class="form-control input-sm" id="grillDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
->>>>>>> origin/master
                             <div class="dropdown">
                                 <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#"><i class="md md-event"></i></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -39,8 +35,8 @@
                     <label for="field" class="col-sm-2 control-label">Campo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="campo" data-ng-model="grill.FieldName">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.FieldName.$error.required">El Campo es requerido.</small>
+                            <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="campo" data-ng-model="grillU.FieldName">
+                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.FieldName.$error.required">El Campo es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -48,8 +44,8 @@
                     <label for="variety" class="col-sm-2 control-label">Variedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="variety" name="Variety" placeholder="variedad" data-ng-model="grill.Variety">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.Variety.$error.required">El Campo es requerido.</small>
+                            <input type="text" class="form-control input-sm" id="variety" name="Variety" placeholder="variedad" data-ng-model="grillU.Variety">
+                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Variety.$error.required">El Campo es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -57,8 +53,8 @@
                     <label for="quality" class="col-sm-2 control-label">Calidad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="quality" name="Quality" placeholder="calidad" data-ng-model="grill.Quality">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.Quality.$error.required">El Campo es requerido.</small>
+                            <input type="text" class="form-control input-sm" id="quality" name="Quality" placeholder="calidad" data-ng-model="grillU.Quality">
+                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Quality.$error.required">El Campo es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -66,8 +62,8 @@
                     <label for="sacks" class="col-sm-2 control-label">Sacos</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="sacks" name="Sacks" placeholder="sacos" data-ng-model="grill.Sacks">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.Sacks.$error.required">El Campo es requerido.</small>
+                            <input type="text" class="form-control input-sm" id="sacks" name="Sacks" placeholder="sacos" data-ng-model="grillU.Sacks">
+                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Sacks.$error.required">El Campo es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -75,8 +71,8 @@
                     <label for="kilos" class="col-sm-2 control-label">Kilos</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="kilos" name="Kilos" placeholder="kilos" data-ng-model="grill.Kilos">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.Kilos.$error.required">El Campo es requerido.</small>
+                            <input type="text" class="form-control input-sm" id="kilos" name="Kilos" placeholder="kilos" data-ng-model="grillU.Kilos">
+                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Kilos.$error.required">El Campo es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -84,14 +80,14 @@
                     <label for="size" class="col-sm-2 control-label">Tamaño</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="size" name="Size" placeholder="tamaño" data-ng-model="grill.Size">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.Size.$error.required">El Campo es requerido.</small>
+                            <input type="text" class="form-control input-sm" id="size" name="Size" placeholder="tamaño" data-ng-model="grillU.Size">
+                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Size.$error.required">El Campo es requerido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveGrill()" ng-disabled="!receptionForm.$valid">Guardar</button>
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="UpdateGrill()" ng-disabled="!grillUForm.$valid">Actualizar</button>
                     </div>
                 </div>
                 <div class="form-group">
