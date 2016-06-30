@@ -11,6 +11,7 @@
                 $scope.message = "la obtencion de parrillas fallo.";
             });
         };
+        
         GetAllGrills();
 
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(grillService.getAllCurrentInv())
