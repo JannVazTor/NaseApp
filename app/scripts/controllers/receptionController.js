@@ -1,11 +1,7 @@
 (function () {
     'use strict'
-<<<<<<< HEAD
-    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $state, receptionService, producerService, cylinderService, humidityService) {
-=======
-    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $mdToast, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $mdToast, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService, humidityService) {
         //When the load page
->>>>>>> origin/master
         $scope.selectedRole = {};
         $scope.receptions = [];
         $scope.producers = [];
@@ -27,24 +23,18 @@
             ProducerId: "",
             EntryDate: ""
         };
-<<<<<<< HEAD
 
-        $scope.redirectAddRemission = function (receptionId) {
-            receptionService.ReceptionId = receptionId;
-=======
         $scope.receptionU = receptionService.reception;
-         $('#EntryDate').val($scope.receptionU.EntryDate);
-        $scope.redirectReceptionToGrill = function(receptionFolio, receptionId){
+        $('#EntryDate').val($scope.receptionU.EntryDate);
+        $scope.redirectReceptionToGrill = function (receptionFolio, receptionId) {
             receptionAndGrillService.IsGrillToReception = true;
             receptionAndGrillService.receptionId = receptionId;
             receptionAndGrillService.receptionFolio = receptionFolio;
             $state.go('grillManage');
         };
-         $scope.redirectAddRemission = function (id,folio) {
-            receptionService.ProducerId = id;
+        $scope.redirectAddRemission = function (id, folio) {
+            receptionService.ReceptionId = id;
             receptionService.folio = folio;
-            
->>>>>>> origin/master
             $state.go('remissionAdd');
         };
         $scope.redirectUpdate = function (reception) {
@@ -52,7 +42,7 @@
             $state.go('receptionUpdate');
         };
 
-        var onStateChange = $scope.$on('$locationChangeStart',function(event, newUrl, oldUrl){
+        var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
             clearService.clearReceptionAndGrillService();
             onStateChange();
         });
@@ -83,7 +73,7 @@
                 receptionAndGrillService.removeReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
                     ShowSimpleToast('el registro se removio satisfactoriamente.');
                 }, function (response) {
-                     $.each($scope.receptions, function (i) {
+                    $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
                             $scope.receptions[i].IsAlreadyAssigned = true;
                             return false;
@@ -134,8 +124,8 @@
             });
         };
 
-        $scope.redirectAddHumidity = function (receptionId, cylinderId) {
-            receptionService.CylinderId = cylinderId;
+        $scope.redirectAddHumidity = function (receptionId, cylinderName) {
+            receptionService.CylinderName = cylinderName;
             receptionService.ReceptionId = receptionId;
             $state.go('humidity');
         };

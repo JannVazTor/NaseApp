@@ -6,12 +6,10 @@
             </div>
             <div class="card-body card-padding">
               <div class="form-group">
-                  <label for="cylinders" class="col-sm-2 control-label">Cilindros</label>
+                  <label for="cylinder" class="col-sm-2 control-label">Cilindro:</label>
                   <div class="col-sm-10">
-                      <div class="fg-line select">
-                          <select class="form-control" ng-model="humidity.CylinderId">
-                          <option ng-repeat="cylinder in cylinders" ng-selected="humidity.CylinderId == cylinder.Id" value="{{cylinder.Id}}">{{cylinder.CylinderName}}</option>
-                      </select>
+                      <div class="fg-line disabled">
+                          <input type="text" readonly class="form-control input-sm" id="cylinder" data-ng-model="CylinderName">
                       </div>
                   </div>
               </div>
@@ -25,7 +23,7 @@
               </div>
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveHumidity()">Guardar</button>
+                      <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveHumidity(CylinderName)">Guardar</button>
                   </div>
                 </div>
                   <div class="form-group">
@@ -53,7 +51,6 @@
                     <th data-column-id=""># Folio</th>
                     <th data-column-id="">Fecha y Hora de Chequeo</th>
                     <th data-column-id="">% Humedad</th>
-                    <th data-column-id="">ID Humedad</th>
                     <th data-column-id="">Opciones</th>
                 </tr>
             </thead>
@@ -64,10 +61,9 @@
                     <td>{{humidity.ProducerName}}</td>
                     <td>{{humidity.Tons}}</td>
                     <td>{{humidity.EntryDate | date: 'dd/MM/yyyy'}}</td>
-                    <td>{{humidity.ReceptionId}}</td>
+                    <td>{{humidity.Folio}}</td>
                     <td>{{humidity.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
-                    <td>{{humidity.HumidityPercent}}</td>
-                    <td>{{humidity.HumidityId}}</td>
+                    <td>{{humidity.HumidityPercentage}}</td>
                     <td>
                     <button class="btn btn-icon command-delete" ng-click="deleteHumidity(humidity.HumidityId)">
                         <span class="md md-delete"></span>

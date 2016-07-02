@@ -10,9 +10,14 @@
         var _getReceptionsByCylinder = function (id) {
             return $http.get(apiPath + 'api/reception/getReceptionsByCylinder' + '?' + 'CylinderId=' + id);
         }
-        var _save = function (data) {
-            return $http.post(apiPath + 'api/humidity', data);
+
+        var _getCylinderId = function(cylinderName){
+            return $http.get(apiPath + 'api/cylinder/getIdByName' + '?' + 'CylinderName=' + cylinderName)
         }
+        var _save = function (data) {
+            return $http.post(apiPath + 'api/humidity/saveHumidity', data);
+        }
+ 
 
         var _delete = function(id){
             return $http.delete(apiPath + 'api/humidity/' + id);
@@ -22,6 +27,7 @@
             ReceptionId : _ReceptionId,
             getTotalHumidities: _getTotalHumidities,
             getReceptionsByCylinder: _getReceptionsByCylinder,
+            getCylinderId: _getCylinderId,
             save: _save,
             delete: _delete
         };

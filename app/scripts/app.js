@@ -85,11 +85,6 @@
           templateUrl: 'views/remission/remissionUpdate.html',
           controller: 'remissionController'
         })
-        .state('receptionUpdate',{
-          url: '/receptionU',
-          templateUrl: 'views/reception/receptionUpdate.html',
-          controller: 'receptionController'
-        })
         .state('grillAdd',{
           url: '/parrillasAlta',
           templateUrl: 'views/grill/grillAdd.html',
@@ -105,12 +100,11 @@
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillController'
         })
-<<<<<<< HEAD
         .state('humidity',{
           url: '/humidity',
           templateUrl: 'views/humidity.html',
           controller: 'humidityController'
-=======
+        })
         .state('grillInvAct', {
           url: '/grillIA',
           templateUrl: 'views/grill/grillInvAct.html',
@@ -135,7 +129,6 @@
           url: '/samplingU',
           templateUrl: 'views/sampling/samplingUpdate.html',
           controller: 'samplingController'
->>>>>>> origin/master
         });
       $urlRouterProvider.otherwise('/');
     })

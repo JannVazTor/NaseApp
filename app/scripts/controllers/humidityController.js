@@ -4,10 +4,12 @@
     $scope.receptions = [];
     $scope.humidities = [];
     $scope.savedSuccesfully = false;
+    $scope.CylinderName = receptionService.CylinderName;
     $scope.humidity = {
         HumidityPercent: "",
+        CylinderName: receptionService.CylinderName,
         CylinderId: "",
-        ReceptionId: receptionService.ProducerId
+        ReceptionId: receptionService.ReceptionId
     };
 
 
@@ -19,11 +21,18 @@
       });
     };
 
-    $scope.saveHumidity = function () {
+    $scope.saveHumidity = function (cylinderName) {
+        receptionService.CylinderName = cylinderName;
       humidityService.save($scope.humidity).then(function (response) {
           $scope.savedSuccesfully = true;
       }, function (response) {
           $scope.message = "ocurrio un error y el registro de humedad no pudo ser guardado."
+      });
+  };
+
+   var GetCylinderId = function(cylinderName){
+      humidityService.getCylinderId(cylinderName).then(function(response){
+          $scope.humidity.CylinderId = response.data;
       });
   };
 
@@ -40,15 +49,7 @@
           $scope.message = "Ocurrio un error y el registro no pudo ser eliminado.";
       });
   };
-    var GetAllCylinders = function () {
-        cylinderService.getAll().then(function (response) {
-            $scope.cylinders = response.data;
-        }, function (response) {
-            $scope.message = "la obtencion de cilindros fallo.";
-        });
-    };
-
-    GetAllCylinders();
+  
     GetTotalHumidities();
   });
 })();

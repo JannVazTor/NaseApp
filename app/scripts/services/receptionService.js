@@ -1,11 +1,9 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').factory('receptionService', function ($http, apiPath) {
-<<<<<<< HEAD
         var _ReceptionId = "";
         var _CylinderId = "";
-
-=======
+        var _CylinderName = "";
         var _ProducerId = "";
         var _Folio = "";
         var _reception = {
@@ -23,7 +21,6 @@
             Folio: ""
         };
    
->>>>>>> origin/master
         var _getAll = function () {
             return $http.get(apiPath + 'api/reception/getAll').success(function(data){
                 data.forEach(function(element) {
@@ -39,21 +36,16 @@
         var _delete = function (id) {
             return $http.delete(apiPath + 'api/reception/' + id);
         }
-<<<<<<< HEAD
-
-        return {
-            ReceptionId: _ReceptionId,
-            CylinderId: _CylinderId,
-=======
         var _update = function (id, data) {
             return $http.put(apiPath + 'api/reception/'+id, data);
         }
         
         return {
-            ProducerId: _ProducerId,
+            ReceptionId: _ReceptionId,
+            CylinderName: _CylinderName,
+            CylinderId: _CylinderId,
             folio: _Folio,
             reception: _reception,
->>>>>>> origin/master
             getAll: _getAll,
             save: _save,
             delete: _delete,

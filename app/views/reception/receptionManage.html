@@ -43,7 +43,6 @@
                     <td>{{reception.Cylinder}}</td>
                     <td>{{reception.EntryDate}}</td>
                     <td>{{reception.HeatHoursDrying}}</td>
-<<<<<<< HEAD
                     <td>
                         <button class="btn btn-icon command-edit">
                         <span class="md md-edit"></span>
@@ -51,9 +50,6 @@
                         <button class="btn btn-icon command-delete" ng-click="deleteReception(reception.Id)">
                         <span class="md md-delete"></span>
                     </button>
-                    <button class="btn btn-icon command-edit">
-                        <span class="md md-cloud-queue" ng-click="redirectAddHumidity(reception.Id, reception.CylinderId)"
-=======
                     <td>{{reception.Grills}}</td>
                     <td ng-hide="IsGrillToReception">
                         <button class="btn btn-icon command-edit" ng-click="redirectUpdate(reception)">
@@ -68,13 +64,15 @@
                         <button class="btn btn-icon command-edit" ng-click="redirectAddRemission(reception.Id, reception.Folio)">
                             <span class="md md-description"></span>
                         </button>
+                        <button class="btn btn-icon command-edit" ng-click="redirectAddHumidity(reception.Id, reception.Cylinder)">
+                        <span class="md md-cloud-queue"></span>
+                    </button>
                     </td>
                     <td ng-show="IsGrillToReception">
                         <div class="toggle-switch">
                             <input id="{{reception.Id}}" type="checkbox" hidden="hidden" ng-model="reception.IsAlreadyAssigned" ng-change="addReceptionToGrill(reception.Id, reception.IsAlreadyAssigned)">
                             <label for="{{reception.Id}}" class="ts-helper"></label>
                         </div>
->>>>>>> origin/master
                     </td>
                 </tr>
             </tbody>
