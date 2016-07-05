@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title></title>
@@ -16,6 +15,7 @@
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/jquery.dataTables.min.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/datatables-buttons/css/buttons.dataTables.css">
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css">
     <link rel="shortcut icon" href="favicon.ico">
     <style>
         #fixedbuttonRight {
@@ -85,7 +85,7 @@
 
                     <li><a ui-sref="users"><i class="md md-people"></i> Usuarios</a></li>
 
-                    <li><a ui-sref="producers"><i class="md md-people-outline"></i> Productores</a></li>
+                    <li><a ui-sref="producersAndVarieties"><i class="md md-people-outline"></i> Productores y Variedades</a></li>
 
                     <li><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
 
@@ -160,6 +160,7 @@
     <script src="bower_components/angular-datatables/dist/plugins/datatables-buttons/js/buttons.flash.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/datatables-buttons/js/buttons.html5.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/datatables-buttons/js/buttons.print.js"></script>
+    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <!--AngularMaterial-->
     <script src="scripts/js/datetimepicker.js"></script>
     <script src="scripts/js/datetimepicker.templates.js"></script>
@@ -168,13 +169,14 @@
 
     <script src="scripts/controllers/loginController.js"></script>
     <script src="scripts/controllers/userController.js"></script>
-    <script src="scripts/controllers/producerController.js"></script>
+    <script src="scripts/controllers/producerAndVarietiesController.js"></script>
     <script src="scripts/controllers/receptionController.js"></script>
     <script src="scripts/controllers/cylinderController.js"></script>
     <script src="scripts/controllers/remissionController.js"></script>
-    <script src="scripts/controllers/grillController.js"></script>
+    <script src="scripts/controllers/grill/grillController.js"></script>
+    <script src="scripts/controllers/grill/grillIssueController.js"></script>
     <script src="scripts/controllers/samplingController.js"></script>
-    <script src="scripts/controllers/grillCurrentInvController.js"></script>
+    <script src="scripts/controllers/grill/grillCurrentInvController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>
@@ -188,6 +190,7 @@
     <script src="scripts/services/samplingService.js"></script>
     <script src="scripts/services/receptionAndGrillService.js"></script>
     <script src="scripts/services/clearService.js"></script>
+    <script src="scripts/services/varietyService.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $mdToast, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('receptionController', function (toastr, $scope, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService) {
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
@@ -59,7 +59,7 @@
         $scope.addReceptionToGrill = function (receptionId, checked) {
             if (checked) {
                 receptionAndGrillService.addReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    ShowSimpleToast('EL registro se agrego correctamente.');
+                    toastr.success('el registro se agrego correctamente.');
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -67,11 +67,11 @@
                             return false;
                         }
                     });
-                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser asignado.');
+                    toastr.error('ocurrio un error y el registro no pudo ser asignado.');
                 });
             } else {
                 receptionAndGrillService.removeReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    ShowSimpleToast('el registro se removio satisfactoriamente.');
+                    toastr.success('el registro se removio satisfactoriamente');
                 }, function (response) {
                      $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -79,7 +79,7 @@
                             return false;
                         }
                     });
-                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser removido.')
+                    toastr.error('ocurrio un error y el registro no pudo ser removido.');
                 });
             }
         };
@@ -149,15 +149,6 @@
             }, function (response) {
                 $scope.message = "la obtencion de las recepciones fallo";
             });
-        };
-
-        var ShowSimpleToast = function (text) {
-            $mdToast.show(
-                $mdToast.simple()
-                    .textContent(text)
-                    .position('bottom right')
-                    .hideDelay(2000)
-            );
         };
 
         function defaultReception() {

@@ -35,6 +35,13 @@
             return $http.get(apiPath + 'api/grill/getAllCurrentInv');
         }
 
+        var _saveIssue = function(data){
+            return $http.post(apiPath + 'api/grill/Issue', data);
+        }
+
+        var _getAllIssues = function(){
+            return $http.get(apiPath + 'api/grill/getAllissues');
+        }
         return {
             id: _Id,
             grill: _grill,
@@ -43,7 +50,9 @@
             changeStatus: _changeStatus,
             getAllCurrentInv: _getAllCurrentInv,
             delete: _delete,
-            update: _update
+            update: _update,
+            saveIssue: _saveIssue,
+            getAllIssues: _getAllIssues
         };
     });
 })();
