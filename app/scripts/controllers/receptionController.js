@@ -1,6 +1,10 @@
 (function () {
     'use strict'
+<<<<<<< HEAD
     angular.module('naseNutAppApp').controller('receptionController', function ($scope, $mdToast, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService, humidityService) {
+=======
+    angular.module('naseNutAppApp').controller('receptionController', function (toastr, $scope, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService) {
+>>>>>>> origin/master
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
@@ -25,8 +29,13 @@
         };
 
         $scope.receptionU = receptionService.reception;
+<<<<<<< HEAD
         $('#EntryDate').val($scope.receptionU.EntryDate);
         $scope.redirectReceptionToGrill = function (receptionFolio, receptionId) {
+=======
+        // $('#EntryDate').val($scope.receptionU.EntryDate);
+        $scope.redirectReceptionToGrill = function(receptionFolio, receptionId){
+>>>>>>> origin/master
             receptionAndGrillService.IsGrillToReception = true;
             receptionAndGrillService.receptionId = receptionId;
             receptionAndGrillService.receptionFolio = receptionFolio;
@@ -59,7 +68,7 @@
         $scope.addReceptionToGrill = function (receptionId, checked) {
             if (checked) {
                 receptionAndGrillService.addReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    ShowSimpleToast('EL registro se agrego correctamente.');
+                    toastr.success('el registro se agrego correctamente.');
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -67,11 +76,11 @@
                             return false;
                         }
                     });
-                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser asignado.');
+                    toastr.error('ocurrio un error y el registro no pudo ser asignado.');
                 });
             } else {
                 receptionAndGrillService.removeReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    ShowSimpleToast('el registro se removio satisfactoriamente.');
+                    toastr.success('el registro se removio satisfactoriamente');
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -79,7 +88,7 @@
                             return false;
                         }
                     });
-                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser removido.')
+                    toastr.error('ocurrio un error y el registro no pudo ser removido.');
                 });
             }
         };
@@ -155,15 +164,6 @@
             }, function (response) {
                 $scope.message = "la obtencion de las recepciones fallo";
             });
-        };
-
-        var ShowSimpleToast = function (text) {
-            $mdToast.show(
-                $mdToast.simple()
-                    .textContent(text)
-                    .position('bottom right')
-                    .hideDelay(2000)
-            );
         };
 
         function defaultReception() {

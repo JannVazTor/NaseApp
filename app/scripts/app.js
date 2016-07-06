@@ -18,10 +18,10 @@
       'ngSanitize',
       'LocalStorageModule',
       'ui.router',
-      'ngMaterial',
       'ui.bootstrap.datetimepicker',
       'datatables',
-      'datatables.buttons'
+      'datatables.buttons',
+      'toastr'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $stateProvider
@@ -30,15 +30,22 @@
           templateUrl: 'views/login.html',
           controller: 'loginController'
         })
+        .state('accessDenied', {
+          url: '/accesoDenegado',
+          templateUrl: 'views/accessDenied.html'
+        })
         .state('users', {
           url: '/usuarios',
           templateUrl: 'views/users.html',
           controller: 'userController'
         })
-        .state('producers', {
-          url: '/productores',
-          templateUrl: 'views/producers.html',
-          controller: 'producerController'
+        .state('producersAndVarieties', {
+          url: '/productoresYvariedades',
+          templateUrl: 'views/producersAndVarieties.html',
+          controller: 'producerAndVarietiesController',
+          data: {
+            roles: ['admin']
+          }
         })
         .state('home', {
           url: '/home',
@@ -60,32 +67,32 @@
           templateUrl: 'views/reception/receptionManage.html',
           controller: 'receptionController'
         })
-        .state('receptionUpdate',{
+        .state('receptionUpdate', {
           url: '/receptionModificar',
           templateUrl: 'views/reception/receptionUpdate.html',
-          controller: 'receptionController'})
+          controller: 'receptionController'
+        })
         /*Remissions*/
         .state('remissionManage', {
           url: '/remisionGestion',
           templateUrl: 'views/remission/remissionManage.html',
-          controller: 'remissionController',
-          onExit: function($stateParams, $state, receptionAndGrillService){
-            $state.transition.then(toState => {
-                receptionAndGrillService.addGrillToReception = true;
-            })
-          }
+          controller: 'remissionController'
         })
         .state('remissionAdd', {
           url: '/remisionAlta',
           templateUrl: 'views/remission/remissionAdd.html',
           controller: 'remissionController'
         })
-        .state('remissionUpdate',{
+        .state('remissionUpdate', {
           url: '/remisionModificar',
           templateUrl: 'views/remission/remissionUpdate.html',
           controller: 'remissionController'
         })
+<<<<<<< HEAD
         .state('grillAdd',{
+=======
+        .state('grillAdd', {
+>>>>>>> origin/master
           url: '/parrillasAlta',
           templateUrl: 'views/grill/grillAdd.html',
           controller: 'grillController'
@@ -98,8 +105,9 @@
         .state('grillIssue', {
           url: '/inventarioSalidas',
           templateUrl: 'views/grill/grillIssue.html',
-          controller: 'grillController'
+          controller: 'grillIssueController'
         })
+<<<<<<< HEAD
         .state('humidity',{
           url: '/humidity',
           templateUrl: 'views/humidity.html',
@@ -109,6 +117,12 @@
           url: '/grillIA',
           templateUrl: 'views/grill/grillInvAct.html',
           controller: 'grillController'
+=======
+        .state('grillCurrentInv', {
+          url: '/parrillasInventarioActual',
+          templateUrl: 'views/grill/grillCurrentInv.html',
+          controller: 'grillCurrentInvController'
+>>>>>>> origin/master
         })
         .state('grillUpdate', {
           url: '/grillU',
@@ -138,8 +152,21 @@
       $httpProvider.useApplyAsync(true);
       $httpProvider.interceptors.push('authInterceptorService');
     })
-    .run(['authService', function (authService) {
+    .config(function (toastrConfig) {
+      angular.extend(toastrConfig, {
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: false,
+        preventOpenDuplicates: false,
+        target: 'body'
+      });
+    })
+    .run(['authService', '$rootScope', '$state', '$stateParams', function (authService, $rootScope, $state, $stateParams) {
       authService.fillAuthData();
+      $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
+        $rootScope.toState = toState;
+        $rootScope.toStateParams = toStateParams;
+        authService.isAuthorize();
+      });
     }])
     .value('apiPath', 'http://localhost:49278/')
     .constant('accesslvl', {

@@ -1,12 +1,13 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillController', function ($filter, $scope, $mdToast, $state, producerService, grillService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('grillController', function (toastr, $filter, $scope, $state, producerService, grillService, receptionAndGrillService, clearService) {
         $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.ReceptionId = receptionAndGrillService.receptionId;
         $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
+
         $scope.grill = {
             DateCapture: "",
             Size: "",
@@ -17,9 +18,9 @@
             Producer: "",
             FieldName: ""
         };
-        
+
         $scope.grillU = grillService.grill;
-        $('#grillDate').val($scope.grillU.DateCapture); 
+        //$('#grillDate').val($scope.grillU.DateCapture);
         var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
             clearService.clearReceptionAndGrillService();
             onStateChange();
@@ -28,19 +29,19 @@
             grillService.id = grillId;
             $state.go('samplingAdd');
         };
-         $scope.redirectUpdate = function (grillId, grill) {
+        $scope.redirectUpdate = function (grillId, grill) {
             grillService.id = grillId;
             grillService.grill = grill;
             $state.go('grillUpdate');
         };
-        
-        $scope.UpdateGrill= function () {
+
+        $scope.UpdateGrill = function () {
             $scope.grillU.DateCapture = $('#grillDate').val();
             grillService.update(grillService.id, $scope.grillU).then(function (response) {
-                $scope.message = "El registro fue Actualizado  de manera exitosa."
+                $scope.message = "El registro fue Actualizado  de manera exitosa.";
                 $state.go('grillManage');
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+                $scope.message = "ocurrio un error y el registro no pudo ser guardado.";
             });
         }
 
@@ -63,7 +64,7 @@
         $scope.changeStatus = function (status, grillId) {
             if (status) {
                 grillService.changeStatus(grillId, 1).then(function (response) {
-                    ShowSimpleToast('El status se cambio correctamente.');
+                    toastr.success('el status se cambio correctamente.');
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -71,11 +72,11 @@
                             return false;
                         }
                     });
-                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser asignado.');
+                    toastr.error('ocurrio un error y el status no pudo ser cambiado.');
                 });
             } else {
                 grillService.changeStatus(grillId, 0).then(function (response) {
-                    ShowSimpleToast('El status se cambio correctamente.');
+                    toastr.success('el status se cambio correctamente.');
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -83,7 +84,7 @@
                             return false;
                         }
                     });
-                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser asignado.');
+                    toastr.error('ocurrio un error y el status no pudo ser cambiado.');
                 });
             }
         };
@@ -91,7 +92,7 @@
         $scope.addGrillToReception = function (grillId, checked) {
             if (checked) {
                 receptionAndGrillService.addGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
-                    ShowSimpleToast('EL registro se agrego correctamente.');
+                    toastr.success('eL registro se agrego correctamente.');
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -99,11 +100,11 @@
                             return false;
                         }
                     });
-                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser asignado.');
+                    toastr.error('ocurrio un error y el registro no pudo ser asignado.');
                 });
             } else {
                 receptionAndGrillService.removeGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
-                    ShowSimpleToast('el registro se removio satisfactoriamente.');
+                    toastr.success('el registro se removio satisfactoriamente.');
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -111,7 +112,7 @@
                             return false;
                         }
                     });
-                    ShowSimpleToast('Ocurrio un error y el registro no pudo ser removido.')
+                    toastr.error('ocurrio un error y el registro no pudo ser removido.');
                 });
             }
         };
@@ -172,20 +173,12 @@
             grillService.getAll().then(function (response) {
                 $scope.grills = response.data;
                 response.data.forEach(function (element) {
+                    //checks if the reception has the grill key in his grillId field
                     element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionFolio) === -1 ? false : true;
                 }, this);
             }, function (response) {
                 $scope.message = "la obtencion de parrillas fallo.";
             });
-        };
-
-        var ShowSimpleToast = function (text) {
-            $mdToast.show(
-                $mdToast.simple()
-                    .textContent(text)
-                    .position('bottom right')
-                    .hideDelay(2000)
-            );
         };
 
         GetAllGrills();
