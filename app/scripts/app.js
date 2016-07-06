@@ -103,6 +103,11 @@
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillIssueController'
         })
+        .state('humidity', {
+          url: '/humidity',
+          templateUrl: 'views/humidity.html',
+          controller: 'humidityController'
+        })
         .state('grillCurrentInv', {
           url: '/parrillasInventarioActual',
           templateUrl: 'views/grill/grillCurrentInv.html',
