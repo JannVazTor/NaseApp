@@ -1,10 +1,7 @@
 (function () {
     'use strict'
-<<<<<<< HEAD
-    angular.module('naseNutAppApp').controller('receptionController', function ($scope, $mdToast, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService, humidityService) {
-=======
-    angular.module('naseNutAppApp').controller('receptionController', function (toastr, $scope, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService) {
->>>>>>> origin/master
+angular.module('naseNutAppApp').controller('receptionController', function ($scope, $mdToast, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService, humidityService) {
+
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
@@ -29,13 +26,8 @@
         };
 
         $scope.receptionU = receptionService.reception;
-<<<<<<< HEAD
-        $('#EntryDate').val($scope.receptionU.EntryDate);
-        $scope.redirectReceptionToGrill = function (receptionFolio, receptionId) {
-=======
         // $('#EntryDate').val($scope.receptionU.EntryDate);
         $scope.redirectReceptionToGrill = function(receptionFolio, receptionId){
->>>>>>> origin/master
             receptionAndGrillService.IsGrillToReception = true;
             receptionAndGrillService.receptionId = receptionId;
             receptionAndGrillService.receptionFolio = receptionFolio;

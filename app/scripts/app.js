@@ -88,11 +88,7 @@
           templateUrl: 'views/remission/remissionUpdate.html',
           controller: 'remissionController'
         })
-<<<<<<< HEAD
-        .state('grillAdd',{
-=======
         .state('grillAdd', {
->>>>>>> origin/master
           url: '/parrillasAlta',
           templateUrl: 'views/grill/grillAdd.html',
           controller: 'grillController'
@@ -107,22 +103,15 @@
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillIssueController'
         })
-<<<<<<< HEAD
-        .state('humidity',{
+        .state('humidity', {
           url: '/humidity',
           templateUrl: 'views/humidity.html',
           controller: 'humidityController'
         })
-        .state('grillInvAct', {
-          url: '/grillIA',
-          templateUrl: 'views/grill/grillInvAct.html',
-          controller: 'grillController'
-=======
         .state('grillCurrentInv', {
           url: '/parrillasInventarioActual',
           templateUrl: 'views/grill/grillCurrentInv.html',
           controller: 'grillCurrentInvController'
->>>>>>> origin/master
         })
         .state('grillUpdate', {
           url: '/grillU',
