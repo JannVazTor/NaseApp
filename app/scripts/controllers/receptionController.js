@@ -24,7 +24,7 @@
             EntryDate: ""
         };
         $scope.receptionU = receptionService.reception;
-         $('#EntryDate').val($scope.receptionU.EntryDate);
+        // $('#EntryDate').val($scope.receptionU.EntryDate);
         $scope.redirectReceptionToGrill = function(receptionFolio, receptionId){
             receptionAndGrillService.IsGrillToReception = true;
             receptionAndGrillService.receptionId = receptionId;
