@@ -132,6 +132,11 @@
           url: '/samplingU',
           templateUrl: 'views/sampling/samplingUpdate.html',
           controller: 'samplingController'
+        })
+        .state('selection', {
+          url: '/selection',
+          templateUrl: 'views/selection.html',
+          controller: 'selectionController'
         });
       $urlRouterProvider.otherwise('/');
     })

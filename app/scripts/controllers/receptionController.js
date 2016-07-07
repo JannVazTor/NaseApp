@@ -107,7 +107,6 @@ angular.module('naseNutAppApp').controller('receptionController', function ($sco
                 function () {
                     $scope.deleteReception(receptionId);
                 });
-
         };
 
         $scope.deleteReception = function (receptionId) {
@@ -129,6 +128,10 @@ angular.module('naseNutAppApp').controller('receptionController', function ($sco
             receptionService.CylinderName = cylinderName;
             receptionService.ReceptionId = receptionId;
             $state.go('humidity');
+        };
+
+        $scope.redirectAddSelection = function () {
+            $state.go('selection');
         };
 
         var GetAllProducers = function () {
