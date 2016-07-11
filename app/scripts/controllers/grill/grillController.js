@@ -7,6 +7,13 @@
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.ReceptionId = receptionAndGrillService.receptionId;
         $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
+        $scope.producers = [];
+        
+        $scope.sizes = [
+            { Name: "Grande", Type: 1 },
+            { Name: "Mediana", Type: 2 },
+            { Name: "Chica", Type: 3 }
+        ];
 
         $scope.grill = {
             DateCapture: "",
@@ -47,6 +54,7 @@
 
         $scope.saveGrill = function () {
             $scope.grill.DateCapture = $('#grillDate').val();
+            $scope.grill.Size = $scope.grill.Size.Type;
             grillService.save($scope.grill).then(function (response) {
                 $scope.savedSuccessfully = true;
                 $scope.message = "La parrilla a sido guardada de manera exitosa";
@@ -163,6 +171,7 @@
         };
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
+                if (response.data.length === 0) toastr.info('No se econtraron productores en la base de datos');
                 $scope.producers = response.data;
             }, function (response) {
                 $scope.message = "la obtencion de productores fallo.";
@@ -171,6 +180,7 @@
 
         var GetAllGrills = function () {
             grillService.getAll().then(function (response) {
+                if (response.data.length === 0) toastr.info('No se econtraron parrillas en la base de datos');
                 $scope.grills = response.data;
                 response.data.forEach(function (element) {
                     //checks if the reception has the grill key in his grillId field
