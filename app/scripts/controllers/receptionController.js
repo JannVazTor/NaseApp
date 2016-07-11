@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function (toastr, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
+angular.module('naseNutAppApp').controller('receptionController', function (toastr, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
