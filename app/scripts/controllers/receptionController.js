@@ -46,8 +46,14 @@
             }
         };
         $scope.redirectAddRemission = function (id, folio) {
+<<<<<<< HEAD
             receptionService.ReceptionId = id;
             receptionService.folio = folio;
+=======
+            receptionService.ProducerId = id;
+            receptionService.folio = folio;
+
+>>>>>>> 2f3d246200148200e57e865cfc071d13522fd8a1
             $state.go('remissionAdd');
         };
         $scope.redirectUpdate = function (reception) {

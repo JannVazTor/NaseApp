@@ -127,6 +127,21 @@
           url: '/samplingU',
           templateUrl: 'views/sampling/samplingUpdate.html',
           controller: 'samplingController'
+        })
+        .state('dailyReportingProcess', {
+          url: '/reporteDiarioProceso',
+          templateUrl: 'views/report/dailyReportingProcess.html',
+          controller: 'dailyReportingProcessController'
+        })
+        .state('humidityAdd',{
+          url: '/humedad',
+          templateUrl: 'views/humidity/humidityAdd.html',
+          controller: 'humidityController'
+        })
+        .state('humidityManage',{
+          url: '/humedadM',
+          templateUrl: 'views/humidity/humidityManage.html',
+          controller: 'humidityController'
         });
       $urlRouterProvider.otherwise('/');
     })
