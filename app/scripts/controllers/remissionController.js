@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('remissionController', function ($scope, $state, remissionService, receptionService) {
+    angular.module('naseNutAppApp').controller('remissionController', function ($scope,toastr, $state, remissionService, receptionService) {
         $scope.remissions = [];
         $scope.message = "";
         $scope.folio = receptionService.folio;
@@ -13,7 +13,7 @@
                 swal("Correcto","Se agrego correctmente","success");
                 defaultRemission();
             }, function (response) {
-                $scope.message = "ocurrio un error al intentar guardar el registro.";
+                toastr.error('Ocurrio un error al intentar guardar el registro.');
             });
         };
         
@@ -24,11 +24,11 @@
 
         $scope.UpdateRemission =function(){
             remissionService.update($scope.remission.Id,$scope.remission).then(function (response) {
-                $scope.message = "El registro fue Actualizado  de manera exitosa."
+                toastr.success('El registro fue Actualizado  de manera exitosa.');
                 defaultRemission();
                 $state.go('remissionManage');
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+                toastr.error('Ocurrio un error al intentar actualizar el registro.');
             });
         }
 
@@ -49,7 +49,6 @@
         };
         $scope.deleteRemission = function (remissionId) {
             remissionService.delete(remissionId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.remissions, function (i) {
                     if ($scope.remissions[i].Id === remissionId) {
@@ -58,7 +57,8 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                toastr.error('Ocurrio un error al intentar eliminar el registro.');
+                
             });
         };
 
@@ -70,7 +70,7 @@
             remissionService.getAll().then(function (response) {
                 $scope.remissions = response.data;
             }, function (response) {
-                $scope.message = "ocurrio un error al intentar obtener los registros.";
+                toastr.error('Ocurrio un error al intentar obtener los registro.');
             });
         };
 

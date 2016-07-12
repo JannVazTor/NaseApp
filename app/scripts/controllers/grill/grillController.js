@@ -38,10 +38,10 @@
         $scope.UpdateGrill = function () {
             $scope.grillU.DateCapture = $('#grillDate').val();
             grillService.update(grillService.id, $scope.grillU).then(function (response) {
-                $scope.message = "El registro fue Actualizado  de manera exitosa.";
+                toastr.success('El registro fue Actualizado  de manera exitosa.');
                 $state.go('grillManage');
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado.";
+                toastr.error('ocurrio un error y el registro no pudo ser guardado.');
             });
         }
 
@@ -49,9 +49,9 @@
             $scope.grill.DateCapture = $('#grillDate').val();
             grillService.save($scope.grill).then(function (response) {
                 $scope.savedSuccessfully = true;
-                $scope.message = "La parrilla a sido guardada de manera exitosa";
+                toastr.success('La parrilla a sido guardada de manera exitosa');
             }, function (response) {
-                $scope.message = "No se pudo guardar el registro";
+                toastr.error('No se pudo guardar el registro.');
             });
         };
 
@@ -119,7 +119,6 @@
 
         $scope.deleteGrill = function (grillId) {
             grillService.delete(grillId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.grills, function (i) {
                     if ($scope.grills[i].Id === grillId) {
@@ -128,7 +127,7 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                toastr.error('Ocurrio un error al intentar eliminar el registro.');
             });
         };
         $scope.confirmationDelete = function (grillId) {
@@ -149,7 +148,6 @@
 
         $scope.deleteGrill = function (grillId) {
             grillService.delete(grillId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.grills, function (i) {
                     if ($scope.grills[i].Id === grillId) {
@@ -158,14 +156,14 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                toastr.error('Ocurrio un error al intentar eliminar el registro.');
             });
         };
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 $scope.producers = response.data;
             }, function (response) {
-                $scope.message = "la obtencion de productores fallo.";
+                toastr.error('la obtencion de productores fallo.');
             });
         };
 
@@ -177,7 +175,7 @@
                     element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionFolio) === -1 ? false : true;
                 }, this);
             }, function (response) {
-                $scope.message = "la obtencion de parrillas fallo.";
+                toastr.error('la obtencion de parrillas fallo.');
             });
         };
 

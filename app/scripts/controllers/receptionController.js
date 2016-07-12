@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-angular.module('naseNutAppApp').controller('receptionController', function ($scope, $mdToast, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService, humidityService) {
+angular.module('naseNutAppApp').controller('receptionController', function ($scope,toastr, $mdToast, $state, receptionService, producerService, cylinderService, receptionAndGrillService, clearService, humidityService) {
 
         //When the load page
         $scope.selectedRole = {};
@@ -50,10 +50,10 @@ angular.module('naseNutAppApp').controller('receptionController', function ($sco
 
         $scope.UpdateReception = function () {
             receptionService.update($scope.receptionU.Id, $scope.receptionU).then(function (response) {
-                $scope.message = "El registro fue Actualizado  de manera exitosa."
+                 toastr.success('El registro se actualizo correctamente.');
                 $state.go('receptionManage');
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+                toastr.error('ocurrio un error, intentelo de nuevo.');
             });
         }
 
@@ -89,9 +89,10 @@ angular.module('naseNutAppApp').controller('receptionController', function ($sco
             $scope.reception.EntryDate = $('#EntryDate').val();
             receptionService.save($scope.reception).then(function (response) {
                 $scope.savedSuccesfully = true;
+                toastr.success('el registro se agrego satisfactoriamente');
                 $state.go('receptionManage');
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+                toastr.error('ocurrio un error y el registro no pudo ser guardado.');
             });
         };
         $scope.confirmationDelete = function (receptionId) {
@@ -121,7 +122,7 @@ angular.module('naseNutAppApp').controller('receptionController', function ($sco
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                toastr.error('Ocurrio un error al intentar eliminar el registro.');
             });
         };
 
@@ -135,7 +136,7 @@ angular.module('naseNutAppApp').controller('receptionController', function ($sco
             producerService.getAll().then(function (response) {
                 $scope.producers = response.data;
             }, function (response) {
-                $scope.message = "la obtencion de productores fallo.";
+                toastr.error('la obtencion de productores fallo.');
             });
         };
 
@@ -143,7 +144,7 @@ angular.module('naseNutAppApp').controller('receptionController', function ($sco
             cylinderService.getAll().then(function (response) {
                 $scope.cylinders = response.data;
             }, function (response) {
-                $scope.message = "la obtencion de cilindros fallo.";
+                toastr.error('la obtencion de cilindros fallo.');
             });
         };
 
@@ -154,7 +155,7 @@ angular.module('naseNutAppApp').controller('receptionController', function ($sco
                     element.IsAlreadyAssigned = element.Grills.indexOf($scope.GrillId) === -1 ? false : true;
                 }, this);
             }, function (response) {
-                $scope.message = "la obtencion de las recepciones fallo";
+                toastr.error('la obtencion de las recepciones fallo');
             });
         };
 
