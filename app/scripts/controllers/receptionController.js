@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-angular.module('naseNutAppApp').controller('receptionController', function (toastr, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('receptionController', function (toastr, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
@@ -12,6 +12,10 @@ angular.module('naseNutAppApp').controller('receptionController', function (toas
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.GrillId = receptionAndGrillService.grillId;
         $scope.receptionEntry = [];
+        //Init dropdown ReceptionAdd
+        $scope.receptionEntry.Cylinder = "";
+        $scope.receptionEntry.Variety = "";
+        $scope.receptionEntry.Producer = "";
 
         $scope.receptionU = receptionService.reception;
         // $('#EntryDate').val($scope.receptionU.EntryDate);
@@ -22,12 +26,28 @@ angular.module('naseNutAppApp').controller('receptionController', function (toas
             $state.go('grillManage');
         };
         $scope.addReception = function (reception) {
-            $scope.reception.EntryDate = $('#EntryDate').val();
-            if ($scope.receptions.indexOf(reception) === -1) {
-                $scope.receptions.push(reception);
-            } else {
+            $scope.receptions.push(reception);
+            /*var rec = new Object();
+            rec.EntryDate = $('#EntryDate').val();
+            rec.Folio = reception.Folio;
+            rec.FieldName = reception.FieldName;
+            rec.CarRegistration = reception.CarRegistration;
+            rec.ReceivedFromField = reception.ReceivedFromField;
+            rec.HumidityPercent = reception.HumidityPercent;
+            rec.HeatHoursDrying = reception.HeatHoursDrying;
+            rec.Observations = reception.Observations;
+            if ($scope.receptions.indexOf(rec) == -1) {
+                $scope.receptions.push(rec);
+            }
+            else {
                 toastr.info('La recepcion ya se encuentra agregada en estado pendiente.');
             }
+            /*
+            if (!isDuplicateByFolio($scope.receptions)) {
+                
+            } else {
+                toastr.info('La recepcion ya se encuentra agregada en estado pendiente.');
+            }*/
         };
         $scope.saveReceptionEntry = function (receptionEntry) {
             if ($scope.receptions.length === 0) {
@@ -35,9 +55,9 @@ angular.module('naseNutAppApp').controller('receptionController', function (toas
             } else {
                 var ReceptionEntry = {};
                 ReceptionEntry.receptions = $scope.receptions;
-                ReceptionEntry.CylinderId = receptionEntry.CylinderId;
-                ReceptionEntry.VarietyId = receptionEntry.VarietyId;
-                ReceptionEntry.ProducerId = receptionEntry.ProducerId;
+                ReceptionEntry.CylinderId = receptionEntry.Cylinder.Id;
+                ReceptionEntry.VarietyId = receptionEntry.Variety.Id;
+                ReceptionEntry.ProducerId = receptionEntry.Producer.Id;
                 receptionService.saveEntry(ReceptionEntry).then(function (response) {
                     toastr.success('los registros se agrego correctamente.');
                 }, function (response) {
@@ -137,6 +157,7 @@ angular.module('naseNutAppApp').controller('receptionController', function (toas
             producerService.getAll().then(function (response) {
                 if (response.data.length === 0) toastr.info('No se econtraron productores en la base de datos');
                 $scope.producers = response.data;
+                $scope.receptionEntry.Producer = $scope.producers[0];
             }, function (response) {
                 $scope.message = "la obtencion de productores fallo.";
             });
@@ -146,6 +167,7 @@ angular.module('naseNutAppApp').controller('receptionController', function (toas
             varietyService.getAll().then(function (response) {
                 if (response.data.length === 0) toastr.info('No se econtraron variedades en la base de datos');
                 $scope.varieties = response.data;
+                $scope.receptionEntry.Variety = $scope.varieties[0];
             }, function (response) {
                 toastr.error('ocurrio un error al intentar cargar las variedades.');
             });
@@ -155,6 +177,7 @@ angular.module('naseNutAppApp').controller('receptionController', function (toas
             cylinderService.getAll().then(function (response) {
                 if (response.data.length === 0) toastr.info('No se econtraron cilindros en la base de datos');
                 $scope.cylinders = response.data;
+                $scope.receptionEntry.Cylinder = $scope.cylinders[0];
             }, function (response) {
                 toastr.error('ocurrio un error al intentar cargar los cilindros.');
             });

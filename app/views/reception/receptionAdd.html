@@ -116,7 +116,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="reception in receptions | filter:searchUser">
+                            <tr ng-repeat="reception in receptions track by reception.Folio">
                                 <td>{{reception.Folio}}</td>
                                 <td>{{reception.FieldName}}</td>
                                 <td>{{reception.CarRegistration}}</td>
@@ -130,37 +130,34 @@
             </div>
             <div class="col-xs-6 col-md-4">
                 <div class="card">
-                    <div class="form-group">
-                        <div class="col-sm-10">
-                            <div class="fg-line select">
-                                <select class="form-control" ng-model="receptionEntry.Producer">
-                                    <option value="">Productores</option>
-                                    <option ng-repeat="producer in producers" value="{{producer.Id}}">{{producer.ProducerName}}</option>
+                    <form name="dropdownForm" class="form-horizontal" role="form">
+                        <div class="card-body card-padding">
+                            <div class="form-group">
+                                <label for="prodF" class="col-sm-2 control-label">Productores</label>
+                                <div class="fg-line select">
+                                    <select id="prodF" class="form-control" ng-model="receptionEntry.Producer" ng-options="producer.ProducerName for producer in producers">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="varieF" class="col-sm-2 control-label">Variedades</label>
+                                <div class="fg-line select">
+                                    <select id="varieF" class="form-control" ng-model="receptionEntry.Variety" ng-options="variety.VarietyName for variety in varieties">
                                 </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cilindF" class="col-sm-2 control-label">Cilindros</label>
+                                <div class="fg-line select">
+                                    <select id="cilindF" class="form-control" ng-model="receptionEntry.Cylinder" ng-options="cylinder.CylinderName for cylinder in cylinders"
+                                        ng-init="receptionEntry.Cylinder = cylinders[0]"></select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-10">
-                            <div class="fg-line select">
-                                <select id="varieF" class="form-control" ng-model="receptionEntry.Variety" ng-options="variety.VarietyName for variety in varieties">
-                                    <option value="">Variedades</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-10">
-                            <div class="fg-line select">
-                                <select id="cilindF" class="form-control" ng-model="receptionEntry.Cylinder" ng-options="cylinder.CylinderName for cylinder in cylinders">
-                                    <option value="">Cilindros</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-            <div class="form-group fg-line">
+            <div class="">
                 <div class="fg-line" style="margin-top: 20px;">
                     <button type="submit" class="btn btn-primary btn-sm pull-right" ng-click="saveReceptionEntry(receptionEntry)">Guardar</button>
                 </div>
