@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillCurrentInvController', function ($scope, grillService, DTOptionsBuilder, DTColumnBuilder) {
+    angular.module('naseNutAppApp').controller('grillCurrentInvController', function ($scope,toastr,grillService, DTOptionsBuilder, DTColumnBuilder) {
         $scope.message = "";
         $scope.grills = [];
 
@@ -8,10 +8,10 @@
             grillService.getAllCurrentInv().then(function (response) {
                 $scope.grills = response.data;
             }, function (response) {
-                $scope.message = "la obtencion de parrillas fallo.";
+                toastr.error('la obtencion de parrillas fallo.');
             });
         };
-        
+
         GetAllGrills();
 
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(grillService.getAllCurrentInv())

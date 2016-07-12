@@ -1,4 +1,3 @@
-
 <div class="animated bounceInRight">
     <div class="card">
         <form name="receptionForm" class="form-horizontal" role="form">
@@ -6,16 +5,6 @@
                 <h2>Alta de Recepciones</h2>
             </div>
             <div class="card-body card-padding">
-                <div class="form-group">
-                    <label for="producers" class="col-sm-2 control-label">Productores</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line select">
-                            <select class="form-control" ng-model="reception.ProducerId">
-                            <option ng-repeat="producer in producers" ng-selected="reception.ProducerId == producer.Id" value="{{producer.Id}}">{{producer.ProducerName}}</option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
                 <div class="form-group">
                     <label for="fieldName" class="col-sm-2 control-label">Folio</label>
                     <div class="col-sm-10">
@@ -39,22 +28,13 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="form-group">
                     <label for="fieldName" class="col-sm-2 control-label">Nombre del Campo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="fieldName" name="FieldName" placeholder="nombre del campo" data-ng-model="reception.FieldName">
+                            <input type="text" required class="form-control input-sm" id="fieldName" name="FieldName" placeholder="nombre del campo"
+                                data-ng-model="reception.FieldName">
                             <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.FieldName.$error.required">Nombre del Campo es requerido.</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="variety" class="col-sm-2 control-label">Variedad</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="variety" name="Variety" placeholder="variedad" data-ng-model="reception.Variety">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.Variety.$error.required">Variedad es requerido.</small>
                         </div>
                     </div>
                 </div>
@@ -71,7 +51,9 @@
                     <label for="receivedFromField" class="col-sm-2 control-label">Kilos recibidos de campo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="number" min="1" step="any" ng-class="{error: !receptionForm.$pristine && receptionForm.ReceivedFromField.$error.required}" class="form-control input-sm" name="ReceivedFromField" id="receivedFromField" placeholder="kilos recibidos" data-ng-model="reception.ReceivedFromField">
+                            <input required type="number" min="1" step="any" ng-class="{error: !receptionForm.$pristine && receptionForm.ReceivedFromField.$error.required}"
+                                class="form-control input-sm" name="ReceivedFromField" id="receivedFromField" placeholder="kilos recibidos"
+                                data-ng-model="reception.ReceivedFromField">
                             <small class="help-block has-error" style="color:yellow" ng-show="!receptionForm.$pristine && receptionForm.ReceivedFromField.$error.number">Tiene que ser un valor númerico.</small>
                             <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.ReceivedFromField.$error.required">Kilos recibidos de campo es requerido.</small>
                         </div>
@@ -81,7 +63,8 @@
                     <label for="humidity" class="col-sm-2 control-label">Humedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number"  step="any" class="form-control input-sm" id="humidity" name="HumidityPercent" placeholder="humedad" data-ng-model="reception.HumidityPercent">
+                            <input type="number" step="any" class="form-control input-sm" id="humidity" name="HumidityPercent" placeholder="humedad"
+                                data-ng-model="reception.HumidityPercent">
                             <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.HumidityPercent.$error.number">Tiene que ser un valor númerico.</small>
                         </div>
                     </div>
@@ -90,7 +73,8 @@
                     <label for="heatHoursDrying" class="col-sm-2 control-label">Horas de calor por secado</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="1" step="any" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado" name="HeatHoursDrying" data-ng-model="reception.HeatHoursDrying">
+                            <input type="number" min="1" step="any" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado"
+                                name="HeatHoursDrying" data-ng-model="reception.HeatHoursDrying">
                             <small class="help-block has-error" style="color:yellow" ng-show="!receptionForm.$pristine && receptionForm.HeatHoursDrying.$error.number">Tiene que ser un valor númerico.</small>
                         </div>
                     </div>
@@ -105,26 +89,82 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="producers" class="col-sm-2 control-label">Cilindros</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line select">
-                            <select class="form-control" ng-model="reception.CylinderId">
-                            <option ng-repeat="cylinder in cylinders" ng-selected="reception.CylinderId == cylinder.Id" value="{{cylinder.Id}}">{{cylinder.CylinderName}}</option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveReception()" ng-disabled="!receptionForm.$valid">Guardar</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div data-ng-hide="message==''" class="alert alert-danger">
-                        {{message}}
+                    <div class="fg-line" style="margin-top: 20px;">
+                        <button type="submit" class="btn btn-primary btn-sm pull-right" ng-click="addReception(reception)" ng-disabled="!receptionForm.$valid">Agregar</button>
                     </div>
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>Recepciones Pendientes</h2>
+        </div>
+        <div class="card-body card-padding">
+            <div class="col-xs-12 col-md-8">
+                <div class="card">
+                    <table id="data-table-command" class="table table-striped table-vmiddle">
+                        <thead>
+                            <tr>
+                                <th>Folio</th>
+                                <th>Campo</th>
+                                <th>Camion/Placas</th>
+                                <th>Recibido</th>
+                                <th>Fecha de Captura</th>
+                                <th>Horas de Secado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="reception in receptions | filter:searchUser">
+                                <td>{{reception.Folio}}</td>
+                                <td>{{reception.FieldName}}</td>
+                                <td>{{reception.CarRegistration}}</td>
+                                <td>{{reception.ReceivedFromField}}</td>
+                                <td>{{reception.EntryDate}}</td>
+                                <td>{{reception.HeatHoursDrying}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-4">
+                <div class="card">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <div class="fg-line select">
+                                <select class="form-control" ng-model="receptionEntry.Producer">
+                                    <option value="">Productores</option>
+                                    <option ng-repeat="producer in producers" value="{{producer.Id}}">{{producer.ProducerName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <div class="fg-line select">
+                                <select id="varieF" class="form-control" ng-model="receptionEntry.Variety" ng-options="variety.VarietyName for variety in varieties">
+                                    <option value="">Variedades</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <div class="fg-line select">
+                                <select id="cilindF" class="form-control" ng-model="receptionEntry.Cylinder" ng-options="cylinder.CylinderName for cylinder in cylinders">
+                                    <option value="">Cilindros</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group fg-line">
+                <div class="fg-line" style="margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary btn-sm pull-right" ng-click="saveReceptionEntry(receptionEntry)">Guardar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

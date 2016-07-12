@@ -30,15 +30,22 @@
           templateUrl: 'views/login.html',
           controller: 'loginController'
         })
+        .state('accessDenied', {
+          url: '/accesoDenegado',
+          templateUrl: 'views/accessDenied.html'
+        })
         .state('users', {
           url: '/usuarios',
           templateUrl: 'views/users.html',
           controller: 'userController'
         })
-        .state('producers', {
-          url: '/productores',
-          templateUrl: 'views/producers.html',
-          controller: 'producerController'
+        .state('producersAndVarieties', {
+          url: '/productoresYvariedades',
+          templateUrl: 'views/producersAndVarieties.html',
+          controller: 'producerAndVarietiesController',
+          data: {
+            roles: ['admin']
+          }
         })
         .state('home', {
           url: '/home',
@@ -69,12 +76,7 @@
         .state('remissionManage', {
           url: '/remisionGestion',
           templateUrl: 'views/remission/remissionManage.html',
-          controller: 'remissionController',
-          onExit: function ($stateParams, $state, receptionAndGrillService) {
-            $state.transition.then(toState => {
-              receptionAndGrillService.addGrillToReception = true;
-            })
-          }
+          controller: 'remissionController'
         })
         .state('remissionAdd', {
           url: '/remisionAlta',
@@ -99,7 +101,12 @@
         .state('grillIssue', {
           url: '/inventarioSalidas',
           templateUrl: 'views/grill/grillIssue.html',
-          controller: 'grillController'
+          controller: 'grillIssueController'
+        })
+        .state('humidity', {
+          url: '/humidity',
+          templateUrl: 'views/humidity.html',
+          controller: 'humidityController'
         })
         .state('grillCurrentInv', {
           url: '/parrillasInventarioActual',
@@ -125,6 +132,21 @@
           url: '/samplingU',
           templateUrl: 'views/sampling/samplingUpdate.html',
           controller: 'samplingController'
+        })
+        .state('dailyReportingProcess', {
+          url: '/reporteDiarioProceso',
+          templateUrl: 'views/report/dailyReportingProcess.html',
+          controller: 'dailyReportingProcessController'
+        })
+        .state('humidityAdd',{
+          url: '/humedad',
+          templateUrl: 'views/humidity/humidityAdd.html',
+          controller: 'humidityController'
+        })
+        .state('humidityManage',{
+          url: '/humedadM',
+          templateUrl: 'views/humidity/humidityManage.html',
+          controller: 'humidityController'
         });
       $urlRouterProvider.otherwise('/');
     })
@@ -142,8 +164,13 @@
         target: 'body'
       });
     })
-    .run(['authService', function (authService) {
+    .run(['authService', '$rootScope', '$state', '$stateParams', function (authService, $rootScope, $state, $stateParams) {
       authService.fillAuthData();
+      $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
+        $rootScope.toState = toState;
+        $rootScope.toStateParams = toStateParams;
+        authService.isAuthorize();
+      });
     }])
     .value('apiPath', 'http://localhost:49278/')
     .constant('accesslvl', {

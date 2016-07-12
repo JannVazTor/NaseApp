@@ -1,23 +1,23 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('samplingController',function($scope, $filter, $state, samplingService){
+    angular.module('naseNutAppApp').controller('samplingController',function($scope,toastr, $filter, $state, samplingService){
         $scope.message = "";
         $scope.samplings = [];
         $scope.sampling = samplingService.sampling;
-        $('#samplingDate').val($scope.sampling.DateCapture);
+        //$('#samplingDate').val($scope.sampling.DateCapture);
         $scope.saveSampling = function () {
             $scope.sampling.DateCapture = $('#samplingDate').val();
             samplingService.save($scope.sampling).then(function (response) {   
                 $scope.savedSuccesfully = true;
                 $state.go('samplingManage');
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+                toastr.error('Ocurrio un error al intentar guardar el registro.');
             });
         };
         $scope.confirmationDelete = function (SamplingId) {
             swal({
                 title: "Estas seguro?",
-                text: "Tú eliminaras la recepcion: " + SamplingId + "!!",
+                text: "Tú eliminaras el muestreo con id: " + SamplingId + "!!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -32,7 +32,6 @@
 
         $scope.deleteSampling = function (SamplingId) {
             samplingService.delete(SamplingId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.samplings, function (i) {
                     if ($scope.samplings[i].Id === SamplingId) {
@@ -41,7 +40,7 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                toastr.error('Ocurrio un error al intentar eliminar el registro.');
             });
         };
 
@@ -53,10 +52,10 @@
         $scope.UpdateSampling= function () {
             $scope.sampling.DateCapture = $('#samplingDate').val();
             samplingService.update($scope.sampling).then(function (response) {
-                $scope.message = "El registro fue Actualizado  de manera exitosa."
+                toastr.success('El registro se actualizo de manera exitosa.');
                 $state.go('samplingManage');
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+               toastr.error('Ocurrio un error al intentar actualizar el registro.');
             });
         }
 
@@ -64,7 +63,7 @@
             samplingService.getAll().then(function (response) {
                 $scope.samplings = response.data;
             }, function (response) {
-                $scope.message = "la obtencion de los muestreos fallo";
+                toastr.error('La obtencion de muestreos fallo.');
             });
         };
 
