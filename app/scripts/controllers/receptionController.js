@@ -91,10 +91,10 @@
 
         $scope.UpdateReception = function () {
             receptionService.update($scope.receptionU.Id, $scope.receptionU).then(function (response) {
-                $scope.message = "El registro fue Actualizado  de manera exitosa."
+                 toastr.success('El registro se actualizo correctamente.');
                 $state.go('receptionManage');
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+                toastr.error('ocurrio un error, intentelo de nuevo.');
             });
         }
 
@@ -125,6 +125,17 @@
                 });
             }
         };
+
+        $scope.saveReception = function () {
+            $scope.reception.EntryDate = $('#EntryDate').val();
+            receptionService.save($scope.reception).then(function (response) {
+                $scope.savedSuccesfully = true;
+                toastr.success('el registro se agrego satisfactoriamente');
+                $state.go('receptionManage');
+            }, function (response) {
+                toastr.error('ocurrio un error y el registro no pudo ser guardado.');
+            });
+        };
         $scope.confirmationDelete = function (receptionId) {
             swal({
                 title: "Estas seguro?",
@@ -152,7 +163,7 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                toastr.error('Ocurrio un error al intentar eliminar el registro.');
             });
         };
 
@@ -168,7 +179,7 @@
                 $scope.producers = response.data;
                 $scope.receptionEntry.Producer = $scope.producers[0];
             }, function (response) {
-                $scope.message = "la obtencion de productores fallo.";
+                toastr.error('la obtencion de productores fallo.');
             });
         };
 
@@ -200,7 +211,7 @@
                     element.IsAlreadyAssigned = element.Grills.indexOf($scope.GrillId) === -1 ? false : true;
                 }, this);
             }, function (response) {
-                $scope.message = "la obtencion de las recepciones fallo";
+                toastr.error('la obtencion de las recepciones fallo');
             });
         };
 
