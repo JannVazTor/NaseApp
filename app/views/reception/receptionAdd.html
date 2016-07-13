@@ -113,6 +113,7 @@
                                 <th>Recibido</th>
                                 <th>Fecha de Captura</th>
                                 <th>Horas de Secado</th>
+                                <th>Remover</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,6 +124,11 @@
                                 <td>{{reception.ReceivedFromField}}</td>
                                 <td>{{reception.EntryDate}}</td>
                                 <td>{{reception.HeatHoursDrying}}</td>
+                                <td> 
+                                    <button class="btn btn-icon command-delete" ng-click="removeReception(reception.Folio)" data-toggle="tooltip" data-placement="bottom" title="Remover">
+                                        <span class="md md-delete"></span>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

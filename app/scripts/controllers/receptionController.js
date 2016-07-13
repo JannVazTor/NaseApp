@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function (toastr, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('receptionController', function (toastr, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
@@ -25,29 +25,37 @@
             receptionAndGrillService.receptionFolio = receptionFolio;
             $state.go('grillManage');
         };
-        $scope.addReception = function (reception) {
-            $scope.receptions.push(reception);
-            /*var rec = new Object();
-            rec.EntryDate = $('#EntryDate').val();
-            rec.Folio = reception.Folio;
-            rec.FieldName = reception.FieldName;
-            rec.CarRegistration = reception.CarRegistration;
-            rec.ReceivedFromField = reception.ReceivedFromField;
-            rec.HumidityPercent = reception.HumidityPercent;
-            rec.HeatHoursDrying = reception.HeatHoursDrying;
-            rec.Observations = reception.Observations;
-            if ($scope.receptions.indexOf(rec) == -1) {
-                $scope.receptions.push(rec);
-            }
-            else {
-                toastr.info('La recepcion ya se encuentra agregada en estado pendiente.');
-            }
-            /*
-            if (!isDuplicateByFolio($scope.receptions)) {
-                
+        $scope.removeReception = function (folio) {
+            $.each($scope.receptions, function (i) {
+                if ($scope.receptions[i].Folio === folio) {
+                    $scope.receptions.splice(i, 1);
+                    return false;
+                }
+            });
+        };
+        var findDuplicateByFolio = function (folio, array) {
+            var found = $filter('filter')(array, { Folio: folio }, true);
+            if (found.length) {
+                return true;
             } else {
-                toastr.info('La recepcion ya se encuentra agregada en estado pendiente.');
-            }*/
+                return false;
+            }
+        }
+        $scope.addReception = function (reception) {
+            if (!findDuplicateByFolio(reception.Folio, $scope.receptions)) {
+                $scope.receptions.push({
+                    Folio: reception.Folio,
+                    EntryDate: $('#EntryDate').val(),
+                    FieldName: reception.FieldName,
+                    CarRegistration: reception.CarRegistration,
+                    ReceivedFromField: reception.ReceivedFromField,
+                    HumidityPercent: reception.HumidityPercent,
+                    HeatHoursDrying: reception.HeatHoursDrying,
+                    Observations: reception.Observations
+                });
+            } else {
+                toastr.info('La recepcion ya se encuentra agregada y en estado pendiente.');
+            }
         };
         $scope.saveReceptionEntry = function (receptionEntry) {
             if ($scope.receptions.length === 0) {
@@ -60,6 +68,7 @@
                 ReceptionEntry.ProducerId = receptionEntry.Producer.Id;
                 receptionService.saveEntry(ReceptionEntry).then(function (response) {
                     toastr.success('los registros se agrego correctamente.');
+                    $scope.receptions = [];
                 }, function (response) {
                     toastr.error('ocurrio un error y los registros no pudieron ser guardados.');
                 });
