@@ -59,16 +59,16 @@
                         </div>
                     </td>
                     <td ng-hide="IsGrillToReception">
-                        <button class="btn btn-icon command-edit" ng-click="redirectUpdate(grill.Id, grill)">
+                        <button class="btn btn-icon command-edit" ng-click="redirectUpdate(grill.Id, grill)" data-toggle="tooltip" data-placement="bottom" title="Modificar">
                                 <span class="md md-edit"></span>
                             </button>
-                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(grill.Id)">
+                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(grill.Id)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                 <span class="md md-delete"></span>
                             </button>
-                        <button class="btn btn-icon command-edit" ng-click="redirectReceptionToGrill(grill.Id)">
+                        <button class="btn btn-icon command-edit" ng-click="redirectReceptionToGrill(grill.Id)" data-toggle="tooltip" data-placement="bottom" title="Agregar recepciones">
                                 <span class="md md-assignment"></span>
                             </button>
-                        <button ng-show="{{grill.Sampling.SampleWeight}} == null" class="btn btn-icon command-edit" ng-click="redirectAddSampling(grill.Id)">
+                        <button ng-show="grill.Sampling == null" class="btn btn-icon command-edit" ng-click="redirectAddSampling(grill.Id)" data-toggle="tooltip" data-placement="bottom" title="Agregar muestreo">
                             <span class="md md-description"></span>
                         </button>
                     </td>
