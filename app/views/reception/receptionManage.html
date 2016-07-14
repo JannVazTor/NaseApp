@@ -42,30 +42,20 @@
                     <td>{{reception.Cylinder}}</td>
                     <td>{{reception.EntryDate}}</td>
                     <td>{{reception.HeatHoursDrying}}</td>
-                    <td>
-                        <button class="btn btn-icon command-edit">
-                        <span class="md md-edit"></span>
-                    </button>
-                        <button class="btn btn-icon command-delete" ng-click="deleteReception(reception.Id)">
-                        <span class="md md-delete"></span>
-                    </button>
                     <td>{{reception.Grills}}</td>
                     <td ng-hide="IsGrillToReception">
-                        <button class="btn btn-icon command-edit" ng-click="redirectUpdate(reception)">
+                        <button class="btn btn-icon command-edit" ng-click="redirectUpdate(reception)" data-toggle="tooltip" data-placement="bottom" title="Modificar">
                             <span class="md md-edit"></span>
                         </button>
-                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(reception.Id)">
+                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(reception.Id)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                             <span class="md md-delete"></span>
                         </button>
-                        <button class="btn btn-icon command-edit" ng-click="redirectReceptionToGrill(reception.Folio, reception.Id)">
+                        <button class="btn btn-icon command-edit" ng-click="redirectReceptionToGrill(reception.Folio, reception.Id)" data-toggle="tooltip" data-placement="bottom" title="Asignar resepcion a parrilla">
                             <span class="md md-view-module"></span>
                         </button>
-                        <button class="btn btn-icon command-edit" ng-click="redirectAddRemission(reception.Id, reception.Folio)">
+                        <button class="btn btn-icon command-edit" ng-click="redirectAddRemission(reception.Id, reception.Folio)" data-toggle="tooltip" data-placement="bottom" title="Agregar remisiones">
                             <span class="md md-description"></span>
                         </button>
-                        <button class="btn btn-icon command-edit" ng-click="redirectAddHumidity(reception.Id, reception.Cylinder)">
-                        <span class="md md-cloud-queue"></span>
-                    </button>
                     </td>
                     <td ng-show="IsGrillToReception">
                         <div class="toggle-switch">
