@@ -241,20 +241,19 @@
             $scope.reception.Folio = "";
         };
 
-        var chargeReceptionAddData = function () {
-            if ($state.current.name === 'receptionAdd') {
-                GetAllProducers();
-                GetAllCylinders();
-                GetAllVarieties();
+        (function () {
+            switch ($state.current.name) {
+                case 'receptionManage':
+                    GetAllReceptions();
+                    break;
+                case 'receptionAdd':
+                    GetAllProducers();
+                    GetAllCylinders();
+                    GetAllVarieties();
+                    break;
+                default:
+                    break;
             }
-        };
-        var chargeReceptionManageData = function () {
-            if ($state.current.name === 'receptionManage') {
-                GetAllReceptions();
-            }
-        };
-
-        chargeReceptionAddData();
-        chargeReceptionManageData();
+        })();
     });
 })();

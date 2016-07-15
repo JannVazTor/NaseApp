@@ -14,21 +14,23 @@
             varietyName: ""
         };
 
-        var GetAllProducers = function () {
+        //GetAllProducers
+         (function () {
             producerService.getAll().then(function (response) {
                 $scope.producers = response.data;
             }, function (response) {
                 toastr.error('ocurrio un error y no se pudieron obtener los productores.');
             });
-        };
+        })();
 
-        var GetAllVarieties = function () {
+        //GetAllVarieties
+        (function () {
             varietyService.getAll().then(function (response) {
                 $scope.varieties = response.data;
             }, function (response) {
                 toastr.error('ocurrio un error y no se pudieron obtener las variedades.');
             });
-        };
+        })();
 
         $scope.saveProducer = function () {
             producerService.save($scope.producer).then(function (response) {
@@ -109,8 +111,5 @@
                 toastr.error('ocurrio un error y la variedad no pudo ser eliminada.');
             });
         };
-
-        GetAllProducers();
-        GetAllVarieties();
     });
 })();

@@ -1,19 +1,26 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('samplingController',function($scope,toastr, $filter, $state, samplingService){
+    angular.module('naseNutAppApp').controller('samplingController', function ($scope, toastr, $filter, $state, samplingService, clearService, receptionService) {
         $scope.message = "";
         $scope.samplings = [];
+        $scope.receptionEntries = [];
         $scope.sampling = samplingService.sampling;
-        //$('#samplingDate').val($scope.sampling.DateCapture);
+
         $scope.saveSampling = function () {
             $scope.sampling.DateCapture = $('#samplingDate').val();
-            samplingService.save($scope.sampling).then(function (response) {   
+            samplingService.save($scope.sampling).then(function (response) {
                 $scope.savedSuccesfully = true;
                 $state.go('samplingManage');
             }, function (response) {
                 toastr.error('Ocurrio un error al intentar guardar el registro.');
             });
         };
+
+        var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+            clearService.clearSamplingService();
+            onStateChange();
+        });
+
         $scope.confirmationDelete = function (SamplingId) {
             swal({
                 title: "Estas seguro?",
@@ -27,7 +34,6 @@
                 function () {
                     $scope.deleteSampling(SamplingId);
                 });
-
         };
 
         $scope.deleteSampling = function (SamplingId) {
@@ -44,29 +50,77 @@
             });
         };
 
-         $scope.redirectUpdate = function (sampling) {
+        $scope.redirectUpdate = function (sampling) {
             samplingService.sampling = sampling;
             $state.go('samplingUpdate');
         };
 
-        $scope.UpdateSampling= function () {
+        $scope.UpdateSampling = function () {
             $scope.sampling.DateCapture = $('#samplingDate').val();
             samplingService.update($scope.sampling).then(function (response) {
                 toastr.success('El registro se actualizo de manera exitosa.');
                 $state.go('samplingManage');
             }, function (response) {
-               toastr.error('Ocurrio un error al intentar actualizar el registro.');
+                toastr.error('Ocurrio un error al intentar actualizar el registro.');
             });
         }
 
-         var GetAllSamplings = function () {
-            samplingService.getAll().then(function (response) {
-                $scope.samplings = response.data;
+        var GetAllGrillSamplings = function () {
+            samplingService.getAllGrills().then(function (response) {
+                if (response.data.length === 0) {
+                    toastr.info('No se encontraron muestreos en la base de datos.');
+                } else {
+                    $scope.samplings = response.data;
+                }
             }, function (response) {
-                toastr.error('La obtencion de muestreos fallo.');
+                toastr.error('Ocurrio un error y no se pudieron obtener los muestreos.');
             });
         };
 
-        GetAllSamplings();
+        var GetAllReceptionSamplings = function () {
+            samplingService.getAllReceptions().then(function (response) {
+                if (response.data.length === 0) {
+                    toastr.info('No se encontraron muestreos en la base de datos.');
+                } else {
+                    $scope.samplings = response.data;
+                }
+            }, function (response) {
+                toastr.error('Ocurrio un error y no se pudieron obtener los muestreos.');
+            });
+        };
+        var GetAllReceptionEntries = function () {
+            receptionService.getAllEntries().then(function (response) {
+                if (response.data.length === 0) {
+                    toastr.info('No se encontraron recepciones en la base de datos.');
+                } else {
+                    $scope.receptionEntries = response.data;
+                }
+            }, function (response) {
+                toastr.error('Ocurrio un error y no se puedieron obtener las recepciones.');
+            });
+        };
+
+        $scope.redirectToAddSampling = function (receptionEntryId) {
+            samplingService.isReceptionAdd = true;
+            $state.go('samplingAdd');
+        };
+
+        (function () {
+            switch ($state.current.name) {
+                case 'samplingReceptionAdd':
+                    GetAllReceptionEntries();
+                    break;
+                case 'samplingReceptionManage':
+                    GetAllReceptionSamplings();
+                    break;
+                case 'samplingAdd':
+                    break;
+                case 'samplingGrillManage':
+                    GetAllGrillSamplings();
+                    break;
+                default:
+                    break;
+            }
+        })();
     });
 })();

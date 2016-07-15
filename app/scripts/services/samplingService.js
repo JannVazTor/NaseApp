@@ -1,6 +1,6 @@
-(function(){
+(function () {
     'use strict'
-    angular.module('naseNutAppApp').factory('samplingService',function($http, apiPath, grillService){
+    angular.module('naseNutAppApp').factory('samplingService', function ($http, apiPath, grillService) {
         var _sampling = {
             Id: grillService.id,
             DateCapture: "",
@@ -11,8 +11,13 @@
             TotalWeightOfEdibleNuts: ""
         };
 
-        var _getAll = function () {
-            return $http.get(apiPath + 'api/sampling/getAll');
+        var _isReceptionAdd = false;
+
+        var _getAllGrills = function () {
+            return $http.get(apiPath + 'api/sampling/grills');
+        }
+        var _getAllReceptions = function () {
+            return $http.get(apiPath + 'api/sampling/receptions');
         }
         var _save = function (data) {
             return $http.post(apiPath + 'api/sampling', data);
@@ -25,10 +30,12 @@
         }
         return {
             sampling: _sampling,
-            getAll: _getAll,
+            getAllGrills: _getAllGrills,
             save: _save,
             delete: _delete,
-            update: _update
+            update: _update,
+            getAllReceptions: _getAllReceptions,
+            isReceptionAdd: _isReceptionAdd
         };
     });
 })();

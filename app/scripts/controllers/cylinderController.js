@@ -9,14 +9,15 @@
             CylinderName: ""
         };
 
-        var GetAll = function () {
+        //GetAllCylinders
+        (function () {
             cylinderService.getAll().then(function (response) {
                 $scope.cylinders = response.data;
             }, function (response) {
                 toastr.error('la obtencion de cilindros fallo.');
             });
-        };
-        GetAll();
+        })();
+
         $scope.saveCylinder = function () {
             cylinderService.save($scope.cylinder).then(function (response) {
                 $scope.savedSuccessfully = true;

@@ -60,45 +60,44 @@
             </div>
         </form>
     </div>
-
-
     <div class="card">
         <div class="card-header">
             <h2>Usuarios</h2>
         </div>
-        <div class="col-sm-12 actionbar">
-            <div class="form-group">
-                <label for="isearch" class="col-sm-2 control-label">Buscar</label>
-                <div class="col-sm-12">
-                    <div class="fg-line">
-                        <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchUser">
+        <div class="card-body table-responsive">
+            <div class="col-sm-12 actionbar">
+                <div class="form-group">
+                    <label for="isearch" class="col-sm-2 control-label">Buscar</label>
+                    <div class="col-sm-12">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchUser">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <table id="data-table-command" class="table table-striped table-vmiddle">
-            <thead>
-                <tr>
-                    <th data-column-id="id">Nombre</th>
-                    <th data-column-id="role">Role</th>
-                    <th data-column-id="commands">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="user in users | filter:searchUser">
-                    <td>{{user.UserName}}</td>
-                    <td>{{user.Role}}</td>
-                    <td>
-                        <button class="btn btn-icon command-edit" data-toggle="modal" onclick="location.href='#modalWider'">
+            <table class="table table-striped table-vmiddle">
+                <thead>
+                    <tr>
+                        <th data-column-id="id">Nombre</th>
+                        <th data-column-id="role">Role</th>
+                        <th data-column-id="commands">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users | filter:searchUser">
+                        <td>{{user.UserName}}</td>
+                        <td>{{user.Role}}</td>
+                        <td>
+                            <button class="btn btn-icon command-edit" data-toggle="modal" onclick="location.href='#modalWider'">
                         <span class="md md-edit"></span>
                     </button>
-                        <button class="btn btn-icon command-delete" ng-click="deleteUser(user.Id)">
+                            <button class="btn btn-icon command-delete" ng-click="deleteUser(user.Id)">
                         <span class="md md-delete"></span>
                     </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
