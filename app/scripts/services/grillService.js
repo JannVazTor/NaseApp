@@ -1,7 +1,7 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').factory('grillService', function ($http, apiPath) {
-        var _Id = "";
+        var _grillId = "";
         var _grill = {
             DateCapture: "",
             Size: "",
@@ -43,7 +43,6 @@
             return $http.get(apiPath + 'api/grill/getAllissues');
         }
         return {
-            id: _Id,
             grill: _grill,
             getAll: _getAll,
             save: _save,
@@ -52,7 +51,8 @@
             delete: _delete,
             update: _update,
             saveIssue: _saveIssue,
-            getAllIssues: _getAllIssues
+            getAllIssues: _getAllIssues,
+            grillId: _grillId
         };
     });
 })();

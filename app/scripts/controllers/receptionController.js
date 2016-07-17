@@ -59,19 +59,31 @@
         };
         $scope.saveReceptionEntry = function (receptionEntry) {
             if ($scope.receptions.length === 0) {
-                toastr.info('Debe agregar al menos una recepcion.')
+                toastr.info('Debe agregar al menos una recepcion.');
             } else {
-                var ReceptionEntry = {};
-                ReceptionEntry.receptions = $scope.receptions;
-                ReceptionEntry.CylinderId = receptionEntry.Cylinder.Id;
-                ReceptionEntry.VarietyId = receptionEntry.Variety.Id;
-                ReceptionEntry.ProducerId = receptionEntry.Producer.Id;
-                receptionService.saveEntry(ReceptionEntry).then(function (response) {
-                    toastr.success('los registros se agrego correctamente.');
-                    $scope.receptions = [];
-                }, function (response) {
-                    toastr.error('ocurrio un error y los registros no pudieron ser guardados.');
-                });
+                if (!receptionEntry.Cylinder) {
+                    toastr.info('No puede agregar si no hay cilindros disponibles.');
+                } else {
+                    if (!receptionEntry.Variety) {
+                        toastr.info('No puede agregar si no hay variedades disponibles.');
+                    } else {
+                        if (!receptionEntry.Producer) {
+                            toastr.info('No puede agregar si no hay productores disponibles.');
+                        } else {
+                            var ReceptionEntry = {};
+                            ReceptionEntry.receptions = $scope.receptions;
+                            ReceptionEntry.CylinderId = receptionEntry.Cylinder.Id;
+                            ReceptionEntry.VarietyId = receptionEntry.Variety.Id;
+                            ReceptionEntry.ProducerId = receptionEntry.Producer.Id;
+                            receptionService.saveEntry(ReceptionEntry).then(function (response) {
+                                toastr.success('los registros se agrego correctamente.');
+                                $scope.receptions = [];
+                            }, function (response) {
+                                toastr.error('ocurrio un error y los registros no pudieron ser guardados.');
+                            });
+                        }
+                    }
+                }
             }
         };
         $scope.redirectAddRemission = function (id, folio) {
@@ -91,7 +103,7 @@
 
         $scope.UpdateReception = function () {
             receptionService.update($scope.receptionU.Id, $scope.receptionU).then(function (response) {
-                 toastr.success('El registro se actualizo correctamente.');
+                toastr.success('El registro se actualizo correctamente.');
                 $state.go('receptionManage');
             }, function (response) {
                 toastr.error('ocurrio un error, intentelo de nuevo.');
@@ -179,7 +191,7 @@
                 $scope.producers = response.data;
                 $scope.receptionEntry.Producer = $scope.producers[0];
             }, function (response) {
-                toastr.error('la obtencion de productores fallo.');
+                toastr.error('ocurrio un error al intentar cargar a los productores.');
             });
         };
 
@@ -229,20 +241,19 @@
             $scope.reception.Folio = "";
         };
 
-        var chargeReceptionAddData = function () {
-            if ($state.current.name === 'receptionAdd') {
-                GetAllProducers();
-                GetAllCylinders();
-                GetAllVarieties();
+        (function () {
+            switch ($state.current.name) {
+                case 'receptionManage':
+                    GetAllReceptions();
+                    break;
+                case 'receptionAdd':
+                    GetAllProducers();
+                    GetAllCylinders();
+                    GetAllVarieties();
+                    break;
+                default:
+                    break;
             }
-        };
-        var chargeReceptionManageData = function () {
-            if ($state.current.name === 'receptionManage') {
-                GetAllReceptions();
-            }
-        };
-
-        chargeReceptionAddData();
-        chargeReceptionManageData();
+        })();
     });
 })();

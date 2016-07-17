@@ -1,4 +1,3 @@
-
 <div class="animated bounceInRight">
     <div class="card">
         <form name="samplingForm" class="form-horizontal" role="form">
@@ -10,7 +9,7 @@
                     <label for="date" class="col-sm-2 control-label">Fecha</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" required disabled class="form-control input-sm" id="samplingDate" placeholder="fecha de captura"  value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
+                            <input type="text" required disabled class="form-control input-sm" id="samplingDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#"><i class="large md md-event"></i></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -24,7 +23,8 @@
                     <label for="sampleWeight" class="col-sm-2 control-label">Peso</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="0" step="any" required class="form-control input-sm" id="sampleWeight" name="SampleWeight" placeholder="Peso" data-ng-model="sampling.SampleWeight">
+                            <input type="number" min="0" step="any" required class="form-control input-sm" id="sampleWeight" name="SampleWeight" placeholder="Peso"
+                                data-ng-model="sampling.SampleWeight">
                             <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.Performance.$error.number">Tiene que ser un valor númerico.</small>
                             <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.SampleWeight.$error.required">El peso es requerido.</small>
                         </div>
@@ -34,7 +34,8 @@
                     <label for="HumidityPercent" class="col-sm-2 control-label">Porciento de Humedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="0"  step="any" required class="form-control input-sm" id="HumidityPercent" name="HumidityPercent" placeholder="Porciento de Humedad" data-ng-model="sampling.HumidityPercent">
+                            <input type="number" min="0" step="any" required class="form-control input-sm" id="HumidityPercent" name="HumidityPercent"
+                                placeholder="Porciento de Humedad" data-ng-model="sampling.HumidityPercent">
                             <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.HumidityPercent.$error.number">Tiene que ser un valor númerico.</small>
                             <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.HumidityPercent.$error.required">Porciento de Humedad es requerido.</small>
                         </div>
@@ -44,7 +45,8 @@
                     <label for="WalnutNumber" class="col-sm-2 control-label">Número de nueces</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="0" required class="form-control input-sm" id="WalnutNumber" name="WalnutNumber" placeholder="Número de nueces" data-ng-model="sampling.WalnutNumber">
+                            <input type="number" min="0" required class="form-control input-sm" id="WalnutNumber" name="WalnutNumber" placeholder="Número de nueces"
+                                data-ng-model="sampling.WalnutNumber">
                             <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.WalnutNumber.$error.number">Tiene que ser un valor númerico.</small>
                             <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.WalnutNumber.$error.required">Número de nueces son requerido.</small>
                         </div>
@@ -54,7 +56,8 @@
                     <label for="Performance" class="col-sm-2 control-label">Rendimiento</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="number" min="0" step="any" ng-class="{error: !samplingForm.$pristine && samplingForm.Performance.$error.required}" class="form-control input-sm" name="Performance" id="Performance" placeholder="Rendimiento" data-ng-model="sampling.Performance">
+                            <input required type="number" min="0" step="any" ng-class="{error: !samplingForm.$pristine && samplingForm.Performance.$error.required}"
+                                class="form-control input-sm" name="Performance" id="Performance" placeholder="Rendimiento" data-ng-model="sampling.Performance">
                             <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.Performance.$error.number">Tiene que ser un valor númerico.</small>
                             <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.Performance.$error.required">Rendimiento es requerido.</small>
                         </div>
@@ -64,20 +67,59 @@
                     <label for="TotalWeightOfEdibleNuts" class="col-sm-2 control-label">Peso total de nueces Comestibles</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="0" required step="any" class="form-control input-sm" id="TotalWeightOfEdibleNuts" name="TotalWeightOfEdibleNuts" placeholder="Peso total de nueces Comestibles" data-ng-model="sampling.TotalWeightOfEdibleNuts">
+                            <input type="number" min="0" required step="any" class="form-control input-sm" id="TotalWeightOfEdibleNuts" name="TotalWeightOfEdibleNuts"
+                                placeholder="Peso total de nueces Comestibles" data-ng-model="sampling.TotalWeightOfEdibleNuts">
                             <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.TotalWeightOfEdibleNuts.$error.number">Tiene que ser un valor númerico.</small>
                             <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.TotalWeightOfEdibleNuts.$error.number">Tiene que ser un valor númerico.</small>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveSampling()" ng-disabled="!samplingForm.$valid">Guardar</button>
+                <div ng-show="IsReceptionSamplingAdd()">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="nutFirst" class="col-sm-2 control-label">Nuez de Primera</label>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutFirst" placeholder="sacos de primera" data-ng-model="sampling.sacksFirst">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutFirst" placeholder="kilos por saco" data-ng-model="sampling.kilosFirst">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nutSecond" class="col-sm-2 control-label">Nuez de Segunda</label>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text"class="form-control input-sm" id="nutSecond" placeholder="sacos de segunda" data-ng-model="sampling.sacksSecond">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutSecond" placeholder="kilos por saco" data-ng-model="sampling.kilosSecond">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nutThird" class="col-sm-2 control-label">Nuez de Tercera</label>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutThird" placeholder="sacos de tercera" data-ng-model="sampling.sacksThird">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutThird" placeholder="kilos por saco" data-ng-model="sampling.kilosThird">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div data-ng-hide="message==''" class="alert alert-danger">
-                        {{message}}
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveSampling(sampling)" ng-disabled="!samplingForm.$valid">Guardar</button>
                     </div>
                 </div>
             </div>

@@ -15,22 +15,24 @@
       Email: ""
     };
 
-    var GetAllUsers = function () {
+    //GetAllUsers
+    (function () {
       userService.getAll().then(function (response) {
         $scope.users = response.data;
       }, function (response) {
         $scope.message = "la obtencion de usuarios fallo";
       });
-    };
+    })();
 
-    var GetAllRoles = function () {
+    //GetAllRoles
+    (function () {
       roleService.getAll().then(function (response) {
         $scope.roles = response.data;
       },
         function (response) {
           $scope.message = "La obtencion de roles fallo";
         });
-    };
+    })();
 
     $scope.signUp = function () {
       authService.saveRegistration($scope.registration).then(function (response) {
@@ -62,8 +64,5 @@
         $scope.message = "Ocurrio un error al intentar eliminar al usuario.";
       });
     };
-
-    GetAllUsers();
-    GetAllRoles();
   });
 })();

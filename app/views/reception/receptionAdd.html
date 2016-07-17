@@ -141,22 +141,19 @@
                             <div class="form-group">
                                 <label for="prodF" class="col-sm-2 control-label">Productores</label>
                                 <div class="fg-line select">
-                                    <select id="prodF" class="form-control" ng-model="receptionEntry.Producer" ng-options="producer.ProducerName for producer in producers">
-                                    </select>
+                                    <select id="prodF" class="form-control" ng-model="receptionEntry.Producer" ng-options="producer.ProducerName for producer in producers"></select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="varieF" class="col-sm-2 control-label">Variedades</label>
                                 <div class="fg-line select">
-                                    <select id="varieF" class="form-control" ng-model="receptionEntry.Variety" ng-options="variety.VarietyName for variety in varieties">
-                                </select>
+                                    <select id="varieF" class="form-control" ng-model="receptionEntry.Variety" ng-options="variety.VarietyName for variety in varieties"></select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="cilindF" class="col-sm-2 control-label">Cilindros</label>
                                 <div class="fg-line select">
-                                    <select id="cilindF" class="form-control" ng-model="receptionEntry.Cylinder" ng-options="cylinder.CylinderName for cylinder in cylinders"
-                                        ng-init="receptionEntry.Cylinder = cylinders[0]"></select>
+                                    <select id="cilindF" class="form-control" ng-model="receptionEntry.Cylinder" ng-options="cylinder.CylinderName for cylinder in cylinders"></select>
                                 </div>
                             </div>
                         </div>
