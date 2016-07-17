@@ -6,6 +6,7 @@
         var _CylinderName = "";
         var _ProducerId = "";
         var _Folio = "";
+        var _ReceptionEntryId = "";
         var _reception = {
             Id: "",
             Variety: "",
@@ -58,7 +59,8 @@
             delete: _delete,
             update: _update,
             saveEntry: _saveEntry,
-            getAllEntries: _getAllEntries
+            getAllEntries: _getAllEntries,
+            receptionEntryId: _ReceptionEntryId
         };
     });
 })();

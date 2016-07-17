@@ -66,13 +66,14 @@
             $state.go('receptionManage');
         };
 
-        var GetAllRemissions = function () {
+        //GetAllRemissions
+        (function () {
             remissionService.getAll().then(function (response) {
                 $scope.remissions = response.data;
             }, function (response) {
                 toastr.error('Ocurrio un error al intentar obtener los registro.');
             });
-        };
+        })();
 
         function defaultRemission(){
             remissionService.remission.Id= "";
@@ -85,8 +86,6 @@
             remissionService.remission.Elaborate = "";
             remissionService.remission.ReceptionId = receptionService.reception.Id;
             $scope.remission = remissionService.remission;
-        }
-
-        GetAllRemissions();
+        };
     });
 })();

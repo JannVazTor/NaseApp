@@ -1,13 +1,5 @@
 (function () {
   'use strict';
-  /**
-   * @ngdoc overview
-   * @name naseNutAppApp
-   * @description
-   * # naseNutAppApp
-   *
-   * Main module of the application.
-   */
   var app = angular
     .module('naseNutAppApp', [
       'ngAnimate',
@@ -103,11 +95,6 @@
           templateUrl: 'views/grill/grillIssue.html',
           controller: 'grillIssueController'
         })
-        .state('humidity', {
-          url: '/humidity',
-          templateUrl: 'views/humidity.html',
-          controller: 'humidityController'
-        })
         .state('grillCurrentInv', {
           url: '/parrillasInventarioActual',
           templateUrl: 'views/grill/grillCurrentInv.html',
@@ -118,18 +105,23 @@
           templateUrl: 'views/grill/grillUpdate.html',
           controller: 'grillController'
         })
-        .state('samplingManage', {
-          url: '/samplingM',
-          templateUrl: 'views/sampling/samplingManage.html',
+        .state('humidity', {
+          url: '/humidity',
+          templateUrl: 'views/humidity.html',
+          controller: 'humidityController'
+        })
+        .state('samplingGrillManage', {
+          url: '/muestreoParrillas',
+          templateUrl: 'views/sampling/samplingGrillManage.html',
           controller: 'samplingController'
         })
         .state('samplingAdd', {
-          url: '/samplingA',
+          url: '/agregarMuestreo',
           templateUrl: 'views/sampling/samplingAdd.html',
           controller: 'samplingController'
         })
         .state('samplingUpdate', {
-          url: '/samplingU',
+          url: '/modificarMuestreo',
           templateUrl: 'views/sampling/samplingUpdate.html',
           controller: 'samplingController'
         })
@@ -138,12 +130,27 @@
           templateUrl: 'views/report/dailyReportingProcess.html',
           controller: 'dailyReportingProcessController'
         })
-        .state('humidityAdd',{
+        .state('samplingReceptionAdd', {
+          url: '/agregarMuestreoRecepcion',
+          templateUrl: 'views/sampling/samplingReceptionAdd.html',
+          controller: 'samplingController'
+        })
+        .state('samplingReceptionEntryAdd',{
+          url: '/agregarMuestreoRecepcion',
+          templateUrl: 'views/sampling/samplingAdd.html',
+          controller: 'samplingController'
+        })
+        .state('samplingReceptionManage', {
+          url: '/muestreoRecepciones',
+          templateUrl: 'views/sampling/samplingReceptionManage.html',
+          controller: 'samplingController'
+        })
+        .state('humidityAdd', {
           url: '/humedad',
           templateUrl: 'views/humidity/humidityAdd.html',
           controller: 'humidityController'
         })
-        .state('humidityManage',{
+        .state('humidityManage', {
           url: '/humedadM',
           templateUrl: 'views/humidity/humidityManage.html',
           controller: 'humidityController'

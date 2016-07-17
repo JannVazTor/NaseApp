@@ -1,0 +1,52 @@
+<div class="animated bounceInRight">
+    <div class="card">
+        <div class="card-header">
+            <h2>Muestreos (Parrillas)</h2>
+        </div>
+        <div class="card-body table-responsive">
+            <div class="col-sm-12 actionbar">
+                <div class="form-group">
+                    <label for="isearch" class="col-sm-2 control-label">Buscar</label>
+                    <div class="col-sm-12">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchGrillSampling">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-vmiddle">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fecha</th>
+                        <th>Peso</th>
+                        <th>Porciento de Humedad</th>
+                        <th>Número de nueces</th>
+                        <th>Rendimiento</th>
+                        <th>Peso total de nueces Comestibles</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="sampling in samplings | filter:searchGrillSampling">
+                        <td>{{sampling.Id}}</td>
+                        <td>{{sampling.DateCapture}}</td>
+                        <td>{{sampling.SampleWeight}}</td>
+                        <td>{{sampling.HumidityPercent}}</td>
+                        <td>{{sampling.WalnutNumber}}</td>
+                        <td>{{sampling.Performance}}</td>
+                        <td>{{sampling.TotalWeightOfEdibleNuts}}</td>
+                        <td>
+                            <button class="btn btn-icon command-edit" ng-click="redirectUpdate(sampling)">
+                        <span class="md md-edit"></span>
+                    </button>
+                            <button class="btn btn-icon command-delete" ng-click="confirmationDelete(sampling.Id)">
+                        <span class="md md-delete"></span>
+                    </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

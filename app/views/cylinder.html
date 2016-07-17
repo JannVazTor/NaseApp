@@ -26,8 +26,6 @@
             </div>
         </form>
     </div>
-
-
     <div class="card">
         <div class="card-header">
             <h2>Cilindros</h2>
@@ -42,24 +40,25 @@
                 </div>
             </div>
         </div>
-
-        <table id="data-table-command" class="table table-striped table-vmiddle">
-            <thead>
-                <tr>
-                    <th data-column-id="id">Cilindro</th>
-                    <th data-column-id="commands">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="cylinder in cylinders | filter:searchUser">
-                    <td>{{cylinder.CylinderName}}</td>
-                    <td>
-                        <button class="btn btn-icon command-delete" ng-click="confirmationDelete(cylinder.Id)">
+        <div class="card-body table-responsive">
+            <table class="table table-striped table-vmiddle">
+                <thead>
+                    <tr>
+                        <th data-column-id="id">Cilindro</th>
+                        <th data-column-id="commands">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="cylinder in cylinders | filter:searchUser">
+                        <td>{{cylinder.CylinderName}}</td>
+                        <td>
+                            <button class="btn btn-icon command-delete" ng-click="confirmationDelete(cylinder.Id)">
                         <span class="md md-delete"></span>
                     </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

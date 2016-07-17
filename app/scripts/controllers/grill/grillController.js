@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillController', function (toastr, $filter, $scope, $state, producerService, grillService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('grillController', function (toastr, $filter, $scope, $state, producerService, varietyService, grillService, receptionAndGrillService, clearService) {
         $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
@@ -8,23 +8,12 @@
         $scope.ReceptionId = receptionAndGrillService.receptionId;
         $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
         $scope.producers = [];
-        
+
         $scope.sizes = [
             { Name: "Grande", Type: 1 },
             { Name: "Mediana", Type: 2 },
             { Name: "Chica", Type: 3 }
         ];
-
-        $scope.grill = {
-            DateCapture: "",
-            Size: "",
-            Sacks: "",
-            Kilos: "",
-            Quality: "",
-            Variety: "",
-            Producer: "",
-            FieldName: ""
-        };
 
         $scope.grillU = grillService.grill;
         //$('#grillDate').val($scope.grillU.DateCapture);
@@ -33,7 +22,7 @@
             onStateChange();
         });
         $scope.redirectAddSampling = function (grillId) {
-            grillService.id = grillId;
+            grillService.grillId = grillId;
             $state.go('samplingAdd');
         };
         $scope.redirectUpdate = function (grillId, grill) {
@@ -52,10 +41,18 @@
             });
         }
 
-        $scope.saveGrill = function () {
-            $scope.grill.DateCapture = $('#grillDate').val();
-            $scope.grill.Size = $scope.grill.Size.Type;
-            grillService.save($scope.grill).then(function (response) {
+        $scope.saveGrill = function (grill) {
+            var Grill = {
+                DateCapture: $('#grillDate').val(),
+                Size: $scope.grill.Size.Type,
+                FieldName: grill.FieldName,
+                Kilos: grill.Kilos,
+                Sacks: grill.Sacks,
+                Quality: grill.Quality,
+                Variety: grill.Variety.VarietyName,
+                Producer: grill.Producer.ProducerName
+            };
+            grillService.save(Grill).then(function (response) {
                 $scope.savedSuccessfully = true;
                 toastr.success('La parrilla a sido guardada de manera exitosa');
             }, function (response) {
@@ -169,27 +166,57 @@
         };
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
-                if (response.data.length === 0) toastr.info('No se econtraron productores en la base de datos');
-                $scope.producers = response.data;
+                if (response.data.length === 0) {
+                    toastr.info('No se econtraron productores en la base de datos')
+                } else {
+                    $scope.producers = response.data;
+                    $scope.grill.Producer = $scope.producers[0];
+                };
             }, function (response) {
                 toastr.error('la obtencion de productores fallo.');
             });
         };
 
+        var GetAllVarieties = function () {
+            varietyService.getAll().then(function (response) {
+                if (response.data.length === 0) {
+                    toastr.info('No se econtraron variedades en la base de datos')
+                } else {
+                    $scope.varieties = response.data;
+                    $scope.grill.Variety = $scope.varieties[0];
+                };
+            }, function (response) {
+                toastr.error('ocurrio un error al intentar cargar las variedades.');
+            });
+        };
+
         var GetAllGrills = function () {
             grillService.getAll().then(function (response) {
-                if (response.data.length === 0) toastr.info('No se econtraron parrillas en la base de datos');
-                $scope.grills = response.data;
-                response.data.forEach(function (element) {
-                    //checks if the reception has the grill key in his grillId field
-                    element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionFolio) === -1 ? false : true;
-                }, this);
+                if (response.data.length === 0) {
+                    toastr.info('No se econtraron parrillas en la base de datos')
+                } else {
+                    $scope.grills = response.data;
+                    response.data.forEach(function (element) {
+                        //checks if the reception has the grill key in his grillId field
+                        element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionFolio) === -1 ? false : true;
+                    }, this);
+                };
             }, function (response) {
                 toastr.error('la obtencion de parrillas fallo.');
             });
         };
-
-        GetAllGrills();
-        GetAllProducers();
+        var chargeGrillAddData = function () {
+            if ($state.current.name === 'grillAdd') {
+                GetAllProducers();
+                GetAllVarieties();
+            }
+        };
+        var chargeManageGrillData = function(){
+            if($state.current.name === 'grillManage'){
+                GetAllGrills();
+            }
+        };
+        chargeGrillAddData();
+        chargeManageGrillData();
     });
 })();
