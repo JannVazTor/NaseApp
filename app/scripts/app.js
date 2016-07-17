@@ -21,7 +21,8 @@
       'ui.bootstrap.datetimepicker',
       'datatables',
       'datatables.buttons',
-      'toastr'
+      'toastr',
+      'datatables.bootstrap'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $stateProvider
@@ -147,7 +148,43 @@
           url: '/humedadM',
           templateUrl: 'views/humidity/humidityManage.html',
           controller: 'humidityController'
+        })
+        .state('producerReport', {
+          url: '/reporteProductor',
+          templateUrl: 'views/report/producerReport.html',
+          controller: 'reportProducerController'
+        })
+        .state('processInventory', {
+          url: '/Inventario de Proceso',
+          templateUrl: 'views/report/processInventory.html',
+          controller: 'processInventoryReportController'
+        })
+        .state('outputs', {
+          url: '/Salidas',
+          templateUrl: 'views/report/outputs.html',
+          controller: 'outputsReportController'
+        })
+        .state('currentInventoryGrills', {
+          url: '/InvenarioActualParrillas',
+          templateUrl: 'views/report/currentInventoryGrills.html',
+          controller: 'currentInventoryGrillsReportController'
+        })
+        .state('dailyABEL', {
+          url: '/reporteDiarioABEL',
+          templateUrl: 'views/report/dailyABEL.html',
+          controller: 'dailyAbelReportController'
+        })
+        .state('reportOrigin', {
+          url: '/ReporteOrigen',
+          templateUrl: 'views/report/reportOrigin.html',
+          controller: 'reportOriginController'
+        })
+        .state('firstFinalSummary', {
+          url: '/ResumenFinalPrimeras',
+          templateUrl: 'views/report/firstFinalSummary.html',
+          controller: 'firstFinalSummaryReportController'
         });
+        
       $urlRouterProvider.otherwise('/');
     })
     .config(function ($httpProvider) {

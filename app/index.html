@@ -13,9 +13,12 @@
     <link rel="stylesheet" href="vendors/bootgrid/jquery.bootgrid.min.css">
     <link rel="stylesheet" href="styles/datetimepicker.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
-    <link rel="stylesheet" href="bower_components/angular-datatables/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="bower_components/angular-datatables/jquery.dataTables.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/datatables-buttons/css/buttons.dataTables.css">
+    
+    <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css">
+    <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/datatables-responsive/css/dataTables.responsive.css">
     <link rel="shortcut icon" href="favicon.ico">
     <style>
         #fixedbuttonRight {
@@ -120,9 +123,14 @@
                     <li class="sub-menu">
                         <a href=""><i class="md md-my-library-books"></i>Reportes</a>
                         <ul>
-                            <li><a href="dailyReportingProcess">Reporte diario de proceso</a></li>
-                            <li><a href="">Reporte de produccion por productor</a></li>
-                            <li><a href="">Resumen final primeras</a></li>
+                            <li><a ui-sref="dailyReportingProcess">Reporte diario de proceso</a></li>
+                            <li><a ui-sref="producerReport">Reporte de produccion por productor</a></li>
+                            <li><a ui-sref="processInventory">Inventario de Proceso</a></li>
+                            <li><a ui-sref="outputs">Salidas</a></li>
+                            <li><a ui-sref="currentInventoryGrills">Inventario Actual de Parrillas</a></li>
+                            <li><a ui-sref="dailyABEL">Reporte Diario ABEL</a></li>
+                            <li><a ui-sref="reportOrigin">Reporte de Origen</a></li>
+                            <li><a ui-sref="firstFinalSummary">Reporte Resumen Final Primeras</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -161,14 +169,17 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="bower_components/angular-datatables/dist/angular-datatables.js"></script>
+    <script src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/datatables-buttons/js/dataTables.buttons.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.min.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/datatables-buttons/js/buttons.colVis.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/datatables-buttons/js/buttons.flash.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/datatables-buttons/js/buttons.html5.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/datatables-buttons/js/buttons.print.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/datatables-responsive/js/dataTables.responsive.js"></script>
     <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  
     <!--AngularMaterial-->
     <script src="scripts/js/datetimepicker.js"></script>
     <script src="scripts/js/datetimepicker.templates.js"></script>
@@ -188,6 +199,13 @@
     <script src="scripts/controllers/grill/grillCurrentInvController.js"></script>
     <script src="scripts/controllers/report/dailyReportingProcessController.js"></script>
     <script src="scripts/controllers/humidityController.js"></script>
+    <script src="scripts/controllers/report/reportProducerController.js"></script>
+    <script src="scripts/controllers/report/currentInventoryGrillsReportController.js"></script>
+    <script src="scripts/controllers/report/dailyAbelReportController.js"></script>
+    <script src="scripts/controllers/report/firstFinalSummaryReportController.js"></script>
+    <script src="scripts/controllers/report/outputsReportController.js"></script>
+    <script src="scripts/controllers/report/reportOriginController.js"></script>
+    <script src="scripts/controllers/report/processInventoryReportController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>
