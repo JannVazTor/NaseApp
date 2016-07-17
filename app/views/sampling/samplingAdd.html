@@ -74,31 +74,52 @@
                         </div>
                     </div>
                 </div>
-                <div ng-show="">
-                    <form class="row" role="form">
-                        <div class="col-sm-3">
-                            <div class="form-group fg-line">
-                                <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                <input type="email" class="form-control input-sm" id="exampleInputEmail2" placeholder="Enter email">
+                <div ng-show="IsReceptionSamplingAdd()">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="nutFirst" class="col-sm-2 control-label">Nuez de Primera</label>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutFirst" placeholder="sacos de primera" data-ng-model="sampling.sacksFirst">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutFirst" placeholder="kilos por saco" data-ng-model="sampling.kilosFirst">
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group fg-line">
-                                <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                <input type="password" class="form-control input-sm" id="exampleInputPassword2" placeholder="Password">
+                        <div class="form-group">
+                            <label for="nutSecond" class="col-sm-2 control-label">Nuez de Segunda</label>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text"class="form-control input-sm" id="nutSecond" placeholder="sacos de segunda" data-ng-model="sampling.sacksSecond">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutSecond" placeholder="kilos por saco" data-ng-model="sampling.kilosSecond">
+                                </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveSampling()" ng-disabled="!samplingForm.$valid">Guardar</button>
+                        <div class="form-group">
+                            <label for="nutThird" class="col-sm-2 control-label">Nuez de Tercera</label>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutThird" placeholder="sacos de tercera" data-ng-model="sampling.sacksThird">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="nutThird" placeholder="kilos por saco" data-ng-model="sampling.kilosThird">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div data-ng-hide="message==''" class="alert alert-danger">
-                        {{message}}
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveSampling(sampling)" ng-disabled="!samplingForm.$valid">Guardar</button>
                     </div>
                 </div>
             </div>

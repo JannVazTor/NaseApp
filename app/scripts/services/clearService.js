@@ -1,18 +1,18 @@
 (function(){
     'use strict'
-    angular.module('naseNutAppApp').factory('clearService',function(receptionAndGrillService, samplingService){
+    angular.module('naseNutAppApp').factory('clearService',function(receptionAndGrillService, receptionService){
         
         var _clearReceptionAndGrillService = function(){
             receptionAndGrillService.IsGrillToReception = false;
             receptionAndGrillService.grillId = "";
         }
-        var _clearSamplingService = function(){
-            samplingService.isReceptionAdd = false;
+        var _clearReceptionService = function(){
+            receptionService.receptionEntryId = "";
         }
         
         return{
             clearReceptionAndGrillService: _clearReceptionAndGrillService,
-            clearSamplingService: _clearSamplingService
+            clearReceptionService: _clearReceptionService
         }
     });
 })();

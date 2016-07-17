@@ -1,24 +1,62 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('samplingController', function ($scope, toastr, $filter, $state, samplingService, clearService, receptionService) {
+    angular.module('naseNutAppApp').controller('samplingController', function ($scope, toastr, $filter, $state, samplingService, clearService, grillService, receptionService) {
         $scope.message = "";
         $scope.samplings = [];
         $scope.receptionEntries = [];
         $scope.sampling = samplingService.sampling;
 
-        $scope.saveSampling = function () {
-            $scope.sampling.DateCapture = $('#samplingDate').val();
-            samplingService.save($scope.sampling).then(function (response) {
-                $scope.savedSuccesfully = true;
-                $state.go('samplingManage');
-            }, function (response) {
-                toastr.error('Ocurrio un error al intentar guardar el registro.');
+        $scope.saveSampling = function (sampling) {
+            var nutTypes = [{ NutType: 1, Kilos: sampling.kilosFirst, Sacks: sampling.sacksFirst },
+                { NutType: 2, Kilos: sampling.kilosSecond, Sacks: sampling.sacksSecond },
+                { NutType: 3, Kilos: sampling.kilosThird, Sacks: sampling.sacksThird }]
+            var Sampling = {
+                NutTypes: nutTypes,
+                TotalWeightOfEdibleNuts: sampling.TotalWeightOfEdibleNuts,
+                Performance: sampling.Performance,
+                WalnutNumber: sampling.WalnutNumber,
+                HumidityPercent: sampling.HumidityPercent,
+                SampleWeight: sampling.SampleWeight,
+                DateCapture: $('#samplingDate').val(),
+                ReceptionEntryId: receptionService.receptionEntryId
+            };
+            if ($state.current.name === 'samplingReceptionEntryAdd') {
+                if (ValidateNutTypes(Sampling.NutTypes)) {
+                    samplingService.saveToReceptionEntry(Sampling).then(function (response) {
+                        clearService.clearReceptionService();
+                        $state.go('samplingReceptionAdd');
+                    }, function (response) {
+                        toastr.error('Ocurrio un error al intentar guardar el registro.');
+                    });
+                } else {
+                    toastr.error('Se debe agregar al menos un tipo de nuez, sacos y kilos.');
+                };
+            } else {
+                delete Sampling['NutTypes'];
+                delete Sampling['ReceptionEntryId'];
+                Sampling.GrillId = grillService.grillId;
+                samplingService.saveToGrill(Sampling).then(function (response) {
+                    $state.go('samplingGrillManage');
+                }, function (response) {
+                    toastr.error('Ocurrio un error al intentar guardar el registro.');
+                });
+            }
+        };
+        var ValidateNutTypes = function (nutTypes) {
+            var counter = 0;
+            $.each(nutTypes, function (i) {
+                if (nutTypes[i].Kilos || nutTypes[i].Sacks) {
+                    counter += 1;
+                };
             });
+            return counter >= 1;
         };
 
         var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
-            clearService.clearSamplingService();
-            onStateChange();
+            if ($state.current.name !== 'samplingReceptionEntryAdd') {
+                clearService.clearReceptionService();
+                onStateChange();
+            };
         });
 
         $scope.confirmationDelete = function (SamplingId) {
@@ -70,6 +108,7 @@
                 if (response.data.length === 0) {
                     toastr.info('No se encontraron muestreos en la base de datos.');
                 } else {
+                    if ($scope.samplings.length !== 0) $scope.samplings = [];
                     $scope.samplings = response.data;
                 }
             }, function (response) {
@@ -82,6 +121,7 @@
                 if (response.data.length === 0) {
                     toastr.info('No se encontraron muestreos en la base de datos.');
                 } else {
+                    if ($scope.samplings.length !== 0) $scope.samplings = [];
                     $scope.samplings = response.data;
                 }
             }, function (response) {
@@ -101,8 +141,12 @@
         };
 
         $scope.redirectToAddSampling = function (receptionEntryId) {
-            samplingService.isReceptionAdd = true;
-            $state.go('samplingAdd');
+            receptionService.receptionEntryId = receptionEntryId;
+            $state.go('samplingReceptionEntryAdd');
+        };
+
+        $scope.IsReceptionSamplingAdd = function () {
+            return ($state.current.name === 'samplingReceptionEntryAdd');
         };
 
         (function () {
@@ -113,7 +157,7 @@
                 case 'samplingReceptionManage':
                     GetAllReceptionSamplings();
                     break;
-                case 'samplingAdd':
+                case 'samplingReceptionEntryAdd':
                     break;
                 case 'samplingGrillManage':
                     GetAllGrillSamplings();

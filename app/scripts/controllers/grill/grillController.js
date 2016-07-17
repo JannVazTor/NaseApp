@@ -22,7 +22,7 @@
             onStateChange();
         });
         $scope.redirectAddSampling = function (grillId) {
-            grillService.id = grillId;
+            grillService.grillId = grillId;
             $state.go('samplingAdd');
         };
         $scope.redirectUpdate = function (grillId, grill) {

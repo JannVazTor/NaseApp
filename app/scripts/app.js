@@ -135,6 +135,11 @@
           templateUrl: 'views/sampling/samplingReceptionAdd.html',
           controller: 'samplingController'
         })
+        .state('samplingReceptionEntryAdd',{
+          url: '/agregarMuestreoRecepcion',
+          templateUrl: 'views/sampling/samplingAdd.html',
+          controller: 'samplingController'
+        })
         .state('samplingReceptionManage', {
           url: '/muestreoRecepciones',
           templateUrl: 'views/sampling/samplingReceptionManage.html',

@@ -24,18 +24,30 @@
                         <th>Número de nueces</th>
                         <th>Rendimiento</th>
                         <th>Peso total de nueces Comestibles</th>
+                        <th>Sacos de Primera</th>
+                        <th>Kilos de Primera</th>
+                        <th>Sacos de Segunda</th>
+                        <th>Kilos de Segunda</th>
+                        <th>Sacos de Tercera</th>
+                        <th>Kilos de Tercera</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="sampling in samplings | filter:searchUser">
                         <td>{{sampling.Id}}</td>
-                        <td>{{sampling.DateCapture}}</td>
+                        <td>{{sampling.DateCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{sampling.SampleWeight}}</td>
                         <td>{{sampling.HumidityPercent}}</td>
                         <td>{{sampling.WalnutNumber}}</td>
                         <td>{{sampling.Performance}}</td>
                         <td>{{sampling.TotalWeightOfEdibleNuts}}</td>
+                        <td>{{sampling.SacksFirst}}</td>
+                        <td>{{sampling.KilosFirst}}</td>
+                        <td>{{sampling.SacksSecond}}</td>
+                        <td>{{sampling.KilosSecond}}</td>
+                        <td>{{sampling.SacksThird}}</td>
+                        <td>{{sampling.KilosThird}}</td>
                         <td>
                             <button class="btn btn-icon command-edit" ng-click="redirectUpdate(sampling)">
                         <span class="md md-edit"></span>
