@@ -159,7 +159,7 @@
         .state('producerReport', {
           url: '/reporteProductor',
           templateUrl: 'views/report/producerReport.html',
-          controller: 'reportProducerController'
+          controller: 'reportController'
         })
         .state('processInventory', {
           url: '/Inventario de Proceso',
