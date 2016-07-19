@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/dist/sweetalert.css">
-    <link rel="stylesheet" href="styles/app.min.css">
+    <link rel="stylesheet" href="styles/app.css">
     <link rel="stylesheet" href="vendors/animate-css/animate.min.css">
     <link rel="stylesheet" href="vendors/farbtastic/farbtastic.css">
     <link rel="stylesheet" href="vendors/bootgrid/jquery.bootgrid.min.css">
@@ -123,7 +123,7 @@
                     <li class="sub-menu">
                         <a href=""><i class="md md-my-library-books"></i>Reportes</a>
                         <ul>
-                            <li><a ui-sref="dailyReportingProcess">Reporte diario de proceso</a></li>
+                            <li><a ui-sref="reportingProcess">Reporte de proceso</a></li>
                             <li><a ui-sref="producerReport">Reporte de produccion por productor</a></li>
                             <li><a ui-sref="processInventory">Inventario de Proceso</a></li>
                             <li><a ui-sref="outputs">Salidas</a></li>
@@ -197,16 +197,8 @@
     <script src="scripts/controllers/samplingController.js"></script>
     <script src="scripts/controllers/humidityController.js"></script>
     <script src="scripts/controllers/grill/grillCurrentInvController.js"></script>
-    <script src="scripts/controllers/report/dailyReportingProcessController.js"></script>
     <script src="scripts/controllers/humidityController.js"></script>
-    <script src="scripts/controllers/report/reportProducerController.js"></script>
-    <script src="scripts/controllers/report/currentInventoryGrillsReportController.js"></script>
-    <script src="scripts/controllers/report/dailyAbelReportController.js"></script>
-    <script src="scripts/controllers/report/firstFinalSummaryReportController.js"></script>
-    <script src="scripts/controllers/report/outputsReportController.js"></script>
-    <script src="scripts/controllers/report/reportOriginController.js"></script>
-    <script src="scripts/controllers/report/processInventoryReportController.js"></script>
-    <script src="scripts/controllers/report/reportController.js"></script>
+    <script src="scripts/controllers/reportController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>

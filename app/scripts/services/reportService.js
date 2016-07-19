@@ -4,12 +4,12 @@
         var _getProducerReport = function(id){
             return $http.get(apiPath + 'api/report/producer/' + id);
         }
-        var _getSacksPerVariety = function(){
-            return $http.get(apiPath + 'api/report/');
+        var _getReportingProcess = function(){
+            return $http.get(apiPath + 'api/report/reportingProcess');
         }
         return {
             getProducerReport: _getProducerReport,
-            getSacksPerVariety: _getSacksPerVariety
+            getReportingProcess: _getReportingProcess
         };
     });
 })();

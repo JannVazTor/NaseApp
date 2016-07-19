@@ -16030,3 +16030,6 @@ a.thumbnail.active {
 .marginTop {
     margin-top: 20px;
 }
+table, th, td{
+  text-align: center;
+}

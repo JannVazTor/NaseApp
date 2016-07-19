@@ -54,8 +54,8 @@
                 Kilos: grill.Kilos,
                 Sacks: grill.Sacks,
                 Quality: grill.Quality.Type,
-                Variety: grill.Variety.VarietyName,
-                Producer: grill.Producer.ProducerName
+                VarietyId: grill.Variety.Id,
+                ProducerId: grill.Producer.Id
             };
             grillService.save(Grill).then(function (response) {
                 $scope.savedSuccessfully = true;

@@ -3,6 +3,7 @@
     angular.module('naseNutAppApp').controller('reportController', function (toastr, $scope, $state, DTOptionsBuilder, DTColumnBuilder, reportService, producerService) {
         //$scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withBootstrap().withOption('responsive', true);
         $scope.dtOptions = {};
+        $scope.reportingProcess = [];
 
         $scope.getProducerReport = function (id) {
             reportService.getProducerReport(id).then(function (response) {
@@ -40,7 +41,16 @@
                     GetAllProducers();
                     $scope.dtOptions = GetDtOptions(reportService.getProducerReport(1));
                     break;
-                case 'home':
+                case 'reportingProcess':
+                    $scope.dtOptions = GetDtOptions(reportService.getReportingProcess().then(function(response){
+                        if(response.data.length === 0){
+                            toastr.info('No se encontraron variedades en la base de datos.');
+                        }else{
+                            $scope.reportingProcess = response.data;
+                        }
+                    },function(response){
+                        toastr.error('Ocurrio un error en el servidor y no se pudo obtener la informacion.');
+                    }));
                     break;
                 default:
                     break;
