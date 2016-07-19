@@ -23,7 +23,6 @@
                     <tr>
                         <th>Fecha</th>
                         <th>Variedad</th>
-                        <th>Campo</th>
                         <th>Remisión</th>
                         <th>Cilindro</th>
                         <th>Folio</th>
@@ -40,8 +39,7 @@
                     <tr ng-repeat="report in producerReport">
                         <td>{{report.DateReceptionCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{report.Variety}}</td>
-                        <td>{{report.FieldName}}</td>
-                        <td></td>
+                        <td>{{report.Remission}}</td>
                         <td>{{report.Cylinder}}</td>
                         <td>{{report.Folio}}</td>
                         <td>{{report.KgsOrigen}}</td>
