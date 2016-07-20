@@ -48,11 +48,11 @@
                         <td>{{grill.Variety}}</td>
                         <td>{{grill.Producer}}</td>
                         <td>{{grill.FieldName}}</td>
-                        <td>{{grill.Sampling.SampleWeight}}</td>
-                        <td>{{grill.Sampling.HumidityPercent}}</td>
-                        <td>{{grill.Sampling.WalnutNumber}}</td>
-                        <td>{{grill.Sampling.Performance}}</td>
-                        <td>{{grill.Sampling.TotalWeightOfEdibleNuts}}</td>
+                        <td>{{grill.SampleWeight}}</td>
+                        <td>{{grill.HumidityPercent}}</td>
+                        <td>{{grill.WalnutNumber}}</td>
+                        <td>{{grill.Performance}}</td>
+                        <td>{{grill.TotalWeightOfEdibleNuts}}</td>
                         <td>
                             <div class="toggle-switch">
                                 <input id="{{grill.Id + g}}" type="checkbox" hidden="hidden" ng-model="grill.Status" ng-change="changeStatus(grill.Status, grill.Id)">
