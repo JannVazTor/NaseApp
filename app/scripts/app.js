@@ -81,7 +81,8 @@
           templateUrl: 'views/remission/remissionUpdate.html',
           controller: 'remissionController'
         })
-        .state('grillAdd',{
+        /*Grills*/
+        .state('grillAdd', {
           url: '/parrillasAlta',
           templateUrl: 'views/grill/grillAdd.html',
           controller: 'grillController'
@@ -106,11 +107,23 @@
           templateUrl: 'views/grill/grillUpdate.html',
           controller: 'grillController'
         })
+        /*Humidity*/
         .state('humidity', {
           url: '/humidity',
           templateUrl: 'views/humidity.html',
           controller: 'humidityController'
         })
+        .state('humidityAdd', {
+          url: '/humedad',
+          templateUrl: 'views/humidity/humidityAdd.html',
+          controller: 'humidityController'
+        })
+        .state('humidityManage', {
+          url: '/humedadM',
+          templateUrl: 'views/humidity/humidityManage.html',
+          controller: 'humidityController'
+        })
+        /*Sampling*/
         .state('samplingGrillManage', {
           url: '/muestreoParrillas',
           templateUrl: 'views/sampling/samplingGrillManage.html',
@@ -126,17 +139,12 @@
           templateUrl: 'views/sampling/samplingUpdate.html',
           controller: 'samplingController'
         })
-        .state('dailyReportingProcess', {
-          url: '/reporteDiarioProceso',
-          templateUrl: 'views/report/dailyReportingProcess.html',
-          controller: 'dailyReportingProcessController'
-        })
         .state('samplingReceptionAdd', {
           url: '/agregarMuestreoRecepcion',
           templateUrl: 'views/sampling/samplingReceptionAdd.html',
           controller: 'samplingController'
         })
-        .state('samplingReceptionEntryAdd',{
+        .state('samplingReceptionEntryAdd', {
           url: '/agregarMuestreoRecepcion',
           templateUrl: 'views/sampling/samplingAdd.html',
           controller: 'samplingController'
@@ -146,52 +154,48 @@
           templateUrl: 'views/sampling/samplingReceptionManage.html',
           controller: 'samplingController'
         })
-        .state('humidityAdd', {
-          url: '/humedad',
-          templateUrl: 'views/humidity/humidityAdd.html',
-          controller: 'humidityController'
-        })
-        .state('humidityManage', {
-          url: '/humedadM',
-          templateUrl: 'views/humidity/humidityManage.html',
-          controller: 'humidityController'
+        /*Reports*/
+        .state('reportingProcess', {
+          url: '/reporteProceso',
+          templateUrl: 'views/report/grill/reportingProcess.html',
+          controller: 'reportController'
         })
         .state('producerReport', {
           url: '/reporteProductor',
           templateUrl: 'views/report/producerReport.html',
-          controller: 'reportProducerController'
+          controller: 'reportController'
         })
         .state('processInventory', {
           url: '/Inventario de Proceso',
-          templateUrl: 'views/report/processInventory.html',
-          controller: 'processInventoryReportController'
+          templateUrl: 'views/report/grill/genericReport.html',
+          controller: 'reportController'
         })
         .state('outputs', {
           url: '/Salidas',
           templateUrl: 'views/report/outputs.html',
           controller: 'outputsReportController'
         })
-        .state('currentInventoryGrills', {
+        .state('currentInventory', {
           url: '/InvenarioActualParrillas',
-          templateUrl: 'views/report/currentInventoryGrills.html',
-          controller: 'currentInventoryGrillsReportController'
+          templateUrl: 'views/report/grill/genericReport.html',
+          controller: 'reportController'
         })
         .state('dailyABEL', {
           url: '/reporteDiarioABEL',
           templateUrl: 'views/report/dailyABEL.html',
-          controller: 'dailyAbelReportController'
+          controller: 'reportController'
         })
         .state('reportOrigin', {
           url: '/ReporteOrigen',
           templateUrl: 'views/report/reportOrigin.html',
-          controller: 'reportOriginController'
+          controller: 'reportController'
         })
         .state('firstFinalSummary', {
           url: '/ResumenFinalPrimeras',
           templateUrl: 'views/report/firstFinalSummary.html',
-          controller: 'firstFinalSummaryReportController'
+          controller: 'reportController'
         });
-        
+
       $urlRouterProvider.otherwise('/');
     })
     .config(function ($httpProvider) {

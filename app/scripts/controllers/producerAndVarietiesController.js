@@ -3,38 +3,25 @@
     angular.module('naseNutAppApp').controller('producerAndVarietiesController', function ($scope, producerService, varietyService, toastr) {
         $scope.producers = [];
         $scope.varieties = [];
-        $scope.message = "";
-        $scope.savedSuccessfully = false;
-
-        $scope.producer = {
-            producerName: ""
-        };
-
-        $scope.variety = {
-            varietyName: ""
-        };
-
-        //GetAllProducers
-         (function () {
+        
+        var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 $scope.producers = response.data;
             }, function (response) {
                 toastr.error('ocurrio un error y no se pudieron obtener los productores.');
             });
-        })();
+        };
 
-        //GetAllVarieties
-        (function () {
+        var GetAllVarieties = function () {
             varietyService.getAll().then(function (response) {
                 $scope.varieties = response.data;
             }, function (response) {
                 toastr.error('ocurrio un error y no se pudieron obtener las variedades.');
             });
-        })();
+        };
 
-        $scope.saveProducer = function () {
-            producerService.save($scope.producer).then(function (response) {
-                $scope.savedSuccessfully = true;
+        $scope.saveProducer = function (producerName) {
+            producerService.save(producerName).then(function (response) {
                 toastr.success('El productor a sigo guardado de manera exitosa.');
                 GetAllProducers();
             }, function (response) {
@@ -42,9 +29,16 @@
             });
         };
 
-        $scope.saveVariety = function () {
-            varietyService.save($scope.variety).then(function (response) {
-                $scope.savedSuccessfully = true;
+        $scope.saveVariety = function (variety) {
+            var Variety = {
+                VarietyName:variety.varietyName, 
+                LargeEnd: variety.LargeEnd, 
+                LargeStart: variety.LargeStart,
+                MediumEnd: variety.MediumEnd, 
+                MediumStart: variety.MediumStart, 
+                Small: variety.Small    
+            };
+            varietyService.save(Variety).then(function (response) {
                 toastr.success('la variedad a sigo guardada de manera exitosa.');
                 GetAllVarieties();
             }, function (response) {
@@ -111,5 +105,10 @@
                 toastr.error('ocurrio un error y la variedad no pudo ser eliminada.');
             });
         };
+        
+        (function(){
+            GetAllProducers();
+            GetAllVarieties();
+        })();
     });
 })();
