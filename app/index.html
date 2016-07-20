@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/dist/sweetalert.css">
-    <link rel="stylesheet" href="styles/app.min.css">
+    <link rel="stylesheet" href="styles/app.css">
     <link rel="stylesheet" href="vendors/animate-css/animate.min.css">
     <link rel="stylesheet" href="vendors/farbtastic/farbtastic.css">
     <link rel="stylesheet" href="vendors/bootgrid/jquery.bootgrid.min.css">
     <link rel="stylesheet" href="styles/datetimepicker.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
-    <link rel="stylesheet" href="bower_components/angular-datatables/jquery.dataTables.css">
+    <link rel="stylesheet" href="bower_components/angular-datatables/jquery.dataTables.min.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/datatables-buttons/css/buttons.dataTables.css">
     
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
@@ -85,11 +85,8 @@
                 </div>
                 <ul class="main-menu">
                     <li class="active"><a ui-sref="home"><i class="md md-home"></i> Home</a></li>
-
                     <li><a ui-sref="users"><i class="md md-people"></i> Usuarios</a></li>
-
                     <li><a ui-sref="producersAndVarieties"><i class="md md-people-outline"></i> Productores y Variedades</a></li>
-
                     <li><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
                     <li class="sub-menu">
                         <a href=""> <i class="md md md-format-color-reset"></i>Humedad</a>
@@ -98,7 +95,6 @@
                             <li><a ui-sref="humidityManage">Gestion de Humedad</a></li>
                         </ul>
                     </li>
-
                     <li class="sub-menu">
                         <a href=""><i class="md md-view-module"></i>Parillas</a>
                         <ul>
@@ -123,18 +119,15 @@
                             <li><a ui-sref="receptionManage">Gestion de Recepciones</a></li>
                         </ul>
                     </li>
-
                     <li><a ui-sref="remissionManage"><i class="md md-description"></i> Remisiones</a></li>
-                    <li><a ui-sref="humidity"><i class="md md-cloud-queue"></i> Humedad</a></li>
-
                     <li class="sub-menu">
                         <a href=""><i class="md md-my-library-books"></i>Reportes</a>
                         <ul>
-                            <li><a ui-sref="dailyReportingProcess">Reporte diario de proceso</a></li>
-                            <li><a ui-sref="producerReport">Reporte de produccion por productor</a></li>
+                            <li><a ui-sref="reportingProcess">Reporte de Proceso</a></li>
+                            <li><a ui-sref="producerReport">Reporte de Produccion</a></li>
                             <li><a ui-sref="processInventory">Inventario de Proceso</a></li>
+                            <li><a ui-sref="currentInventory">Inventario Actual</a></li>
                             <li><a ui-sref="outputs">Salidas</a></li>
-                            <li><a ui-sref="currentInventoryGrills">Inventario Actual de Parrillas</a></li>
                             <li><a ui-sref="dailyABEL">Reporte Diario ABEL</a></li>
                             <li><a ui-sref="reportOrigin">Reporte de Origen</a></li>
                             <li><a ui-sref="firstFinalSummary">Reporte Resumen Final Primeras</a></li>
@@ -204,15 +197,8 @@
     <script src="scripts/controllers/samplingController.js"></script>
     <script src="scripts/controllers/humidityController.js"></script>
     <script src="scripts/controllers/grill/grillCurrentInvController.js"></script>
-    <script src="scripts/controllers/report/dailyReportingProcessController.js"></script>
     <script src="scripts/controllers/humidityController.js"></script>
-    <script src="scripts/controllers/report/reportProducerController.js"></script>
-    <script src="scripts/controllers/report/currentInventoryGrillsReportController.js"></script>
-    <script src="scripts/controllers/report/dailyAbelReportController.js"></script>
-    <script src="scripts/controllers/report/firstFinalSummaryReportController.js"></script>
-    <script src="scripts/controllers/report/outputsReportController.js"></script>
-    <script src="scripts/controllers/report/reportOriginController.js"></script>
-    <script src="scripts/controllers/report/processInventoryReportController.js"></script>
+    <script src="scripts/controllers/reportController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>
@@ -231,5 +217,4 @@
     <script src="scripts/services/reportService.js"></script>
     <script src="scripts/services/humidityService.js"></script>
 </body>
-
 </html>

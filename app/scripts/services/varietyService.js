@@ -2,7 +2,7 @@
     'use strict'
     angular.module('naseNutAppApp').factory('varietyService', function ($http, apiPath) {
         var _getAll = function () {
-            return $http.get(apiPath + 'api/variety/getAll');
+            return $http.get(apiPath + 'api/variety');
         }
 
         var _save = function (data) {

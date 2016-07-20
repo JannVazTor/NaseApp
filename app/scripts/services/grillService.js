@@ -13,7 +13,7 @@
             FieldName: ""
         };
         var _getAll = function () {
-            return $http.get(apiPath + 'api/grill/getAll');
+            return $http.get(apiPath + 'api/grill');
         }
 
         var _save = function (data) {
@@ -23,6 +23,7 @@
         var _delete = function (id) {
             return $http.delete(apiPath + 'api/grill/' + id);
         }
+
         var _update = function (id, data) {
             return $http.put(apiPath + 'api/grill/' + id, data);
         }

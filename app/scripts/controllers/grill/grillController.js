@@ -14,6 +14,11 @@
             { Name: "Mediana", Type: 2 },
             { Name: "Chica", Type: 3 }
         ];
+        $scope.qualities = [
+            { Name: "Primera", Type: 1 },
+            { Name: "Segunda", Type: 2 },
+            { Name: "Tercera", Type: 3 }
+        ];
 
         $scope.grillU = grillService.grill;
         //$('#grillDate').val($scope.grillU.DateCapture);
@@ -44,13 +49,13 @@
         $scope.saveGrill = function (grill) {
             var Grill = {
                 DateCapture: $('#grillDate').val(),
-                Size: $scope.grill.Size.Type,
+                Size: grill.Size.Type,
                 FieldName: grill.FieldName,
                 Kilos: grill.Kilos,
                 Sacks: grill.Sacks,
-                Quality: grill.Quality,
-                Variety: grill.Variety.VarietyName,
-                Producer: grill.Producer.ProducerName
+                Quality: grill.Quality.Type,
+                VarietyId: grill.Variety.Id,
+                ProducerId: grill.Producer.Id
             };
             grillService.save(Grill).then(function (response) {
                 $scope.savedSuccessfully = true;
@@ -205,18 +210,19 @@
                 toastr.error('la obtencion de parrillas fallo.');
             });
         };
-        var chargeGrillAddData = function () {
-            if ($state.current.name === 'grillAdd') {
-                GetAllProducers();
-                GetAllVarieties();
-            }
-        };
-        var chargeManageGrillData = function(){
-            if($state.current.name === 'grillManage'){
-                GetAllGrills();
-            }
-        };
-        chargeGrillAddData();
-        chargeManageGrillData();
+
+        (function () {
+            switch ($state.current.name) {
+                case 'grillAdd':
+                    GetAllProducers();
+                    GetAllVarieties();
+                    break;
+                case 'grillManage':
+                    GetAllGrills();
+                    break;
+                default:
+                    break;
+            };
+        })();
     });
 })();
