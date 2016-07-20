@@ -42,7 +42,7 @@
                 messageService.toastMessage(messageService.successMessages[1],2);
                 $state.go('grillManage');
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[3],3);
+                messageService.toastMessage(messageService.errorMessages[3],3);
             });
         }
 
@@ -61,7 +61,7 @@
                 $scope.savedSuccessfully = true;
                 messageService.toastMessage(messageService.successMessages[3],2);
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[3],3);
+                messageService.toastMessage(messageService.errorMessages[3],3);
             });
         };
 
@@ -82,7 +82,7 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessage[17],3);
+                    messageService.toastMessage(messageService.errorMessages[17],3);
                 });
             } else {
                 grillService.changeStatus(grillId, 0).then(function (response) {
@@ -94,7 +94,7 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessage[17],3);
+                    messageService.toastMessage(messageService.errorMessages[17],3);
                 });
             }
         };
@@ -110,7 +110,7 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessage[18],3);
+                    messageService.toastMessage(messageService.errorMessages[18],3);
                 });
             } else {
                 receptionAndGrillService.removeGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
@@ -122,7 +122,7 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessage[4],3);
+                    messageService.toastMessage(messageService.errorMessages[4],3);
                 });
             }
         };
@@ -137,7 +137,7 @@
                     }
                 });
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[4],3);
+                messageService.toastMessage(messageService.errorMessages[4],3);
             });
         };
         $scope.confirmationDelete = function (grillId) {
@@ -166,7 +166,7 @@
                     }
                 });
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[4],3);
+                messageService.toastMessage(messageService.errorMessages[4],3);
             });
         };
         var GetAllProducers = function () {
@@ -178,7 +178,7 @@
                     $scope.grill.Producer = $scope.producers[0];
                 };
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[8],3);
+                messageService.toastMessage(messageService.errorMessages[8],3);
             });
         };
 
@@ -191,7 +191,7 @@
                     $scope.grill.Variety = $scope.varieties[0];
                 };
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[5],3);
+                messageService.toastMessage(messageService.errorMessages[5],3);
             });
         };
 
@@ -207,7 +207,7 @@
                     }, this);
                 };
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[15],3);
+                messageService.toastMessage(messageService.errorMessages[15],3);
             });
         };
 
