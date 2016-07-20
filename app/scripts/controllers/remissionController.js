@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('remissionController', function ($scope,toastr, $state, remissionService, receptionService) {
+    angular.module('naseNutAppApp').controller('remissionController', function ($scope,messageService,toastr, $state, remissionService, receptionService) {
         $scope.remissions = [];
         $scope.message = "";
         $scope.folio = receptionService.folio;
@@ -8,12 +8,11 @@
         
         
         $scope.saveRemission = function () {
-           
             remissionService.save($scope.remission).then(function (response) {
-                swal("Correcto","Se agrego correctmente","success");
+                messageService.toastMessage(messageService.successMessages[0], 2);
                 defaultRemission();
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar guardar el registro.');
+                messageService.toastMessage(messageService.errorMessages[3], 3);
             });
         };
         
@@ -24,11 +23,11 @@
 
         $scope.UpdateRemission =function(){
             remissionService.update($scope.remission.Id,$scope.remission).then(function (response) {
-                toastr.success('El registro fue Actualizado  de manera exitosa.');
+                messageService.toastMessage(messageService.successMessages[1], 2);
                 defaultRemission();
                 $state.go('remissionManage');
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar actualizar el registro.');
+                messageService.toastMessage(messageService.errorMessages[9], 3);
             });
         }
 
@@ -57,8 +56,7 @@
                     }
                 });
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar eliminar el registro.');
-                
+                messageService.toastMessage(messageService.errorMessages[4], 3);     
             });
         };
 
@@ -71,7 +69,7 @@
             remissionService.getAll().then(function (response) {
                 $scope.remissions = response.data;
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar obtener los registro.');
+                messageService.toastMessage(messageService.errorMessages[10], 3);
             });
         })();
 

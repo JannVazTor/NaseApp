@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function (toastr, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('receptionController', function (toastr, messageService, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
@@ -54,21 +54,21 @@
                     Observations: reception.Observations
                 });
             } else {
-                toastr.info('La recepcion ya se encuentra agregada y en estado pendiente.');
+                messageService.toastMessage(messageService.infoMessages[1], 1);
             }
         };
         $scope.saveReceptionEntry = function (receptionEntry) {
             if ($scope.receptions.length === 0) {
-                toastr.info('Debe agregar al menos una recepcion.');
+                messageService.toastMessage(messageService.infoMessages[0], 1);
             } else {
                 if (!receptionEntry.Cylinder) {
-                    toastr.info('No puede agregar si no hay cilindros disponibles.');
+                    messageService.toastMessage(messageService.infoMessages[2], 1);
                 } else {
                     if (!receptionEntry.Variety) {
-                        toastr.info('No puede agregar si no hay variedades disponibles.');
+                        messageService.toastMessage(messageService.infoMessages[3], 1);
                     } else {
                         if (!receptionEntry.Producer) {
-                            toastr.info('No puede agregar si no hay productores disponibles.');
+                            messageService.toastMessage(messageService.infoMessages[4], 1);
                         } else {
                             var ReceptionEntry = {};
                             ReceptionEntry.receptions = $scope.receptions;
@@ -76,10 +76,10 @@
                             ReceptionEntry.VarietyId = receptionEntry.Variety.Id;
                             ReceptionEntry.ProducerId = receptionEntry.Producer.Id;
                             receptionService.saveEntry(ReceptionEntry).then(function (response) {
-                                toastr.success('los registros se agrego correctamente.');
+                                messageService.toastMessage(messageService.successMessages[0], 1);
                                 $scope.receptions = [];
                             }, function (response) {
-                                toastr.error('ocurrio un error y los registros no pudieron ser guardados.');
+                                messageService.toastMessage(messageService.errorMessages[0], 1);
                             });
                         }
                     }
@@ -103,17 +103,17 @@
 
         $scope.UpdateReception = function () {
             receptionService.update($scope.receptionU.Id, $scope.receptionU).then(function (response) {
-                toastr.success('El registro se actualizo correctamente.');
+                messageService.toastMessage(messageService.successMessages[1], 2);
                 $state.go('receptionManage');
             }, function (response) {
-                toastr.error('ocurrio un error, intentelo de nuevo.');
+                messageService.toastMessage(messageService.errorMessages[1], 3);
             });
         }
 
         $scope.addReceptionToGrill = function (receptionId, checked) {
             if (checked) {
                 receptionAndGrillService.addReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    toastr.success('el registro se agrego correctamente.');
+                    messageService.toastMessage(messageService.successMessages[0], 2);
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -121,11 +121,11 @@
                             return false;
                         }
                     });
-                    toastr.error('ocurrio un error y el registro no pudo ser asignado.');
+                    messageService.toastMessage(messageService.errorMessages[2], 3);
                 });
             } else {
                 receptionAndGrillService.removeReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    toastr.success('el registro se removio satisfactoriamente');
+                    messageService.toastMessage(messageService.successMessages[2], 2);
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -133,7 +133,7 @@
                             return false;
                         }
                     });
-                    toastr.error('ocurrio un error y el registro no pudo ser removido.');
+                    messageService.toastMessage(messageService.errorMessages[4], 3);
                 });
             }
         };
@@ -142,10 +142,10 @@
             $scope.reception.EntryDate = $('#EntryDate').val();
             receptionService.save($scope.reception).then(function (response) {
                 $scope.savedSuccesfully = true;
-                toastr.success('el registro se agrego satisfactoriamente');
+                messageService.toastMessage(messageService.successMessages[0], 2);
                 $state.go('receptionManage');
             }, function (response) {
-                toastr.error('ocurrio un error y el registro no pudo ser guardado.');
+                messageService.toastMessage(messageService.errorMessages[3], 3);
             });
         };
         $scope.confirmationDelete = function (receptionId) {
@@ -166,7 +166,6 @@
 
         $scope.deleteReception = function (receptionId) {
             receptionService.delete(receptionId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.receptions, function (i) {
                     if ($scope.receptions[i].Id === receptionId) {
@@ -175,7 +174,7 @@
                     }
                 });
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar eliminar el registro.');
+                messageService.toastMessage(messageService.errorMessages[4], 3);
             });
         };
 
@@ -187,43 +186,54 @@
 
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
-                if (response.data.length === 0) toastr.info('No se econtraron productores en la base de datos');
+                if (response.data.length === 0) 
+                     messageService.toastMessage(messageService.infoMessages[5], 1);   
+
                 $scope.producers = response.data;
                 $scope.receptionEntry.Producer = $scope.producers[0];
             }, function (response) {
-                toastr.error('ocurrio un error al intentar cargar a los productores.');
+                messageService.toastMessage(messageService.errorMessages[7], 3);
+      
             });
         };
 
         var GetAllVarieties = function () {
             varietyService.getAll().then(function (response) {
-                if (response.data.length === 0) toastr.info('No se econtraron variedades en la base de datos');
+                if (response.data.length === 0) 
+                     messageService.toastMessage(messageService.infoMessages[7], 1);
+              
                 $scope.varieties = response.data;
                 $scope.receptionEntry.Variety = $scope.varieties[0];
             }, function (response) {
-                toastr.error('ocurrio un error al intentar cargar las variedades.');
+                messageService.toastMessage(messageService.errorMessages[5], 3);
+               
             });
         };
 
         var GetAllCylinders = function () {
             cylinderService.getAll().then(function (response) {
-                if (response.data.length === 0) toastr.info('No se econtraron cilindros en la base de datos');
+                if (response.data.length === 0) 
+                messageService.toastMessage(messageService.infoMessages[8], 1);
+               
                 $scope.cylinders = response.data;
                 $scope.receptionEntry.Cylinder = $scope.cylinders[0];
             }, function (response) {
-                toastr.error('ocurrio un error al intentar cargar los cilindros.');
+                messageService.toastMessage(messageService.errorMessages[6], 3);
+                
             });
         };
 
         var GetAllReceptions = function () {
             receptionService.getAll().then(function (response) {
-                if (response.data.length === 0) toastr.info('No se econtraron recepciones en la base de datos.');
+                if (response.data.length === 0) 
+                    messageService.toastMessage(messageService.infoMessages[6], 1);
+                
                 $scope.receptions = response.data;
                 response.data.forEach(function (element) {
                     element.IsAlreadyAssigned = element.Grills.indexOf($scope.GrillId) === -1 ? false : true;
                 }, this);
             }, function (response) {
-                toastr.error('la obtencion de las recepciones fallo');
+                messageService.toastMessage(messageService.errorMessages[7], 3);
             });
         };
 
