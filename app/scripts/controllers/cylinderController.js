@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('cylinderController', function ($scope,toastr, cylinderService) {
+    angular.module('naseNutAppApp').controller('cylinderController', function ($scope,messageService, cylinderService) {
         $scope.cylinders = [];
         $scope.message = "";
         $scope.savedSuccessfully = false;
@@ -14,17 +14,17 @@
             cylinderService.getAll().then(function (response) {
                 $scope.cylinders = response.data;
             }, function (response) {
-                toastr.error('la obtencion de cilindros fallo.');
+                messageService.toastMessage(messageService.errorMessages[6],3);
             });
         })();
 
         $scope.saveCylinder = function () {
             cylinderService.save($scope.cylinder).then(function (response) {
                 $scope.savedSuccessfully = true;
-                toastr.success('El registro a sigo guardado de manera exitosa.');
+                messageService.toastMessage(messageService.successMessages[3],2);
                 GetAll();
             }, function (response) {
-                toastr.error('No se pudo guardar el cilindro.');
+                messageService.toastMessage(messageService.errorMessages[3],3);
             });
         };
         $scope.confirmationDelete =  function(cylinderId){
@@ -52,7 +52,7 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error y el registro no pudo ser eliminado.";
+                messageService.toastMessage(messageService.errorMessages[4],3);
             });
         };
     });

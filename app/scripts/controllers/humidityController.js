@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('humidityController', function (toastr, $state, $scope, humidityService, receptionService) {
+    angular.module('naseNutAppApp').controller('humidityController', function (messageService,$state, $scope, humidityService, receptionService) {
         $scope.receptionEntries = [];
         $scope.humidities = [];
         var GetAllHumidities = function () {
@@ -8,10 +8,10 @@
                 if (response.data.length !== 0) {
                     $scope.humidities = response.data;
                 } else {
-                    toastr.info('No se encontraron tomas de humedad en la base de datos.');
+                    messageService.toastMessage(messageService.infoMessages[9],1);
                 }
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar obtener las humedades.');
+                messageService.toastMessage(messageService.errorMessages[11],3);
             });
         };
         var GetAllReceptionEntries = function () {
@@ -19,10 +19,10 @@
                 if (response.data.length !== 0) {
                     $scope.receptionEntries = response.data;
                 } else {
-                    toastr.info('No se econtraron recepciones en la base de datos.');
+                    messageService.toastMessage(messageService.infoMessages[6],1);
                 }
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar obtener las recepciones.');
+                messageService.toastMessage(messageService.errorMessages[7],3);
             });
         };
         $scope.saveHumidity = function (humidityPercent, receptionEntryId) {
@@ -30,9 +30,9 @@
             humidity.HumidityPercent = humidityPercent;
             humidity.ReceptionEntryId = receptionEntryId;
             humidityService.save(humidity).then(function (response) {
-                toastr.success('El registro se guardo correctamente.');
+                messageService.toastMessage(messageService.successMessages[3],2);
             }, function (response) {
-                toastr.error('Ocurrio un error y el registro no pudo ser guardado.');
+                messageService.toastMessage(messageService.errorMessages[3],3);
             });
         };
 
@@ -54,7 +54,6 @@
 
         $scope.deleteReception = function (receptionId) {
             receptionService.delete(receptionId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.receptions, function (i) {
                     if ($scope.receptions[i].Id === receptionId) {
@@ -63,7 +62,7 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                messageService.toastMessage(messageService.errorMessages[4],3);
             });
         };
         var chargeHumidityAddData = function(){

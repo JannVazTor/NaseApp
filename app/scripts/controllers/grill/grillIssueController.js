@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillIssueController', function (toastr, $scope, grillService) {
+    angular.module('naseNutAppApp').controller('grillIssueController', function (messageService, $scope, grillService) {
         $scope.grillIssue = {
             Remission: "",
             DateCapture: "",
@@ -28,10 +28,10 @@
                         return false;
                     }
                 });
-                toastr.success('el registro se agrego correctamente.');
+                messageService.toastMessage(messageService.successMessages[3],2);
             }, function (response) {
                 cleanObj();
-                toastr.error('ocurrio un error y el registro no pudo ser agregado.');
+                messageService.toastMessage(messageService.errorMessage[3],3);
             });
         };
 
@@ -43,10 +43,10 @@
                         element.Added = false;
                     }, this);
                 } else {
-                    toastr.info('No hay parrillas para mostrar.');
+                    messageService.toastMessage(messageService.infoMessages[12],1);
                 }
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar cargar las parrillas.');
+                messageService.toastMessage(messageService.errorMessage[15],3);
             });
         };
 
@@ -54,10 +54,10 @@
             grillService.getAllIssues().then(function (response) {
                 $scope.issues = response.data;
                 if (response.data.length === 0) {
-                    toastr.info('No hay salidas para mostrar.');
+                    messageService.toastMessage(messageService.infoMessages[13],1);
                 }
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar cargar las salidas.');
+                messageService.toastMessage(messageService.errorMessage[16],3);
             });
         };
 

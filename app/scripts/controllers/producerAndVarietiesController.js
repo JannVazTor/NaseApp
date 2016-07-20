@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('producerAndVarietiesController', function ($scope, producerService, varietyService, toastr) {
+    angular.module('naseNutAppApp').controller('producerAndVarietiesController', function ($scope, producerService, varietyService, messageService) {
         $scope.producers = [];
         $scope.varieties = [];
         
@@ -8,7 +8,7 @@
             producerService.getAll().then(function (response) {
                 $scope.producers = response.data;
             }, function (response) {
-                toastr.error('ocurrio un error y no se pudieron obtener los productores.');
+                messageService.toastMessage(messageService.errorMessages[8],3);
             });
         };
 
@@ -16,7 +16,7 @@
             varietyService.getAll().then(function (response) {
                 $scope.varieties = response.data;
             }, function (response) {
-                toastr.error('ocurrio un error y no se pudieron obtener las variedades.');
+                messageService.toastMessage(messageService.errorMessages[5],3);
             });
         };
 
@@ -25,7 +25,7 @@
                 toastr.success('El productor a sigo guardado de manera exitosa.');
                 GetAllProducers();
             }, function (response) {
-                toastr.error('ocurrio un error y el productor no pudo ser guardado.');
+                messageService.toastMessage(messageService.errorMessages[3],3);
             });
         };
 
@@ -39,10 +39,10 @@
                 Small: variety.Small    
             };
             varietyService.save(Variety).then(function (response) {
-                toastr.success('la variedad a sigo guardada de manera exitosa.');
+                messageService.toastMessage(messageService.successMessage[3],2);
                 GetAllVarieties();
             }, function (response) {
-                toastr.error('ocurrio un error y la variedad no pudo ser guardado.');
+                messageService.toastMessage(messageService.errorMessages[3],3);
             });
         };
 
@@ -88,7 +88,7 @@
                 });
                 swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
             }, function (response) {
-                toastr.error('ocurrio un error y el productor no pudo ser eliminado.');
+                messageService.toastMessage(messageService.errorMessages[4],3);
             });
         };
 
@@ -102,7 +102,7 @@
                 });
                 swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
             }, function (response) {
-                toastr.error('ocurrio un error y la variedad no pudo ser eliminada.');
+                messageService.toastMessage(messageService.errorMessages[4],3);
             });
         };
         
