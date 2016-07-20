@@ -105,5 +105,10 @@
                 toastr.error('ocurrio un error y la variedad no pudo ser eliminada.');
             });
         };
+        
+        (function(){
+            GetAllProducers();
+            GetAllVarieties();
+        })();
     });
 })();

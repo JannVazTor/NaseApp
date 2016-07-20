@@ -216,6 +216,7 @@
                 case 'grillAdd':
                     GetAllProducers();
                     GetAllVarieties();
+                    break;
                 case 'grillManage':
                     GetAllGrills();
                     break;

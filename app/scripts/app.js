@@ -157,7 +157,7 @@
         /*Reports*/
         .state('reportingProcess', {
           url: '/reporteProceso',
-          templateUrl: 'views/report/reportingProcess.html',
+          templateUrl: 'views/report/grill/reportingProcess.html',
           controller: 'reportController'
         })
         .state('producerReport', {
@@ -167,7 +167,7 @@
         })
         .state('processInventory', {
           url: '/Inventario de Proceso',
-          templateUrl: 'views/report/processInventory.html',
+          templateUrl: 'views/report/grill/genericReport.html',
           controller: 'reportController'
         })
         .state('outputs', {
@@ -175,9 +175,9 @@
           templateUrl: 'views/report/outputs.html',
           controller: 'outputsReportController'
         })
-        .state('currentInventoryGrills', {
+        .state('currentInventory', {
           url: '/InvenarioActualParrillas',
-          templateUrl: 'views/report/currentInventoryGrills.html',
+          templateUrl: 'views/report/grill/genericReport.html',
           controller: 'reportController'
         })
         .state('dailyABEL', {

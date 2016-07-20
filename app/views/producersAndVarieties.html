@@ -125,12 +125,18 @@
                     <thead>
                         <tr>
                             <th data-column-id="id">Nombre</th>
+                            <th>Chicas</th>
+                            <th>Medianas</th>
+                            <th>Grandes</th>
                             <th data-column-id="commands">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="variety in varieties | filter:searchVariety">
                             <td>{{variety.VarietyName}}</td>
+                            <td>{{variety.Small}}</td>
+                            <td>{{variety.MediumStart.toString() + '-' +  variety.MediumEnd.toString()}}</td>
+                            <td>{{variety.LargeStart.toString() + '-' + variety.LargeEnd.toString()}}</td>
                             <td>
                                 <button class="btn btn-icon command-delete" ng-click="confirmVarietyDel(variety.Id)">
                         <span class="md md-delete"></span>
