@@ -123,6 +123,11 @@
           templateUrl: 'views/humidity/humidityManage.html',
           controller: 'humidityController'
         })
+        .state('humidityAddToReception', {
+          url: '/agregarHumedad',
+          templateUrl: 'views/humidity/humidityAddToReception.html',
+          controller: 'humidityController'
+        })
         /*Sampling*/
         .state('samplingGrillManage', {
           url: '/muestreoParrillas',
