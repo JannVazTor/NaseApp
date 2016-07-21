@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillIssueController', function (messageService, $scope, grillService) {
+    angular.module('naseNutAppApp').controller('grillIssueController', function (msgS, $scope, grillService) {
         $scope.grillIssue = {
             Remission: "",
             DateCapture: "",
@@ -28,10 +28,10 @@
                         return false;
                     }
                 });
-                messageService.toastMessage(messageService.successMessages[3],2);
+                msgS.toastMessage(msgS.successMessages[3],2);
             }, function (response) {
                 cleanObj();
-                messageService.toastMessage(messageService.errorMessage[3],3);
+                msgS.toastMessage(msgS.errorMessage[3],3);
             });
         };
 
@@ -43,10 +43,10 @@
                         element.Added = false;
                     }, this);
                 } else {
-                    messageService.toastMessage(messageService.infoMessages[12],1);
+                    msgS.toastMessage(msgS.infoMessages[12],1);
                 }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[15],3);
+                msgS.toastMessage(msgS.errorMessage[15],3);
             });
         };
 
@@ -54,10 +54,10 @@
             grillService.getAllIssues().then(function (response) {
                 $scope.issues = response.data;
                 if (response.data.length === 0) {
-                    messageService.toastMessage(messageService.infoMessages[13],1);
+                    msgS.toastMessage(msgS.infoMessages[13],1);
                 }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[16],3);
+                msgS.toastMessage(msgS.errorMessage[16],3);
             });
         };
 

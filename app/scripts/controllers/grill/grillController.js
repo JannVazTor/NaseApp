@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillController', function (messageService, $filter, $scope, $state, producerService, varietyService, grillService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('grillController', function (msgS, $filter, $scope, $state, producerService, varietyService, grillService, receptionAndGrillService, clearService) {
         $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
@@ -39,10 +39,10 @@
         $scope.UpdateGrill = function () {
             $scope.grillU.DateCapture = $('#grillDate').val();
             grillService.update(grillService.id, $scope.grillU).then(function (response) {
-                messageService.toastMessage(messageService.successMessages[1],2);
+                msgS.toastMessage(msgS.successMessages[1],2);
                 $state.go('grillManage');
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[3],3);
+                msgS.toastMessage(msgS.errorMessages[3],3);
             });
         }
 
@@ -59,9 +59,9 @@
             };
             grillService.save(Grill).then(function (response) {
                 $scope.savedSuccessfully = true;
-                messageService.toastMessage(messageService.successMessages[3],2);
+                msgS.toastMessage(msgS.successMessages[3],2);
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[3],3);
+                msgS.toastMessage(msgS.errorMessages[3],3);
             });
         };
 
@@ -74,7 +74,7 @@
         $scope.changeStatus = function (status, grillId) {
             if (status) {
                 grillService.changeStatus(grillId, 1).then(function (response) {
-                    messageService.toastMessage(messageService.successMessages[4],2);
+                    msgS.toastMessage(msgS.successMessages[4],2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -82,11 +82,11 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessages[17],3);
+                    msgS.toastMessage(msgS.errorMessages[17],3);
                 });
             } else {
                 grillService.changeStatus(grillId, 0).then(function (response) {
-                    messageService.toastMessage(messageService.successMessages[4],2);
+                    msgS.toastMessage(msgS.successMessages[4],2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -94,7 +94,7 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessages[17],3);
+                    msgS.toastMessage(msgS.errorMessages[17],3);
                 });
             }
         };
@@ -102,7 +102,7 @@
         $scope.addGrillToReception = function (grillId, checked) {
             if (checked) {
                 receptionAndGrillService.addGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
-                    messageService.toastMessage(messageService.successMessages[3],2);
+                    msgS.toastMessage(msgS.successMessages[3],2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -110,11 +110,11 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessages[18],3);
+                    msgS.toastMessage(msgS.errorMessages[18],3);
                 });
             } else {
                 receptionAndGrillService.removeGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
-                    messageService.toastMessage(messageService.successMessages[2],2);
+                    msgS.toastMessage(msgS.successMessages[2],2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -122,7 +122,7 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessages[4],3);
+                    msgS.toastMessage(msgS.errorMessages[4],3);
                 });
             }
         };
@@ -137,7 +137,7 @@
                     }
                 });
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[4],3);
+                msgS.toastMessage(msgS.errorMessages[4],3);
             });
         };
         $scope.confirmationDelete = function (grillId) {
@@ -166,39 +166,39 @@
                     }
                 });
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[4],3);
+                msgS.toastMessage(msgS.errorMessages[4],3);
             });
         };
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 if (response.data.length === 0) {
-                    messageService.toastMessage(messageService.infoMessages[5],1);
+                    msgS.toastMessage(msgS.infoMessages[5],1);
                 } else {
                     $scope.producers = response.data;
                     $scope.grill.Producer = $scope.producers[0];
                 };
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[8],3);
+                msgS.toastMessage(msgS.errorMessages[8],3);
             });
         };
 
         var GetAllVarieties = function () {
             varietyService.getAll().then(function (response) {
                 if (response.data.length === 0) {
-                    messageService.toastMessage(messageService.infoMessages[7],1);
+                    msgS.toastMessage(msgS.infoMessages[7],1);
                 } else {
                     $scope.varieties = response.data;
                     $scope.grill.Variety = $scope.varieties[0];
                 };
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[5],3);
+                msgS.toastMessage(msgS.errorMessages[5],3);
             });
         };
 
         var GetAllGrills = function () {
             grillService.getAll().then(function (response) {
                 if (response.data.length === 0) {
-                    messageService.toastMessage(messageService.infoMessages[12],1);
+                    msgS.toastMessage(msgS.infoMessages[12],1);
                 } else {
                     $scope.grills = response.data;
                     response.data.forEach(function (element) {
@@ -207,7 +207,7 @@
                     }, this);
                 };
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[15],3);
+                msgS.toastMessage(msgS.errorMessages[15],3);
             });
         };
 

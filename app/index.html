@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title></title>
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/jquery.dataTables.min.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/datatables-buttons/css/buttons.dataTables.css">
-    
+
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/datatables-responsive/css/dataTables.responsive.css">
@@ -26,22 +27,23 @@
             bottom: 20px;
             right: 20px;
         }
-
+        
         #fixedbuttonLeft {
             position: fixed;
             bottom: 20px;
             left: 20px;
         }
-        .contentC{
+        
+        .contentC {
             margin-top: 50px;
         }
     </style>
 </head>
 
-<body ng-app="naseNutAppApp">
+<body ng-app="naseNutAppApp" ng-cloak>
     <header id="header">
         <ul class="header-inner">
-            <li id="menu-trigger" data-trigger="#sidebar">
+            <li ng-if="authService.authentication.isAuth" id="menu-trigger" data-trigger="#sidebar">
                 <div class="line-wrap">
                     <div class="line top"></div>
                     <div class="line center"></div>
@@ -61,7 +63,7 @@
         </ul>
     </header>
     <section id="main">
-        <aside id="sidebar">
+        <aside ng-hide="authService.authentication.isAuth" id="sidebar">
             <div class="sidebar-inner">
                 <div class="profile-menu">
                     <a href="" data-toggle="dropdown">
@@ -138,7 +140,7 @@
         </aside>
         <section id="content">
             <div class="container-fluid">
-                    <div ui-view></div>
+                <div ui-view></div>
             </div>
         </section>
         <button id="fixedbuttonRight" class="btn btn-primary btn-icon">
@@ -179,7 +181,7 @@
     <script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/datatables-responsive/js/dataTables.responsive.js"></script>
     <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-  
+
     <!--AngularMaterial-->
     <script src="scripts/js/datetimepicker.js"></script>
     <script src="scripts/js/datetimepicker.templates.js"></script>
@@ -218,4 +220,5 @@
     <script src="scripts/services/humidityService.js"></script>
     <script src="scripts/services/messageService.js"></script>
 </body>
+
 </html>

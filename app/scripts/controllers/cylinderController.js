@@ -1,30 +1,27 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('cylinderController', function ($scope,messageService, cylinderService) {
+    angular.module('naseNutAppApp').controller('cylinderController', function ($scope,msgS, cylinderService) {
         $scope.cylinders = [];
         $scope.message = "";
-        $scope.savedSuccessfully = false;
 
         $scope.cylinder = {
             CylinderName: ""
         };
 
-        //GetAllCylinders
-        (function () {
+        var GetAllCylinders = function () {
             cylinderService.getAll().then(function (response) {
                 $scope.cylinders = response.data;
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[6],3);
+                msgS.toastMessage(msgS.errorMessages[6],3);
             });
-        })();
+        };
 
         $scope.saveCylinder = function () {
             cylinderService.save($scope.cylinder).then(function (response) {
-                $scope.savedSuccessfully = true;
-                messageService.toastMessage(messageService.successMessages[3],2);
-                GetAll();
+                msgS.toastMessage(msgS.successMessages[3],2);
+                GetAllCylinders();
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[3],3);
+                msgS.toastMessage(msgS.errorMessages[3],3);
             });
         };
         $scope.confirmationDelete =  function(cylinderId){
@@ -52,8 +49,9 @@
                     }
                 });
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[4],3);
+                msgS.toastMessage(msgS.errorMessages[4],3);
             });
         };
+        GetAllCylinders();
     });
 })();

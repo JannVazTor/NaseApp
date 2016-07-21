@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillCurrentInvController', function ($scope,messageService,grillService, DTOptionsBuilder, DTColumnBuilder) {
+    angular.module('naseNutAppApp').controller('grillCurrentInvController', function ($scope,msgS,grillService, DTOptionsBuilder, DTColumnBuilder) {
         $scope.message = "";
         $scope.grills = [];
 
@@ -8,7 +8,7 @@
             grillService.getAllCurrentInv().then(function (response) {
                 $scope.grills = response.data;
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessage[15],3);
+                msgS.toastMessage(msgS.errorMessage[15],3);
             });
         };
 

@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('remissionController', function ($scope,messageService,toastr, $state, remissionService, receptionService) {
+    angular.module('naseNutAppApp').controller('remissionController', function ($scope,msgS,toastr, $state, remissionService, receptionService) {
         $scope.remissions = [];
         $scope.message = "";
         $scope.folio = receptionService.folio;
@@ -9,10 +9,10 @@
         
         $scope.saveRemission = function () {
             remissionService.save($scope.remission).then(function (response) {
-                messageService.toastMessage(messageService.successMessages[0], 2);
+                msgS.toastMessage(msgS.successMessages[0], 2);
                 defaultRemission();
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[3], 3);
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         };
         
@@ -23,11 +23,11 @@
 
         $scope.UpdateRemission =function(){
             remissionService.update($scope.remission.Id,$scope.remission).then(function (response) {
-                messageService.toastMessage(messageService.successMessages[1], 2);
+                msgS.toastMessage(msgS.successMessages[1], 2);
                 defaultRemission();
                 $state.go('remissionManage');
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[9], 3);
+                msgS.toastMessage(msgS.errorMessages[9], 3);
             });
         }
 
@@ -56,7 +56,7 @@
                     }
                 });
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[4], 3);     
+                msgS.toastMessage(msgS.errorMessages[4], 3);     
             });
         };
 
@@ -69,7 +69,7 @@
             remissionService.getAll().then(function (response) {
                 $scope.remissions = response.data;
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[10], 3);
+                msgS.toastMessage(msgS.errorMessages[10], 3);
             });
         })();
 
