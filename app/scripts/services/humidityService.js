@@ -7,6 +7,12 @@
                 throw e;
             });
         }
+        var _getAllbyId = function (id) {
+            return $http.get(apiPath + 'api/humidity/getAll/'+id).catch(function (e) {
+                console.log("error description: ", e);
+                throw e;
+            });
+        }
 
         var _save = function (data) {
             return $http.post(apiPath + 'api/humidity', data);

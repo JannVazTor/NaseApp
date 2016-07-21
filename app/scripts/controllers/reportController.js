@@ -86,14 +86,42 @@
                 .withPaginationType('full_numbers')
                 .withOption('responsive', true)
                 .withButtons(['copy', 'excel', 'pdf', 'csv', 'print'])
-                .withBootstrap();
+                .withBootstrap().withBootstrapOptions({
+                    Buttons: {
+                        classes: {
+                            container: 'btn-group',
+                            buttons: {
+                                normal: 'btn btn-danger'
+                            }
+                        }
+                    },
+                    pagination: {
+                        classes: {
+                            ul: 'pagination pagination-sm'
+                        }
+                    }
+                });
         };
         var GetDtOptions = function () {
             return DTOptionsBuilder.newOptions()
                 .withPaginationType('full_numbers')
                 .withOption('responsive', true)
-                .withButtons(['copy', 'excel', 'pdf', 'csv', 'print'])
-                .withBootstrap();
+                
+                .withBootstrap().withBootstrapOptions({
+                Buttons: {
+                    classes: {
+                        container: 'btn-group',
+                        buttons: {
+                            normal: 'btn btn-danger'
+                        }
+                    }
+                },
+                pagination: {
+                    classes: {
+                        ul: 'pagination pagination-sm'
+                    }
+                }
+            }).withButtons(['copy', 'excel', 'pdf', 'csv', 'print']);
         };
 
         (function () {

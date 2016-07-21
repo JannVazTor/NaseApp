@@ -1,7 +1,12 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('humidityController', function (messageService,$state, $scope, humidityService, receptionService) {
-        $scope.receptionEntries = [];
+        $scope.humidity = {
+            HumidityPercent: '',
+            ReceptionEntryId: '',
+            DateCapture: $('#EntryDate').val()
+        }
+        $scope.folios = '';
         $scope.humidities = [];
         var GetAllHumidities = function () {
             humidityService.getAll().then(function (response) {
@@ -25,39 +30,51 @@
                 messageService.toastMessage(messageService.errorMessages[7],3);
             });
         };
-        $scope.saveHumidity = function (humidityPercent, receptionEntryId) {
-            var humidity = {};
-            humidity.HumidityPercent = humidityPercent;
-            humidity.ReceptionEntryId = receptionEntryId;
+        $scope.redirectToAddHumidities = function(receptionEntryId, folios){
+            $scope.Humidity.ReceptionEntryId = receptionEntryId;
+            $scope.folios = folios;
+            $state.go('humidityAddToReception');
+            humidityService.getAllbyId(receptionEntryId).then(function (response) {
+                if (response.data.length !== 0) {
+                    $scope.humidities = response.data;
+                } else {
+                    messageService.toastMessage(messageService.infoMessages[9],1);
+                }
+            }, function (response) {
+                messageService.toastMessage(messageService.errorMessages[11],3);
+            });
+        }
+        $scope.saveHumidity = function (humidity) {
             humidityService.save(humidity).then(function (response) {
+                $scope.humidities = response.data;
                 messageService.toastMessage(messageService.successMessages[3],2);
             }, function (response) {
                 messageService.toastMessage(messageService.errorMessages[3],3);
             });
         };
 
-        $scope.confirmationDelete = function (receptionId) {
+        $scope.confirmationDelete = function (Id) {
             swal({
                 title: "Estas seguro?",
-                text: "Tú eliminaras la recepcion: " + receptionId + "!!",
+                text: "Tú eliminaras la humedad: " + Id + "!!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "Si, eliminarlo!",
                 closeOnConfirm: false
             },
                 function () {
-                    $scope.deleteReception(receptionId);
+                    $scope.deleteHumidity(Id);
                 });
 
         };
 
-        $scope.deleteReception = function (receptionId) {
-            receptionService.delete(receptionId).then(function (response) {
+        $scope.deleteHumidity = function (Id) {
+            receptionService.delete(Id).then(function (response) {
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.receptions, function (i) {
-                    if ($scope.receptions[i].Id === receptionId) {
-                        $scope.receptions.splice(i, 1);
+                    if ($scope.humidities[i].Id === Id) {
+                        $scope.humidities.splice(i, 1);
                         return false;
                     }
                 });
