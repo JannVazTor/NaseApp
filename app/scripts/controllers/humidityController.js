@@ -32,9 +32,9 @@
             });
         };
         $scope.redirectToAddHumidities = function(receptionEntryId, folios){
-            $scope.Humidity.ReceptionEntryId = receptionEntryId;
+            $scope.humidity.ReceptionEntryId = receptionEntryId;
             $scope.folios = folios;
-            $state.go('humidityAddToReception');
+           
             humidityService.getAllbyId(receptionEntryId).then(function (response) {
                 if (response.data.length !== 0) {
                     $scope.humidities = response.data;
@@ -44,8 +44,10 @@
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[11],3);
             });
+             $state.go('humidityAddToReception');
         }
         $scope.saveHumidity = function (humidity) {
+            $scope.humidity.DateCapture = $('#EntryDate').val()
             humidityService.save(humidity).then(function (response) {
                 $scope.humidities = response.data;
                 msgS.toastMessage(msgS.successMessages[3],2);
