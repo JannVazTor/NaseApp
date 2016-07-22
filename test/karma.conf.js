@@ -41,6 +41,8 @@ module.exports = function(config) {
       'bower_components/foundation-apps/dist/js/foundation-apps.js',
       'bower_components/foundation-apps/dist/js/foundation-apps-templates.js',
       'bower_components/angular-material/angular-material.js',
+      'bower_components/file-saver/FileSaver.js',
+      'bower_components/json-export-excel/src/json-export-excel.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

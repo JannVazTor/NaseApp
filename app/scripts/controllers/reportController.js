@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('reportController', function ($filter, $q, messageService, $scope, $state, DTOptionsBuilder, DTColumnBuilder, reportService, producerService) {
+    angular.module('naseNutAppApp').controller('reportController', function ($filter, $q, msgS, $scope, $state, DTOptionsBuilder, DTColumnBuilder, reportService, producerService) {
         $scope.dtOptions = {};
         $scope.dtColumns = [];
         $scope.reportingProcess = [];
@@ -9,39 +9,39 @@
             reportService.getProducerReport(id).then(function (response) {
                 $scope.producerReport = response.data;
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[8],3);
+                msgS.toastMessage(msgS.errorMessages[8],3);
             });
         };
 
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 if (response.data.length === 0) {
-                    messageService.toastMessage(messageService.infoMessages[5],1);
+                    msgS.toastMessage(msgS.infoMessages[5],1);
                 } else {
                     $scope.producers = response.data;
                     $scope.producer = $scope.producers[0];
                 };
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[8],3);
+                msgS.toastMessage(msgS.errorMessages[8],3);
             });
         };
 
         var GetReportingProcess = function () {
             reportService.getReportingProcess().then(function (response) {
-                if (response.data.length === 0) { messageService.toastMessage(messageService.infoMessages[7],1);; }
+                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[7],1);; }
                 $scope.reportingProcess = response.data;
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[12],3);
+                msgS.toastMessage(msgS.errorMessages[12],3);
             });
         };
 
         var GetCurrentInventory = function () {
             var defer = $q.defer();
             reportService.getCurrentInventoryReport().then(function (response) {
-                if (response.data.length === 0) { messageService.toastMessage(messageService.infoMessages[10],1); };
+                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10],1); };
                 defer.resolve(response.data);
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[12],3);
+                msgS.toastMessage(msgS.errorMessages[12],3);
                 defer.reject();
             });
             return defer.promise;
@@ -50,10 +50,10 @@
         var GetProcessInventory = function () {
             var defer = $q.defer();
             reportService.getProcessInventory().then(function (response) {
-                if (response.data.length === 0) { messageService.toastMessage(messageService.infoMessages[10],1) };
+                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10],1) };
                 defer.resolve(response.data);
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[12],3);
+                msgS.toastMessage(msgS.errorMessages[12],3);
                 defer.reject();
             });
             return defer.promise;

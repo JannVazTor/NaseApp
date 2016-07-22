@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function (toastr, messageService, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('receptionController', function (toastr, msgS, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
@@ -54,21 +54,21 @@
                     Observations: reception.Observations
                 });
             } else {
-                messageService.toastMessage(messageService.infoMessages[1], 1);
+                msgS.toastMessage(msgS.infoMessages[1], 1);
             }
         };
         $scope.saveReceptionEntry = function (receptionEntry) {
             if ($scope.receptions.length === 0) {
-                messageService.toastMessage(messageService.infoMessages[0], 1);
+                msgS.toastMessage(msgS.infoMessages[0], 1);
             } else {
                 if (!receptionEntry.Cylinder) {
-                    messageService.toastMessage(messageService.infoMessages[2], 1);
+                    msgS.toastMessage(msgS.infoMessages[2], 1);
                 } else {
                     if (!receptionEntry.Variety) {
-                        messageService.toastMessage(messageService.infoMessages[3], 1);
+                        msgS.toastMessage(msgS.infoMessages[3], 1);
                     } else {
                         if (!receptionEntry.Producer) {
-                            messageService.toastMessage(messageService.infoMessages[4], 1);
+                            msgS.toastMessage(msgS.infoMessages[4], 1);
                         } else {
                             var ReceptionEntry = {};
                             ReceptionEntry.receptions = $scope.receptions;
@@ -76,10 +76,10 @@
                             ReceptionEntry.VarietyId = receptionEntry.Variety.Id;
                             ReceptionEntry.ProducerId = receptionEntry.Producer.Id;
                             receptionService.saveEntry(ReceptionEntry).then(function (response) {
-                                messageService.toastMessage(messageService.successMessages[0], 1);
+                                msgS.toastMessage(msgS.successMessages[0], 1);
                                 $scope.receptions = [];
                             }, function (response) {
-                                messageService.toastMessage(messageService.errorMessages[0], 1);
+                                msgS.toastMessage(msgS.errorMessages[0], 1);
                             });
                         }
                     }
@@ -103,17 +103,17 @@
 
         $scope.UpdateReception = function () {
             receptionService.update($scope.receptionU.Id, $scope.receptionU).then(function (response) {
-                messageService.toastMessage(messageService.successMessages[1], 2);
+                msgS.toastMessage(msgS.successMessages[1], 2);
                 $state.go('receptionManage');
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[1], 3);
+                msgS.toastMessage(msgS.errorMessages[1], 3);
             });
         }
 
         $scope.addReceptionToGrill = function (receptionId, checked) {
             if (checked) {
                 receptionAndGrillService.addReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    messageService.toastMessage(messageService.successMessages[0], 2);
+                    msgS.toastMessage(msgS.successMessages[0], 2);
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -121,11 +121,11 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessages[2], 3);
+                    msgS.toastMessage(msgS.errorMessages[2], 3);
                 });
             } else {
                 receptionAndGrillService.removeReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    messageService.toastMessage(messageService.successMessages[2], 2);
+                    msgS.toastMessage(msgS.successMessages[2], 2);
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -133,7 +133,7 @@
                             return false;
                         }
                     });
-                    messageService.toastMessage(messageService.errorMessages[4], 3);
+                    msgS.toastMessage(msgS.errorMessages[4], 3);
                 });
             }
         };
@@ -142,10 +142,10 @@
             $scope.reception.EntryDate = $('#EntryDate').val();
             receptionService.save($scope.reception).then(function (response) {
                 $scope.savedSuccesfully = true;
-                messageService.toastMessage(messageService.successMessages[0], 2);
+                msgS.toastMessage(msgS.successMessages[0], 2);
                 $state.go('receptionManage');
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[3], 3);
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         };
         $scope.confirmationDelete = function (receptionId) {
@@ -174,7 +174,7 @@
                     }
                 });
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[4], 3);
+                msgS.toastMessage(msgS.errorMessages[4], 3);
             });
         };
 
@@ -186,54 +186,58 @@
 
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
-                if (response.data.length === 0) 
-                     messageService.toastMessage(messageService.infoMessages[5], 1);   
-
-                $scope.producers = response.data;
-                $scope.receptionEntry.Producer = $scope.producers[0];
+                if (response.data.length === 0) {
+                    msgS.msg('info', 3);
+                } else {
+                    $scope.producers = response.data;
+                    $scope.receptionEntry.Producer = $scope.producers[0];
+                }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[7], 3);
-      
+                msgS.msg('err', 8);
+
             });
         };
 
         var GetAllVarieties = function () {
             varietyService.getAll().then(function (response) {
-                if (response.data.length === 0) 
-                     messageService.toastMessage(messageService.infoMessages[7], 1);
-              
-                $scope.varieties = response.data;
-                $scope.receptionEntry.Variety = $scope.varieties[0];
+                if (response.data.length === 0) {
+                    msgS.msg('info', 2);
+                } else {
+                    $scope.varieties = response.data;
+                    $scope.receptionEntry.Variety = $scope.varieties[0];
+                }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[5], 3);
-               
+                msgS.msg('err', 7);
+
             });
         };
 
         var GetAllCylinders = function () {
             cylinderService.getAll().then(function (response) {
-                if (response.data.length === 0) 
-                messageService.toastMessage(messageService.infoMessages[8], 1);
-               
-                $scope.cylinders = response.data;
-                $scope.receptionEntry.Cylinder = $scope.cylinders[0];
+                if (response.data.length === 0) {
+                    msgS.msg('info', 1);
+                } else {
+                    $scope.cylinders = response.data;
+                    $scope.receptionEntry.Cylinder = $scope.cylinders[0];
+                }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[6], 3);
-                
+                msgS.msg('err', 6);
+
             });
         };
 
         var GetAllReceptions = function () {
             receptionService.getAll().then(function (response) {
-                if (response.data.length === 0) 
-                    messageService.toastMessage(messageService.infoMessages[6], 1);
-                
-                $scope.receptions = response.data;
-                response.data.forEach(function (element) {
-                    element.IsAlreadyAssigned = element.Grills.indexOf($scope.GrillId) === -1 ? false : true;
-                }, this);
+                if (response.data.length === 0) {
+                    msgS.msg('info', 0);
+                } else {
+                    $scope.receptions = response.data;
+                    response.data.forEach(function (element) {
+                        element.IsAlreadyAssigned = element.Grills.indexOf($scope.GrillId) === -1 ? false : true;
+                    }, this);
+                }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[7], 3);
+                msgS.msg('err', 5);
             });
         };
 

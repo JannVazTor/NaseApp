@@ -1,5 +1,6 @@
 <!doctype html>
-<html>
+<html ng-app="naseNutAppApp" ng-cloak>
+
 <head>
     <meta charset="utf-8">
     <title></title>
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/jquery.dataTables.min.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/datatables-buttons/css/buttons.dataTables.css">
-    
+
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css">
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/datatables-responsive/css/dataTables.responsive.css">
@@ -26,22 +27,23 @@
             bottom: 20px;
             right: 20px;
         }
-
+        
         #fixedbuttonLeft {
             position: fixed;
             bottom: 20px;
             left: 20px;
         }
-        .contentC{
+        
+        .contentC {
             margin-top: 50px;
         }
     </style>
 </head>
 
-<body ng-app="naseNutAppApp">
+<body ng-controller="mainController">
     <header id="header">
         <ul class="header-inner">
-            <li id="menu-trigger" data-trigger="#sidebar">
+            <li ng-if="isLoggedIn()" id="menu-trigger" data-trigger="#sidebar">
                 <div class="line-wrap">
                     <div class="line top"></div>
                     <div class="line center"></div>
@@ -51,7 +53,7 @@
             <li class="logo hidden-xs">
                 <a ui-sref="home">NASE NUEZ APP</a>
             </li>
-            <li class="pull-right">
+            <li ng-if="!isLoggedIn()" class="pull-right">
                 <ul class="top-menu">
                     <li id="top" class="logo">
                         <a ui-sref="login">Ingresar</a>
@@ -68,18 +70,14 @@
                         <div class="profile-pic">
                             <img src="img/profile-pics/8.jpg" alt="">
                         </div>
-                        <div class="profile-info">
-                            UserName
-                            <i class="md md-arrow-drop-down"></i>
-                        </div>
+                        <div class="profile-info">UserName<i class="md md-arrow-drop-down"></i></div>
                     </a>
-
                     <ul class="main-menu">
                         <li>
                             <a href=""><i class="md md-person"></i> View Profile</a>
                         </li>
                         <li>
-                            <a href=""><i class="md md-history"></i> Logout</a>
+                            <a href ng-click="logOut()"><i class="md md-history"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -138,7 +136,7 @@
         </aside>
         <section id="content">
             <div class="container-fluid">
-                    <div ui-view></div>
+                <div ui-view></div>
             </div>
         </section>
         <button id="fixedbuttonRight" class="btn btn-primary btn-icon">
@@ -179,13 +177,15 @@
     <script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
     <script src="bower_components/angular-datatables/dist/plugins/datatables-responsive/js/dataTables.responsive.js"></script>
     <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-  
+
     <!--AngularMaterial-->
     <script src="scripts/js/datetimepicker.js"></script>
     <script src="scripts/js/datetimepicker.templates.js"></script>
 
     <script src="scripts/app.js"></script>
 
+    <script src="scripts/constants/authEvents.js"></script>
+    <script src="scripts/constants/userRoles.js"></script>
     <script src="scripts/controllers/loginController.js"></script>
     <script src="scripts/controllers/userController.js"></script>
     <script src="scripts/controllers/producerAndVarietiesController.js"></script>
@@ -199,6 +199,8 @@
     <script src="scripts/controllers/grill/grillCurrentInvController.js"></script>
     <script src="scripts/controllers/humidityController.js"></script>
     <script src="scripts/controllers/reportController.js"></script>
+    <script src="scripts/controllers/mainController.js"></script>
+    <script src="scripts/controllers/listenerController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>
@@ -217,5 +219,7 @@
     <script src="scripts/services/reportService.js"></script>
     <script src="scripts/services/humidityService.js"></script>
     <script src="scripts/services/messageService.js"></script>
+
 </body>
+
 </html>

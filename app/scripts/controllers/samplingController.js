@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('samplingController', function ($scope, messageService, $filter, $state, samplingService, clearService, grillService, receptionService) {
+    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, samplingService, clearService, grillService, receptionService) {
         $scope.message = "";
         $scope.samplings = [];
         $scope.receptionEntries = [];
@@ -26,10 +26,10 @@
                         clearService.clearReceptionService();
                         $state.go('samplingReceptionAdd');
                     }, function (response) {
-                        messageService.toastMessage(messageService.errorMessages[3],3);;
+                        msgS.toastMessage(msgS.errorMessages[3],3);;
                     });
                 } else {
-                    messageService.toastMessage(messageService.errorMessages[14],3);;
+                    msgS.toastMessage(msgS.errorMessages[14],3);;
                 };
             } else {
                 delete Sampling['NutTypes'];
@@ -38,7 +38,7 @@
                 samplingService.saveToGrill(Sampling).then(function (response) {
                     $state.go('samplingGrillManage');
                 }, function (response) {
-                    messageService.toastMessage(messageService.errorMessages[3],3);
+                    msgS.toastMessage(msgS.errorMessages[3],3);
                 });
             }
         };
@@ -84,7 +84,7 @@
                     }
                 });
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[4],3);
+                msgS.toastMessage(msgS.errorMessages[4],3);
             });
         };
 
@@ -96,47 +96,47 @@
         $scope.UpdateSampling = function () {
             $scope.sampling.DateCapture = $('#samplingDate').val();
             samplingService.update($scope.sampling).then(function (response) {
-                messageService.toastMessage(messageService.successMessages[1],2);;
+                msgS.toastMessage(msgS.successMessages[1],2);;
                 $state.go('samplingManage');
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[9],3);
+                msgS.toastMessage(msgS.errorMessages[9],3);
             });
         }
 
         var GetAllGrillSamplings = function () {
             samplingService.getAllGrills().then(function (response) {
                 if (response.data.length === 0) {
-                    messageService.toastMessage(messageService.infoMessages[11],1);
+                    msgS.toastMessage(msgS.infoMessages[11],1);
                 } else {
                     if ($scope.samplings.length !== 0) $scope.samplings = [];
                     $scope.samplings = response.data;
                 }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[13],3);
+                msgS.toastMessage(msgS.errorMessages[13],3);
             });
         };
 
         var GetAllReceptionSamplings = function () {
             samplingService.getAllReceptions().then(function (response) {
                 if (response.data.length === 0) {
-                    messageService.toastMessage(messageService.infoMessages[11],1);
+                    msgS.toastMessage(msgS.infoMessages[11],1);
                 } else {
                     if ($scope.samplings.length !== 0) $scope.samplings = [];
                     $scope.samplings = response.data;
                 }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[13],3);
+                msgS.toastMessage(msgS.errorMessages[13],3);
             });
         };
         var GetAllReceptionEntries = function () {
             receptionService.getAllEntries().then(function (response) {
                 if (response.data.length === 0) {
-                    messageService.toastMessage(messageService.infoMessages[6],1);
+                    msgS.toastMessage(msgS.infoMessages[6],1);
                 } else {
                     $scope.receptionEntries = response.data;
                 }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[7],3);
+                msgS.toastMessage(msgS.errorMessages[7],3);
             });
         };
 
