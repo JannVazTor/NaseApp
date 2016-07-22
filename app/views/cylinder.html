@@ -25,17 +25,17 @@
         <div class="card-header">
             <h2>Cilindros</h2>
         </div>
-        <div class="col-sm-12 actionbar">
-            <div class="form-group">
-                <label for="isearch" class="col-sm-2 control-label">Buscar</label>
-                <div class="col-sm-12">
-                    <div class="fg-line">
-                        <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchUser">
+        <div class="card-body table-responsive">
+            <div class="col-sm-12 actionbar">
+                <div class="form-group">
+                    <label for="isearch" class="col-sm-2 control-label">Buscar</label>
+                    <div class="col-sm-12">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchCylinder">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-body table-responsive">
             <table class="table table-striped table-vmiddle">
                 <thead>
                     <tr>
@@ -44,7 +44,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="cylinder in cylinders | filter:searchUser">
+                    <tr ng-repeat="cylinder in cylinders | filter:searchCylinder">
                         <td>{{cylinder.CylinderName}}</td>
                         <td>
                             <button class="btn btn-icon command-delete" ng-click="confirmationDelete(cylinder.Id)">
