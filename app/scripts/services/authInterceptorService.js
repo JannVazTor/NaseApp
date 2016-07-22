@@ -11,17 +11,10 @@
       return config;
     };
 
-    /*var _responseError = function (rejection) {
-      if (rejection.status === 401) {
-        $location.path('/login');
-      }
-      return $q.reject(rejection);
-    };*/
-
      var _responseError = function (response) { 
       $rootScope.$broadcast({
-        401: AUTH_EVENTS.notAuthenticated,
-        403: AUTH_EVENTS.notAuthorized,
+        401: AUTH_EVENTS.notAuthorized,
+        403: AUTH_EVENTS.notAuthenticated,
         419: AUTH_EVENTS.sessionTimeout,
         440: AUTH_EVENTS.sessionTimeout
       }[response.status], response);
