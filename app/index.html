@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="naseNutAppApp" ng-cloak>
 
 <head>
     <meta charset="utf-8">
@@ -40,10 +40,10 @@
     </style>
 </head>
 
-<body ng-app="naseNutAppApp" ng-cloak>
+<body ng-controller="mainController">
     <header id="header">
         <ul class="header-inner">
-            <li ng-if="authService.authentication.isAuth" id="menu-trigger" data-trigger="#sidebar">
+            <li ng-if="isLoggedIn()" id="menu-trigger" data-trigger="#sidebar">
                 <div class="line-wrap">
                     <div class="line top"></div>
                     <div class="line center"></div>
@@ -53,7 +53,7 @@
             <li class="logo hidden-xs">
                 <a ui-sref="home">NASE NUEZ APP</a>
             </li>
-            <li class="pull-right">
+            <li ng-if="!isLoggedIn()" class="pull-right">
                 <ul class="top-menu">
                     <li id="top" class="logo">
                         <a ui-sref="login">Ingresar</a>
@@ -63,25 +63,21 @@
         </ul>
     </header>
     <section id="main">
-        <aside ng-hide="authService.authentication.isAuth" id="sidebar">
+        <aside id="sidebar">
             <div class="sidebar-inner">
                 <div class="profile-menu">
                     <a href="" data-toggle="dropdown">
                         <div class="profile-pic">
                             <img src="img/profile-pics/8.jpg" alt="">
                         </div>
-                        <div class="profile-info">
-                            UserName
-                            <i class="md md-arrow-drop-down"></i>
-                        </div>
+                        <div class="profile-info">UserName<i class="md md-arrow-drop-down"></i></div>
                     </a>
-
                     <ul class="main-menu">
                         <li>
                             <a href=""><i class="md md-person"></i> View Profile</a>
                         </li>
                         <li>
-                            <a href=""><i class="md md-history"></i> Logout</a>
+                            <a href ng-click="logOut()"><i class="md md-history"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -188,6 +184,8 @@
 
     <script src="scripts/app.js"></script>
 
+    <script src="scripts/constants/authEvents.js"></script>
+    <script src="scripts/constants/userRoles.js"></script>
     <script src="scripts/controllers/loginController.js"></script>
     <script src="scripts/controllers/userController.js"></script>
     <script src="scripts/controllers/producerAndVarietiesController.js"></script>
@@ -201,6 +199,8 @@
     <script src="scripts/controllers/grill/grillCurrentInvController.js"></script>
     <script src="scripts/controllers/humidityController.js"></script>
     <script src="scripts/controllers/reportController.js"></script>
+    <script src="scripts/controllers/mainController.js"></script>
+    <script src="scripts/controllers/listenerController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>
@@ -219,6 +219,7 @@
     <script src="scripts/services/reportService.js"></script>
     <script src="scripts/services/humidityService.js"></script>
     <script src="scripts/services/messageService.js"></script>
+
 </body>
 
 </html>

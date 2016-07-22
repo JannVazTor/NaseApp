@@ -58,7 +58,7 @@
         var _msg = function (type, index) {
             switch (type) {
                 case 'info':
-
+                    toastr.info(info[index]);
                     break;
                 case 'succ':
                     toastr.success(success[index]);
@@ -67,6 +67,7 @@
                     toastr.error(errors[index]);
                     break;
                 default:
+                    toastr.error('Ocurrio un error.');
                     break;
             }
         }
@@ -74,10 +75,19 @@
             'Ocurrio un error y el usuario no pudo ser registrado.',
             'Ocurrio un error y el usuario no pudo ser eliminado.',
             'Ocurrio un error al intentar cargar a los usuarios.',
-            'Ocurrio un error y el usuario no pudo ser loggeado.'];
+            'Ocurrio un error y el usuario no pudo ser loggeado.',
+            'Ocurrio un error al intentar cargar las recepciones.',
+            'Ocurrio un error al intentar cargar los cilindros.',
+            'Ocurrio un error al intentar cargar las variedades.',
+            'Ocurrio un error al intentar cargar a los productores.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',
-        'El Usuario fue agregado de manera exitosa.'];
+            'El Usuario fue agregado de manera exitosa.'];
+
+        var info = ['No se encontraron recepciones en la base de datos.',
+            'No se encontraron cilindros en la base de datos.',
+            'No se encontraron variedades en la base de datos.',
+            'No se encontraron productores en la base de datos.'];
 
         return {
             infoMessages: _arrayInfoMessage,

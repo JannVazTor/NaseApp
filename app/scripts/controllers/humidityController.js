@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('humidityController', function (messageService,$state, $scope, humidityService, receptionService) {
+    angular.module('naseNutAppApp').controller('humidityController', function (msgS,$state, $scope, humidityService, receptionService) {
         $scope.humidity = {
             HumidityPercent: '',
             ReceptionEntryId: '',
@@ -8,15 +8,16 @@
         }
         $scope.folios = '';
         $scope.humidities = [];
+        
         var GetAllHumidities = function () {
             humidityService.getAll().then(function (response) {
                 if (response.data.length !== 0) {
                     $scope.humidities = response.data;
                 } else {
-                    messageService.toastMessage(messageService.infoMessages[9],1);
+                    msgS.toastMessage(msgS.infoMessages[9],1);
                 }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[11],3);
+                msgS.toastMessage(msgS.errorMessages[11],3);
             });
         };
         var GetAllReceptionEntries = function () {
@@ -24,10 +25,10 @@
                 if (response.data.length !== 0) {
                     $scope.receptionEntries = response.data;
                 } else {
-                    messageService.toastMessage(messageService.infoMessages[6],1);
+                    msgS.toastMessage(msgS.infoMessages[6],1);
                 }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[7],3);
+                msgS.toastMessage(msgS.errorMessages[7],3);
             });
         };
         $scope.redirectToAddHumidities = function(receptionEntryId, folios){
@@ -38,18 +39,18 @@
                 if (response.data.length !== 0) {
                     $scope.humidities = response.data;
                 } else {
-                    messageService.toastMessage(messageService.infoMessages[9],1);
+                    msgS.toastMessage(msgS.infoMessages[9],1);
                 }
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[11],3);
+                msgS.toastMessage(msgS.errorMessages[11],3);
             });
         }
         $scope.saveHumidity = function (humidity) {
             humidityService.save(humidity).then(function (response) {
                 $scope.humidities = response.data;
-                messageService.toastMessage(messageService.successMessages[3],2);
+                msgS.toastMessage(msgS.successMessages[3],2);
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[3],3);
+                msgS.toastMessage(msgS.errorMessages[3],3);
             });
         };
 
@@ -79,7 +80,7 @@
                     }
                 });
             }, function (response) {
-                messageService.toastMessage(messageService.errorMessages[4],3);
+                msgS.toastMessage(msgS.errorMessages[4],3);
             });
         };
         var chargeHumidityAddData = function(){

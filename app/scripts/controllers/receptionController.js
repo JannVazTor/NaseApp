@@ -186,54 +186,58 @@
 
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
-                if (response.data.length === 0) 
-                     msgS.toastMessage(msgS.infoMessages[5], 1);   
-
-                $scope.producers = response.data;
-                $scope.receptionEntry.Producer = $scope.producers[0];
+                if (response.data.length === 0) {
+                    msgS.msg('info', 3);
+                } else {
+                    $scope.producers = response.data;
+                    $scope.receptionEntry.Producer = $scope.producers[0];
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[7], 3);
-      
+                msgS.msg('err', 8);
+
             });
         };
 
         var GetAllVarieties = function () {
             varietyService.getAll().then(function (response) {
-                if (response.data.length === 0) 
-                     msgS.toastMessage(msgS.infoMessages[7], 1);
-              
-                $scope.varieties = response.data;
-                $scope.receptionEntry.Variety = $scope.varieties[0];
+                if (response.data.length === 0) {
+                    msgS.msg('info', 2);
+                } else {
+                    $scope.varieties = response.data;
+                    $scope.receptionEntry.Variety = $scope.varieties[0];
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[5], 3);
-               
+                msgS.msg('err', 7);
+
             });
         };
 
         var GetAllCylinders = function () {
             cylinderService.getAll().then(function (response) {
-                if (response.data.length === 0) 
-                msgS.toastMessage(msgS.infoMessages[8], 1);
-               
-                $scope.cylinders = response.data;
-                $scope.receptionEntry.Cylinder = $scope.cylinders[0];
+                if (response.data.length === 0) {
+                    msgS.msg('info', 1);
+                } else {
+                    $scope.cylinders = response.data;
+                    $scope.receptionEntry.Cylinder = $scope.cylinders[0];
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[6], 3);
-                
+                msgS.msg('err', 6);
+
             });
         };
 
         var GetAllReceptions = function () {
             receptionService.getAll().then(function (response) {
-                if (response.data.length === 0) 
-                    msgS.toastMessage(msgS.infoMessages[6], 1);
-                
-                $scope.receptions = response.data;
-                response.data.forEach(function (element) {
-                    element.IsAlreadyAssigned = element.Grills.indexOf($scope.GrillId) === -1 ? false : true;
-                }, this);
+                if (response.data.length === 0) {
+                    msgS.msg('info', 0);
+                } else {
+                    $scope.receptions = response.data;
+                    response.data.forEach(function (element) {
+                        element.IsAlreadyAssigned = element.Grills.indexOf($scope.GrillId) === -1 ? false : true;
+                    }, this);
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[7], 3);
+                msgS.msg('err', 5);
             });
         };
 
