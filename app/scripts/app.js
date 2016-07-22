@@ -265,7 +265,7 @@
         .state('outputs', {
           url: '/Salidas',
           templateUrl: 'views/report/outputs.html',
-          controller: 'outputsReportController',
+          controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
           }

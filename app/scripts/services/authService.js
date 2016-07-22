@@ -34,7 +34,7 @@
       var deferred = $q.defer();
       $http.post(apiPath + 'Token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
         var role = getRole(response.data.role);
-        localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.username, role: role });
+        localStorageService.set('authorizationData', { token: response.data.access_token, userName: loginData.username, role: role });
         _authentication.isAuth = true;
         _authentication.userName = loginData.username;
         _authentication.role = role;
