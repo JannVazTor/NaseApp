@@ -156,16 +156,8 @@
           }
         })
         /*Humidity*/
-        .state('humidity', {
-          url: '/humidity',
-          templateUrl: 'views/humidity.html',
-          controller: 'humidityController',
-          data: {
-            roles: [USER_ROLES.humidityUser, USER_ROLES.admin]
-          }
-        })
         .state('humidityAdd', {
-          url: '/humedad',
+          url: '/humidity',
           templateUrl: 'views/humidity/humidityAdd.html',
           controller: 'humidityController',
           data: {
@@ -182,7 +174,7 @@
         })
         .state('humidityAddToReception', {
           url: '/agregarHumedad',
-          templateUrl: 'views/humidity/humidityAddToReception.html',
+          templateUrl: 'views/humidity/humidityAddToCylinder.html',
           controller: 'humidityController',
           data: {
             roles: [USER_ROLES.humidityUser, USER_ROLES.admin]
