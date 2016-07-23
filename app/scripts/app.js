@@ -52,6 +52,7 @@
         .state('home', {
           url: '/home',
           templateUrl: 'views/home.html',
+          controller: 'homeController',
           data: {
             roles: [USER_ROLES.admin, USER_ROLES.remRecepUser, USER_ROLES.humidityUser, USER_ROLES.grillUser, USER_ROLES.qualityUser]
           }
