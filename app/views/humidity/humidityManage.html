@@ -3,14 +3,12 @@
         <div class="card-header">
             <h2>Humedades</h2>
         </div>
-        <div class="card-body card-padding">
-            <div class="row">
-                <div class="col-sm-12 actionbar">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchReceptionEntries">
-                            </div>
+        <div class="card-body table-responsive">
+            <div class="col-sm-12 actionbar">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchReceptionEntries">
                         </div>
                     </div>
                 </div>
@@ -18,31 +16,28 @@
             <table id="data-table-command" class="table table-striped table-vmiddle">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Fecha de Captura</th>
-                        <th>Porciento de Humedad</th>
-                        <th>Cilindro</th>
-                        <th>Variedad</th>
-                        <th>Productor</th>
-                        <th>Toneladas</th>
-                        <th>Fecha de entrada</th>
-                        <th>Folio</th>
-                        <th data-column-id="">Eliminar Humedad</th>
+                        <td>Cilindro</td>
+                        <td>Campos</td>
+                        <td>Toneladas</td>
+                        <td>Fecha de Entrada</td>
+                        <td>Folios</td>
+                        <td>Fecha de Captura</td>
+                        <td>% Humedad</td>
+                        <td>Eliminar</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="humidity in humidities | filter:searchUser">
-                        <td>{{humidity.Id}}</td>
-                        <td>{{humidity.DateCapture}}</td>
-                        <td>{{humidity.HumidityPercent}}</td>
+                    <tr ng-repeat="humidity in humiditiesInReceptionEntry | filter:searchHumities | orderBy:DateCapture">
                         <td>{{humidity.CylinderName}}</td>
-                        <td>{{humidity.ProducerName}}</td>
+                        <td>{{humidity.FieldName}}</td>
                         <td>{{humidity.Tons}}</td>
-                        <td>{{humidity.EntryDate}}</td>
+                        <td>{{humidity.EntryDate | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{humidity.Folio}}</td>
+                        <td>{{humidity.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{humidity.HumidityPercentage}}</td>
                         <td>
                             <button class="btn btn-icon command-delete" ng-click="confirmationDelete(humidity.Id)">
-                                <span class="md md-format-color-reset"></span>
+                                <span class="md md-delete"></span>
                             </button>
                         </td>
                     </tr>

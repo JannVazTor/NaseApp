@@ -1,17 +1,16 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').factory('humidityService', function (apiPath, $http) {
+    angular.module('naseNutAppApp').factory('humidityService', function (apiPath, $http) { 
+
         var _getAll = function () {
-            return $http.get(apiPath + 'api/humidity/getAll').catch(function (e) {
+            return $http.get(apiPath + 'api/humidity').catch(function (e) {
                 console.log("error description: ", e);
                 throw e;
             });
         }
-        var _getAllbyId = function (id) {
-            return $http.get(apiPath + 'api/humidity/getAll/'+id).catch(function (e) {
-                console.log("error description: ", e);
-                throw e;
-            });
+
+        var _getByReceptionEntry = function(id){
+            return $http.get(apiPath + 'api/humidity/getByReceptionEntry/' + id);
         }
 
         var _save = function (data) {
@@ -25,7 +24,8 @@
         return {
             save: _save,
             getAll: _getAll,
-            delete: _delete
+            delete: _delete,
+            getByReceptionEntry:_getByReceptionEntry
         };
     });
 })();

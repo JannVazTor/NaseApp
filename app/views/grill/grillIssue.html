@@ -171,7 +171,7 @@
                                             <tbody>
                                                 <tr ng-repeat="grilli in issue.Grills">
                                                     <td>{{grilli.Id}}</td>
-                                                    <td>{{grilli.DateCapture}}</td>
+                                                    <td>{{grilli.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
                                                     <td>{{grilli.Receptions}}</td>
                                                     <td>{{grilli.Size}}</td>
                                                     <td>{{grilli.Sacks}}</td>

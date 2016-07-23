@@ -1,7 +1,7 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('mainController', function ($scope, userService, USER_ROLES, AUTH_EVENTS, $state, authService) {
-        $scope.currentUser = userService.currentUserInfo;
+        $scope.currentUser = userService.currentUserInfo();
 
         $scope.userRoles = USER_ROLES;
 
