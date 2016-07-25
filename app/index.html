@@ -66,7 +66,7 @@
         <aside id="sidebar">
             <div class="sidebar-inner">
                 <div class="profile-menu">
-                    <a href="" data-toggle="dropdown">
+                    <a href data-toggle="dropdown">
                         <div class="profile-pic">
                             <img src="img/profile-pics/8.jpg" alt="">
                         </div>
@@ -74,7 +74,7 @@
                     </a>
                     <ul class="main-menu">
                         <li>
-                            <a href=""><i class="md md-person"></i> View Profile</a>
+                            <a href><i class="md md-person"></i> View Profile</a>
                         </li>
                         <li>
                             <a href ng-click="logOut()"><i class="md md-history"></i> Logout</a>
@@ -83,49 +83,49 @@
                 </div>
                 <ul class="main-menu">
                     <li class="active"><a ui-sref="home"><i class="md md-home"></i> Home</a></li>
-                    <li><a ui-sref="users"><i class="md md-people"></i> Usuarios</a></li>
-                    <li><a ui-sref="producersAndVarieties"><i class="md md-people-outline"></i> Productores y Variedades</a></li>
-                    <li><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
-                    <li class="sub-menu">
-                        <a href=""> <i class="md md md-format-color-reset"></i>Humedad</a>
+                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="users"><i class="md md-people"></i> Usuarios</a></li>
+                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="producersAndVarieties"><i class="md md-people-outline"></i> Productores y Variedades</a></li>
+                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
+                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.admin) || (currentUser.role === userRoles.humidityUser)">
+                        <a href><i class="md md md-format-color-reset"></i>Humedad</a>
                         <ul>
                             <li><a ui-sref="humidityAdd">Alta de Humedad</a></li>
                             <li><a ui-sref="humidityManage">Gestion de Humedad</a></li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
-                        <a href=""><i class="md md-view-module"></i>Parillas</a>
+                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.grillUser) || (currentUser.role === userRoles.admin)">
+                        <a href><i class="md md-view-module"></i>Parillas</a>
                         <ul>
                             <li><a ui-sref="grillAdd">Alta de Parillas</a></li>
-                            <li><a ui-sref="grillIssue">Salida de Parillas</a></li>
                             <li><a ui-sref="grillManage">Inventario de Proceso</a></li>
                             <li><a ui-sref="grillCurrentInv">Inventario Actual</a></li>
+                            <li><a ui-sref="grillIssue">Salida de Parillas</a></li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
-                        <a href=""><i class="md md-description"></i>Muestreos</a>
+                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.qualityUser) || (currentUser.role === userRoles.admin)">
+                        <a href><i class="md md-description"></i>Muestreos de Calidad</a>
                         <ul>
-                            <li><a ui-sref="samplingReceptionAdd">Agregar muestreo a recepciones</a></li>
+                            <li><a ui-sref="samplingReceptionAdd">Muestreo en Cilindros</a></li>
                             <li><a ui-sref="samplingReceptionManage">Gestionar muestreos en Recepciones</a></li>
                             <li><a ui-sref="samplingGrillManage">Gestionar muestreos en Parrillas</a></li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
-                        <a href=""><i class="md md-assignment"></i>Recepciones</a>
+                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)">
+                        <a href><i class="md md-assignment"></i>Recepciones</a>
                         <ul>
                             <li><a ui-sref="receptionAdd">Alta de Recepciones</a></li>
                             <li><a ui-sref="receptionManage">Gestion de Recepciones</a></li>
                         </ul>
                     </li>
-                    <li><a ui-sref="remissionManage"><i class="md md-description"></i> Remisiones</a></li>
-                    <li class="sub-menu">
-                        <a href=""><i class="md md-my-library-books"></i>Reportes</a>
+                    <li ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)"><a ui-sref="remissionManage"><i class="md md-description"></i> Remisiones</a></li>
+                    <li class="sub-menu" ng-if="currentUser.role === userRoles.admin">
+                        <a href><i class="md md-my-library-books"></i>Reportes</a>
                         <ul>
                             <li><a ui-sref="reportingProcess">Reporte de Proceso</a></li>
                             <li><a ui-sref="producerReport">Reporte de Produccion</a></li>
                             <li><a ui-sref="processInventory">Inventario de Proceso</a></li>
                             <li><a ui-sref="currentInventory">Inventario Actual</a></li>
-                            <li><a ui-sref="outputs">Salidas</a></li>
+                            <li><a ui-sref="grillIssues">Salidas</a></li>
                             <li><a ui-sref="dailyABEL">Reporte Diario ABEL</a></li>
                             <li><a ui-sref="reportOrigin">Reporte de Origen</a></li>
                             <li><a ui-sref="firstFinalSummary">Reporte Resumen Final Primeras</a></li>

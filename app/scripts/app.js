@@ -255,9 +255,9 @@
             roles: [USER_ROLES.admin]
           }
         })
-        .state('outputs', {
-          url: '/Salidas',
-          templateUrl: 'views/report/outputs.html',
+        .state('grillIssues', {
+          url: '/parrillasSalidas',
+          templateUrl: 'views/report/grillIssues.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
@@ -295,7 +295,7 @@
             roles: [USER_ROLES.admin]
           }
         });
-      $urlRouterProvider.otherwise('/home');
+      $urlRouterProvider.otherwise('/');
     })
     .config(function ($httpProvider) {
       $httpProvider.defaults.useXDomain = true;
