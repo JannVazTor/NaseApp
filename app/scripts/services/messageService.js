@@ -79,7 +79,8 @@
             'Ocurrio un error al intentar cargar las recepciones.',
             'Ocurrio un error al intentar cargar los cilindros.',
             'Ocurrio un error al intentar cargar las variedades.',
-            'Ocurrio un error al intentar cargar a los productores.'];
+            'Ocurrio un error al intentar cargar a los productores.',
+            'La Sesion a expirado.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',
             'El Usuario fue agregado de manera exitosa.'];

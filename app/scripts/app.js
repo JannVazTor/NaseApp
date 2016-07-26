@@ -52,6 +52,7 @@
         .state('home', {
           url: '/home',
           templateUrl: 'views/home.html',
+          controller: 'homeController',
           data: {
             roles: [USER_ROLES.admin, USER_ROLES.remRecepUser, USER_ROLES.humidityUser, USER_ROLES.grillUser, USER_ROLES.qualityUser]
           }
@@ -254,9 +255,9 @@
             roles: [USER_ROLES.admin]
           }
         })
-        .state('outputs', {
-          url: '/Salidas',
-          templateUrl: 'views/report/outputs.html',
+        .state('grillIssues', {
+          url: '/parrillasSalidas',
+          templateUrl: 'views/report/grillIssues.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
@@ -294,7 +295,7 @@
             roles: [USER_ROLES.admin]
           }
         });
-      $urlRouterProvider.otherwise('/home');
+      $urlRouterProvider.otherwise('/');
     })
     .config(function ($httpProvider) {
       $httpProvider.defaults.useXDomain = true;

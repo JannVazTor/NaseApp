@@ -13,12 +13,16 @@
         var _getProcessInventory = function(){
             return $http.get(apiPath + 'api/report/processInventory');
         }
+        var _getGrillIssuesReport = function(){
+            return $http.get(apiPath + 'api/report/grillIssues');
+        }
 
         return {
             getProducerReport: _getProducerReport,
             getReportingProcess: _getReportingProcess,
             getCurrentInventoryReport: _getCurrentInventoryReport,
-            getProcessInventory: _getProcessInventory
+            getProcessInventory: _getProcessInventory,
+            getGrillIssuesReport:_getGrillIssuesReport
         };
     });
 })();
