@@ -86,6 +86,7 @@
                     <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="users"><i class="md md-people"></i> Usuarios</a></li>
                     <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="producersAndVarieties"><i class="md md-people-outline"></i> Productores y Variedades</a></li>
                     <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
+                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="field"><i class="md md-photo-album"></i> Campos</a></li>
                     <li class="sub-menu" ng-if="(currentUser.role === userRoles.admin) || (currentUser.role === userRoles.humidityUser)">
                         <a href><i class="md md md-format-color-reset"></i>Humedad</a>
                         <ul>
@@ -204,6 +205,7 @@
     <script src="scripts/controllers/reportController.js"></script>
     <script src="scripts/controllers/mainController.js"></script>
     <script src="scripts/controllers/homeController.js"></script>
+    <script src="scripts/controllers/fieldController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>
@@ -222,6 +224,7 @@
     <script src="scripts/services/reportService.js"></script>
     <script src="scripts/services/humidityService.js"></script>
     <script src="scripts/services/messageService.js"></script>
+    <script src="scripts/services/fieldService.js"></script>
 
 </body>
 

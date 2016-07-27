@@ -294,6 +294,14 @@
           data: {
             roles: [USER_ROLES.admin]
           }
+        })
+        .state('field', {
+          url: '/campos',
+          templateUrl: 'views/field.html',
+          controller: 'fieldController',
+          data: {
+            roles: [USER_ROLES.admin]
+          }
         });
       $urlRouterProvider.otherwise('/');
     })

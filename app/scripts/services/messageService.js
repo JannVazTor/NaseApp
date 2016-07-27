@@ -71,24 +71,30 @@
                     break;
             }
         }
-        var errors = ['Ocurrio un error al intentar cargar los roles.',
-            'Ocurrio un error y el usuario no pudo ser registrado.',
-            'Ocurrio un error y el usuario no pudo ser eliminado.',
-            'Ocurrio un error al intentar cargar a los usuarios.',
-            'Ocurrio un error y el usuario no pudo ser loggeado.',
-            'Ocurrio un error al intentar cargar las recepciones.',
-            'Ocurrio un error al intentar cargar los cilindros.',
-            'Ocurrio un error al intentar cargar las variedades.',
-            'Ocurrio un error al intentar cargar a los productores.',
-            'La Sesion a expirado.'];
+        var errors = ['Ocurrio un error al intentar cargar los roles.',//0
+            'Ocurrio un error y el usuario no pudo ser registrado.',//1
+            'Ocurrio un error y el usuario no pudo ser eliminado.',//2
+            'Ocurrio un error al intentar cargar a los usuarios.',//3
+            'Ocurrio un error y el usuario no pudo ser loggeado.',//4
+            'Ocurrio un error al intentar cargar las recepciones.',//5
+            'Ocurrio un error al intentar cargar los cilindros.',//6
+            'Ocurrio un error al intentar cargar las variedades.',//7
+            'Ocurrio un error al intentar cargar a los productores.',//8
+            'La Sesion a expirado.',//9
+            'Ocurrio un error y el campo no pudo ser guardado.',//10
+            'Ocurrio un error al intentar cargar los campos.',//11
+            'Ocurrio un error al intentar eliminar el campo.',//12
+            'Ocurrio un error al intentar cargar los campos.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',
-            'El Usuario fue agregado de manera exitosa.'];
+            'El Usuario fue agregado de manera exitosa.',
+            'El Campo fue agregado de manera exitosa.'];
 
-        var info = ['No se encontraron recepciones en la base de datos.',
-            'No se encontraron cilindros en la base de datos.',
-            'No se encontraron variedades en la base de datos.',
-            'No se encontraron productores en la base de datos.'];
+        var info = ['No se encontraron recepciones en la base de datos.',//0
+            'No se encontraron cilindros en la base de datos.',//1
+            'No se encontraron variedades en la base de datos.',//2
+            'No se encontraron productores en la base de datos.',//3
+            'No se encontraron campos en la base de datos.'];
 
         return {
             infoMessages: _arrayInfoMessage,
