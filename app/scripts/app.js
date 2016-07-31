@@ -143,7 +143,7 @@
         .state('grillCurrentInv', {
           url: '/parrillasInventarioActual',
           templateUrl: 'views/grill/grillCurrentInv.html',
-          controller: 'grillCurrentInvController',
+          controller: 'grillController',
           data: {
             roles: [USER_ROLES.grillUser, USER_ROLES.admin]
           }
@@ -176,6 +176,14 @@
         .state('humidityAddToReception', {
           url: '/agregarHumedad',
           templateUrl: 'views/humidity/humidityAddToCylinder.html',
+          controller: 'humidityController',
+          data: {
+            roles: [USER_ROLES.humidityUser, USER_ROLES.admin]
+          }
+        }).
+        state('humidityLastSamplings', {
+          ulr: '/ultimasHumedades',
+          templateUrl: 'views/humidity/humidityLastSamplings.html',
           controller: 'humidityController',
           data: {
             roles: [USER_ROLES.humidityUser, USER_ROLES.admin]

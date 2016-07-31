@@ -34,7 +34,7 @@
                 <tbody>
                     <tr ng-repeat="remission in remissions | filter:searchUser">
                         <td>{{remission.Id}}</td>
-                        <td>{{remission.DateCapture}}</td>
+                        <td>{{remission.DateCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{remission.FieldName}}</td>
                         <td>{{remission.Cultivation}}</td>
                         <td>{{remission.Variety}}</td>

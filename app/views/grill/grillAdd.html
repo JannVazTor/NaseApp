@@ -6,7 +6,7 @@
             </div>
             <div class="card-body card-padding">
                 <div class="form-group">
-                    <label for="prodF" class="col-sm-2 control-label">Productores</label>
+                    <label for="prodF" class="col-sm-2 control-label">Productores *</label>
                     <div class="col-sm-10">
                         <div class="fg-line select">
                             <select id="prodF" class="form-control" ng-model="grill.Producer" ng-options="producer.ProducerName for producer in producers"></select>
@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="date" class="col-sm-2 control-label">Fecha</label>
+                    <label for="date" class="col-sm-2 control-label">Fecha *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
                             <input required  type="text" disabled class="form-control input-sm" id="grillDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="fieldF" class="col-sm-2 control-label">Campo</label>
+                    <label for="fieldF" class="col-sm-2 control-label">Campo *</label>
                     <div class="col-sm-10">
                         <div class="fg-line select">
                             <select id="fieldF" class="form-control" ng-model="grill.Field" ng-options="field.FieldName for field in fields"></select>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="varieF" class="col-sm-2 control-label">Variedades</label>
+                    <label for="varieF" class="col-sm-2 control-label">Variedades *</label>
                     <div class="col-sm-10">
                         <div class="fg-line select">
                             <select id="varieF" class="form-control" ng-model="grill.Variety" ng-options="variety.VarietyName for variety in varieties"></select>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="quality" class="col-sm-2 control-label">Calidad</label>
+                    <label for="quality" class="col-sm-2 control-label">Calidad *</label>
                     <div class="col-sm-10">
                         <div class="fg-line select">
                             <select class="form-control" ng-init="grill.Quality = qualities[0]" ng-model="grill.Quality" ng-options="quality.Name for quality in qualities"></select>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="sacks" class="col-sm-2 control-label">Sacos</label>
+                    <label for="sacks" class="col-sm-2 control-label">Sacos *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
                             <input required type="number" min="1" name="Sacks" class="form-control input-sm" id="sacks" placeholder="sacos" ng-model="grill.Sacks">
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="kilos" class="col-sm-2 control-label">Kilos</label>
+                    <label for="kilos" class="col-sm-2 control-label">Kilos *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
                             <input required type="number" min="1" class="form-control input-sm" id="kilos" name="Kilos" placeholder="kilos" data-ng-model="grill.Kilos">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="size" class="col-sm-2 control-label">Tamaño</label>
+                    <label for="size" class="col-sm-2 control-label">Tamaño *</label>
                     <div class="col-sm-10">
                         <div class="fg-line select">
                             <select class="form-control" ng-init="grill.Size = sizes[0]" ng-model="grill.Size" ng-options="size.Name for size in sizes"></select>

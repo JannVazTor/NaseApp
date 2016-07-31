@@ -42,13 +42,17 @@
         RoleId: user.Role.Id,
         Email: user.Email
       };
-      authService.saveRegistration(User).then(function (response) {
-        GetAllUsers();
-        msgS.msg('succ', 1);
-      },
-        function (response) {
-          msgS.msg('err', 1);
-        });
+      if (User.RoleId === undefined){
+        msgS.msg('err', 18);
+      } else {
+        authService.saveRegistration(User).then(function (response) {
+          GetAllUsers();
+          msgS.msg('succ', 1);
+        },
+          function (response) {
+            msgS.msg('err', 1);
+          });
+      }
     };
 
     $scope.deleteUser = function (userId) {

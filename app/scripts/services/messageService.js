@@ -88,7 +88,10 @@
             'Ocurrio un error al intentar cargar los datos del reporte.',//14
             'Ocurrio un error al intentar cargar los datos para la grafica.',//15
             'Debe agregar al menos un registro de parrillas para poder guardar la salida.',//16
-            'Ocurrio un error la intentar guardar la salida.'];
+            'Ocurrio un error la intentar guardar la salida.',//17
+            'No puede agregar usuarios si no hay roles asignados.',//18
+            'Ocurrio un error al intenter cargar las parrillas.',//19
+            'Ocurrio un error al intentar cargar las tomas de humedad.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -101,7 +104,9 @@
             'No se encontraron productores en la base de datos.',//3
             'No se encontraron campos en la base de datos.',//4
             'No se encontraron datos en la base de datos.',//5
-            'No se encontraron datos para la grafica de Produccion Acumuladad por Variedades.'];
+            'No se encontraron datos para la grafica de Produccion Acumuladad por Variedades.',//6
+            'No se encontraron parrillas en la base de datos.',//7
+            'No se encontraron tomas de humedad en la base de datos.'];
 
         return {
             infoMessages: _arrayInfoMessage,
