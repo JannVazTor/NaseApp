@@ -57,6 +57,14 @@
             roles: [USER_ROLES.admin, USER_ROLES.remRecepUser, USER_ROLES.humidityUser, USER_ROLES.grillUser, USER_ROLES.qualityUser]
           }
         })
+        .state('userProfile', {
+          url: '/usuarioPerfil',
+          templateUrl: 'views/userProfile.html',
+          controller: 'userController',
+          data: {
+            roles: [USER_ROLES.admin, USER_ROLES.remRecepUser, USER_ROLES.humidityUser, USER_ROLES.grillUser, USER_ROLES.qualityUser]
+          }
+        })
         .state('cylinder', {
           url: '/cilindros',
           templateUrl: 'views/cylinder.html',

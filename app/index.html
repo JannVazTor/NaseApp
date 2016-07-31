@@ -1,5 +1,6 @@
 <!doctype html>
 <html ng-app="naseNutAppApp" ng-cloak>
+
 <head>
     <meta charset="utf-8">
     <title></title>
@@ -38,6 +39,7 @@
         }
     </style>
 </head>
+
 <body ng-controller="mainController">
     <header id="header">
         <ul class="header-inner">
@@ -58,6 +60,13 @@
                     </li>
                 </ul>
             </li>
+            <li ng-if="isLoggedIn()" class="pull-right">
+                <ul class="top-menu">
+                    <li id="top" class="logo">
+                        <a href ng-click="logOut()">Salir</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </header>
     <section id="main">
@@ -72,10 +81,10 @@
                     </a>
                     <ul class="main-menu">
                         <li>
-                            <a href><i class="md md-person"></i> View Profile</a>
+                            <a ui-sref="userProfile"><i class="md md-person"></i>Ver Perfil</a>
                         </li>
                         <li>
-                            <a href ng-click="logOut()"><i class="md md-history"></i> Logout</a>
+                            <a href ng-click="logOut()"><i class="md md-history"></i> Salir</a>
                         </li>
                     </ul>
                 </div>
@@ -226,6 +235,7 @@
     <script src="scripts/services/homeService.js"></script>
 
     <script src="scripts/directives/confirmPassword.js"></script>
-    
+
 </body>
+
 </html>

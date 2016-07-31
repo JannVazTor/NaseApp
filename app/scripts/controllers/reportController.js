@@ -97,7 +97,6 @@
 
         var GetDtOptionsWithPromise = function (promise) {
             return DTOptionsBuilder.fromFnPromise(promise)
-                .withDOM('frtip')
                 .withPaginationType('full_numbers')
                 .withOption('responsive', true)
                 .withButtons(['copy', 'excel', 'pdf', 'csv', 'print'])
@@ -121,6 +120,7 @@
             return DTOptionsBuilder.newOptions()
                 .withPaginationType('full_numbers')
                 .withOption('responsive', true)
+                .withButtons(['copy', 'excel', 'pdf', 'csv', 'print'])
                 .withBootstrap().withBootstrapOptions({
                     Buttons: {
                         classes: {
@@ -135,7 +135,7 @@
                             ul: 'pagination pagination-sm'
                         }
                     }
-                }).withButtons(['copy', 'excel', 'pdf', 'csv', 'print']);
+                });
         };
 
         var GrillIssueSettings = function (promise) {
@@ -269,8 +269,7 @@
                     $scope.title = 'Salidas (Parrillas)';
                     break;
                 case 'reportOrigin':
-                    $scope.dtOptions = GetDtOptions();
-                    GetReportOrigin();
+                    $scope.dtOptions = GetDtOptions(GetReportOrigin());
                     break;
                 default:
                     break;

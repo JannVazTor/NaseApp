@@ -16,11 +16,16 @@
             return authService.authentication;
         }
 
+        var _changePassword = function (data) {
+            return $http.post(apiPath + 'api/account/changePassword', data);
+        }
+
         return {
             getAll: _getAll,
             delete: _delete,
             isLoggedIn: _isLoggedIn,
-            currentUserInfo: _currentUserInfo
+            currentUserInfo: _currentUserInfo,
+            changePassword: _changePassword
         };
     });
 })();

@@ -42,7 +42,7 @@
         RoleId: user.Role.Id,
         Email: user.Email
       };
-      if (User.RoleId === undefined){
+      if (User.RoleId === undefined) {
         msgS.msg('err', 18);
       } else {
         authService.saveRegistration(User).then(function (response) {
@@ -53,6 +53,30 @@
             msgS.msg('err', 1);
           });
       }
+    };
+
+    var GetCurrentUser = function () {
+      var userInfo = angular.copy(authService.authentication);
+      switch (userInfo.role) {
+        case 'admin':
+          userInfo.role = 'Administrador';
+          break;
+        case 'grillUser':
+          userInfo.role = 'Capturista de Parrillas';
+          break;
+        case 'humidityUser':
+          userInfo.role = 'Capturista de Humedad';
+          break;
+        case 'qualityUser':
+          userInfo.role = 'Capturista de Muestreos';
+          break;
+        case 'remRecepUser':
+          userInfo.role = 'Capturista de Recepciones y Remisiones';
+          break;
+        default:
+          break;
+      }
+      $scope.userInf = userInfo;
     };
 
     $scope.deleteUser = function (userId) {
@@ -69,8 +93,31 @@
       });
     };
 
-    GetAllRoles();
-    GetAllUsers();
+    $scope.changePass = function (changePass) {
+      var ChangePassword = {
+        OldPassword: changePass.OldPassword,
+        NewPassword: changePass.NewPassword,
+        ConfirmPassword: changePass.ConfirmPassword
+      };
+      userService.changePassword(ChangePassword).then(function () {
+        msgS.msg('succ', 4);
+      }, function () {
+        msgS.msg('err', 21);
+      });
+    };
 
+    (function () {
+      switch ($state.current.name) {
+        case 'userProfile':
+          GetCurrentUser();
+          break;
+        case 'users':
+          GetAllRoles();
+          GetAllUsers();
+          break;
+        default:
+          break;
+      };
+    })();
   });
 })();
