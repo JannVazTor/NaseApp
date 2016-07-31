@@ -21,11 +21,16 @@
             return $http.delete(apiPath + 'api/humidity/' + id);
         }
 
+        var _getLastHumiditiesSamplings = function(){
+            return $http.get(apiPath + 'api/humidity/getLastHumiditiesSamplings');
+        }
+
         return {
             save: _save,
             getAll: _getAll,
             delete: _delete,
-            getByReceptionEntry:_getByReceptionEntry
+            getByReceptionEntry:_getByReceptionEntry,
+            getLastHumiditiesSamplings: _getLastHumiditiesSamplings
         };
     });
 })();

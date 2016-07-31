@@ -34,6 +34,18 @@
             });
         };
 
+        var GetAllHumiditiesLastSamplings = function () {
+            humidityService.getLastHumiditiesSamplings().then(function (response) {
+                if (response.data.length !== 0) {
+                    $scope.humiditiesInReceptionEntry = response.data;
+                } else {
+                    msgS.msg('info', 8);
+                }
+            }, function (response) {
+                msgS.msg('err', 20);
+            });
+        };
+
         var GetAllReceptionEntries = function () {
             receptionService.getAllEntries().then(function (response) {
                 if (response.data.length === 0) {
@@ -98,6 +110,15 @@
                         }
                     });
                 }
+                if ($state.current.name === 'humidityLastSamplings') {
+                    $.each($scope.humiditiesInReceptionEntry, function (i) {
+                        if ($scope.humiditiesInReceptionEntry[i].Id === Id) {
+                            $scope.humiditiesInReceptionEntry.splice(i, 1);
+                            return false;
+                        }
+                    });
+                    GetAllHumiditiesLastSamplings();
+                }
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });
@@ -113,6 +134,11 @@
                     break;
                 case 'humidityAddToReception':
                     GetAllHumiditiesByReception();
+                    break;
+                case 'humidityLastSamplings':
+                    GetAllHumiditiesLastSamplings();
+                    break;
+                default:
                     break;
             }
         })();

@@ -60,6 +60,13 @@
                     </li>
                 </ul>
             </li>
+            <li ng-if="isLoggedIn()" class="pull-right">
+                <ul class="top-menu">
+                    <li id="top" class="logo">
+                        <a href ng-click="logOut()">Salir</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </header>
     <section id="main">
@@ -74,10 +81,10 @@
                     </a>
                     <ul class="main-menu">
                         <li>
-                            <a href><i class="md md-person"></i> View Profile</a>
+                            <a ui-sref="userProfile"><i class="md md-person"></i>Ver Perfil</a>
                         </li>
                         <li>
-                            <a href ng-click="logOut()"><i class="md md-history"></i> Logout</a>
+                            <a href ng-click="logOut()"><i class="md md-history"></i> Salir</a>
                         </li>
                     </ul>
                 </div>
@@ -92,6 +99,7 @@
                         <ul>
                             <li><a ui-sref="humidityAdd">Alta de Humedad</a></li>
                             <li><a ui-sref="humidityManage">Gestion de Humedad</a></li>
+                            <li><a ui-sref="humidityLastSamplings">Gestion Ultimas Muestras</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu" ng-if="(currentUser.role === userRoles.grillUser) || (currentUser.role === userRoles.admin)">
@@ -129,7 +137,6 @@
                             <li><a ui-sref="grillIssues">Salidas</a></li>
                             <li><a ui-sref="dailyABEL">Reporte Diario ABEL</a></li>
                             <li><a ui-sref="reportOrigin">Reporte de Origen</a></li>
-                            <li><a ui-sref="firstFinalSummary">Reporte Resumen Final Primeras</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -225,6 +232,9 @@
     <script src="scripts/services/humidityService.js"></script>
     <script src="scripts/services/messageService.js"></script>
     <script src="scripts/services/fieldService.js"></script>
+    <script src="scripts/services/homeService.js"></script>
+
+    <script src="scripts/directives/confirmPassword.js"></script>
 
 </body>
 

@@ -4,6 +4,8 @@
         $scope.dtOptions = {};
         $scope.dtColumns = [];
         $scope.reportingProcess = [];
+        $scope.reportOrigin = [];
+        $scope.producerReport = [];
 
         $scope.getProducerReport = function (id) {
             reportService.getProducerReport(id).then(function (response) {
@@ -59,6 +61,19 @@
             return defer.promise;
         };
 
+        var GetReportOrigin = function () {
+            reportService.getReportOrigin().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5)
+                } else {
+                    $scope.reportOrigin = response.data;
+                    $scope.reportOriginFirst = $scope.reportOrigin[0];
+                }
+            }, function (response) {
+                msgS.msg('err', 14);
+            })
+        };
+
         var GetColumns = function () {
             return [
                 DTColumnBuilder.newColumn('DateCapture').withTitle('Fecha de Captura').renderWith(function (data, type, full) {
@@ -82,7 +97,6 @@
 
         var GetDtOptionsWithPromise = function (promise) {
             return DTOptionsBuilder.fromFnPromise(promise)
-                .withDOM('frtip')
                 .withPaginationType('full_numbers')
                 .withOption('responsive', true)
                 .withButtons(['copy', 'excel', 'pdf', 'csv', 'print'])
@@ -106,6 +120,7 @@
             return DTOptionsBuilder.newOptions()
                 .withPaginationType('full_numbers')
                 .withOption('responsive', true)
+                .withButtons(['copy', 'excel', 'pdf', 'csv', 'print'])
                 .withBootstrap().withBootstrapOptions({
                     Buttons: {
                         classes: {
@@ -120,7 +135,7 @@
                             ul: 'pagination pagination-sm'
                         }
                     }
-                }).withButtons(['copy', 'excel', 'pdf', 'csv', 'print']);
+                });
         };
 
         var GrillIssueSettings = function (promise) {
@@ -206,11 +221,34 @@
             ];
         };
 
+        var GetProducerReportColumns = function () {
+            return [
+                DTColumnBuilder.newColumn('DateReceptionCapture').withTitle('Fecha de Captura').renderWith(function (data, type, full) {
+                    return $filter('date')(data, 'dd/MM/yyyy HH:mm');
+                }),
+                DTColumnBuilder.newColumn('Variety').withTitle('Variedad'),
+                DTColumnBuilder.newColumn('FieldName').withTitle('Campo'),
+                DTColumnBuilder.newColumn('Remission').withTitle('Remision'),
+                DTColumnBuilder.newColumn('Cylinder').withTitle('Cilindro'),
+                DTColumnBuilder.newColumn('Folio').withTitle('Folio'),
+                DTColumnBuilder.newColumn('KgsOrigen').withTitle('Kgs. en el Origen'),
+                DTColumnBuilder.newColumn('ProcessDate').withTitle('Fecha de Proceso').renderWith(function (data, type, full) {
+                    return $filter('date')(data, 'dd/MM/yyyy HH:mm');
+                }),
+                DTColumnBuilder.newColumn('SacksP').withTitle('Sacos de Primera'),
+                DTColumnBuilder.newColumn('KilosFirst').withTitle('Kg. de Primera'),
+                DTColumnBuilder.newColumn('SacksS').withTitle('Sacos de Segunda'),
+                DTColumnBuilder.newColumn('KilosSecond').withTitle('Kg. de Segunda'),
+                DTColumnBuilder.newColumn('KilosTotal').withTitle('Kgs. Totales')
+            ];
+        };
+
         (function () {
             switch ($state.current.name) {
                 case 'producerReport':
                     GetAllProducers();
-                    $scope.dtOptions = GetDtOptionsWithPromise(reportService.getProducerReport(1));
+                    $scope.getProducerReport(1);
+                    $scope.dtOptions = GetDtOptions();
                     break;
                 case 'reportingProcess':
                     $scope.dtOptions = GetDtOptions(GetReportingProcess());
@@ -228,8 +266,10 @@
                 case 'grillIssues':
                     $scope.dtOptions = GetDtOptionsWithPromise(reportService.getGrillIssuesReport);
                     $scope.dtColumns = GetGrillIssueColumns();
-                    //GrillIssueSettings();
                     $scope.title = 'Salidas (Parrillas)';
+                    break;
+                case 'reportOrigin':
+                    $scope.dtOptions = GetDtOptions(GetReportOrigin());
                     break;
                 default:
                     break;

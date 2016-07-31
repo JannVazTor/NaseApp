@@ -13,29 +13,36 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane" id="addIssueGrill">
                     <div class="card-body card-padding">
-                        <form class="row" role="form">
+                        <form name="grillForm" class="row" role="form">
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="Remision" data-ng-model="grillIssue.Remission">
-                                    <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.FieldName.$error.required">El Campo es requerido.</small>
+                                    <input required type="number" min="1" name="Remission" class="form-control input-sm" id="field" placeholder="Remision *"
+                                        data-ng-model="grillIssue.Remission">
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Remission.$error.number">Numero no valido.</small>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="Camion" data-ng-model="grillIssue.Truck">
-                                    <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.FieldName.$error.required">El Campo es requerido.</small>
+                                    <input required type="text" class="form-control input-sm" id="field" name="Truck" placeholder="Camion *" ng-minlength="3"
+                                        ng-maxlength="150" data-ng-model="grillIssue.Truck">
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Truck.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Truck.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 150 caracteres.</small>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="Chofer" data-ng-model="grillIssue.Driver">
-                                    <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.FieldName.$error.required">El Campo es requerido.</small>
+                                    <input required type="text" class="form-control input-sm" id="field" name="Driver" placeholder="Chofer *" ng-minlength="3"
+                                        ng-maxlength="150" data-ng-model="grillIssue.Driver">
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Driver.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Driver.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 150 caracteres.</small>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="Caja" data-ng-model="grillIssue.Box">
-                                    <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.FieldName.$error.required">El Campo es requerido.</small>
+                                    <input type="text" class="form-control input-sm" id="field" name="Box" placeholder="Caja *" ng-minlength="3" ng-maxlength="150"
+                                        data-ng-model="grillIssue.Box">
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Box.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Box.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 150 caracteres.</small>
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -60,7 +67,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <button type="submit" class="btn btn-primary waves-effect" data-ng-click="saveGrillIssue()" ng-disabled="">Guardar</button>
+                                    <button type="submit" class="btn btn-primary waves-effect" data-ng-click="saveGrillIssue()" ng-disabled="!grillForm.$valid">Guardar</button>
                                 </div>
                             </div>
                         </form>
@@ -101,7 +108,7 @@
                                     <tbody>
                                         <tr ng-repeat="grill in grills | filter:searchUser">
                                             <td>{{grill.Id}}</td>
-                                            <td>{{grill.DateCapture}}</td>
+                                            <td>{{grill.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
                                             <td>{{grill.Receptions}}</td>
                                             <td>{{grill.Size}}</td>
                                             <td>{{grill.Sacks}}</td>

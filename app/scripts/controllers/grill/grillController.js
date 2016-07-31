@@ -207,6 +207,18 @@
             });
         };
 
+        var GetAllGrillsCurrentInv = function () {
+            grillService.getAllCurrentInv().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 7);
+                } else {
+                    $scope.grills = response.data;
+                }
+            }, function (response) {
+                msgS.msg('err', 19);
+            });
+        };
+
         var GetAllGrills = function () {
             grillService.getAll().then(function (response) {
                 if (response.data.length === 0) {
@@ -232,6 +244,9 @@
                     break;
                 case 'grillManage':
                     GetAllGrills();
+                    break;
+                case 'grillCurrentInv':
+                    GetAllGrillsCurrentInv();
                     break;
                 default:
                     break;

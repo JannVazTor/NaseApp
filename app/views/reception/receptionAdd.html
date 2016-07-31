@@ -6,16 +6,16 @@
             </div>
             <div class="card-body card-padding">
                 <div class="form-group">
-                    <label for="fieldName" class="col-sm-2 control-label">Folio</label>
+                    <label for="fieldName" class="col-sm-2 control-label">Folio *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="folio" name="Folio" placeholder="Folio" data-ng-model="reception.Folio">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.Folio.$error.required">Folio es requerido.</small>
+                            <input required type="number" min="1" name="Folio" class="form-control input-sm" id="folio" placeholder="Folio" data-ng-model="reception.Folio">
+                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.Folio.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="EntryDate" class="col-sm-2 control-label">Fecha</label>
+                    <label for="EntryDate" class="col-sm-2 control-label">Fecha *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
                             <input type="text" required disabled class="form-control input-sm" id="EntryDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="fieldF" class="col-sm-2 control-label">Campo</label>
+                    <label for="fieldF" class="col-sm-2 control-label">Campo *</label>
                     <div class="col-sm-10">
                         <div class="fg-line select">
                             <select id="fieldF" class="form-control" ng-model="reception.Field" ng-options="field.FieldName for field in fields"></select>
@@ -37,23 +37,23 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="carRegistration" class="col-sm-2 control-label">Camion/Placas</label>
+                    <label for="carRegistration" class="col-sm-2 control-label">Camion/Placas *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="carRegistration" name="CarRegistration" placeholder="matricula" data-ng-model="reception.CarRegistration">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.CarRegistration.$error.required">Las placas son requerido.</small>
+                            <input required type="text" name="Carregistration" class="form-control input-sm" id="carRegistration" placeholder="matricula"
+                                ng-minlength="3" ng-maxlength="50" data-ng-model="reception.CarRegistration">
+                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.Carregistration.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.Carregistration.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 50 caracteres.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="receivedFromField" class="col-sm-2 control-label">Kilos recibidos de campo</label>
+                    <label for="receivedFromField" class="col-sm-2 control-label">Kilos recibidos de campo *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="number" min="1" step="any" ng-class="{error: !receptionForm.$pristine && receptionForm.ReceivedFromField.$error.required}"
-                                class="form-control input-sm" name="ReceivedFromField" id="receivedFromField" placeholder="kilos recibidos"
+                            <input required type="number" min="1" name="ReceivedFromField" class="form-control input-sm" id="receivedFromField" placeholder="kilos recibidos"
                                 data-ng-model="reception.ReceivedFromField">
-                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionForm.$pristine && receptionForm.ReceivedFromField.$error.number">Tiene que ser un valor númerico.</small>
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.ReceivedFromField.$error.required">Kilos recibidos de campo es requerido.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.ReceivedFromField.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
@@ -61,9 +61,9 @@
                     <label for="humidity" class="col-sm-2 control-label">Humedad</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" step="any" class="form-control input-sm" id="humidity" name="HumidityPercent" placeholder="humedad"
+                            <input type="number" class="form-control input-sm" id="humidity" name="Humiditypercent" placeholder="humedad"
                                 data-ng-model="reception.HumidityPercent">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.HumidityPercent.$error.number">Tiene que ser un valor númerico.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.Humiditypercent.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
@@ -71,18 +71,19 @@
                     <label for="heatHoursDrying" class="col-sm-2 control-label">Horas de calor por secado</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="1" step="any" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado"
-                                name="HeatHoursDrying" data-ng-model="reception.HeatHoursDrying">
-                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionForm.$pristine && receptionForm.HeatHoursDrying.$error.number">Tiene que ser un valor númerico.</small>
+                            <input type="number" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado"
+                                name="Heathoursdrying" data-ng-model="reception.HeatHoursDrying">
+                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.Heathoursdrying.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="observations" class="col-sm-2 control-label">Observaciones</label>
+                    <label for="observations" class="col-sm-2 control-label">Observaciones *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <textarea required class="form-control auto-size" placeholder="observaciones..." name="Observations" data-ng-model="reception.Observations"></textarea>
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionForm.$pristine && receptionForm.Observations.$error.required">Observaciones son requerido.</small>
+                            <textarea required name="Observations" class="form-control auto-size" placeholder="observaciones..." ng-minlength="2" ng-maxlength="500" data-ng-model="reception.Observations"></textarea>
+                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.Observations.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.Observations.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 500 caracteres.</small>
                         </div>
                     </div>
                 </div>
@@ -122,8 +123,9 @@
                                 <td>{{reception.ReceivedFromField}}</td>
                                 <td>{{reception.EntryDate}}</td>
                                 <td>{{reception.HeatHoursDrying}}</td>
-                                <td> 
-                                    <button class="btn btn-icon command-delete" ng-click="removeReception(reception.Folio)" data-toggle="tooltip" data-placement="bottom" title="Remover">
+                                <td>
+                                    <button class="btn btn-icon command-delete" ng-click="removeReception(reception.Folio)" data-toggle="tooltip" data-placement="bottom"
+                                        title="Remover">
                                         <span class="md md-delete"></span>
                                     </button>
                                 </td>

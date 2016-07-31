@@ -1,29 +1,32 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form name="Field" class="form-horizontal" role="form">
+        <form name="fieldForm" class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Alta de Campos</h2>
             </div>
             <div class="card-body card-padding">
                 <div class="form-group">
-                    <label for="iusername" class="col-sm-2 control-label">Nombre</label>
+                    <label for="iusername" class="col-sm-2 control-label">Nombre *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="text" class="form-control input-sm" id="iusername" placeholder="Nombre del Campo" data-ng-model="field.FieldName">
+                            <input required type="text" name="fieldName" class="form-control input-sm" id="iusername" ng-maxlength="100" ng-minlength="3" placeholder="nombre del campo" data-ng-model="field.FieldName">
+                            <small class="help-block has-error" style="color:red" ng-show="fieldForm.fieldName.$error.minlength">El nombre del campo debe contener al menos 3 caracteres.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="fieldForm.fieldName.$error.maxlength">El nombre del campo es demasiado extenso, debe contener menos de 100 caracteres.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="iusername" class="col-sm-2 control-label">Hectareas</label>
+                    <label for="iusername" class="col-sm-2 control-label">Hectareas *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="text" class="form-control input-sm" id="iusername" placeholder="hectareas" data-ng-model="field.Hectares">
+                            <input required name="hectares" type="number" min="1" class="form-control input-sm" id="iusername" placeholder="hectareas" data-ng-model="field.Hectares">
+                            <small class="help-block has-error" style="color:red" ng-show="fieldForm.hectares.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveField(field)" ng-disabled="!Field.$valid">Guardar</button>
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveField(field)" ng-disabled="!fieldForm.$valid">Guardar</button>
                     </div>
                 </div>
             </div>

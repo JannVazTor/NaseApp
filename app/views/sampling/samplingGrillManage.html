@@ -30,7 +30,7 @@
                 <tbody>
                     <tr ng-repeat="sampling in samplings | filter:searchGrillSampling">
                         <td>{{sampling.Id}}</td>
-                        <td>{{sampling.DateCapture}}</td>
+                        <td>{{sampling.DateCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{sampling.SampleWeight}}</td>
                         <td>{{sampling.HumidityPercent}}</td>
                         <td>{{sampling.WalnutNumber}}</td>
