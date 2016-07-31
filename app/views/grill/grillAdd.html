@@ -17,7 +17,7 @@
                     <label for="date" class="col-sm-2 control-label">Fecha</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" disabled required class="form-control input-sm" id="grillDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
+                            <input required  type="text" disabled class="form-control input-sm" id="grillDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#"><i class="md md-event"></i></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -55,8 +55,8 @@
                     <label for="sacks" class="col-sm-2 control-label">Sacos</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="sacks" name="Sacks" placeholder="sacos" data-ng-model="grill.Sacks">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.Sacks.$error.required">El Campo es requerido.</small>
+                            <input required type="number" min="1" name="Sacks" class="form-control input-sm" id="sacks" placeholder="sacos" ng-model="grill.Sacks">
+                            <small class="help-block has-error" style="color:red" ng-show="grillForm.Sacks.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
@@ -64,8 +64,8 @@
                     <label for="kilos" class="col-sm-2 control-label">Kilos</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="kilos" name="Kilos" placeholder="kilos" data-ng-model="grill.Kilos">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.Kilos.$error.required">El Campo es requerido.</small>
+                            <input required type="number" min="1" class="form-control input-sm" id="kilos" name="Kilos" placeholder="kilos" data-ng-model="grill.Kilos">
+                            <small class="help-block has-error" style="color:red" ng-show="grillForm.Kilos.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>

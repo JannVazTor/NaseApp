@@ -5,9 +5,10 @@
     $scope.users = [];
     $scope.registration = [];
     $scope.registration.Role = "";
+
     var GetAllUsers = function () {
       userService.getAll().then(function (response) {
-        $scope.users = response.data;
+        $scope.users = ReplaceRoleNames(response.data, 'Role');
       }, function (response) {
         msgS.msg('err', 3);
       });
@@ -15,19 +16,22 @@
 
     var GetAllRoles = function () {
       roleService.getAll().then(function (response) {
-        $.each(response.data, function (i) {
-          if (response.data[i].Name == 'admin') { response.data[i].Name = 'Administrador' };
-          if (response.data[i].Name == 'grillUser') { response.data[i].Name = 'Capturista de Parrillas' };
-          if (response.data[i].Name == 'humidityUser') { response.data[i].Name = 'Capturista de Humedad' };
-          if (response.data[i].Name == 'qualityUser') { response.data[i].Name = 'Capturista de Muestreos' };
-          if (response.data[i].Name == 'remRecepUser') { response.data[i].Name = 'Capturista de Recepciones y Remisiones' };
-        });
-        $scope.roles = response.data;
+        $scope.roles = ReplaceRoleNames(response.data, 'Name');
         $scope.registration.Role = $scope.roles[0];
       },
         function (response) {
           msgS.msg('err', 0);
         });
+    };
+    function ReplaceRoleNames(data, propertyName) {
+      $.each(data, function (i) {
+        if (data[i][propertyName] == 'admin') { data[i][propertyName] = 'Administrador' };
+        if (data[i][propertyName] == 'grillUser') { data[i][propertyName] = 'Capturista de Parrillas' };
+        if (data[i][propertyName] == 'humidityUser') { data[i][propertyName] = 'Capturista de Humedad' };
+        if (data[i][propertyName] == 'qualityUser') { data[i][propertyName] = 'Capturista de Muestreos' };
+        if (data[i][propertyName] == 'remRecepUser') { data[i][propertyName] = 'Capturista de Recepciones y Remisiones' };
+      });
+      return data;
     };
 
     $scope.signUp = function (user) {

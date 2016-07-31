@@ -249,7 +249,7 @@
         })
         .state('processInventory', {
           url: '/Inventario de Proceso',
-          templateUrl: 'views/report/grill/genericReport.html',
+          templateUrl: 'views/report/genericReport.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
@@ -257,7 +257,7 @@
         })
         .state('grillIssues', {
           url: '/parrillasSalidas',
-          templateUrl: 'views/report/grillIssues.html',
+          templateUrl: 'views/report/grill/grillIssues.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
@@ -265,7 +265,7 @@
         })
         .state('currentInventory', {
           url: '/InvenarioActualParrillas',
-          templateUrl: 'views/report/grill/genericReport.html',
+          templateUrl: 'views/report/genericReport.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
@@ -280,7 +280,7 @@
           }
         })
         .state('reportOrigin', {
-          url: '/ReporteOrigen',
+          url: '/reporteOrigen',
           templateUrl: 'views/report/reportOrigin.html',
           controller: 'reportController',
           data: {

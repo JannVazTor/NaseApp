@@ -1,21 +1,28 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('homeController', function ($scope) {
-        (function () {
-            $('#pieChart').highcharts({
+    angular.module('naseNutAppApp').controller('homeController', function (msgS, $q, $scope, homeService) {
+
+        var GetProductionVariety = function (callback) {
+            homeService.getProductionVariety().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 6);
+                } else {
+                    callback(response.data);
+                }
+            }, function (response) {
+                msgS.msg('err', 15);
+            });
+        };
+        function ProduccionVarietyChart(dataO) {
+            Highcharts.chart('productionVariety', {
                 chart: {
-                    type: 'pie',
-                    options3d: {
-                        enabled: true,
-                        alpha: 45,
-                        beta: 0
-                    }
-                },
-                credits: {
-                    enabled: false
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
                 },
                 title: {
-                    text: 'Variedades'
+                    text: 'Browser market shares January, 2015 to May, 2015'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -24,94 +31,37 @@
                     pie: {
                         allowPointSelect: true,
                         cursor: 'pointer',
-                        depth: 35,
                         dataLabels: {
                             enabled: true,
-                            format: '{point.name}'
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
                         }
                     }
                 },
                 series: [{
-                    type: 'pie',
-                    name: 'Browser share',
-                    data: [
-                        ['Badour', 30.0],
-                        ['Wichita', 45.0],
-                        ['Western', 26.8],
-                        {
-                            name: 'Mixta',
-                            y: 12.8,
-                            sliced: true,
-                            selected: true
-                        },
-                        ['Choctow', 8.5],
-                        ['Mahan', 6.2],
-                        ['Navajo', 0.7]
-                    ]
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: dataO
                 }]
             });
-        })();
+        };
 
-        (function () {
-            $('#barChart').highcharts({
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'Parrillas'
-                },
-                xAxis: {
-                    categories: ['Parrillas']
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Inventario de Parrillas'
-                    }
-                },
-                legend: {
-                    reversed: true
-                },
-                plotOptions: {
-                    series: {
-                        stacking: 'normal'
-                    }
-                },
-                series: [{
-                    name: 'Inventario',
-                    data: [2]
-                }, {
-                        name: 'Salidas',
-                        data: [3]
-                    }]
-            });
-        })();
-
-        (function () {
-            $('#barChartTime').highcharts({
+        function AcumulatedByProducer() {
+            Highcharts.chart('acumulatedByProducer', {
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Produccion de Nuez'
+                    text: 'Monthly Average Rainfall'
                 },
                 subtitle: {
                     text: 'Source: WorldClimate.com'
                 },
                 xAxis: {
                     categories: [
-                        'Jan',
-                        'Feb',
-                        'Mar',
-                        'Apr',
-                        'May',
-                        'Jun',
-                        'Jul',
-                        'Aug',
-                        'Sep',
-                        'Oct',
-                        'Nov',
-                        'Dec'
+                        'Acumulado'
                     ],
                     crosshair: true
                 },
@@ -136,19 +86,28 @@
                     }
                 },
                 series: [{
-                    name: 'Grande',
-                    data: [49.9, 71.5, 106.4]
-
+                    name: 'Nase',
+                    data: [12000]
                 }, {
-                        name: 'Mediana',
-                        data: [83.6, 78.8, 98.5]
+                        name: 'Titanes',
+                        data: [10000]
 
                     }, {
-                        name: 'Chica',
-                        data: [48.9, 38.8, 39.3]
+                        name: 'Otro1',
+                        data: [9000]
 
+                    }, {
+                        name: 'Otro2',
+                        data: [15000]
                     }]
             });
+        };
+        (function () {
+            GetProductionVariety(function(response){
+                alert(JSON.stringify(response));
+                ProduccionVarietyChart(JSON.stringify(response));
+            });
+            AcumulatedByProducer();
         })();
     });
 })();

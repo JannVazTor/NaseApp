@@ -1,6 +1,6 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form name="Cilindros" class="form-horizontal" role="form">
+        <form name="cylinderForm" class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Alta de Cilindros</h2>
             </div>
@@ -9,7 +9,8 @@
                     <label for="iusername" class="col-sm-2 control-label">Nombre</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="text" class="form-control input-sm" id="iusername" placeholder="Nombre del cilindro" data-ng-model="cylinder.CylinderName">
+                            <input name="cylinderName" type="text" class="form-control input-sm" id="iusername" placeholder="Nombre del cilindro" ng-maxlength="20" ng-model="cylinder.CylinderName" required>
+                            <small class="help-block has-error" style="color:red" ng-show="cylinderForm.cylinderName.$error.maxlength">El nombre del cilindro es demasiado extenso, debe contener menos de 20 caracteres.</small>
                         </div>
                     </div>
                 </div>

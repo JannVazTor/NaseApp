@@ -1,6 +1,5 @@
 <!doctype html>
 <html ng-app="naseNutAppApp" ng-cloak>
-
 <head>
     <meta charset="utf-8">
     <title></title>
@@ -39,7 +38,6 @@
         }
     </style>
 </head>
-
 <body ng-controller="mainController">
     <header id="header">
         <ul class="header-inner">
@@ -129,7 +127,6 @@
                             <li><a ui-sref="grillIssues">Salidas</a></li>
                             <li><a ui-sref="dailyABEL">Reporte Diario ABEL</a></li>
                             <li><a ui-sref="reportOrigin">Reporte de Origen</a></li>
-                            <li><a ui-sref="firstFinalSummary">Reporte Resumen Final Primeras</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -225,7 +222,9 @@
     <script src="scripts/services/humidityService.js"></script>
     <script src="scripts/services/messageService.js"></script>
     <script src="scripts/services/fieldService.js"></script>
+    <script src="scripts/services/homeService.js"></script>
 
+    <script src="scripts/directives/confirmPassword.js"></script>
+    
 </body>
-
 </html>

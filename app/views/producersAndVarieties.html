@@ -1,7 +1,7 @@
 <div class="animated bounceInRight">
     <div class="col-sm-6">
         <div class="card">
-            <form name="Productores" class="form-horizontal" role="form">
+            <form name="producerForm" class="form-horizontal" role="form">
                 <div class="card-header">
                     <h2>Alta de Productores</h2>
                 </div>
@@ -10,14 +10,16 @@
                         <label for="iusername" class="col-sm-2 control-label">Nombre</label>
                         <div class="col-sm-10">
                             <div class="fg-line">
-                                <input type="text" required class="form-control input-sm" id="iusername" placeholder="productor" data-ng-model="producerName">
-
+                                <input name="prodName" type="text" required class="form-control input-sm" id="iusername" ng-minlength="3" ng-maxlength="150"
+                                    placeholder="productor" data-ng-model="producerName" required>
+                                <small class="help-block has-error" style="color:red" ng-show="producerForm.prodName.$error.minlength">El nombre del productor debe contener al menos 3 caracteres.</small>
+                                <small class="help-block has-error" style="color:red" ng-show="producerForm.prodName.$error.maxlength">El nombre del productor es demasiado extenso, debe contener menos de 150 caracteres.</small>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveProducer(producerName)" ng-disabled="!Productores.$valid">Guardar</button>
+                            <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveProducer(producerName)" ng-disabled="!producerForm.$valid">Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -26,7 +28,7 @@
     </div>
     <div class="col-sm-6">
         <div class="card">
-            <form name="Variety" class="form-horizontal" role="form">
+            <form name="varietyForm" class="form-horizontal" role="form">
                 <div class="card-header">
                     <h2>Alta de Variedades</h2>
                 </div>
@@ -35,7 +37,9 @@
                         <label for="ivariety" class="col-sm-2 control-label">Nombre</label>
                         <div class="col-sm-10">
                             <div class="fg-line">
-                                <input type="text" required class="form-control input-sm" id="ivariety" placeholder="variedad" data-ng-model="variety.varietyName">
+                                <input name="varietyName" type="text" class="form-control input-sm" id="ivariety" ng-minlength="3" ng-maxlength="150" placeholder="variedad" ng-model="variety.varietyName" required>
+                                <small class="help-block has-error" style="color:red" ng-show="varietyForm.varietyName.$error.minlength">El nombre de la variedad debe contener al menos 3 caracteres.</small>
+                                <small class="help-block has-error" style="color:red" ng-show="varietyForm.varietyName.$error.maxlength">El nombre de la variedad es demasiado extenso, debe contener menos de 150 caracteres.</small>
                             </div>
                         </div>
                     </div>
@@ -61,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveVariety(variety)" ng-disabled="!Variety.$valid">Guardar</button>
+                            <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveVariety(variety)" ng-disabled="!varietyForm.$valid">Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -135,7 +139,7 @@
                         <tr ng-repeat="variety in varieties | filter:searchVariety">
                             <td>{{variety.VarietyName}}</td>
                             <td>{{variety.Small}}</td>
-                            <td>{{variety.MediumStart.toString() + '-' +  variety.MediumEnd.toString()}}</td>
+                            <td>{{variety.MediumStart.toString() + '-' + variety.MediumEnd.toString()}}</td>
                             <td>{{variety.LargeStart.toString() + '-' + variety.LargeEnd.toString()}}</td>
                             <td>
                                 <button class="btn btn-icon command-delete" ng-click="confirmVarietyDel(variety.Id)">

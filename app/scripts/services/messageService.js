@@ -84,17 +84,24 @@
             'Ocurrio un error y el campo no pudo ser guardado.',//10
             'Ocurrio un error al intentar cargar los campos.',//11
             'Ocurrio un error al intentar eliminar el campo.',//12
-            'Ocurrio un error al intentar cargar los campos.'];
+            'Ocurrio dun error al intentar cargar los campos.',//13
+            'Ocurrio un error al intentar cargar los datos del reporte.',//14
+            'Ocurrio un error al intentar cargar los datos para la grafica.',//15
+            'Debe agregar al menos un registro de parrillas para poder guardar la salida.',//16
+            'Ocurrio un error la intentar guardar la salida.'];
 
-        var success = ['El Usuario fue eliminado de manera exitosa.',
-            'El Usuario fue agregado de manera exitosa.',
-            'El Campo fue agregado de manera exitosa.'];
+        var success = ['El Usuario fue eliminado de manera exitosa.',//0
+            'El Usuario fue agregado de manera exitosa.',//1
+            'El Campo fue agregado de manera exitosa.',//2
+            'La Salida fue agregada de manera exitosa.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1
             'No se encontraron variedades en la base de datos.',//2
             'No se encontraron productores en la base de datos.',//3
-            'No se encontraron campos en la base de datos.'];
+            'No se encontraron campos en la base de datos.',//4
+            'No se encontraron datos en la base de datos.',//5
+            'No se encontraron datos para la grafica de Produccion Acumuladad por Variedades.'];
 
         return {
             infoMessages: _arrayInfoMessage,
