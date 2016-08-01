@@ -8,6 +8,8 @@
         $scope.ReceptionId = receptionAndGrillService.receptionId;
         $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
 
+        //$('#grillDate').val($filter('date')(new Date(),'dd-MM-yyyy HH:mm a'));
+
         $scope.sizes = [
             { Name: "Grande", Type: 1 },
             { Name: "Mediana", Type: 2 },
@@ -57,7 +59,6 @@
                 ProducerId: grill.Producer.Id
             };
             grillService.save(Grill).then(function (response) {
-                $scope.savedSuccessfully = true;
                 msgS.toastMessage(msgS.successMessages[3], 2);
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[3], 3);

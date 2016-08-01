@@ -319,7 +319,7 @@
             roles: [USER_ROLES.admin]
           }
         });
-      $urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/home');
     })
     .config(function ($httpProvider) {
       $httpProvider.defaults.useXDomain = true;
