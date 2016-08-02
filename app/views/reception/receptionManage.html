@@ -61,24 +61,6 @@
                                 data-placement="bottom" title="Agregar remisiones">
                             <span class="md md-description"></span>
                         </button>
-<<<<<<< HEAD
-                        <button class="btn btn-icon command-edit" ng-click="redirectAddHumidity(reception.Id, reception.Cylinder)">
-                            <span class="md md-cloud-queue"></span>
-                        </button>
-                        <button class="btn btn-icon command-edit" ng-click="redirectAddSelection()">
-                            <span class="md md-done-all"></span>
-                        </button>
-                    </td>
-                    <td ng-show="IsGrillToReception">
-                        <div class="toggle-switch">
-                            <input id="{{reception.Id}}" type="checkbox" hidden="hidden" ng-model="reception.IsAlreadyAssigned" ng-change="addReceptionToGrill(reception.Id, reception.IsAlreadyAssigned)">
-                            <label for="{{reception.Id}}" class="ts-helper"></label>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-=======
                         </td>
                         <td ng-if="IsGrillToReception">
                             <div class="toggle-switch">
@@ -90,7 +72,6 @@
                 </tbody>
             </table>
         </div>
->>>>>>> origin/master
     </div>
 </div>
 <button ng-if="IsGrillToReception" id="fixedbuttonLeft" type="submit" class="btn bgm-teal btn-icon" ng-click="return()">

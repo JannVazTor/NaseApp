@@ -217,14 +217,6 @@
         .state('samplingUpdate', {
           url: '/modificarMuestreo',
           templateUrl: 'views/sampling/samplingUpdate.html',
-<<<<<<< HEAD
-          controller: 'samplingController'
-        })
-        .state('selection', {
-          url: '/selection',
-          templateUrl: 'views/selection.html',
-          controller: 'selectionController'
-=======
           controller: 'samplingController',
           data: {
             roles: [USER_ROLES.qualityUser, USER_ROLES.admin]
@@ -326,7 +318,6 @@
           data: {
             roles: [USER_ROLES.admin]
           }
->>>>>>> origin/master
         });
       $urlRouterProvider.otherwise('/home');
     })
