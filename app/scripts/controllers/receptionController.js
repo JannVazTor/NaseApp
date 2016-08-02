@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function (fieldService, toastr, msgS, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('receptionController', function (fieldService, toastr, msgS, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService, $rootScope) {
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
@@ -19,9 +19,9 @@
         $scope.receptionEntry.Cylinder = "";
         $scope.receptionEntry.Variety = "";
         $scope.receptionEntry.Producer = "";
-
+        $scope.receptionUpdateModel = {};
         $scope.receptionU = receptionService.reception;
-        // $('#EntryDate').val($scope.receptionU.EntryDate);
+
         $scope.redirectReceptionToGrill = function (receptionFolio, receptionId) {
             receptionAndGrillService.IsGrillToReception = true;
             receptionAndGrillService.receptionId = receptionId;
@@ -90,25 +90,47 @@
                 }
             }
         };
+
         $scope.redirectAddRemission = function (id, folio) {
             receptionService.ReceptionId = id;
             receptionService.folio = folio;
             $state.go('remissionAdd');
         };
-        $scope.redirectUpdate = function (reception) {
-            receptionService.reception = reception;
+
+        $scope.redirectUpdate = function (receptionId, reception, folio) {
+            receptionService.ReceptionId = receptionId;
+            receptionService.Folio = folio;
+            receptionService.reception = {
+                ReceivedFromField: reception.ReceivedFromField,
+                FieldId: reception.FieldName,
+                CarRegistration: reception.CarRegistration,
+                HeatHoursDrying: reception.HeatHoursDrying,
+                HumidityPercent: reception.HumidityPercent,
+                Observations: reception.Observations
+            };
             $state.go('receptionUpdate');
         };
 
         var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
             clearService.clearReceptionAndGrillService();
+            if ($state.current.name !== 'receptionUpdate') {
+                clearService.clearReceptionService();
+            }
             onStateChange();
         });
 
-        $scope.UpdateReception = function () {
-            receptionService.update($scope.receptionU.Id, $scope.receptionU).then(function (response) {
+        $scope.updateReception = function (reception) {
+            var ReceptionUpdate = {
+                ReceivedFromField: reception.ReceivedFromField,
+                FieldId: reception.Field.Id,
+                CarRegistration: reception.CarRegistration,
+                HeatHoursDrying: reception.HeatHoursDrying,
+                Observations: reception.Observations,
+                Folio: receptionService.Folio
+            };
+            receptionService.update(receptionService.ReceptionId, ReceptionUpdate).then(function (response) {
                 msgS.toastMessage(msgS.successMessages[1], 2);
-                $state.go('receptionManage');
+                $scope.return();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[1], 3);
             });
@@ -251,25 +273,41 @@
                     msgS.msg('info', 4);
                 } else {
                     $scope.fields = response.data;
-                    $scope.reception.Field = $scope.fields[0];
+                    if ($state.current.name === 'receptionUpdate') {
+                        $scope.receptionUpdateModel.Field = SearchItemObj($scope.fields, 'FieldName', receptionService.reception.FieldId);
+                    } else {
+                        $scope.receptionUpdateModel.Field = $scope.fields[0];
+                    }
                 };
             }, function (response) {
                 msgS.msg('err', 13);
             });
         };
 
-        function defaultReception() {
-            $scope.reception.ID = "";
-            $scope.reception.Variety = "";
-            $scope.reception.ReceivedFromField = "";
-            $scope.reception.CylinderId = "";
-            $scope.reception.FieldName = "";
-            $scope.reception.CarRegistration = "";
-            $scope.reception.HeatHoursDrying = "";
-            $scope.reception.HumidityPercent = "";
-            $scope.reception.Observations = "";
-            $scope.reception.ProducerId = "";
-            $scope.reception.Folio = "";
+        function SearchItemObj(array, property, id) {
+            var item = {};
+            $.each(array, function (i) {
+                if (array[i][property] === id) {
+                    item = array[i];
+                    return false;
+                }
+            });
+            return item;
+        };
+
+        function FillUpdateReceptionObject(reception){
+            $scope.receptionUpdateModel.ReceivedFromField = reception.ReceivedFromField,
+            $scope.receptionUpdateModel.CarRegistration = reception.CarRegistration,
+            $scope.receptionUpdateModel.HeatHoursDrying = reception.HeatHoursDrying,
+            $scope.receptionUpdateModel.Observations = reception.Observations
+        };
+
+        $scope.return = function () {
+            if ($rootScope.prevState.length !== 0) {
+                $state.go($rootScope.prevState);
+            } else {
+                $state.go('home');
+            }
         };
 
         (function () {
@@ -282,6 +320,10 @@
                     GetAllCylinders();
                     GetAllVarieties();
                     GetAllFields();
+                    break;
+                case 'receptionUpdate':
+                    GetAllFields();
+                    FillUpdateReceptionObject(receptionService.reception);
                     break;
                 default:
                     break;

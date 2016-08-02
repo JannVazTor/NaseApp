@@ -90,7 +90,8 @@
                             <label for="nutSecond" class="col-sm-2 control-label">Nuez de Segunda</label>
                             <div class="col-sm-3">
                                 <div class="fg-line">
-                                    <input type="number" name="sacksSecond" class="form-control input-sm" id="nutSecondSacks" placeholder="sacos de segunda" data-ng-model="sampling.sacksSecond">
+                                    <input type="number" name="sacksSecond" class="form-control input-sm" id="nutSecondSacks" placeholder="sacos de segunda"
+                                        data-ng-model="sampling.sacksSecond">
                                     <small class="help-block has-error" style="color:red" ng-show="samplingForm.sacksSecond.$error.number">Numero no valido.</small>
                                 </div>
                             </div>
@@ -127,3 +128,6 @@
         </form>
     </div>
 </div>
+<button id="fixedbuttonLeft" type="submit" class="btn bgm-teal btn-icon" data-ng-click="return()">
+        <i class="md md-arrow-back"></i>
+</button>

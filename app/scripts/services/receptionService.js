@@ -8,18 +8,11 @@
         var _Folio = "";
         var _ReceptionEntryId = "";
         var _reception = {
-            Id: "",
-            Variety: "",
-            EntryDate: "",
             ReceivedFromField: "",
-            CylinderId: "",
-            FieldName: "",
+            FieldId: "",
             CarRegistration: "",
             HeatHoursDrying: "",
-            HumidityPercent: "",
-            Observations: "",
-            ProducerId: "",
-            Folio: ""
+            Observations: ""
         };
 
         var _getAll = function () {

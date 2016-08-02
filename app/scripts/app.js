@@ -157,7 +157,7 @@
           }
         })
         .state('grillUpdate', {
-          url: '/grillU',
+          url: '/modificarParrilla',
           templateUrl: 'views/grill/grillUpdate.html',
           controller: 'grillController',
           data: {
@@ -166,7 +166,7 @@
         })
         /*Humidity*/
         .state('humidityAdd', {
-          url: '/humidity',
+          url: '/humedad',
           templateUrl: 'views/humidity/humidityAdd.html',
           controller: 'humidityController',
           data: {
@@ -339,7 +339,8 @@
     })
     .run(['authService', '$rootScope', '$state', '$stateParams', 'AUTH_EVENTS', function (authService, $rootScope, $state, $stateParams, AUTH_EVENTS) {
       authService.fillAuthData();
-      $rootScope.$on('$stateChangeStart', function (event, next) {
+      $rootScope.$on('$stateChangeStart', function (event, next, toParams, prev) {
+        $rootScope.prevState = prev.name;
         var authorizaedRoles = next.data.roles;
         if (authorizaedRoles.length > 0) {
           if (!authService.isInRole(authorizaedRoles)) {
