@@ -1,12 +1,13 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillController', function (msgS, $filter, $scope, $state, fieldService, producerService, varietyService, grillService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('grillController', function (msgS, $filter, $scope, $state, fieldService, producerService, varietyService, grillService, receptionAndGrillService, clearService, $rootScope) {
         $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.ReceptionId = receptionAndGrillService.receptionId;
         $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
+        $scope.grill = {};
 
         $scope.sizes = [
             { Name: "Grande", Type: 1 },
@@ -19,27 +20,47 @@
             { Name: "Tercera", Type: 3 }
         ];
 
-        $scope.grillU = grillService.grill;
-        //$('#grillDate').val($scope.grillU.DateCapture);
         var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
-            clearService.clearReceptionAndGrillService();
-            onStateChange();
+            if ($state.current.name !== 'grillUpdate') {
+                clearService.clearReceptionAndGrillService();
+                clearService.clearGrillService();
+                onStateChange();
+            }
         });
+
         $scope.redirectAddSampling = function (grillId) {
             grillService.grillId = grillId;
             $state.go('samplingAdd');
         };
         $scope.redirectUpdate = function (grillId, grill) {
-            grillService.id = grillId;
-            grillService.grill = grill;
+            grillService.grillId = grillId;
+            grillService.grill = {
+                DateCapture: grill.DateCapture,
+                Size: grill.Size,
+                FieldId: grill.FieldName,
+                Kilos: grill.Kilos,
+                Sacks: grill.Sacks,
+                Quality: grill.Quality,
+                VarietyId: grill.Variety,
+                ProducerId: grill.Producer
+            };
             $state.go('grillUpdate');
         };
 
-        $scope.UpdateGrill = function () {
-            $scope.grillU.DateCapture = $('#grillDate').val();
-            grillService.update(grillService.id, $scope.grillU).then(function (response) {
+        $scope.UpdateGrill = function (grill) {
+            var GrillUpdate = {
+                DateCapture: $('#grillDate').val(),
+                Size: grill.Size.Type,
+                FieldId: grill.Field.Id,
+                Kilos: grill.Kilos,
+                Sacks: grill.Sacks,
+                Quality: grill.Quality.Type,
+                VarietyId: grill.Variety.Id,
+                ProducerId: grill.Producer.Id
+            };
+            grillService.update(grillService.grillId, GrillUpdate).then(function (response) {
                 msgS.toastMessage(msgS.successMessages[1], 2);
-                $state.go('grillManage');
+                $state.go($rootScope.prevState);
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[3], 3);
             });
@@ -57,7 +78,6 @@
                 ProducerId: grill.Producer.Id
             };
             grillService.save(Grill).then(function (response) {
-                $scope.savedSuccessfully = true;
                 msgS.toastMessage(msgS.successMessages[3], 2);
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[3], 3);
@@ -174,7 +194,11 @@
                     msgS.toastMessage(msgS.infoMessages[5], 1);
                 } else {
                     $scope.producers = response.data;
-                    $scope.grill.Producer = $scope.producers[0];
+                    if ($state.current.name === 'grillUpdate') {
+                        $scope.grill.Producer = SearchItemObj($scope.producers, 'ProducerName', grillService.grill.ProducerId);
+                    } else {
+                        $scope.grill.Producer = $scope.producers[0];
+                    }
                 };
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[8], 3);
@@ -187,20 +211,28 @@
                     msgS.toastMessage(msgS.infoMessages[7], 1);
                 } else {
                     $scope.varieties = response.data;
-                    $scope.grill.Variety = $scope.varieties[0];
+                    if ($state.current.name === 'grillUpdate') {
+                        $scope.grill.Variety = SearchItemObj($scope.varieties, 'VarietyName', grillService.grill.VarietyId);
+                    } else {
+                        $scope.grill.Variety = $scope.varieties[0];
+                    }
                 };
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[5], 3);
             });
         };
 
-        var GetAllFields = function () {
+        var GetAllFields = function (defaultItem) {
             fieldService.getAll().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 4);
                 } else {
                     $scope.fields = response.data;
-                    $scope.grill.Field = $scope.fields[0];
+                    if ($state.current.name === 'grillUpdate') {
+                        $scope.grill.Field = SearchItemObj($scope.fields, 'FieldName', grillService.grill.FieldId);
+                    } else {
+                        $scope.grill.Field = $scope.fields[0];
+                    }
                 };
             }, function (response) {
                 msgS.msg('err', 13);
@@ -235,6 +267,32 @@
             });
         };
 
+        function FillUpdateGrillObject(grillU) {
+            $scope.grill.Kilos = grillU.Kilos;
+            $scope.grill.Sacks = grillU.Sacks;
+            $scope.grill.Size = SearchItemObj($scope.sizes, 'Type', grillU.Size);
+            $scope.grill.Quality = SearchItemObj($scope.qualities, 'Type', grillU.Quality);
+        };
+
+        function SearchItemObj(array, property, id) {
+            var item = {};
+            $.each(array, function (i) {
+                if (array[i][property] === id) {
+                    item = array[i];
+                    return false;
+                }
+            });
+            return item;
+        };
+
+        $scope.return = function () {
+            if ($rootScope.prevState.length !== 0) {
+                $state.go($rootScope.prevState);
+            } else {
+                $state.go('home');
+            }
+        };
+
         (function () {
             switch ($state.current.name) {
                 case 'grillAdd':
@@ -247,6 +305,12 @@
                     break;
                 case 'grillCurrentInv':
                     GetAllGrillsCurrentInv();
+                    break;
+                case 'grillUpdate':
+                    GetAllProducers();
+                    GetAllVarieties();
+                    GetAllFields();
+                    FillUpdateGrillObject(grillService.grill);
                     break;
                 default:
                     break;

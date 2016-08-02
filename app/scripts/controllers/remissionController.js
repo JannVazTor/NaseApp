@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('remissionController', function ($scope, msgS, toastr, $state, remissionService, receptionService) {
+    angular.module('naseNutAppApp').controller('remissionController', function ($scope, msgS, toastr, $state, remissionService, clearService, receptionService, $rootScope) {
         $scope.remissions = [];
         $scope.message = "";
         $scope.folio = receptionService.folio;
@@ -25,21 +25,27 @@
             });
         };
 
-        function ClearForm(){
+        function ClearForm() {
             $scope.remission = {};
             $scope.remissionForm.$setPristine();
             $scope.remissionForm.$setUntouched();
         };
+
+        var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+            if ($state.current.name === 'remissionUpdate') {
+                clearService.clearRemissionService();
+                onStateChange();
+            }
+        });
 
         $scope.redirectUpdate = function (remission) {
             remissionService.remission = remission;
             $state.go('remissionUpdate');
         };
 
-        $scope.UpdateRemission = function () {
+        $scope.updateRemission = function () {
             remissionService.update($scope.remission.Id, $scope.remission).then(function (response) {
                 msgS.toastMessage(msgS.successMessages[1], 2);
-                defaultRemission();
                 $state.go('remissionManage');
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[9], 3);
@@ -75,10 +81,6 @@
             });
         };
 
-        $scope.redirectToReception = function () {
-            $state.go('receptionManage');
-        };
-
         var GetAllRemissions = function () {
             remissionService.getAll().then(function (response) {
                 $scope.remissions = response.data;
@@ -87,6 +89,14 @@
             });
         };
 
+        $scope.return = function () {
+            if ($rootScope.prevState.length !== 0) {
+                $state.go($rootScope.prevState);
+            } else {
+                $state.go('home');
+            }
+        };
+        
         (function () {
             switch ($state.current.name) {
                 case 'remissionManage':
@@ -96,18 +106,5 @@
                     break;
             };
         })();
-
-        function defaultRemission() {
-            remissionService.remission.Id = "";
-            remissionService.remission.Cultivation = "";
-            remissionService.remission.Batch = "";
-            remissionService.remission.Quantity = "";
-            remissionService.remission.Butler = "";
-            remissionService.remission.TransportNumber = "";
-            remissionService.remission.Driver = "";
-            remissionService.remission.Elaborate = "";
-            remissionService.remission.ReceptionId = receptionService.ReceptionId;
-            $scope.remission = remissionService.remission;
-        };
     });
 })();

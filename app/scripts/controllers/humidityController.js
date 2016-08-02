@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('humidityController', function (msgS, $state, $scope, humidityService, receptionService, clearService) {
+    angular.module('naseNutAppApp').controller('humidityController', function (msgS, $state, $scope, humidityService, receptionService, clearService, $rootScope) {
         $scope.humiditiesInReceptionEntry = [];
 
         var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
@@ -122,6 +122,10 @@
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });
+        };
+
+        $scope.return = function(){
+            $state.go($rootScope.prevState);
         };
 
         (function () {

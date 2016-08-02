@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, samplingService, clearService, grillService, receptionService) {
+    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, samplingService, clearService, grillService, receptionService, $rootScope) {
         $scope.message = "";
         $scope.samplings = [];
         $scope.receptionEntries = [];
@@ -56,6 +56,7 @@
                 clearService.clearReceptionService();
                 onStateChange();
             };
+            clearService.clearSamplingService();
         });
 
         $scope.confirmationDelete = function (SamplingId) {
@@ -96,7 +97,7 @@
             $scope.sampling.DateCapture = $('#samplingDate').val();
             samplingService.update($scope.sampling).then(function (response) {
                 msgS.toastMessage(msgS.successMessages[1],2);;
-                $state.go('samplingManage');
+                $state.go($rootScope.prevState);
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[9],3);
             });
@@ -146,6 +147,14 @@
 
         $scope.IsReceptionSamplingAdd = function () {
             return ($state.current.name === 'samplingReceptionEntryAdd');
+        };
+
+        $scope.return = function () {
+            if ($rootScope.prevState.length !== 0) {
+                $state.go($rootScope.prevState);
+            } else {
+                $state.go('home');
+            }
         };
 
         (function () {
