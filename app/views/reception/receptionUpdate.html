@@ -1,77 +1,36 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form name="receptionUForm" class="form-horizontal" role="form">
+        <form name="updateReceptionForm" class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Actualizar Recepción</h2>
             </div>
             <div class="card-body card-padding">
                 <div class="form-group">
-                    <label for="producers" class="col-sm-2 control-label">Productores</label>
+                    <label for="fieldF" class="col-sm-2 control-label">Campo *</label>
                     <div class="col-sm-10">
                         <div class="fg-line select">
-                            <select required class="form-control" ng-model="receptionU.ProducerId" ng-selected="receptionU.ProducerId == producer.Id"  ng-options="producer as producer.ProducerName for producer in producers track by producer.Id">
-                           
-                        </select>
+                            <select id="fieldF" class="form-control" ng-model="receptionUpdateModel.Field" ng-options="field.FieldName for field in fields"></select>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="EntryDate" class="col-sm-2 control-label">Fecha</label>
+                    <label for="carRegistration" class="col-sm-2 control-label">Camion/Placas *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" required disabled class="form-control input-sm" id="EntryDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#"><i class="md md-event"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <datetimepicker data-ng-model="data.dateDropDownLink" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
-                                </ul>
-                            </div>
+                            <input required type="text" name="Carregistration" class="form-control input-sm" id="carRegistration" placeholder="matricula"
+                                ng-minlength="3" ng-maxlength="50" data-ng-model="receptionUpdateModel.CarRegistration">
+                            <small class="help-block has-error" style="color:red" ng-show="updateReceptionForm.Carregistration.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="updateReceptionForm.Carregistration.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 50 caracteres.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="fieldName" class="col-sm-2 control-label">Nombre del Campo</label>
+                    <label for="receivedFromField" class="col-sm-2 control-label">Kilos recibidos de campo *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="fieldName" name="FieldName" placeholder="nombre del campo" data-ng-model="receptionU.FieldName">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.FieldName.$error.required">Nombre del Campo es requerido.</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="variety" class="col-sm-2 control-label">Variedad</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="text" required class="form-control input-sm" id="variety" name="Variety" placeholder="variedad" data-ng-model="receptionU.Variety">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.Variety.$error.required">Variedad es requerido.</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="carRegistration" class="col-sm-2 control-label">Camion/Placas</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="carRegistration" name="CarRegistration" placeholder="matricula" data-ng-model="receptionU.CarRegistration">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.CarRegistration.$error.required">Las placas son requerido.</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="receivedFromField" class="col-sm-2 control-label">Kilos recibidos de campo</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input required type="number" min="1" step="any" ng-class="{error: !receptionUForm.$pristine && receptionUForm.ReceivedFromField.$error.required}" class="form-control input-sm" name="ReceivedFromField" id="receivedFromField" placeholder="kilos recibidos" data-ng-model="receptionU.ReceivedFromField">
-                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionUForm.$pristine && receptionUForm.ReceivedFromField.$error.number">Tiene que ser un valor númerico.</small>
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.ReceivedFromField.$error.required">Kilos recibidos de campo es requerido.</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="humidity" class="col-sm-2 control-label">Humedad</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="number" min="1" step="any" class="form-control input-sm" id="humidity" name="HumidityPercent" placeholder="humedad" data-ng-model="receptionU.HumidityPercent">
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.HumidityPercent.$error.number">Tiene que ser un valor númerico.</small>
+                            <input required type="number" min="1" name="ReceivedFromField" class="form-control input-sm" id="receivedFromField" placeholder="kilos recibidos"
+                                data-ng-model="receptionUpdateModel.ReceivedFromField">
+                            <small class="help-block has-error" style="color:red" ng-show="updateReceptionForm.ReceivedFromField.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
@@ -79,31 +38,32 @@
                     <label for="heatHoursDrying" class="col-sm-2 control-label">Horas de calor por secado</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" min="1" step="any" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado" name="HeatHoursDrying" data-ng-model="receptionU.HeatHoursDrying">
-                            <small class="help-block has-error" style="color:yellow" ng-show="!receptionUForm.$pristine && receptionUForm.HeatHoursDrying.$error.number">Tiene que ser un valor númerico.</small>
+                            <input type="number" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado" name="Heathoursdrying"
+                                data-ng-model="receptionUpdateModel.HeatHoursDrying">
+                            <small class="help-block has-error" style="color:red" ng-show="updateReceptionForm.Heathoursdrying.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="observations" class="col-sm-2 control-label">Observaciones</label>
+                    <label for="observations" class="col-sm-2 control-label">Observaciones *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <textarea required class="form-control auto-size" placeholder="observaciones..." name="Observations" data-ng-model="receptionU.Observations"></textarea>
-                            <small class="help-block has-error" style="color:red" ng-show="!receptionUForm.$pristine && receptionUForm.Observations.$error.required">Observaciones son requerido.</small>
+                            <textarea required name="Observations" class="form-control auto-size" placeholder="observaciones..." ng-minlength="2" ng-maxlength="500"
+                                data-ng-model="receptionUpdateModel.Observations"></textarea>
+                            <small class="help-block has-error" style="color:red" ng-show="updateReceptionForm.Observations.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="updateReceptionForm.Observations.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 500 caracteres.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="UpdateReception()" ng-disabled="!receptionUForm.$valid">Guardar</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div data-ng-hide="message==''" class="alert alert-danger">
-                        {{message}}
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="updateReception(receptionUpdateModel)" ng-disabled="!updateReceptionForm.$valid">Actualizar</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
+<button id="fixedbuttonLeft" type="submit" class="btn bgm-teal btn-icon" data-ng-click="return()">
+        <i class="md md-arrow-back"></i>
+</button>

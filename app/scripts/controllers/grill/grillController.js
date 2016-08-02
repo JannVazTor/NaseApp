@@ -1,57 +1,86 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillController', function (toastr, $filter, $scope, $state, producerService, grillService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('grillController', function (msgS, $filter, $scope, $state, fieldService, producerService, varietyService, grillService, receptionAndGrillService, clearService, $rootScope) {
         $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.ReceptionId = receptionAndGrillService.receptionId;
         $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
+        $scope.grill = {};
 
-        $scope.grill = {
-            DateCapture: "",
-            Size: "",
-            Sacks: "",
-            Kilos: "",
-            Quality: "",
-            Variety: "",
-            Producer: "",
-            FieldName: ""
-        };
+        $scope.sizes = [
+            { Name: "Grande", Type: 1 },
+            { Name: "Mediana", Type: 2 },
+            { Name: "Chica", Type: 3 }
+        ];
+        $scope.qualities = [
+            { Name: "Primera", Type: 1 },
+            { Name: "Segunda", Type: 2 },
+            { Name: "Tercera", Type: 3 }
+        ];
 
-        $scope.grillU = grillService.grill;
-        //$('#grillDate').val($scope.grillU.DateCapture);
         var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
-            clearService.clearReceptionAndGrillService();
-            onStateChange();
+            if ($state.current.name !== 'grillUpdate') {
+                clearService.clearReceptionAndGrillService();
+                clearService.clearGrillService();
+                onStateChange();
+            }
         });
+
         $scope.redirectAddSampling = function (grillId) {
-            grillService.id = grillId;
+            grillService.grillId = grillId;
             $state.go('samplingAdd');
         };
         $scope.redirectUpdate = function (grillId, grill) {
-            grillService.id = grillId;
-            grillService.grill = grill;
+            grillService.grillId = grillId;
+            grillService.grill = {
+                DateCapture: grill.DateCapture,
+                Size: grill.Size,
+                FieldId: grill.FieldName,
+                Kilos: grill.Kilos,
+                Sacks: grill.Sacks,
+                Quality: grill.Quality,
+                VarietyId: grill.Variety,
+                ProducerId: grill.Producer
+            };
             $state.go('grillUpdate');
         };
 
-        $scope.UpdateGrill = function () {
-            $scope.grillU.DateCapture = $('#grillDate').val();
-            grillService.update(grillService.id, $scope.grillU).then(function (response) {
-                $scope.message = "El registro fue Actualizado  de manera exitosa.";
-                $state.go('grillManage');
+        $scope.UpdateGrill = function (grill) {
+            var GrillUpdate = {
+                DateCapture: $('#grillDate').val(),
+                Size: grill.Size.Type,
+                FieldId: grill.Field.Id,
+                Kilos: grill.Kilos,
+                Sacks: grill.Sacks,
+                Quality: grill.Quality.Type,
+                VarietyId: grill.Variety.Id,
+                ProducerId: grill.Producer.Id
+            };
+            grillService.update(grillService.grillId, GrillUpdate).then(function (response) {
+                msgS.toastMessage(msgS.successMessages[1], 2);
+                $state.go($rootScope.prevState);
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado.";
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         }
 
-        $scope.saveGrill = function () {
-            $scope.grill.DateCapture = $('#grillDate').val();
-            grillService.save($scope.grill).then(function (response) {
-                $scope.savedSuccessfully = true;
-                $scope.message = "La parrilla a sido guardada de manera exitosa";
+        $scope.saveGrill = function (grill) {
+            var Grill = {
+                DateCapture: $('#grillDate').val(),
+                Size: grill.Size.Type,
+                FieldId: grill.Field.Id,
+                Kilos: grill.Kilos,
+                Sacks: grill.Sacks,
+                Quality: grill.Quality.Type,
+                VarietyId: grill.Variety.Id,
+                ProducerId: grill.Producer.Id
+            };
+            grillService.save(Grill).then(function (response) {
+                msgS.toastMessage(msgS.successMessages[3], 2);
             }, function (response) {
-                $scope.message = "No se pudo guardar el registro";
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         };
 
@@ -64,7 +93,7 @@
         $scope.changeStatus = function (status, grillId) {
             if (status) {
                 grillService.changeStatus(grillId, 1).then(function (response) {
-                    toastr.success('el status se cambio correctamente.');
+                    msgS.toastMessage(msgS.successMessages[4], 2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -72,11 +101,11 @@
                             return false;
                         }
                     });
-                    toastr.error('ocurrio un error y el status no pudo ser cambiado.');
+                    msgS.toastMessage(msgS.errorMessages[17], 3);
                 });
             } else {
                 grillService.changeStatus(grillId, 0).then(function (response) {
-                    toastr.success('el status se cambio correctamente.');
+                    msgS.toastMessage(msgS.successMessages[4], 2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -84,7 +113,7 @@
                             return false;
                         }
                     });
-                    toastr.error('ocurrio un error y el status no pudo ser cambiado.');
+                    msgS.toastMessage(msgS.errorMessages[17], 3);
                 });
             }
         };
@@ -92,7 +121,7 @@
         $scope.addGrillToReception = function (grillId, checked) {
             if (checked) {
                 receptionAndGrillService.addGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
-                    toastr.success('eL registro se agrego correctamente.');
+                    msgS.toastMessage(msgS.successMessages[3], 2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -100,11 +129,11 @@
                             return false;
                         }
                     });
-                    toastr.error('ocurrio un error y el registro no pudo ser asignado.');
+                    msgS.toastMessage(msgS.errorMessages[18], 3);
                 });
             } else {
                 receptionAndGrillService.removeGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
-                    toastr.success('el registro se removio satisfactoriamente.');
+                    msgS.toastMessage(msgS.successMessages[2], 2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -112,14 +141,13 @@
                             return false;
                         }
                     });
-                    toastr.error('ocurrio un error y el registro no pudo ser removido.');
+                    msgS.toastMessage(msgS.errorMessages[4], 3);
                 });
             }
         };
 
         $scope.deleteGrill = function (grillId) {
             grillService.delete(grillId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.grills, function (i) {
                     if ($scope.grills[i].Id === grillId) {
@@ -128,7 +156,7 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                msgS.toastMessage(msgS.errorMessages[4], 3);
             });
         };
         $scope.confirmationDelete = function (grillId) {
@@ -149,7 +177,6 @@
 
         $scope.deleteGrill = function (grillId) {
             grillService.delete(grillId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.grills, function (i) {
                     if ($scope.grills[i].Id === grillId) {
@@ -158,30 +185,136 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                msgS.toastMessage(msgS.errorMessages[4], 3);
             });
         };
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
-                $scope.producers = response.data;
+                if (response.data.length === 0) {
+                    msgS.toastMessage(msgS.infoMessages[5], 1);
+                } else {
+                    $scope.producers = response.data;
+                    if ($state.current.name === 'grillUpdate') {
+                        $scope.grill.Producer = SearchItemObj($scope.producers, 'ProducerName', grillService.grill.ProducerId);
+                    } else {
+                        $scope.grill.Producer = $scope.producers[0];
+                    }
+                };
             }, function (response) {
-                $scope.message = "la obtencion de productores fallo.";
+                msgS.toastMessage(msgS.errorMessages[8], 3);
+            });
+        };
+
+        var GetAllVarieties = function () {
+            varietyService.getAll().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.toastMessage(msgS.infoMessages[7], 1);
+                } else {
+                    $scope.varieties = response.data;
+                    if ($state.current.name === 'grillUpdate') {
+                        $scope.grill.Variety = SearchItemObj($scope.varieties, 'VarietyName', grillService.grill.VarietyId);
+                    } else {
+                        $scope.grill.Variety = $scope.varieties[0];
+                    }
+                };
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[5], 3);
+            });
+        };
+
+        var GetAllFields = function (defaultItem) {
+            fieldService.getAll().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 4);
+                } else {
+                    $scope.fields = response.data;
+                    if ($state.current.name === 'grillUpdate') {
+                        $scope.grill.Field = SearchItemObj($scope.fields, 'FieldName', grillService.grill.FieldId);
+                    } else {
+                        $scope.grill.Field = $scope.fields[0];
+                    }
+                };
+            }, function (response) {
+                msgS.msg('err', 13);
+            });
+        };
+
+        var GetAllGrillsCurrentInv = function () {
+            grillService.getAllCurrentInv().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 7);
+                } else {
+                    $scope.grills = response.data;
+                }
+            }, function (response) {
+                msgS.msg('err', 19);
             });
         };
 
         var GetAllGrills = function () {
             grillService.getAll().then(function (response) {
-                $scope.grills = response.data;
-                response.data.forEach(function (element) {
-                    //checks if the reception has the grill key in his grillId field
-                    element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionFolio) === -1 ? false : true;
-                }, this);
+                if (response.data.length === 0) {
+                    msgS.toastMessage(msgS.infoMessages[12], 1);
+                } else {
+                    $scope.grills = response.data;
+                    response.data.forEach(function (element) {
+                        //checks if the reception has the grill key in his grillId field
+                        element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionFolio) === -1 ? false : true;
+                    }, this);
+                };
             }, function (response) {
-                $scope.message = "la obtencion de parrillas fallo.";
+                msgS.toastMessage(msgS.errorMessages[15], 3);
             });
         };
 
-        GetAllGrills();
-        GetAllProducers();
+        function FillUpdateGrillObject(grillU) {
+            $scope.grill.Kilos = grillU.Kilos;
+            $scope.grill.Sacks = grillU.Sacks;
+            $scope.grill.Size = SearchItemObj($scope.sizes, 'Type', grillU.Size);
+            $scope.grill.Quality = SearchItemObj($scope.qualities, 'Type', grillU.Quality);
+        };
+
+        function SearchItemObj(array, property, id) {
+            var item = {};
+            $.each(array, function (i) {
+                if (array[i][property] === id) {
+                    item = array[i];
+                    return false;
+                }
+            });
+            return item;
+        };
+
+        $scope.return = function () {
+            if ($rootScope.prevState.length !== 0) {
+                $state.go($rootScope.prevState);
+            } else {
+                $state.go('home');
+            }
+        };
+
+        (function () {
+            switch ($state.current.name) {
+                case 'grillAdd':
+                    GetAllProducers();
+                    GetAllVarieties();
+                    GetAllFields();
+                    break;
+                case 'grillManage':
+                    GetAllGrills();
+                    break;
+                case 'grillCurrentInv':
+                    GetAllGrillsCurrentInv();
+                    break;
+                case 'grillUpdate':
+                    GetAllProducers();
+                    GetAllVarieties();
+                    GetAllFields();
+                    FillUpdateGrillObject(grillService.grill);
+                    break;
+                default:
+                    break;
+            };
+        })();
     });
 })();

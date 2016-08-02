@@ -1,24 +1,14 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('producerAndVarietiesController', function ($scope, producerService, varietyService, toastr) {
+    angular.module('naseNutAppApp').controller('producerAndVarietiesController', function ($scope, producerService, varietyService, msgS) {
         $scope.producers = [];
         $scope.varieties = [];
-        $scope.message = "";
-        $scope.savedSuccessfully = false;
-
-        $scope.producer = {
-            producerName: ""
-        };
-
-        $scope.variety = {
-            varietyName: ""
-        };
-
+        
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 $scope.producers = response.data;
             }, function (response) {
-                toastr.error('ocurrio un error y no se pudieron obtener los productores.');
+                msgS.toastMessage(msgS.errorMessages[8],3);
             });
         };
 
@@ -26,27 +16,33 @@
             varietyService.getAll().then(function (response) {
                 $scope.varieties = response.data;
             }, function (response) {
-                toastr.error('ocurrio un error y no se pudieron obtener las variedades.');
+                msgS.toastMessage(msgS.errorMessages[5],3);
             });
         };
 
-        $scope.saveProducer = function () {
-            producerService.save($scope.producer).then(function (response) {
-                $scope.savedSuccessfully = true;
+        $scope.saveProducer = function (producerName) {
+            producerService.save(producerName).then(function (response) {
                 toastr.success('El productor a sigo guardado de manera exitosa.');
                 GetAllProducers();
             }, function (response) {
-                toastr.error('ocurrio un error y el productor no pudo ser guardado.');
+                msgS.toastMessage(msgS.errorMessages[3],3);
             });
         };
 
-        $scope.saveVariety = function () {
-            varietyService.save($scope.variety).then(function (response) {
-                $scope.savedSuccessfully = true;
-                toastr.success('la variedad a sigo guardada de manera exitosa.');
+        $scope.saveVariety = function (variety) {
+            var Variety = {
+                VarietyName:variety.varietyName, 
+                LargeEnd: variety.LargeEnd, 
+                LargeStart: variety.LargeStart,
+                MediumEnd: variety.MediumEnd, 
+                MediumStart: variety.MediumStart, 
+                Small: variety.Small    
+            };
+            varietyService.save(Variety).then(function (response) {
+                msgS.toastMessage(msgS.successMessage[3],2);
                 GetAllVarieties();
             }, function (response) {
-                toastr.error('ocurrio un error y la variedad no pudo ser guardado.');
+                msgS.toastMessage(msgS.errorMessages[3],3);
             });
         };
 
@@ -92,7 +88,7 @@
                 });
                 swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
             }, function (response) {
-                toastr.error('ocurrio un error y el productor no pudo ser eliminado.');
+                msgS.toastMessage(msgS.errorMessages[4],3);
             });
         };
 
@@ -106,11 +102,13 @@
                 });
                 swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
             }, function (response) {
-                toastr.error('ocurrio un error y la variedad no pudo ser eliminada.');
+                msgS.toastMessage(msgS.errorMessages[4],3);
             });
         };
-
-        GetAllProducers();
-        GetAllVarieties();
+        
+        (function(){
+            GetAllProducers();
+            GetAllVarieties();
+        })();
     });
 })();

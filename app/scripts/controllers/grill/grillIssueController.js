@@ -1,13 +1,13 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillIssueController', function (toastr, $scope, grillService) {
+    angular.module('naseNutAppApp').controller('grillIssueController', function (msgS, $scope, grillService) {
         $scope.grillIssue = {
             Remission: "",
             DateCapture: "",
             Truck: "",
             Driver: "",
             Box: "",
-            GrillIds: []
+            GrillsIds: []
         };
 
         $scope.grills = [];
@@ -17,22 +17,26 @@
             $scope.grillIssue.DateCapture = $('#grillIssueDate').val();
             $scope.grills.forEach(function (element) {
                 if (element.Added) {
-                    $scope.grillIssue.GrillIds.push(element.Id);
+                    $scope.grillIssue.GrillsIds.push(element.Id);
                 }
             }, this);
-            grillService.saveIssue($scope.grillIssue).then(function (response) {
-                cleanObj();
-                $.each($scope.grills, function (i) {
-                    if ($scope.grills[i].Added) {
-                        $scope.grills.splice(i, 1);
-                        return false;
-                    }
-                });
-                toastr.success('el registro se agrego correctamente.');
-            }, function (response) {
-                cleanObj();
-                toastr.error('ocurrio un error y el registro no pudo ser agregado.');
-            });
+            if ($scope.grillIssue.GrillsIds.length === 0) {
+                msgS.msg('err', 16);
+            } else {
+                grillService.saveIssue($scope.grillIssue).then(function (response) {
+                    cleanObj();
+                    $.each($scope.grills, function (i) {
+                        if ($scope.grills[i].Added) {
+                            $scope.grills.splice(i, 1);
+                            return false;
+                        }
+                    });
+                    msgS.msg('succ', 3);
+                }, function (response) {
+                    cleanObj();
+                    msgS.msg('err', 17);
+                })
+            };
         };
 
         var GetAllGrills = function () {
@@ -43,10 +47,10 @@
                         element.Added = false;
                     }, this);
                 } else {
-                    toastr.info('No hay parrillas para mostrar.');
+                    msgS.toastMessage(msgS.infoMessages[12], 1);
                 }
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar cargar las parrillas.');
+                msgS.toastMessage(msgS.errorMessage[15], 3);
             });
         };
 
@@ -54,10 +58,10 @@
             grillService.getAllIssues().then(function (response) {
                 $scope.issues = response.data;
                 if (response.data.length === 0) {
-                    toastr.info('No hay salidas para mostrar.');
+                    msgS.toastMessage(msgS.infoMessages[13], 1);
                 }
             }, function (response) {
-                toastr.error('Ocurrio un error al intentar cargar las salidas.');
+                msgS.toastMessage(msgS.errorMessage[16], 3);
             });
         };
 

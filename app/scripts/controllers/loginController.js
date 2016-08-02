@@ -1,25 +1,23 @@
-(function(){
-'use strict'
+(function () {
+  'use strict'
   angular.module('naseNutAppApp')
-    .controller('loginController',function($scope, $state, authService){
+    .controller('loginController', function ($scope, $state, authService, msgS) {
       $scope.loginData = {
         username: "",
         password: ""
       };
       $scope.isAuth = false;
-      $scope.message = "";
 
-      $scope.login = function(){
-        authService.login($scope.loginData).then(function(response){
-            $state.go('home');
-            $scope.isAuth = true;
-        },
-      function(err){
-        $scope.message = err.err_description;
-      });
+      $scope.login = function () {
+        authService.login($scope.loginData).then(function (response) {
+          $scope.isAuth = true;
+          $state.go('home');
+        },function (response) {
+            msgS.msg('err', 4);
+          });
       };
 
-      $scope.logout = function() {
+      $scope.logout = function () {
         authService.logOut();
         $scope.isAuth = false;
         $state.go('login');

@@ -6,43 +6,50 @@
         <div class="card-body card-padding">
             <div role="tabpanel">
                 <ul class="tab-nav" role="">
-                    <li><a href="#addIssueGrill" aria-controls="addIssueGrill" role="tab" data-toggle="tab">Agregar Salida</a></li>
-                    <li><a href="#IssueGrills" aria-controls="IssueGrils" role="tab" data-toggle="tab">Salidas</a></li>
+                    <li><a href="#addIssueGrill" target="_self" aria-controls="addIssueGrill" role="tab" data-toggle="tab">Agregar Salida</a></li>
+                    <li><a href="#IssueGrills" target="_self" aria-controls="IssueGrils" role="tab" data-toggle="tab">Salidas</a></li>
                 </ul>
             </div>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane" id="addIssueGrill">
                     <div class="card-body card-padding">
-                        <form class="row" role="form">
+                        <form name="grillForm" class="row" role="form">
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="Remision" data-ng-model="grillIssue.Remission">
-                                    <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.FieldName.$error.required">El Campo es requerido.</small>
+                                    <input required type="number" min="1" name="Remission" class="form-control input-sm" id="field" placeholder="Remision *"
+                                        data-ng-model="grillIssue.Remission">
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Remission.$error.number">Numero no valido.</small>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="Camion" data-ng-model="grillIssue.Truck">
-                                    <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.FieldName.$error.required">El Campo es requerido.</small>
+                                    <input required type="text" class="form-control input-sm" id="field" name="Truck" placeholder="Camion *" ng-minlength="3"
+                                        ng-maxlength="150" data-ng-model="grillIssue.Truck">
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Truck.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Truck.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 150 caracteres.</small>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="Chofer" data-ng-model="grillIssue.Driver">
-                                    <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.FieldName.$error.required">El Campo es requerido.</small>
+                                    <input required type="text" class="form-control input-sm" id="field" name="Driver" placeholder="Chofer *" ng-minlength="3"
+                                        ng-maxlength="150" data-ng-model="grillIssue.Driver">
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Driver.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Driver.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 150 caracteres.</small>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="Caja" data-ng-model="grillIssue.Box">
-                                    <small class="help-block has-error" style="color:red" ng-show="!grillForm.$pristine && grillForm.FieldName.$error.required">El Campo es requerido.</small>
+                                    <input type="text" class="form-control input-sm" id="field" name="Box" placeholder="Caja *" ng-minlength="3" ng-maxlength="150"
+                                        data-ng-model="grillIssue.Box">
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Box.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                                    <small class="help-block has-error" style="color:red" ng-show="grillForm.Box.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 150 caracteres.</small>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
                                     <input type="text" disabled required class="form-control input-sm" id="grillIssueDate" placeholder="Fecha" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
                                     <div class="dropdown">
-                                        <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#"><i class="md md-event"></i></a>
+                                        <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target href><i class="md md-event"></i></a>
                                         <ul class="dropdown-menu" role="menu">
                                             <datetimepicker data-ng-model="data.dateDropDownLink" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
                                         </ul>
@@ -60,7 +67,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <button type="submit" class="btn btn-primary waves-effect" data-ng-click="saveGrillIssue()" ng-disabled="">Guardar</button>
+                                    <button type="submit" class="btn btn-primary waves-effect" data-ng-click="saveGrillIssue()" ng-disabled="!grillForm.$valid">Guardar</button>
                                 </div>
                             </div>
                         </form>
@@ -76,52 +83,54 @@
                                     </div>
                                 </div>
                             </div>
-                            <table id="data-table-command" class="table table-striped table-vmiddle">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Fecha de Captura</th>
-                                        <th>Recepciones</th>
-                                        <th>Tamaño</th>
-                                        <th>Sacos</th>
-                                        <th>Kilos</th>
-                                        <th>Calidad</th>
-                                        <th>Variedad</th>
-                                        <th>Productor</th>
-                                        <th>Campo</th>
-                                        <th>Peso de la Muestra</th>
-                                        <th>Humedad</th>
-                                        <th>No.Nueces</th>
-                                        <th>Rendimiento</th>
-                                        <th>Total</th>
-                                        <th>Agregar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="grill in grills | filter:searchUser">
-                                        <td>{{grill.Id}}</td>
-                                        <td>{{grill.DateCapture}}</td>
-                                        <td>{{grill.Receptions}}</td>
-                                        <td>{{grill.Size}}</td>
-                                        <td>{{grill.Sacks}}</td>
-                                        <td>{{grill.Kilos}}</td>
-                                        <td>{{grill.Quality}}</td>
-                                        <td>{{grill.Variety}}</td>
-                                        <td>{{grill.Producer}}</td>
-                                        <td>{{grill.FieldName}}</td>
-                                        <td>{{grill.Sampling.SampleWeight}}</td>
-                                        <td>{{grill.Sampling.HumidityPercent}}</td>
-                                        <td>{{grill.Sampling.WalnutNumber}}</td>
-                                        <td>{{grill.Sampling.Performance}}</td>
-                                        <td>{{grill.Sampling.TotalWeightOfEdibleNuts}}</td>
-                                        <td>
-                                            <div class="checkbox m-b-15">
-                                                <label><input type="checkbox" ng-model="grill.Added"><i class="input-helper"></i></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="card-body table-responsive">
+                                <table class="table table-striped table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Fecha de Captura</th>
+                                            <th>Recepciones</th>
+                                            <th>Tamaño</th>
+                                            <th>Sacos</th>
+                                            <th>Kilos</th>
+                                            <th>Calidad</th>
+                                            <th>Variedad</th>
+                                            <th>Productor</th>
+                                            <th>Campo</th>
+                                            <th>Peso de la Muestra</th>
+                                            <th>Humedad</th>
+                                            <th>No.Nueces</th>
+                                            <th>Rendimiento</th>
+                                            <th>Total</th>
+                                            <th>Agregar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="grill in grills | filter:searchUser">
+                                            <td>{{grill.Id}}</td>
+                                            <td>{{grill.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
+                                            <td>{{grill.Receptions}}</td>
+                                            <td>{{grill.Size}}</td>
+                                            <td>{{grill.Sacks}}</td>
+                                            <td>{{grill.Kilos}}</td>
+                                            <td>{{grill.Quality}}</td>
+                                            <td>{{grill.Variety}}</td>
+                                            <td>{{grill.Producer}}</td>
+                                            <td>{{grill.FieldName}}</td>
+                                            <td>{{grill.SampleWeight}}</td>
+                                            <td>{{grill.HumidityPercent}}</td>
+                                            <td>{{grill.WalnutNumber}}</td>
+                                            <td>{{grill.Performance}}</td>
+                                            <td>{{grill.TotalWeightOfEdibleNuts}}</td>
+                                            <td>
+                                                <div class="checkbox m-b-15">
+                                                    <label><input type="checkbox" ng-model="grill.Added"><i class="input-helper"></i></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,44 +156,46 @@
                             </div>
                             <div id="{{issue.Id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body">
-                                    <table id="data-table-command" class="table table-striped table-vmiddle">
-                                        <thead>
-                                            <th>Id</th>
-                                            <th>Fecha de Captura</th>
-                                            <th>Recepciones</th>
-                                            <th>Tamaño</th>
-                                            <th>Sacos</th>
-                                            <th>Kilos</th>
-                                            <th>Calidad</th>
-                                            <th>Variedad</th>
-                                            <th>Productor</th>
-                                            <th>Campo</th>
-                                            <th>Peso de la Muestra</th>
-                                            <th>Humedad</th>
-                                            <th>No.Nueces</th>
-                                            <th>Rendimiento</th>
-                                            <th>Total</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="grilli in issue.Grills">
-                                                <td>{{grilli.Id}}</td>
-                                                <td>{{grilli.DateCapture}}</td>
-                                                <td>{{grilli.Receptions}}</td>
-                                                <td>{{grilli.Size}}</td>
-                                                <td>{{grilli.Sacks}}</td>
-                                                <td>{{grilli.Kilos}}</td>
-                                                <td>{{grilli.Quality}}</td>
-                                                <td>{{grilli.Variety}}</td>
-                                                <td>{{grilli.Producer}}</td>
-                                                <td>{{grilli.FieldName}}</td>
-                                                <td>{{grilli.Sampling.SampleWeight}}</td>
-                                                <td>{{grilli.Sampling.HumidityPercent}}</td>
-                                                <td>{{grilli.Sampling.WalnutNumber}}</td>
-                                                <td>{{grilli.Sampling.Performance}}</td>
-                                                <td>{{grilli.Sampling.TotalWeightOfEdibleNuts}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="card-body table-responsive">
+                                        <table class="table table-striped table-vmiddle">
+                                            <thead>
+                                                <th>Id</th>
+                                                <th>Fecha de Captura</th>
+                                                <th>Recepciones</th>
+                                                <th>Tamaño</th>
+                                                <th>Sacos</th>
+                                                <th>Kilos</th>
+                                                <th>Calidad</th>
+                                                <th>Variedad</th>
+                                                <th>Productor</th>
+                                                <th>Campo</th>
+                                                <th>Peso de la Muestra</th>
+                                                <th>Humedad</th>
+                                                <th>No.Nueces</th>
+                                                <th>Rendimiento</th>
+                                                <th>Total</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="grilli in issue.Grills">
+                                                    <td>{{grilli.Id}}</td>
+                                                    <td>{{grilli.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
+                                                    <td>{{grilli.Receptions}}</td>
+                                                    <td>{{grilli.Size}}</td>
+                                                    <td>{{grilli.Sacks}}</td>
+                                                    <td>{{grilli.Kilos}}</td>
+                                                    <td>{{grilli.Quality}}</td>
+                                                    <td>{{grilli.Variety}}</td>
+                                                    <td>{{grilli.Producer}}</td>
+                                                    <td>{{grilli.FieldName}}</td>
+                                                    <td>{{grilli.SampleWeight}}</td>
+                                                    <td>{{grilli.HumidityPercent}}</td>
+                                                    <td>{{grilli.WalnutNumber}}</td>
+                                                    <td>{{grilli.Performance}}</td>
+                                                    <td>{{grilli.TotalWeightOfEdibleNuts}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

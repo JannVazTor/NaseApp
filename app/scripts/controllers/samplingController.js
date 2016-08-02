@@ -1,23 +1,68 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('samplingController',function($scope, $filter, $state, samplingService){
+    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, samplingService, clearService, grillService, receptionService, $rootScope) {
         $scope.message = "";
         $scope.samplings = [];
+        $scope.receptionEntries = [];
         $scope.sampling = samplingService.sampling;
-        //$('#samplingDate').val($scope.sampling.DateCapture);
-        $scope.saveSampling = function () {
-            $scope.sampling.DateCapture = $('#samplingDate').val();
-            samplingService.save($scope.sampling).then(function (response) {   
-                $scope.savedSuccesfully = true;
-                $state.go('samplingManage');
-            }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
-            });
+
+        $scope.saveSampling = function (sampling) {
+            var nutTypes = [{ NutType: 1, Kilos: sampling.kilosFirst, Sacks: sampling.sacksFirst },
+                { NutType: 2, Kilos: sampling.kilosSecond, Sacks: sampling.sacksSecond },
+                { NutType: 3, Kilos: sampling.kilosThird, Sacks: sampling.sacksThird }]
+            var Sampling = {
+                NutTypes: nutTypes,
+                TotalWeightOfEdibleNuts: sampling.TotalWeightOfEdibleNuts,
+                WalnutNumber: sampling.WalnutNumber,
+                HumidityPercent: sampling.HumidityPercent,
+                SampleWeight: sampling.SampleWeight,
+                DateCapture: $('#samplingDate').val(),
+                ReceptionEntryId: receptionService.receptionEntryId
+            };
+            if ($state.current.name === 'samplingReceptionEntryAdd') {
+                if (ValidateNutTypes(Sampling.NutTypes)) {
+                    samplingService.saveToReceptionEntry(Sampling).then(function (response) {
+                        clearService.clearReceptionService();
+                        $state.go('samplingReceptionAdd');
+                    }, function (response) {
+                        msgS.toastMessage(msgS.errorMessages[3],3);;
+                    });
+                } else {
+                    msgS.toastMessage(msgS.errorMessages[14],3);;
+                };
+            } else {
+                delete Sampling['NutTypes'];
+                delete Sampling['ReceptionEntryId'];
+                Sampling.GrillId = grillService.grillId;
+                samplingService.saveToGrill(Sampling).then(function (response) {
+                    $state.go('samplingGrillManage');
+                }, function (response) {
+                    msgS.toastMessage(msgS.errorMessages[3],3);
+                });
+            }
         };
+        var ValidateNutTypes = function (nutTypes) {
+            var counter = 0;
+            $.each(nutTypes, function (i) {
+                if (nutTypes[i].Kilos || nutTypes[i].Sacks) {
+                    counter += 1;
+                };
+            });
+            return counter >= 1;
+        };
+
+        var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+            if ($state.current.name !== 'samplingReceptionEntryAdd') {
+                clearService.clearReceptionService();
+                onStateChange();
+            };
+            clearService.clearSamplingService();
+        });
+
         $scope.confirmationDelete = function (SamplingId) {
             swal({
                 title: "Estas seguro?",
-                text: "Tú eliminaras la recepcion: " + SamplingId + "!!",
+                text: "Tú eliminaras el muestreo con id: " + SamplingId + "!!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -27,12 +72,10 @@
                 function () {
                     $scope.deleteSampling(SamplingId);
                 });
-
         };
 
         $scope.deleteSampling = function (SamplingId) {
             samplingService.delete(SamplingId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.samplings, function (i) {
                     if ($scope.samplings[i].Id === SamplingId) {
@@ -41,33 +84,95 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                msgS.toastMessage(msgS.errorMessages[4],3);
             });
         };
 
-         $scope.redirectUpdate = function (sampling) {
+        $scope.redirectUpdate = function (sampling) {
             samplingService.sampling = sampling;
             $state.go('samplingUpdate');
         };
 
-        $scope.UpdateSampling= function () {
+        $scope.UpdateSampling = function () {
             $scope.sampling.DateCapture = $('#samplingDate').val();
             samplingService.update($scope.sampling).then(function (response) {
-                $scope.message = "El registro fue Actualizado  de manera exitosa."
-                $state.go('samplingManage');
+                msgS.toastMessage(msgS.successMessages[1],2);;
+                $state.go($rootScope.prevState);
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+                msgS.toastMessage(msgS.errorMessages[9],3);
             });
         }
 
-         var GetAllSamplings = function () {
-            samplingService.getAll().then(function (response) {
-                $scope.samplings = response.data;
+        var GetAllGrillSamplings = function () {
+            samplingService.getAllGrills().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.toastMessage(msgS.infoMessages[11],1);
+                } else {
+                    if ($scope.samplings.length !== 0) $scope.samplings = [];
+                    $scope.samplings = response.data;
+                }
             }, function (response) {
-                $scope.message = "la obtencion de los muestreos fallo";
+                msgS.toastMessage(msgS.errorMessages[13],3);
             });
         };
 
-        GetAllSamplings();
+        var GetAllReceptionSamplings = function () {
+            samplingService.getAllReceptions().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.toastMessage(msgS.infoMessages[11],1);
+                } else {
+                    if ($scope.samplings.length !== 0) $scope.samplings = [];
+                    $scope.samplings = response.data;
+                }
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[13],3);
+            });
+        };
+        var GetAllReceptionEntries = function () {
+            receptionService.getAllEntries().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.toastMessage(msgS.infoMessages[6],1);
+                } else {
+                    $scope.receptionEntries = response.data;
+                }
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[7],3);
+            });
+        };
+
+        $scope.redirectToAddSampling = function (receptionEntryId) {
+            receptionService.receptionEntryId = receptionEntryId;
+            $state.go('samplingReceptionEntryAdd');
+        };
+
+        $scope.IsReceptionSamplingAdd = function () {
+            return ($state.current.name === 'samplingReceptionEntryAdd');
+        };
+
+        $scope.return = function () {
+            if ($rootScope.prevState.length !== 0) {
+                $state.go($rootScope.prevState);
+            } else {
+                $state.go('home');
+            }
+        };
+
+        (function () {
+            switch ($state.current.name) {
+                case 'samplingReceptionAdd':
+                    GetAllReceptionEntries();
+                    break;
+                case 'samplingReceptionManage':
+                    GetAllReceptionSamplings();
+                    break;
+                case 'samplingReceptionEntryAdd':
+                    break;
+                case 'samplingGrillManage':
+                    GetAllGrillSamplings();
+                    break;
+                default:
+                    break;
+            }
+        })();
     });
 })();

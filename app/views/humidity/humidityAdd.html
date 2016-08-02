@@ -1,0 +1,42 @@
+<div class="animated bounceInRight">
+    <div class="card">
+        <div class="card-header">
+            <h2>Captura de Humedad</h2>
+        </div>
+        <div class="card-body table-responsive">
+            <div class="col-sm-12 actionbar">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="fg-line">
+                            <input class="form-control input-sm" id="isearch" placeholder="buscar...." ng-model="searchReceptionEntries">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-vmiddle">
+                <thead>
+                    <tr>
+                        <th>Recepciones (Folios)</th>
+                        <th>Fecha de Captura</th>
+                        <th>Variedad</th>
+                        <th>Productor</th>
+                        <th>Agregar Humedad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="receptionEntry in humiditiesInReceptionEntry | filter:searchUser">
+                        <td>{{receptionEntry.Receptions}}</td>
+                        <td>{{receptionEntry.DateEntry | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{receptionEntry.Variety}}</td>
+                        <td>{{receptionEntry.Producer}}</td>
+                        <td>
+                            <button class="btn btn-icon command-delete" ng-click="redirectToAddHumidity(receptionEntry.Id)">
+                                <span class="md md-format-color-reset"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

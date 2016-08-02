@@ -5,32 +5,32 @@
                 <h2>Control de Cilindros de Secado</h2>
             </div>
             <div class="card-body card-padding">
-              <div class="form-group">
-                  <label for="cylinder" class="col-sm-2 control-label">Cilindro:</label>
-                  <div class="col-sm-10">
-                      <div class="fg-line disabled">
-                          <input type="text" readonly class="form-control input-sm" id="cylinder" data-ng-model="CylinderName">
-                      </div>
-                  </div>
-              </div>
-              <div class="form-group">
-                <label for="humidityPercent" class="col-sm-2 control-label">% de Humedad del Cilindro:</label>
-                <div class="col-sm-10">
-                  <div class="fg-line">
-                    <input type="text" class="form-control input-sm" id="humidityPercent" placeholder="% humedad" data-ng-model="humidity.HumidityPercent">
-                  </div>
-                </div>
-              </div>
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveHumidity(CylinderName)">Guardar</button>
-                  </div>
+                    <label for="cylinder" class="col-sm-2 control-label">Cilindro:</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line disabled">
+                            <input type="text" readonly class="form-control input-sm" id="cylinder" data-ng-model="CylinderName">
+                        </div>
+                    </div>
                 </div>
-                  <div class="form-group">
-                      <div data-ng-hide="message==''" class="alert alert-danger">
-                          {{message}}
-                      </div>
-                  </div>
+                <div class="form-group">
+                    <label for="humidityPercent" class="col-sm-2 control-label">% de Humedad del Cilindro:</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="humidityPercent" placeholder="% humedad" data-ng-model="humidity.HumidityPercent">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveHumidity(CylinderName)">Guardar</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div data-ng-hide="message==''" class="alert alert-danger">
+                        {{message}}
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -40,37 +40,39 @@
         <div class="card-header">
             <h2>Humedad en Cilindros</h2>
         </div>
-        <table id="data-table-command" class="table table-striped table-vmiddle">
-            <thead>
-                <tr>
-                    <th data-column-id="">Cilindros</th>
-                    <th data-column-id="">Variedad</th>
-                    <th data-column-id="">Productor</th>
-                    <th data-column-id="">Toneladas</th>
-                    <th data-column-id="">Fecha de Entrada</th>
-                    <th data-column-id=""># Folio</th>
-                    <th data-column-id="">Fecha y Hora de Chequeo</th>
-                    <th data-column-id="">% Humedad</th>
-                    <th data-column-id="">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="humidity in humidities">
-                    <td>{{humidity.CylinderName}}</td>
-                    <td>{{humidity.Variety}}</td>
-                    <td>{{humidity.ProducerName}}</td>
-                    <td>{{humidity.Tons}}</td>
-                    <td>{{humidity.EntryDate | date: 'dd/MM/yyyy'}}</td>
-                    <td>{{humidity.Folio}}</td>
-                    <td>{{humidity.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
-                    <td>{{humidity.HumidityPercentage}}</td>
-                    <td>
-                    <button class="btn btn-icon command-delete" ng-click="deleteHumidity(humidity.HumidityId)">
+        <div class="card-body table-responsive">
+            <table class="table table-striped table-vmiddle">
+                <thead>
+                    <tr>
+                        <th data-column-id="">Cilindros</th>
+                        <th data-column-id="">Variedad</th>
+                        <th data-column-id="">Productor</th>
+                        <th data-column-id="">Toneladas</th>
+                        <th data-column-id="">Fecha de Entrada</th>
+                        <th data-column-id=""># Folio</th>
+                        <th data-column-id="">Fecha y Hora de Chequeo</th>
+                        <th data-column-id="">% Humedad</th>
+                        <th data-column-id="">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="humidity in humidities">
+                        <td>{{humidity.CylinderName}}</td>
+                        <td>{{humidity.Variety}}</td>
+                        <td>{{humidity.ProducerName}}</td>
+                        <td>{{humidity.Tons}}</td>
+                        <td>{{humidity.EntryDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{humidity.Folio}}</td>
+                        <td>{{humidity.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{humidity.HumidityPercentage}}</td>
+                        <td>
+                            <button class="btn btn-icon command-delete" ng-click="confirmationDelete(humidity.HumidityId)">
                         <span class="md md-delete"></span>
                     </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

@@ -1,29 +1,27 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('cylinderController', function ($scope, cylinderService) {
+    angular.module('naseNutAppApp').controller('cylinderController', function ($scope,msgS, cylinderService) {
         $scope.cylinders = [];
         $scope.message = "";
-        $scope.savedSuccessfully = false;
 
         $scope.cylinder = {
             CylinderName: ""
         };
 
-        var GetAll = function () {
+        var GetAllCylinders = function () {
             cylinderService.getAll().then(function (response) {
                 $scope.cylinders = response.data;
             }, function (response) {
-                $scope.message = "la obtencion de los cilindros fallo";
+                msgS.toastMessage(msgS.errorMessages[6],3);
             });
         };
-        GetAll();
+
         $scope.saveCylinder = function () {
             cylinderService.save($scope.cylinder).then(function (response) {
-                $scope.savedSuccessfully = true;
-                $scope.message = "El registro a sigo guardado de manera exitosa."
-                GetAll();
+                msgS.toastMessage(msgS.successMessages[3],2);
+                GetAllCylinders();
             }, function (response) {
-                $scope.message = "No se pudo guardar el cilindro";
+                msgS.toastMessage(msgS.errorMessages[3],3);
             });
         };
         $scope.confirmationDelete =  function(cylinderId){
@@ -43,7 +41,6 @@
         };
         $scope.deleteCylinder = function (cylinderId) {
             cylinderService.delete(cylinderId).then(function (response) {
-                $scope.message = "El registro se elimino de manera exitosa.";
                 swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
                 $.each($scope.cylinders, function (i) {
                     if ($scope.cylinders[i].Id === cylinderId) {
@@ -52,8 +49,9 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error y el registro no pudo ser eliminado.";
+                msgS.toastMessage(msgS.errorMessages[4],3);
             });
         };
+        GetAllCylinders();
     });
 })();

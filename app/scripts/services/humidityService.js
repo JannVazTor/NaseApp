@@ -1,35 +1,36 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').factory('humidityService', function ($http, apiPath) {
-        var _ReceptionId = "";
+    angular.module('naseNutAppApp').factory('humidityService', function (apiPath, $http) { 
 
-        var _getTotalHumidities = function(){
-          return $http.get(apiPath + 'api/humidity/getAll')
+        var _getAll = function () {
+            return $http.get(apiPath + 'api/humidity').catch(function (e) {
+                console.log("error description: ", e);
+                throw e;
+            });
         }
 
-        var _getReceptionsByCylinder = function (id) {
-            return $http.get(apiPath + 'api/reception/getReceptionsByCylinder' + '?' + 'CylinderId=' + id);
+        var _getByReceptionEntry = function(id){
+            return $http.get(apiPath + 'api/humidity/getByReceptionEntry/' + id);
         }
 
-        var _getCylinderId = function(cylinderName){
-            return $http.get(apiPath + 'api/cylinder/getIdByName' + '?' + 'CylinderName=' + cylinderName)
-        }
         var _save = function (data) {
-            return $http.post(apiPath + 'api/humidity/saveHumidity', data);
+            return $http.post(apiPath + 'api/humidity', data);
         }
- 
 
-        var _delete = function(id){
+        var _delete = function (id) {
             return $http.delete(apiPath + 'api/humidity/' + id);
         }
 
+        var _getLastHumiditiesSamplings = function(){
+            return $http.get(apiPath + 'api/humidity/getLastHumiditiesSamplings');
+        }
+
         return {
-            ReceptionId : _ReceptionId,
-            getTotalHumidities: _getTotalHumidities,
-            getReceptionsByCylinder: _getReceptionsByCylinder,
-            getCylinderId: _getCylinderId,
             save: _save,
-            delete: _delete
+            getAll: _getAll,
+            delete: _delete,
+            getByReceptionEntry:_getByReceptionEntry,
+            getLastHumiditiesSamplings: _getLastHumiditiesSamplings
         };
     });
 })();

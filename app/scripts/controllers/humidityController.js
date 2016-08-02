@@ -1,55 +1,150 @@
-(function(){
-  'use strict'
-  angular.module('naseNutAppApp').controller('humidityController', function($scope, $state, humidityService, cylinderService, receptionService){
-    $scope.receptions = [];
-    $scope.humidities = [];
-    $scope.savedSuccesfully = false;
-    $scope.CylinderName = receptionService.CylinderName;
-    $scope.humidity = {
-        HumidityPercent: "",
-        CylinderName: receptionService.CylinderName,
-        CylinderId: "",
-        ReceptionId: receptionService.ReceptionId
-    };
+(function () {
+    'use strict'
+    angular.module('naseNutAppApp').controller('humidityController', function (msgS, $state, $scope, humidityService, receptionService, clearService, $rootScope) {
+        $scope.humiditiesInReceptionEntry = [];
 
+        var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+            if ($state.current.name !== 'humidityAddToReception') {
+                clearService.clearReceptionService();
+                onStateChange();
+            }
+        });
 
-    var GetTotalHumidities = function(){
-      humidityService.getTotalHumidities().then(function(response){
-        $scope.humidities = response.data;
-      }, function(response){
-        $scope.message = "la obtención de registros de humedad fallo.";
-      });
-    };
+        var GetAllHumiditiesByReception = function () {
+            humidityService.getByReceptionEntry(receptionService.receptionEntryId).then(function (response) {
+                if (response.data.length !== 0) {
+                    $scope.humiditiesInReceptionEntry = response.data;
+                } else {
+                    msgS.toastMessage(msgS.infoMessages[9], 1);
+                }
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[11], 3);
+            });
+        };
 
-    $scope.saveHumidity = function (cylinderName) {
-        receptionService.CylinderName = cylinderName;
-      humidityService.save($scope.humidity).then(function (response) {
-          $scope.savedSuccesfully = true;
-      }, function (response) {
-          $scope.message = "ocurrio un error y el registro de humedad no pudo ser guardado."
-      });
-  };
+        var GetAllHumidities = function () {
+            humidityService.getAll().then(function (response) {
+                if (response.data.length !== 0) {
+                    $scope.humiditiesInReceptionEntry = response.data;
+                } else {
+                    msgS.toastMessage(msgS.infoMessages[6], 1);
+                }
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[7], 3);
+            });
+        };
 
-   var GetCylinderId = function(cylinderName){
-      humidityService.getCylinderId(cylinderName).then(function(response){
-          $scope.humidity.CylinderId = response.data;
-      });
-  };
+        var GetAllHumiditiesLastSamplings = function () {
+            humidityService.getLastHumiditiesSamplings().then(function (response) {
+                if (response.data.length !== 0) {
+                    $scope.humiditiesInReceptionEntry = response.data;
+                } else {
+                    msgS.msg('info', 8);
+                }
+            }, function (response) {
+                msgS.msg('err', 20);
+            });
+        };
 
-  $scope.deleteHumidity = function (humidityId) {
-      humidityService.delete(humidityId).then(function (response) {
-          $scope.message = "El registro se elimino de manera exitosa.";
-          $.each($scope.humidities, function (i) {
-              if ($scope.humidities[i].Id === humidityId) {
-                  $scope.humidities.splice(i, 1);
-                  return false;
-              }
-          });
-      }, function (response) {
-          $scope.message = "Ocurrio un error y el registro no pudo ser eliminado.";
-      });
-  };
-  
-    GetTotalHumidities();
-  });
+        var GetAllReceptionEntries = function () {
+            receptionService.getAllEntries().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 0);
+                } else {
+                    $scope.humiditiesInReceptionEntry = response.data;
+                }
+            }, function (response) {
+                msgS.msg('err', 5);
+            });
+        }
+
+        $scope.redirectToAddHumidity = function (receptionEntryId) {
+            receptionService.receptionEntryId = receptionEntryId;
+            $state.go('humidityAddToReception');
+        };
+
+        $scope.saveHumidity = function (humidity) {
+            var Humidity = {
+                HumidityPercent: humidity,
+                ReceptionEntryId: receptionService.receptionEntryId
+            };
+            humidityService.save(Humidity).then(function (response) {
+                GetAllHumiditiesByReception();
+                msgS.toastMessage(msgS.successMessages[3], 2);
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[3], 3);
+            });
+        };
+
+        $scope.confirmationDelete = function (Id) {
+            swal({
+                title: "Estas seguro?",
+                text: "Tú eliminaras la humedad: " + Id + "!!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Si, eliminarlo!",
+                closeOnConfirm: false
+            },
+                function () {
+                    $scope.deleteHumidity(Id);
+                });
+        };
+
+        $scope.deleteHumidity = function (Id) {
+            humidityService.delete(Id).then(function (response) {
+                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
+                if ($state.current.name === 'humidityManage') {
+                    $.each($scope.humiditiesInReceptionEntry, function (i) {
+                        if ($scope.humiditiesInReceptionEntry[i].Id === Id) {
+                            $scope.humiditiesInReceptionEntry.splice(i, 1);
+                            return false;
+                        }
+                    });
+                }
+                if ($state.current.name === 'humidityAddToReception') {
+                    $.each($scope.humiditiesInReceptionEntry.Humidities, function (i) {
+                        if ($scope.humiditiesInReceptionEntry.Humidities[i].Id === Id) {
+                            $scope.humiditiesInReceptionEntry.Humidities.splice(i, 1);
+                            return false;
+                        }
+                    });
+                }
+                if ($state.current.name === 'humidityLastSamplings') {
+                    $.each($scope.humiditiesInReceptionEntry, function (i) {
+                        if ($scope.humiditiesInReceptionEntry[i].Id === Id) {
+                            $scope.humiditiesInReceptionEntry.splice(i, 1);
+                            return false;
+                        }
+                    });
+                    GetAllHumiditiesLastSamplings();
+                }
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[4], 3);
+            });
+        };
+
+        $scope.return = function(){
+            $state.go($rootScope.prevState);
+        };
+
+        (function () {
+            switch ($state.current.name) {
+                case 'humidityAdd':
+                    GetAllReceptionEntries();
+                    break;
+                case 'humidityManage':
+                    GetAllHumidities();
+                    break;
+                case 'humidityAddToReception':
+                    GetAllHumiditiesByReception();
+                    break;
+                case 'humidityLastSamplings':
+                    GetAllHumiditiesLastSamplings();
+                    break;
+                default:
+                    break;
+            }
+        })();
+    });
 })();

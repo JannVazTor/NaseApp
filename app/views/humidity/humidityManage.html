@@ -1,0 +1,48 @@
+<div class="animated bounceInRight">
+    <div class="card">
+        <div class="card-header">
+            <h2>Humedades</h2>
+        </div>
+        <div class="card-body table-responsive">
+            <div class="col-sm-12 actionbar">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchReceptionEntries">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table id="data-table-command" class="table table-striped table-vmiddle">
+                <thead>
+                    <tr>
+                        <td>Cilindro</td>
+                        <td>Campos</td>
+                        <td>Toneladas</td>
+                        <td>Fecha de Entrada</td>
+                        <td>Folios</td>
+                        <td>Fecha de Captura</td>
+                        <td>% Humedad</td>
+                        <td>Eliminar</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="humidity in humiditiesInReceptionEntry | filter:searchHumities | orderBy:DateCapture">
+                        <td>{{humidity.CylinderName}}</td>
+                        <td>{{humidity.FieldName}}</td>
+                        <td>{{humidity.Tons}}</td>
+                        <td>{{humidity.EntryDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{humidity.Folio}}</td>
+                        <td>{{humidity.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{humidity.HumidityPercentage}}</td>
+                        <td>
+                            <button class="btn btn-icon command-delete" ng-click="confirmationDelete(humidity.Id)">
+                                <span class="md md-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

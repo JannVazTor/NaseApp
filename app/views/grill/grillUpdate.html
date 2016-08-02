@@ -1,19 +1,15 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form name="grillUForm" class="form-horizontal" role="form">
+        <form name="updateGrillForm" class="form-horizontal" role="form">
             <div class="card-header">
                 <h2>Parrillas</h2>
             </div>
             <div class="card-body card-padding">
                 <div class="form-group">
-                    <label for="producers" class="col-sm-2 control-label">Productores</label>
+                    <label for="prodF" class="col-sm-2 control-label">Productores *</label>
                     <div class="col-sm-10">
-                        <div class="fg-line disabled">
-                            <div class="fg-line select">
-                                <select required class="form-control" ng-model="grillU.Producer">
-                                <option ng-repeat="producer in producers" ng-selected="grillU.Producer == producer.ProducerName" value="{{producer.ProducerName}}">{{producer.ProducerName}}</option>
-                        </select>
-                            </div>
+                        <div class="fg-line select">
+                            <select id="prodF" class="form-control" ng-model="grill.Producer" ng-options="producer.ProducerName for producer in producers"></select>
                         </div>
                     </div>
                 </div>
@@ -23,7 +19,7 @@
                         <div class="fg-line">
                             <input type="text" disabled required class="form-control input-sm" id="grillDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
                             <div class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#"><i class="md md-event"></i></a>
+                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target href><i class="md md-event"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <datetimepicker data-ng-model="data.dateDropDownLink" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
                                 </ul>
@@ -32,70 +28,64 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="field" class="col-sm-2 control-label">Campo</label>
+                    <label for="fieldF" class="col-sm-2 control-label">Campo *</label>
                     <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="field" name="FieldName" placeholder="campo" data-ng-model="grillU.FieldName">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.FieldName.$error.required">El Campo es requerido.</small>
+                        <div class="fg-line select">
+                            <select id="fieldF" class="form-control" ng-model="grill.Field" ng-options="field.FieldName for field in fields"></select>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="variety" class="col-sm-2 control-label">Variedad</label>
+                    <label for="varieF" class="col-sm-2 control-label">Variedades *</label>
                     <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="variety" name="Variety" placeholder="variedad" data-ng-model="grillU.Variety">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Variety.$error.required">El Campo es requerido.</small>
+                        <div class="fg-line select">
+                            <select id="varieF" class="form-control" ng-model="grill.Variety" ng-options="variety.VarietyName for variety in varieties"></select>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="quality" class="col-sm-2 control-label">Calidad</label>
+                    <label for="quality" class="col-sm-2 control-label">Calidad *</label>
                     <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="quality" name="Quality" placeholder="calidad" data-ng-model="grillU.Quality">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Quality.$error.required">El Campo es requerido.</small>
+                        <div class="fg-line select">
+                            <select class="form-control" ng-model="grill.Quality" ng-options="quality.Name for quality in qualities"></select>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="sacks" class="col-sm-2 control-label">Sacos</label>
+                    <label for="sacks" class="col-sm-2 control-label">Sacos *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="sacks" name="Sacks" placeholder="sacos" data-ng-model="grillU.Sacks">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Sacks.$error.required">El Campo es requerido.</small>
+                            <input required type="number" min="1" name="Sacks" class="form-control input-sm" id="sacks" placeholder="sacos" ng-model="grill.Sacks">
+                            <small class="help-block has-error" style="color:red" ng-show="updateGrillForm.Sacks.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="kilos" class="col-sm-2 control-label">Kilos</label>
+                    <label for="kilos" class="col-sm-2 control-label">Kilos *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="kilos" name="Kilos" placeholder="kilos" data-ng-model="grillU.Kilos">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Kilos.$error.required">El Campo es requerido.</small>
+                            <input required type="number" min="1" class="form-control input-sm" id="kilos" name="Kilos" placeholder="kilos" data-ng-model="grill.Kilos">
+                            <small class="help-block has-error" style="color:red" ng-show="updateGrillForm.Kilos.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="size" class="col-sm-2 control-label">Tamaño</label>
+                    <label for="size" class="col-sm-2 control-label">Tamaño *</label>
                     <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="size" name="Size" placeholder="tamaño" data-ng-model="grillU.Size">
-                            <small class="help-block has-error" style="color:red" ng-show="!grillUForm.$pristine && grillUForm.Size.$error.required">El Campo es requerido.</small>
+                        <div class="fg-line select">
+                            <select class="form-control" ng-model="grill.Size" ng-options="size.Name for size in sizes"></select>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="UpdateGrill()" ng-disabled="!grillUForm.$valid">Actualizar</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div data-ng-hide="message===''" class="alert alert-danger">
-                        {{message}}
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="UpdateGrill(grill)" ng-disabled="!updateGrillForm.$valid">Actualizar</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
+<button id="fixedbuttonLeft" type="submit" class="btn bgm-teal btn-icon" data-ng-click="return()">
+        <i class="md md-arrow-back"></i>
+</button>

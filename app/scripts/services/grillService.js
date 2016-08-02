@@ -1,19 +1,20 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').factory('grillService', function ($http, apiPath) {
-        var _Id = "";
+        var _grillId = "";
         var _grill = {
             DateCapture: "",
             Size: "",
-            Sacks: "",
+            FieldId: "",
             Kilos: "",
+            Sacks: "",
             Quality: "",
-            Variety: "",
-            Producer: "",
-            FieldName: ""
+            VarietyId: "",
+            ProducerId: ""
         };
+
         var _getAll = function () {
-            return $http.get(apiPath + 'api/grill/getAll');
+            return $http.get(apiPath + 'api/grill');
         }
 
         var _save = function (data) {
@@ -23,27 +24,27 @@
         var _delete = function (id) {
             return $http.delete(apiPath + 'api/grill/' + id);
         }
+
         var _update = function (id, data) {
             return $http.put(apiPath + 'api/grill/' + id, data);
         }
 
-        var _changeStatus = function(id ,status){
+        var _changeStatus = function (id, status) {
             return $http.put(apiPath + 'api/grill/changeStatus/' + id + '/' + status);
         }
 
-        var _getAllCurrentInv = function(){
+        var _getAllCurrentInv = function () {
             return $http.get(apiPath + 'api/grill/getAllCurrentInv');
         }
 
-        var _saveIssue = function(data){
+        var _saveIssue = function (data) {
             return $http.post(apiPath + 'api/grill/Issue', data);
         }
 
-        var _getAllIssues = function(){
+        var _getAllIssues = function () {
             return $http.get(apiPath + 'api/grill/getAllissues');
         }
         return {
-            id: _Id,
             grill: _grill,
             getAll: _getAll,
             save: _save,
@@ -52,7 +53,8 @@
             delete: _delete,
             update: _update,
             saveIssue: _saveIssue,
-            getAllIssues: _getAllIssues
+            getAllIssues: _getAllIssues,
+            grillId: _grillId
         };
     });
 })();

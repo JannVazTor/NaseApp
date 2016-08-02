@@ -1,55 +1,74 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('remissionController', function ($scope, $state, remissionService, receptionService) {
+    angular.module('naseNutAppApp').controller('remissionController', function ($scope, msgS, toastr, $state, remissionService, clearService, receptionService, $rootScope) {
         $scope.remissions = [];
         $scope.message = "";
         $scope.folio = receptionService.folio;
-        $scope.remission = remissionService.remission;
-        
-        
-        $scope.saveRemission = function () {
-           
-            remissionService.save($scope.remission).then(function (response) {
-                swal("Correcto","Se agrego correctmente","success");
-                defaultRemission();
+        $scope.remission = {};
+
+        $scope.saveRemission = function (remission) {
+            var Remission = {
+                Cultivation: remission.Cultivation,
+                Batch: remission.Batch,
+                Quantity: remission.Quantity,
+                Butler: remission.Butler,
+                TransportNumber: remission.TransportNumber,
+                Driver: remission.Driver,
+                Elaborate: remission.Elaborate,
+                ReceptionId: receptionService.ReceptionId
+            };
+            remissionService.save(Remission).then(function (response) {
+                msgS.toastMessage(msgS.successMessages[0], 2);
+                ClearForm();
             }, function (response) {
-                $scope.message = "ocurrio un error al intentar guardar el registro.";
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         };
-        
-         $scope.redirectUpdate = function (remission) {
+
+        function ClearForm() {
+            $scope.remission = {};
+            $scope.remissionForm.$setPristine();
+            $scope.remissionForm.$setUntouched();
+        };
+
+        var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+            if ($state.current.name === 'remissionUpdate') {
+                clearService.clearRemissionService();
+                onStateChange();
+            }
+        });
+
+        $scope.redirectUpdate = function (remission) {
             remissionService.remission = remission;
             $state.go('remissionUpdate');
         };
 
-        $scope.UpdateRemission =function(){
-            remissionService.update($scope.remission.Id,$scope.remission).then(function (response) {
-                $scope.message = "El registro fue Actualizado  de manera exitosa."
-                defaultRemission();
+        $scope.updateRemission = function () {
+            remissionService.update($scope.remission.Id, $scope.remission).then(function (response) {
+                msgS.toastMessage(msgS.successMessages[1], 2);
                 $state.go('remissionManage');
             }, function (response) {
-                $scope.message = "ocurrio un error y el registro no pudo ser guardado."
+                msgS.toastMessage(msgS.errorMessages[9], 3);
             });
         }
 
-        $scope.confirmationDelete =  function(remissionId){
+        $scope.confirmationDelete = function (remissionId) {
             swal({
-            title: "Estas seguro?",
-            text: "Tú eliminaras la remisión: " + remissionId +"!!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
+                title: "Estas seguro?",
+                text: "Tú eliminaras la remisión: " + remissionId + "!!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
             },
-            function(){
-                $scope.deleteRemission(remissionId);
-            });
-            
+                function () {
+                    $scope.deleteRemission(remissionId);
+                });
+
         };
         $scope.deleteRemission = function (remissionId) {
             remissionService.delete(remissionId).then(function (response) {
-                $scope.message = "El registro fue eliminado  de manera exitosa."
                 swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.remissions, function (i) {
                     if ($scope.remissions[i].Id === remissionId) {
@@ -58,35 +77,34 @@
                     }
                 });
             }, function (response) {
-                $scope.message = "Ocurrio un error al intentar eliminar el registro.";
+                msgS.toastMessage(msgS.errorMessages[4], 3);
             });
-        };
-
-        $scope.redirectToReception = function () {
-            $state.go('receptionManage');
         };
 
         var GetAllRemissions = function () {
             remissionService.getAll().then(function (response) {
                 $scope.remissions = response.data;
             }, function (response) {
-                $scope.message = "ocurrio un error al intentar obtener los registros.";
+                msgS.toastMessage(msgS.errorMessages[10], 3);
             });
         };
 
-        function defaultRemission(){
-            remissionService.remission.Id= "";
-            remissionService.remission.Cultivation = "";
-            remissionService.remission.Batch = "";
-            remissionService.remission.Quantity = "";
-            remissionService.remission.Butler = "";
-            remissionService.remission.TransportNumber= "";
-            remissionService.remission.Driver = "";
-            remissionService.remission.Elaborate = "";
-            remissionService.remission.ReceptionId = receptionService.reception.Id;
-            $scope.remission = remissionService.remission;
-        }
-
-        GetAllRemissions();
+        $scope.return = function () {
+            if ($rootScope.prevState.length !== 0) {
+                $state.go($rootScope.prevState);
+            } else {
+                $state.go('home');
+            }
+        };
+        
+        (function () {
+            switch ($state.current.name) {
+                case 'remissionManage':
+                    GetAllRemissions();
+                    break;
+                default:
+                    break;
+            };
+        })();
     });
 })();
