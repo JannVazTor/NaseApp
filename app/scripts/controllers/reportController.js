@@ -4,6 +4,58 @@
         $scope.dtOptions = {};
         $scope.dtColumns = [];
         $scope.reportingProcess = [];
+        $scope.dailyProcess = [];
+        $scope.reportDate = {
+            ReportDate:""
+        }
+
+        
+        $scope.getDailyProcessReport = function (date) {
+            var DailyProcess = {
+                ReportDate: $('#reportDate').val(),
+            };
+            reportService.getDailyProcess(DailyProcess).then(function (response) {
+                $scope.savedSuccessfully = true;
+                $scope.dailyProcess = response.data;
+                $scope.dtOptions = GetDtOptions(GetDailyProcess);
+                msgS.toastMessage(msgS.successMessages[3],2);
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[3],3);
+            });
+        };
+
+        $scope.getTotalSmallSacks = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var smallSacks = $scope.dailyProcess[i];
+                        total += (smallSacks.SacksFirstSmall);
+                    }
+                    return total;
+                };
+        $scope.getTotalMediumSacks = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var smallSacks = $scope.dailyProcess[i];
+                        total += (smallSacks.SacksFirstMedium);
+                    }
+                    return total;
+                };
+        $scope.getTotal = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var smallSacks = $scope.dailyProcess[i];
+                        total += (smallSacks.Total);
+                    }
+                    return total;
+                };
+        $scope.getTotalGerminated = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var smallSacks = $scope.dailyProcess[i];
+                        total += (smallSacks.Germinated);
+                    }
+                    return total;
+                };
 
         $scope.getProducerReport = function (id) {
             reportService.getProducerReport(id).then(function (response) {
@@ -59,6 +111,18 @@
             return defer.promise;
         };
 
+        var GetDailyProcess = function () {
+            var defer = $q.defer();
+            reportService.getDailyProcess().then(function (response) {
+                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10],1) };
+                $scope.dailyProcess = response.data;
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[12],3);
+                defer.reject();
+            });
+            return defer.promise;
+        };
+
         var GetColumns = function () {
             return [
                 DTColumnBuilder.newColumn('DateCapture').withTitle('Fecha de Captura').renderWith(function (data, type, full) {
@@ -79,6 +143,21 @@
                 DTColumnBuilder.newColumn('TotalWeightOfEdibleNuts').withTitle('Total')
             ];
         };
+
+        var GetDailyProcessColumns = function () {
+            return [
+                DTColumnBuilder.newColumn('Date').withTitle('Fecha'),
+                DTColumnBuilder.newColumn('Producer').withTitle('Productor'),
+                DTColumnBuilder.newColumn('Folio').withTitle('Folio'),
+                DTColumnBuilder.newColumn('Cylinder').withTitle('Cilindro'),
+                DTColumnBuilder.newColumn('Variety').withTitle('Variedad'),
+                DTColumnBuilder.newColumn('Small').withTitle('Chica'),
+                DTColumnBuilder.newColumn('Medium').withTitle('Mediana'),
+                DTColumnBuilder.newColumn('Total').withTitle('Total'),
+                DTColumnBuilder.newColumn('QualityPercent').withTitle('% Calidad'),
+                DTColumnBuilder.newColumn('Germinated').withTitle('Germinada'),
+            ];
+        }
 
         var GetDtOptionsWithPromise = function (promise) {
             return DTOptionsBuilder.fromFnPromise(promise)

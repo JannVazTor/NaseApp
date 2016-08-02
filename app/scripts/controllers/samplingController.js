@@ -13,7 +13,6 @@
             var Sampling = {
                 NutTypes: nutTypes,
                 TotalWeightOfEdibleNuts: sampling.TotalWeightOfEdibleNuts,
-                Performance: sampling.Performance,
                 WalnutNumber: sampling.WalnutNumber,
                 HumidityPercent: sampling.HumidityPercent,
                 SampleWeight: sampling.SampleWeight,

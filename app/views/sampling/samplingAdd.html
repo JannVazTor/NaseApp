@@ -11,7 +11,7 @@
                         <div class="fg-line">
                             <input type="text" required disabled class="form-control input-sm" id="samplingDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
                             <div class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#"><i class="large md md-event"></i></a>
+                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown"><i class="large md md-event"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <datetimepicker data-ng-model="data.dateDropDownLink" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
                                 </ul>
@@ -27,6 +27,25 @@
                                 data-ng-model="sampling.SampleWeight">
                             <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.Performance.$error.number">Tiene que ser un valor númerico.</small>
                             <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.SampleWeight.$error.required">El peso es requerido.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="TotalWeightOfEdibleNuts" class="col-sm-2 control-label">Peso total de nueces Comestibles</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="number" min="0" required step="any" class="form-control input-sm" id="TotalWeightOfEdibleNuts" name="TotalWeightOfEdibleNuts"
+                                placeholder="Peso total de nueces Comestibles" data-ng-model="sampling.TotalWeightOfEdibleNuts">
+                            <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.TotalWeightOfEdibleNuts.$error.number">Tiene que ser un valor númerico.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.TotalWeightOfEdibleNuts.$error.number">Tiene que ser un valor númerico.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Performance" class="col-sm-2 control-label">Rendimiento</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line disabled">
+                            <p>{{(sampling.TotalWeightOfEdibleNuts / sampling.SampleWeight * 100)}} % </p>
                         </div>
                     </div>
                 </div>
@@ -49,28 +68,6 @@
                                 data-ng-model="sampling.WalnutNumber">
                             <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.WalnutNumber.$error.number">Tiene que ser un valor númerico.</small>
                             <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.WalnutNumber.$error.required">Número de nueces son requerido.</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="Performance" class="col-sm-2 control-label">Rendimiento</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input required type="number" min="0" step="any" ng-class="{error: !samplingForm.$pristine && samplingForm.Performance.$error.required}"
-                                class="form-control input-sm" name="Performance" id="Performance" placeholder="Rendimiento" data-ng-model="sampling.Performance">
-                            <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.Performance.$error.number">Tiene que ser un valor númerico.</small>
-                            <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.Performance.$error.required">Rendimiento es requerido.</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="TotalWeightOfEdibleNuts" class="col-sm-2 control-label">Peso total de nueces Comestibles</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="number" min="0" required step="any" class="form-control input-sm" id="TotalWeightOfEdibleNuts" name="TotalWeightOfEdibleNuts"
-                                placeholder="Peso total de nueces Comestibles" data-ng-model="sampling.TotalWeightOfEdibleNuts">
-                            <small class="help-block has-error" style="color:#FFBF00" ng-show="!samplingForm.$pristine && samplingForm.TotalWeightOfEdibleNuts.$error.number">Tiene que ser un valor númerico.</small>
-                            <small class="help-block has-error" style="color:red" ng-show="!samplingForm.$pristine && samplingForm.TotalWeightOfEdibleNuts.$error.number">Tiene que ser un valor númerico.</small>
                         </div>
                     </div>
                 </div>

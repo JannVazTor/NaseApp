@@ -14,11 +14,16 @@
             return $http.get(apiPath + 'api/report/processInventory');
         }
 
+        var _getDailyProcessReport = function(date){
+            return $http.post(apiPath + 'api/report/dailyProcess', date);
+        }
+
         return {
             getProducerReport: _getProducerReport,
             getReportingProcess: _getReportingProcess,
             getCurrentInventoryReport: _getCurrentInventoryReport,
-            getProcessInventory: _getProcessInventory
+            getProcessInventory: _getProcessInventory,
+            getDailyProcess: _getDailyProcessReport
         };
     });
 })();
