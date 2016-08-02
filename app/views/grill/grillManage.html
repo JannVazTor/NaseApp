@@ -32,7 +32,7 @@
                         <th>No.Nueces</th>
                         <th>Rendimiento</th>
                         <th>Total</th>
-                        <th>Status</th>
+                        <th ng-if="!IsGrillToReception">Status</th>
                         <th>Operaciones</th>
                     </tr>
                 </thead>
@@ -53,13 +53,13 @@
                         <td>{{grill.WalnutNumber}}</td>
                         <td>{{grill.Performance}}</td>
                         <td>{{grill.TotalWeightOfEdibleNuts}}</td>
-                        <td>
+                        <td ng-if="!IsGrillToReception">
                             <div class="toggle-switch">
                                 <input id="{{grill.Id + g}}" type="checkbox" hidden="hidden" ng-model="grill.Status" ng-change="changeStatus(grill.Status, grill.Id)">
                                 <label for="{{grill.Id + g}}" class="ts-helper"></label>
                             </div>
                         </td>
-                        <td ng-hide="IsGrillToReception">
+                        <td ng-if="!IsGrillToReception">
                             <button class="btn btn-icon command-edit" ng-click="redirectUpdate(grill.Id, grill)" data-toggle="tooltip" data-placement="bottom"
                                 title="Modificar">
                                 <span class="md md-edit"></span>
@@ -77,7 +77,7 @@
                             <span class="md md-description"></span>
                         </button>
                         </td>
-                        <td ng-show="IsGrillToReception">
+                        <td ng-if="IsGrillToReception">
                             <div class="toggle-switch">
                                 <input id="{{grill.Id}}" type="checkbox" hidden="hidden" ng-model="grill.IsAlreadyAssigned" ng-change="addGrillToReception(grill.Id, grill.IsAlreadyAssigned)">
                                 <label for="{{grill.Id}}" class="ts-helper"></label>

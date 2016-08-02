@@ -1,13 +1,12 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillController', function (msgS, $filter, $scope, $state, producerService, varietyService, grillService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('grillController', function (msgS, $filter, $scope, $state, fieldService, producerService, varietyService, grillService, receptionAndGrillService, clearService) {
         $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.ReceptionId = receptionAndGrillService.receptionId;
         $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
-        $scope.producers = [];
 
         $scope.sizes = [
             { Name: "Grande", Type: 1 },
@@ -39,10 +38,10 @@
         $scope.UpdateGrill = function () {
             $scope.grillU.DateCapture = $('#grillDate').val();
             grillService.update(grillService.id, $scope.grillU).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[1],2);
+                msgS.toastMessage(msgS.successMessages[1], 2);
                 $state.go('grillManage');
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3],3);
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         }
 
@@ -50,7 +49,7 @@
             var Grill = {
                 DateCapture: $('#grillDate').val(),
                 Size: grill.Size.Type,
-                FieldName: grill.FieldName,
+                FieldId: grill.Field.Id,
                 Kilos: grill.Kilos,
                 Sacks: grill.Sacks,
                 Quality: grill.Quality.Type,
@@ -59,9 +58,9 @@
             };
             grillService.save(Grill).then(function (response) {
                 $scope.savedSuccessfully = true;
-                msgS.toastMessage(msgS.successMessages[3],2);
+                msgS.toastMessage(msgS.successMessages[3], 2);
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3],3);
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         };
 
@@ -74,7 +73,7 @@
         $scope.changeStatus = function (status, grillId) {
             if (status) {
                 grillService.changeStatus(grillId, 1).then(function (response) {
-                    msgS.toastMessage(msgS.successMessages[4],2);
+                    msgS.toastMessage(msgS.successMessages[4], 2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -82,11 +81,11 @@
                             return false;
                         }
                     });
-                    msgS.toastMessage(msgS.errorMessages[17],3);
+                    msgS.toastMessage(msgS.errorMessages[17], 3);
                 });
             } else {
                 grillService.changeStatus(grillId, 0).then(function (response) {
-                    msgS.toastMessage(msgS.successMessages[4],2);
+                    msgS.toastMessage(msgS.successMessages[4], 2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -94,7 +93,7 @@
                             return false;
                         }
                     });
-                    msgS.toastMessage(msgS.errorMessages[17],3);
+                    msgS.toastMessage(msgS.errorMessages[17], 3);
                 });
             }
         };
@@ -102,7 +101,7 @@
         $scope.addGrillToReception = function (grillId, checked) {
             if (checked) {
                 receptionAndGrillService.addGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
-                    msgS.toastMessage(msgS.successMessages[3],2);
+                    msgS.toastMessage(msgS.successMessages[3], 2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -110,11 +109,11 @@
                             return false;
                         }
                     });
-                    msgS.toastMessage(msgS.errorMessages[18],3);
+                    msgS.toastMessage(msgS.errorMessages[18], 3);
                 });
             } else {
                 receptionAndGrillService.removeGrillToReception(grillId, $scope.ReceptionId).then(function (response) {
-                    msgS.toastMessage(msgS.successMessages[2],2);
+                    msgS.toastMessage(msgS.successMessages[2], 2);
                 }, function (response) {
                     $.each($scope.grills, function (i) {
                         if ($scope.grills[i].Id === grillId) {
@@ -122,7 +121,7 @@
                             return false;
                         }
                     });
-                    msgS.toastMessage(msgS.errorMessages[4],3);
+                    msgS.toastMessage(msgS.errorMessages[4], 3);
                 });
             }
         };
@@ -137,7 +136,7 @@
                     }
                 });
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4],3);
+                msgS.toastMessage(msgS.errorMessages[4], 3);
             });
         };
         $scope.confirmationDelete = function (grillId) {
@@ -166,39 +165,64 @@
                     }
                 });
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4],3);
+                msgS.toastMessage(msgS.errorMessages[4], 3);
             });
         };
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[5],1);
+                    msgS.toastMessage(msgS.infoMessages[5], 1);
                 } else {
                     $scope.producers = response.data;
                     $scope.grill.Producer = $scope.producers[0];
                 };
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[8],3);
+                msgS.toastMessage(msgS.errorMessages[8], 3);
             });
         };
 
         var GetAllVarieties = function () {
             varietyService.getAll().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[7],1);
+                    msgS.toastMessage(msgS.infoMessages[7], 1);
                 } else {
                     $scope.varieties = response.data;
                     $scope.grill.Variety = $scope.varieties[0];
                 };
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[5],3);
+                msgS.toastMessage(msgS.errorMessages[5], 3);
+            });
+        };
+
+        var GetAllFields = function () {
+            fieldService.getAll().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 4);
+                } else {
+                    $scope.fields = response.data;
+                    $scope.grill.Field = $scope.fields[0];
+                };
+            }, function (response) {
+                msgS.msg('err', 13);
+            });
+        };
+
+        var GetAllGrillsCurrentInv = function () {
+            grillService.getAllCurrentInv().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 7);
+                } else {
+                    $scope.grills = response.data;
+                }
+            }, function (response) {
+                msgS.msg('err', 19);
             });
         };
 
         var GetAllGrills = function () {
             grillService.getAll().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[12],1);
+                    msgS.toastMessage(msgS.infoMessages[12], 1);
                 } else {
                     $scope.grills = response.data;
                     response.data.forEach(function (element) {
@@ -207,7 +231,7 @@
                     }, this);
                 };
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[15],3);
+                msgS.toastMessage(msgS.errorMessages[15], 3);
             });
         };
 
@@ -216,9 +240,13 @@
                 case 'grillAdd':
                     GetAllProducers();
                     GetAllVarieties();
+                    GetAllFields();
                     break;
                 case 'grillManage':
                     GetAllGrills();
+                    break;
+                case 'grillCurrentInv':
+                    GetAllGrillsCurrentInv();
                     break;
                 default:
                     break;

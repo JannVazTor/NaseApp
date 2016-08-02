@@ -7,7 +7,7 @@
             Truck: "",
             Driver: "",
             Box: "",
-            GrillIds: []
+            GrillsIds: []
         };
 
         $scope.grills = [];
@@ -17,22 +17,26 @@
             $scope.grillIssue.DateCapture = $('#grillIssueDate').val();
             $scope.grills.forEach(function (element) {
                 if (element.Added) {
-                    $scope.grillIssue.GrillIds.push(element.Id);
+                    $scope.grillIssue.GrillsIds.push(element.Id);
                 }
             }, this);
-            grillService.saveIssue($scope.grillIssue).then(function (response) {
-                cleanObj();
-                $.each($scope.grills, function (i) {
-                    if ($scope.grills[i].Added) {
-                        $scope.grills.splice(i, 1);
-                        return false;
-                    }
-                });
-                msgS.toastMessage(msgS.successMessages[3],2);
-            }, function (response) {
-                cleanObj();
-                msgS.toastMessage(msgS.errorMessage[3],3);
-            });
+            if ($scope.grillIssue.GrillsIds.length === 0) {
+                msgS.msg('err', 16);
+            } else {
+                grillService.saveIssue($scope.grillIssue).then(function (response) {
+                    cleanObj();
+                    $.each($scope.grills, function (i) {
+                        if ($scope.grills[i].Added) {
+                            $scope.grills.splice(i, 1);
+                            return false;
+                        }
+                    });
+                    msgS.msg('succ', 3);
+                }, function (response) {
+                    cleanObj();
+                    msgS.msg('err', 17);
+                })
+            };
         };
 
         var GetAllGrills = function () {
@@ -43,10 +47,10 @@
                         element.Added = false;
                     }, this);
                 } else {
-                    msgS.toastMessage(msgS.infoMessages[12],1);
+                    msgS.toastMessage(msgS.infoMessages[12], 1);
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessage[15],3);
+                msgS.toastMessage(msgS.errorMessage[15], 3);
             });
         };
 
@@ -54,10 +58,10 @@
             grillService.getAllIssues().then(function (response) {
                 $scope.issues = response.data;
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[13],1);
+                    msgS.toastMessage(msgS.infoMessages[13], 1);
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessage[16],3);
+                msgS.toastMessage(msgS.errorMessage[16], 3);
             });
         };
 

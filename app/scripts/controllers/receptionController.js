@@ -1,11 +1,12 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('receptionController', function (toastr, msgS, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
+    angular.module('naseNutAppApp').controller('receptionController', function (fieldService, toastr, msgS, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService) {
         //When the load page
         $scope.selectedRole = {};
         $scope.receptions = [];
         $scope.producers = [];
         $scope.varieties = [];
+        $scope.fields = [];
         $scope.Grills = [];
         //Data shared
         $scope.savedSuccesfully = false;
@@ -13,6 +14,8 @@
         $scope.GrillId = receptionAndGrillService.grillId;
         $scope.receptionEntry = [];
         //Init dropdown ReceptionAdd
+        $scope.reception = [];
+        $scope.reception.Field = "";
         $scope.receptionEntry.Cylinder = "";
         $scope.receptionEntry.Variety = "";
         $scope.receptionEntry.Producer = "";
@@ -46,7 +49,8 @@
                 $scope.receptions.push({
                     Folio: reception.Folio,
                     EntryDate: $('#EntryDate').val(),
-                    FieldName: reception.FieldName,
+                    FieldId: reception.Field.Id,
+                    FieldName: reception.Field.FieldName,
                     CarRegistration: reception.CarRegistration,
                     ReceivedFromField: reception.ReceivedFromField,
                     HumidityPercent: reception.HumidityPercent,
@@ -241,6 +245,19 @@
             });
         };
 
+        var GetAllFields = function () {
+            fieldService.getAll().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 4);
+                } else {
+                    $scope.fields = response.data;
+                    $scope.reception.Field = $scope.fields[0];
+                };
+            }, function (response) {
+                msgS.msg('err', 13);
+            });
+        };
+
         function defaultReception() {
             $scope.reception.ID = "";
             $scope.reception.Variety = "";
@@ -264,6 +281,7 @@
                     GetAllProducers();
                     GetAllCylinders();
                     GetAllVarieties();
+                    GetAllFields();
                     break;
                 default:
                     break;

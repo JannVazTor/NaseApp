@@ -52,6 +52,15 @@
         .state('home', {
           url: '/home',
           templateUrl: 'views/home.html',
+          controller: 'homeController',
+          data: {
+            roles: [USER_ROLES.admin, USER_ROLES.remRecepUser, USER_ROLES.humidityUser, USER_ROLES.grillUser, USER_ROLES.qualityUser]
+          }
+        })
+        .state('userProfile', {
+          url: '/usuarioPerfil',
+          templateUrl: 'views/userProfile.html',
+          controller: 'userController',
           data: {
             roles: [USER_ROLES.admin, USER_ROLES.remRecepUser, USER_ROLES.humidityUser, USER_ROLES.grillUser, USER_ROLES.qualityUser]
           }
@@ -142,7 +151,7 @@
         .state('grillCurrentInv', {
           url: '/parrillasInventarioActual',
           templateUrl: 'views/grill/grillCurrentInv.html',
-          controller: 'grillCurrentInvController',
+          controller: 'grillController',
           data: {
             roles: [USER_ROLES.grillUser, USER_ROLES.admin]
           }
@@ -175,6 +184,14 @@
         .state('humidityAddToReception', {
           url: '/agregarHumedad',
           templateUrl: 'views/humidity/humidityAddToCylinder.html',
+          controller: 'humidityController',
+          data: {
+            roles: [USER_ROLES.humidityUser, USER_ROLES.admin]
+          }
+        }).
+        state('humidityLastSamplings', {
+          ulr: '/ultimasHumedades',
+          templateUrl: 'views/humidity/humidityLastSamplings.html',
           controller: 'humidityController',
           data: {
             roles: [USER_ROLES.humidityUser, USER_ROLES.admin]
@@ -248,15 +265,15 @@
         })
         .state('processInventory', {
           url: '/Inventario de Proceso',
-          templateUrl: 'views/report/grill/genericReport.html',
+          templateUrl: 'views/report/genericReport.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
           }
         })
-        .state('outputs', {
-          url: '/Salidas',
-          templateUrl: 'views/report/outputs.html',
+        .state('grillIssues', {
+          url: '/parrillasSalidas',
+          templateUrl: 'views/report/grill/grillIssues.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
@@ -264,7 +281,7 @@
         })
         .state('currentInventory', {
           url: '/InvenarioActualParrillas',
-          templateUrl: 'views/report/grill/genericReport.html',
+          templateUrl: 'views/report/genericReport.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
@@ -279,7 +296,7 @@
           }
         })
         .state('reportOrigin', {
-          url: '/ReporteOrigen',
+          url: '/reporteOrigen',
           templateUrl: 'views/report/reportOrigin.html',
           controller: 'reportController',
           data: {
@@ -293,8 +310,16 @@
           data: {
             roles: [USER_ROLES.admin]
           }
+        })
+        .state('field', {
+          url: '/campos',
+          templateUrl: 'views/field.html',
+          controller: 'fieldController',
+          data: {
+            roles: [USER_ROLES.admin]
+          }
         });
-      $urlRouterProvider.otherwise('/home');
+      $urlRouterProvider.otherwise('/');
     })
     .config(function ($httpProvider) {
       $httpProvider.defaults.useXDomain = true;
