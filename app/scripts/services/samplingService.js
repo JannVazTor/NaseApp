@@ -7,7 +7,6 @@
             SampleWeight: "",
             HumidityPercent: "",
             WalnutNumber: "",
-            Performance: "",
             TotalWeightOfEdibleNuts: ""
         };
         var _getAllGrills = function () {

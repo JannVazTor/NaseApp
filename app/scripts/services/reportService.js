@@ -13,6 +13,11 @@
         var _getProcessInventory = function(){
             return $http.get(apiPath + 'api/report/processInventory');
         }
+
+        var _getDailyProcessReport = function(date){
+            return $http.post(apiPath + 'api/report/dailyProcess', date);
+        }
+
         var _getGrillIssuesReport = function(){
             return $http.get(apiPath + 'api/report/grillIssues');
         }
@@ -24,7 +29,8 @@
             getReportingProcess: _getReportingProcess,
             getCurrentInventoryReport: _getCurrentInventoryReport,
             getProcessInventory: _getProcessInventory,
-            getGrillIssuesReport:_getGrillIssuesReport,
+            getDailyProcess: _getDailyProcessReport,
+            getGrillIssuesReport: _getGrillIssuesReport,
             getReportOrigin: _getReportOrigin
         };
     });
