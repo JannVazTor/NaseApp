@@ -187,7 +187,6 @@
                 function () {
                     $scope.deleteReception(receptionId);
                 });
-
         };
 
         $scope.deleteReception = function (receptionId) {
@@ -208,6 +207,10 @@
             receptionService.CylinderName = cylinderName;
             receptionService.ReceptionId = receptionId;
             $state.go('humidity');
+        };
+
+        $scope.redirectAddSelection = function () {
+            $state.go('selection');
         };
 
         var GetAllProducers = function () {
