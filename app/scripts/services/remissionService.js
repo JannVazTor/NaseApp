@@ -1,16 +1,13 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').factory('remissionService', function ($http, apiPath, receptionService) {
-    var _remission = {
+        var _remission = {
             Id: "",
-            Cultivation: "",
-            Batch: "",
             Quantity: "",
             Butler: "",
             TransportNumber: "",
             Driver: "",
-            Elaborate: "",
-            ReceptionId: receptionService.ProducerId
+            Elaborate: ""
         };
 
         var _getAll = function () {

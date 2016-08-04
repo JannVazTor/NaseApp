@@ -150,7 +150,7 @@
                         <div class="panel panel-collapse" ng-repeat="issue in issues | filter:searchGrillIssues">
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#{{issue.Id}}" aria-expanded="true" aria-controls="{{issue.Id}}">
+                                    <a data-toggle="collapse" data-parent="#accordion" target="_self" href="#{{issue.Id}}" aria-expanded="true" aria-controls="{{issue.Id}}">
                                         Remision:&nbsp;<small>{{issue.Remission}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha:&nbsp;<small>{{issue.DateCapture}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Camion:&nbsp;<small>{{issue.Truck}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conductor: <small>{{issue.Driver}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Caja:&nbsp;<small>{{issue.Box}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No. Parrillas:&nbsp;<small>{{issue.Grills.length}}</small></a>
                                 </h4>
                             </div>

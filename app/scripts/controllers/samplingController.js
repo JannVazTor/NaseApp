@@ -5,6 +5,12 @@
         $scope.samplings = [];
         $scope.receptionEntries = [];
         $scope.sampling = samplingService.sampling;
+        
+        $scope.CalculatePerformance = function () {
+            if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
+                $scope.sampling.Performance = ($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100;
+            }
+        };
 
         $scope.saveSampling = function (sampling) {
             var nutTypes = [{ NutType: 1, Kilos: sampling.kilosFirst, Sacks: sampling.sacksFirst },
@@ -16,6 +22,7 @@
                 WalnutNumber: sampling.WalnutNumber,
                 HumidityPercent: sampling.HumidityPercent,
                 SampleWeight: sampling.SampleWeight,
+                Performance: sampling.Performance,
                 DateCapture: $('#samplingDate').val(),
                 ReceptionEntryId: receptionService.receptionEntryId
             };
@@ -25,10 +32,10 @@
                         clearService.clearReceptionService();
                         $state.go('samplingReceptionAdd');
                     }, function (response) {
-                        msgS.toastMessage(msgS.errorMessages[3],3);;
+                        msgS.toastMessage(msgS.errorMessages[3], 3);;
                     });
                 } else {
-                    msgS.toastMessage(msgS.errorMessages[14],3);;
+                    msgS.toastMessage(msgS.errorMessages[14], 3);;
                 };
             } else {
                 delete Sampling['NutTypes'];
@@ -37,7 +44,7 @@
                 samplingService.saveToGrill(Sampling).then(function (response) {
                     $state.go('samplingGrillManage');
                 }, function (response) {
-                    msgS.toastMessage(msgS.errorMessages[3],3);
+                    msgS.toastMessage(msgS.errorMessages[3], 3);
                 });
             }
         };
@@ -84,7 +91,7 @@
                     }
                 });
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4],3);
+                msgS.toastMessage(msgS.errorMessages[4], 3);
             });
         };
 
@@ -96,47 +103,47 @@
         $scope.UpdateSampling = function () {
             $scope.sampling.DateCapture = $('#samplingDate').val();
             samplingService.update($scope.sampling).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[1],2);;
+                msgS.toastMessage(msgS.successMessages[1], 2);;
                 $state.go($rootScope.prevState);
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[9],3);
+                msgS.toastMessage(msgS.errorMessages[9], 3);
             });
         }
 
         var GetAllGrillSamplings = function () {
             samplingService.getAllGrills().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[11],1);
+                    msgS.toastMessage(msgS.infoMessages[11], 1);
                 } else {
                     if ($scope.samplings.length !== 0) $scope.samplings = [];
                     $scope.samplings = response.data;
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[13],3);
+                msgS.toastMessage(msgS.errorMessages[13], 3);
             });
         };
 
         var GetAllReceptionSamplings = function () {
             samplingService.getAllReceptions().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[11],1);
+                    msgS.toastMessage(msgS.infoMessages[11], 1);
                 } else {
                     if ($scope.samplings.length !== 0) $scope.samplings = [];
                     $scope.samplings = response.data;
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[13],3);
+                msgS.toastMessage(msgS.errorMessages[13], 3);
             });
         };
         var GetAllReceptionEntries = function () {
             receptionService.getAllEntries().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[6],1);
+                    msgS.toastMessage(msgS.infoMessages[6], 1);
                 } else {
                     $scope.receptionEntries = response.data;
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[7],3);
+                msgS.toastMessage(msgS.errorMessages[7], 3);
             });
         };
 
