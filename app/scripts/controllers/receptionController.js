@@ -320,7 +320,7 @@
                     GetAllReceptions();
                     break;
                 case 'receptionAdd':
-                    $scope.date = $filter("date")(Date.now(), 'yyyy/MM/dd HH:mm');
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllCylinders();
                     GetAllVarieties();
