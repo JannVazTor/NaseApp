@@ -5,7 +5,9 @@
         $scope.saveField = function (field) {
             var Field = {
                 FieldName: field.FieldName,
-                Hectares: field.Hectares
+                Hectares: field.Hectares,
+                Batch: field.Batch,
+                Box: field.Box
             };
             fieldService.save(Field).then(function (response) {
                 msgS.msg('succ',2);

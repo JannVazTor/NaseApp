@@ -104,7 +104,6 @@
         };
         (function () {
             GetProductionVariety(function(response){
-                alert(JSON.stringify(response));
                 ProduccionVarietyChart(JSON.stringify(response));
             });
             AcumulatedByProducer();

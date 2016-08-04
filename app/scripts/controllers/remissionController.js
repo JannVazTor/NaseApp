@@ -8,8 +8,6 @@
 
         $scope.saveRemission = function (remission) {
             var Remission = {
-                Cultivation: remission.Cultivation,
-                Batch: remission.Batch,
                 Quantity: remission.Quantity,
                 Butler: remission.Butler,
                 TransportNumber: remission.TransportNumber,
@@ -32,19 +30,34 @@
         };
 
         var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
-            if ($state.current.name === 'remissionUpdate') {
+            if ($state.current.name !== 'remissionUpdate') {
                 clearService.clearRemissionService();
                 onStateChange();
             }
         });
 
-        $scope.redirectUpdate = function (remission) {
-            remissionService.remission = remission;
+        $scope.redirectUpdate = function (remission, receptionId) {
+            receptionService.ReceptionId = receptionId;
+            remissionService.remission = {
+                Id: remission.Id,
+                Quantity: remission.Quantity,
+                Butler: remission.Butler,
+                TransportNumber: remission.TransportNumber,
+                Driver: remission.Driver,
+                Elaborate: remission.Elaborate
+            };
             $state.go('remissionUpdate');
         };
 
-        $scope.updateRemission = function () {
-            remissionService.update($scope.remission.Id, $scope.remission).then(function (response) {
+        $scope.updateRemission = function (remission) {
+            var Remission = {
+                Quantity: remission.Quantity,
+                Butler: remission.Butler,
+                TransportNumber: remission.TransportNumber,
+                Driver: remission.Driver,
+                Elaborate: remission.Elaborate
+            };
+            remissionService.update(remissionService.remission.Id, Remission).then(function (response) {
                 msgS.toastMessage(msgS.successMessages[1], 2);
                 $state.go('remissionManage');
             }, function (response) {
@@ -96,11 +109,23 @@
                 $state.go('home');
             }
         };
-        
+
+        function FillUpdateRemissionObject(remissionUpdateModel) {
+            $scope.remission.Id = remissionUpdateModel.Id
+            $scope.remission.Quantity = remissionUpdateModel.Quantity,
+                $scope.remission.Butler = remissionUpdateModel.Butler,
+                $scope.remission.TransportNumber = remissionUpdateModel.TransportNumber,
+                $scope.remission.Driver = remissionUpdateModel.Driver,
+                $scope.remission.Elaborate = remissionUpdateModel.Elaborate
+        };
+
         (function () {
             switch ($state.current.name) {
                 case 'remissionManage':
                     GetAllRemissions();
+                    break;
+                case 'remissionUpdate':
+                    FillUpdateRemissionObject(remissionService.remission);
                     break;
                 default:
                     break;
