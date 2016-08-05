@@ -47,14 +47,11 @@
         var _clearRemissionService = function () {
             remissionService.remission = {
                 Id: "",
-                Cultivation: "",
-                Batch: "",
                 Quantity: "",
                 Butler: "",
                 TransportNumber: "",
                 Driver: "",
-                Elaborate: "",
-                ReceptionId: receptionService.ProducerId
+                Elaborate: ""
             };
         }
 

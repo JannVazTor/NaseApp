@@ -80,10 +80,10 @@
                             ReceptionEntry.VarietyId = receptionEntry.Variety.Id;
                             ReceptionEntry.ProducerId = receptionEntry.Producer.Id;
                             receptionService.saveEntry(ReceptionEntry).then(function (response) {
-                                msgS.toastMessage(msgS.successMessages[0], 1);
+                                msgS.msg('succ', 7);
                                 $scope.receptions = [];
                             }, function (response) {
-                                msgS.toastMessage(msgS.errorMessages[0], 1);
+                                msgS.msg('err', 23);
                             });
                         }
                     }
@@ -242,7 +242,7 @@
         };
 
         var GetAllCylinders = function () {
-            cylinderService.getAll().then(function (response) {
+            cylinderService.getAllActive().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 1);
                 } else {
@@ -280,6 +280,7 @@
                         $scope.receptionUpdateModel.Field = SearchItemObj($scope.fields, 'FieldName', receptionService.reception.FieldId);
                     } else {
                         $scope.receptionUpdateModel.Field = $scope.fields[0];
+                        $scope.reception.Field = $scope.fields[0];
                     }
                 };
             }, function (response) {
@@ -319,6 +320,7 @@
                     GetAllReceptions();
                     break;
                 case 'receptionAdd':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllCylinders();
                     GetAllVarieties();

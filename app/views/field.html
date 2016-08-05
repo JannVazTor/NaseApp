@@ -1,17 +1,40 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form name="fieldForm" class="form-horizontal" role="form">
+        <form name="fieldForm" class="form-horizontal" role="form" novalidate>
             <div class="card-header">
                 <h2>Alta de Campos</h2>
             </div>
             <div class="card-body card-padding">
                 <div class="form-group">
-                    <label for="iusername" class="col-sm-2 control-label">Nombre *</label>
+                    <label for="field" class="col-sm-2 control-label">Campo *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="text" name="fieldName" class="form-control input-sm" id="iusername" ng-maxlength="100" ng-minlength="3" placeholder="nombre del campo" data-ng-model="field.FieldName">
+                            <input required type="text" name="fieldName" class="form-control input-sm" id="field" ng-maxlength="100" ng-minlength="3"
+                                placeholder="nombre del campo" data-ng-model="field.FieldName">
                             <small class="help-block has-error" style="color:red" ng-show="fieldForm.fieldName.$error.minlength">El nombre del campo debe contener al menos 3 caracteres.</small>
                             <small class="help-block has-error" style="color:red" ng-show="fieldForm.fieldName.$error.maxlength">El nombre del campo es demasiado extenso, debe contener menos de 100 caracteres.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="batch" class="col-sm-2 control-label">Huerta/Lote *</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input required type="text" name="Batch" class="form-control input-sm" id="batch" ng-maxlength="150" ng-minlength="3" placeholder="huerta / lote"
+                                data-ng-model="field.Batch">
+                            <small class="help-block has-error" style="color:red" ng-show="fieldForm.Batch.$error.minlength">El nombre del lote debe contener al menos 3 caracteres.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="fieldForm.Batch.$error.maxlength">El nombre del lote es demasiado extenso, debe contener menos de 150 caracteres.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="batch" class="col-sm-2 control-label">Cuadro *</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input required type="text" name="Box" class="form-control input-sm" id="batch" ng-maxlength="20" ng-minlength="1" placeholder="cuadro"
+                                data-ng-model="field.Box">
+                            <small class="help-block has-error" style="color:red" ng-show="fieldForm.Box.$error.minlength">El nombre del cuadro debe contener al menos 1 caracteres.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="fieldForm.Box.$error.maxlength">El nombre del cuadro es demasiado extenso, debe contener menos de 20 caracteres.</small>
                         </div>
                     </div>
                 </div>
@@ -19,7 +42,8 @@
                     <label for="iusername" class="col-sm-2 control-label">Hectareas *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required name="hectares" type="number" min="1" class="form-control input-sm" id="iusername" placeholder="hectareas" data-ng-model="field.Hectares">
+                            <input required name="hectares" type="number" min="1" class="form-control input-sm" id="iusername" placeholder="hectareas"
+                                data-ng-model="field.Hectares">
                             <small class="help-block has-error" style="color:red" ng-show="fieldForm.hectares.$error.number">Numero no valido.</small>
                         </div>
                     </div>
@@ -51,6 +75,8 @@
                 <thead>
                     <tr>
                         <th>Campo</th>
+                        <th>Huerta/Lote</th>
+                        <th>Cuadro</th>
                         <th>Hectareas</th>
                         <th>Opciones</th>
                     </tr>
@@ -58,6 +84,8 @@
                 <tbody>
                     <tr ng-repeat="field in fields | filter:searchField">
                         <td>{{field.FieldName}}</td>
+                        <td>{{field.Batch}}</td>
+                        <td>{{field.Box}}</td>
                         <td>{{field.Hectares}}</td>
                         <td>
                             <button class="btn btn-icon command-delete" ng-click="confirmFieldDel(field.Id)">

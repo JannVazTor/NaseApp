@@ -28,7 +28,8 @@
                         <th>Fecha de Captura</th>
                         <th>Horas de Secado</th>
                         <th>Parrillas</th>
-                        <th>Opciones</th>
+                        <th ng-if="!IsGrillToReception">Opciones</th>
+                        <th ng-if="IsGrillToReception">Asignar Folio</th>
                     </tr>
                 </thead>
                 <tbody>

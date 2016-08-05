@@ -92,13 +92,18 @@
             'No puede agregar usuarios si no hay roles asignados.',//18
             'Ocurrio un error al intenter cargar las parrillas.',//19
             'Ocurrio un error al intentar cargar las tomas de humedad.',//20
-            'Ocurrio un error al intentar cambiar la contraseña, verifique su contraseña anterior.'];
+            'Ocurrio un error al intentar cambiar la contraseña, verifique su contraseña anterior.',//21
+            'Ocurrio un error al intentar cambiar el estado.',//22
+            'Oucrrio un error y los registros no pudieron se guardados.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
             'El Campo fue agregado de manera exitosa.',//2
             'La Salida fue agregada de manera exitosa.',//3
-            'La Contraseña fue cambiada correctamente.'];
+            'La Contraseña fue cambiada correctamente.',//4
+            'El Productor fue agregado de manera exitosa.',//5
+            'El Estado fue cambiado correctamente.',//6
+            'Los Registros fueron agregados correctamente.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1

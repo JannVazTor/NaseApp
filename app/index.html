@@ -27,11 +27,13 @@
             bottom: 20px;
             right: 20px;
         }
+        
         #fixedbuttonLeft {
             position: fixed;
             bottom: 20px;
             left: 20px;
         }
+        
         .contentC {
             margin-top: 50px;
         }
@@ -88,18 +90,14 @@
                 </div>
                 <ul class="main-menu">
                     <li class="active"><a ui-sref="home"><i class="md md-home"></i> Home</a></li>
-                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="users"><i class="md md-people"></i> Usuarios</a></li>
-                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="producersAndVarieties"><i class="md md-people-outline"></i> Productores y Variedades</a></li>
-                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
-                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="field"><i class="md md-photo-album"></i> Campos</a></li>
-                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.admin) || (currentUser.role === userRoles.humidityUser)">
-                        <a href><i class="md md md-format-color-reset"></i>Humedad</a>
+                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)">
+                        <a href><i class="md md-assignment"></i>Recepciones</a>
                         <ul>
-                            <li><a ui-sref="humidityAdd">Alta de Humedad</a></li>
-                            <li><a ui-sref="humidityManage">Gestion de Humedad</a></li>
-                            <li><a ui-sref="humidityLastSamplings">Gestion Ultimas Muestras</a></li>
+                            <li><a ui-sref="receptionAdd">Alta de Recepciones</a></li>
+                            <li><a ui-sref="receptionManage">Gestion de Recepciones</a></li>
                         </ul>
                     </li>
+                    <li ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)"><a ui-sref="remissionManage"><i class="md md-description"></i> Remisiones</a></li>
                     <li class="sub-menu" ng-if="(currentUser.role === userRoles.grillUser) || (currentUser.role === userRoles.admin)">
                         <a href><i class="md md-view-module"></i>Parillas</a>
                         <ul>
@@ -109,22 +107,22 @@
                             <li><a ui-sref="grillIssue">Salida de Parillas</a></li>
                         </ul>
                     </li>
+                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.admin) || (currentUser.role === userRoles.humidityUser)">
+                        <a href><i class="md md md-format-color-reset"></i>Humedad</a>
+                        <ul>
+                            <li><a ui-sref="humidityAdd">Alta de Humedad</a></li>
+                            <li><a ui-sref="humidityManage">Gestion de Humedad</a></li>
+                            <li><a ui-sref="humidityLastSamplings">Gestion Ultimas Muestras</a></li>
+                        </ul>
+                    </li>
                     <li class="sub-menu" ng-if="(currentUser.role === userRoles.qualityUser) || (currentUser.role === userRoles.admin)">
                         <a href><i class="md md-description"></i>Muestreos de Calidad</a>
                         <ul>
-                            <li><a ui-sref="samplingReceptionAdd">Muestreo en Cilindros</a></li>
+                            <li><a ui-sref="samplingReceptionAdd">Resultado de Proceso</a></li>
                             <li><a ui-sref="samplingReceptionManage">Gestionar muestreos en Recepciones</a></li>
                             <li><a ui-sref="samplingGrillManage">Gestionar muestreos en Parrillas</a></li>
                         </ul>
                     </li>
-                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)">
-                        <a href><i class="md md-assignment"></i>Recepciones</a>
-                        <ul>
-                            <li><a ui-sref="receptionAdd">Alta de Recepciones</a></li>
-                            <li><a ui-sref="receptionManage">Gestion de Recepciones</a></li>
-                        </ul>
-                    </li>
-                    <li ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)"><a ui-sref="remissionManage"><i class="md md-description"></i> Remisiones</a></li>
                     <li class="sub-menu" ng-if="currentUser.role === userRoles.admin">
                         <a href><i class="md md-my-library-books"></i>Reportes</a>
                         <ul>
@@ -137,6 +135,10 @@
                             <li><a ui-sref="reportOrigin">Reporte de Origen</a></li>
                         </ul>
                     </li>
+                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="users"><i class="md md-people"></i> Usuarios</a></li>
+                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="producersAndVarieties"><i class="md md-people-outline"></i> Productores y Variedades</a></li>
+                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="cylinder"><i class="md md-view-column"></i> Cilindros</a></li>
+                    <li ng-if="currentUser.role === userRoles.admin"><a ui-sref="field"><i class="md md-photo-album"></i> Campos</a></li>
                 </ul>
             </div>
         </aside>
@@ -233,4 +235,5 @@
 
     <script src="scripts/directives/confirmPassword.js"></script>
 </body>
+
 </html>

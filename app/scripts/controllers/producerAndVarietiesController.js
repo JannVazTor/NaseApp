@@ -21,8 +21,11 @@
         };
 
         $scope.saveProducer = function (producerName) {
-            producerService.save(producerName).then(function (response) {
-                toastr.success('El productor a sigo guardado de manera exitosa.');
+            var Producer = {
+                ProducerName: producerName
+            };
+            producerService.save(Producer).then(function (response) {
+                msgS.msg('succ',5);
                 GetAllProducers();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[3],3);
