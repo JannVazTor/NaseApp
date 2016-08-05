@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('remissionController', function ($scope, msgS, toastr, $state, remissionService, clearService, receptionService, $rootScope) {
+    angular.module('naseNutAppApp').controller('remissionController', function ($filter, $scope, msgS, toastr, $state, remissionService, clearService, receptionService, $rootScope) {
         $scope.remissions = [];
         $scope.message = "";
         $scope.folio = receptionService.folio;
@@ -126,6 +126,9 @@
                     break;
                 case 'remissionUpdate':
                     FillUpdateRemissionObject(remissionService.remission);
+                    break;
+                case 'remissionAdd':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     break;
                 default:
                     break;

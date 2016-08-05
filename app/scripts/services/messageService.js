@@ -94,7 +94,11 @@
             'Ocurrio un error al intentar cargar las tomas de humedad.',//20
             'Ocurrio un error al intentar cambiar la contraseña, verifique su contraseña anterior.',//21
             'Ocurrio un error al intentar cambiar el estado.',//22
-            'Oucrrio un error y los registros no pudieron se guardados.'];
+            'Ocucrrio un error y los registros no pudieron se guardados.',//23
+            'Ocurrio un error y la Huerta/Lote no pudo ser guardada.',//24
+            'Ocurrio un error y el cuadro no pudo ser guardado.',//25
+            'Ocurrio un error al intentar cargar los cuadros.',//26
+            'Ocurrio un error al intentar cargar las huertas/lotes.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -103,7 +107,9 @@
             'La Contraseña fue cambiada correctamente.',//4
             'El Productor fue agregado de manera exitosa.',//5
             'El Estado fue cambiado correctamente.',//6
-            'Los Registros fueron agregados correctamente.'];
+            'Los Registros fueron agregados correctamente.',//7
+            'La Huerta/Lote fue agregada correctamente.',//8
+            'El Cuadro se agrego correctamente.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1
@@ -113,7 +119,9 @@
             'No se encontraron datos en la base de datos.',//5
             'No se encontraron datos para la grafica de Produccion Acumuladad por Variedades.',//6
             'No se encontraron parrillas en la base de datos.',//7
-            'No se encontraron tomas de humedad en la base de datos.'];
+            'No se encontraron tomas de humedad en la base de datos.',//8
+            'No se encontraron cuadros en la base de datos.',//9
+            'No se encontraron huertas/lotes en la base de datos.'];
 
         return {
             infoMessages: _arrayInfoMessage,
