@@ -49,11 +49,7 @@
                 $scope.receptions.push({
                     Folio: reception.Folio,
                     EntryDate: $('#EntryDate').val(),
-                    FieldId: reception.Field.Id,
-                    FieldName: reception.Field.FieldName,
                     CarRegistration: reception.CarRegistration,
-                    ReceivedFromField: reception.ReceivedFromField,
-                    HumidityPercent: reception.HumidityPercent,
                     HeatHoursDrying: reception.HeatHoursDrying,
                     Observations: reception.Observations
                 });
@@ -91,8 +87,7 @@
             }
         };
 
-        $scope.redirectAddRemission = function (id, folio) {
-            receptionService.ReceptionId = id;
+        $scope.redirectAddRemission = function (folio) {
             receptionService.folio = folio;
             $state.go('remissionAdd');
         };

@@ -17,7 +17,6 @@
             <table class="table table-striped table-vmiddle">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Folio</th>
                         <th>Productor</th>
                         <th>Campo</th>
@@ -34,7 +33,6 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="reception in receptions | filter:searchUser">
-                        <td>{{reception.Id}}</td>
                         <td>{{reception.Folio}}</td>
                         <td>{{reception.ProducerName}}</td>
                         <td>{{reception.FieldName}}</td>
@@ -58,7 +56,7 @@
                                 data-placement="bottom" title="Asignar resepcion a parrilla">
                             <span class="md md-view-module"></span>
                         </button>
-                            <button class="btn btn-icon command-edit" ng-click="redirectAddRemission(reception.Id, reception.Folio)" data-toggle="tooltip"
+                            <button class="btn btn-icon command-edit" ng-click="redirectAddRemission(reception.Folio)" data-toggle="tooltip"
                                 data-placement="bottom" title="Agregar remisiones">
                             <span class="md md-description"></span>
                         </button>

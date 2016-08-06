@@ -29,14 +29,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="fieldF" class="col-sm-2 control-label">Campo *</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line select">
-                            <select id="fieldF" class="form-control" ng-model="reception.Field" ng-options="field.FieldName for field in fields"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="carRegistration" class="col-sm-2 control-label">Camion/Placas *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
@@ -48,31 +40,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="receivedFromField" class="col-sm-2 control-label">Kilos recibidos de campo *</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input required type="number" min="1" name="ReceivedFromField" class="form-control input-sm" id="receivedFromField" placeholder="kilos recibidos"
-                                data-ng-model="reception.ReceivedFromField">
-                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.ReceivedFromField.$error.number">Numero no valido.</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="humidity" class="col-sm-2 control-label">Humedad</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="number" class="form-control input-sm" id="humidity" name="Humiditypercent" placeholder="humedad"
-                                data-ng-model="reception.HumidityPercent">
-                            <small class="help-block has-error" style="color:red" ng-show="receptionForm.Humiditypercent.$error.number">Numero no valido.</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="heatHoursDrying" class="col-sm-2 control-label">Horas de calor por secado</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="number" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado"
-                                name="Heathoursdrying" data-ng-model="reception.HeatHoursDrying">
+                            <input type="number" class="form-control input-sm" id="heatHoursDrying" placeholder="horas de calor por secado" name="Heathoursdrying"
+                                data-ng-model="reception.HeatHoursDrying">
                             <small class="help-block has-error" style="color:red" ng-show="receptionForm.Heathoursdrying.$error.number">Numero no valido.</small>
                         </div>
                     </div>
@@ -81,7 +53,8 @@
                     <label for="observations" class="col-sm-2 control-label">Observaciones *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <textarea required name="Observations" class="form-control auto-size" placeholder="observaciones..." ng-minlength="2" ng-maxlength="500" data-ng-model="reception.Observations"></textarea>
+                            <textarea required name="Observations" class="form-control auto-size" placeholder="observaciones..." ng-minlength="2" ng-maxlength="500"
+                                data-ng-model="reception.Observations"></textarea>
                             <small class="help-block has-error" style="color:red" ng-show="receptionForm.Observations.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
                             <small class="help-block has-error" style="color:red" ng-show="receptionForm.Observations.$error.maxlength">Este campo es demasiado extenso, debe contener menos de 500 caracteres.</small>
                         </div>
@@ -107,9 +80,7 @@
                         <thead>
                             <tr>
                                 <th>Folio</th>
-                                <th>Campo</th>
                                 <th>Camion/Placas</th>
-                                <th>Recibido</th>
                                 <th>Fecha de Captura</th>
                                 <th>Horas de Secado</th>
                                 <th>Remover</th>
@@ -118,9 +89,7 @@
                         <tbody>
                             <tr ng-repeat="reception in receptions track by reception.Folio">
                                 <td>{{reception.Folio}}</td>
-                                <td>{{reception.FieldName}}</td>
                                 <td>{{reception.CarRegistration}}</td>
-                                <td>{{reception.ReceivedFromField}}</td>
                                 <td>{{reception.EntryDate}}</td>
                                 <td>{{reception.HeatHoursDrying}}</td>
                                 <td>
