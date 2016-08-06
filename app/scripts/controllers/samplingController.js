@@ -5,7 +5,7 @@
         $scope.samplings = [];
         $scope.receptionEntries = [];
         $scope.sampling = samplingService.sampling;
-        
+
         $scope.CalculatePerformance = function () {
             if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
                 $scope.sampling.Performance = ($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100;
@@ -23,7 +23,7 @@
                 HumidityPercent: sampling.HumidityPercent,
                 SampleWeight: sampling.SampleWeight,
                 Performance: sampling.Performance,
-                DateCapture: $('#samplingDate').val(),
+                DateCapture: $('#EntryDate').val(),
                 ReceptionEntryId: receptionService.receptionEntryId
             };
             if ($state.current.name === 'samplingReceptionEntryAdd') {
@@ -101,7 +101,7 @@
         };
 
         $scope.UpdateSampling = function () {
-            $scope.sampling.DateCapture = $('#samplingDate').val();
+            $scope.sampling.DateCapture = $('#EntryDate').val();
             samplingService.update($scope.sampling).then(function (response) {
                 msgS.toastMessage(msgS.successMessages[1], 2);;
                 $state.go($rootScope.prevState);
@@ -173,9 +173,13 @@
                     GetAllReceptionSamplings();
                     break;
                 case 'samplingReceptionEntryAdd':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     break;
                 case 'samplingGrillManage':
                     GetAllGrillSamplings();
+                    break;
+                case 'samplingAdd':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     break;
                 default:
                     break;

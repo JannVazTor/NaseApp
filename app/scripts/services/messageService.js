@@ -98,7 +98,10 @@
             'Ocurrio un error y la Huerta/Lote no pudo ser guardada.',//24
             'Ocurrio un error y el cuadro no pudo ser guardado.',//25
             'Ocurrio un error al intentar cargar los cuadros.',//26
-            'Ocurrio un error al intentar cargar las huertas/lotes.'];
+            'Ocurrio un error al intentar cargar las huertas/lotes.',//27
+            'El Campo es requerido.',//28
+            'La Huerta/Lote es requerida.',//29
+            'El Cuadro es requerido.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1

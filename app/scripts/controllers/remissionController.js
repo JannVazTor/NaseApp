@@ -1,26 +1,45 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('remissionController', function ($filter, $scope, msgS, toastr, $state, remissionService, clearService, receptionService, $rootScope) {
+    angular.module('naseNutAppApp').controller('remissionController', function ($filter, $scope, msgS, toastr, $state, remissionService, fieldService, clearService, receptionService, $rootScope) {
         $scope.remissions = [];
         $scope.message = "";
         $scope.folio = receptionService.folio;
-        $scope.remission = {};
+        $scope.remission = {
+            Field: {},
+            Batch: {},
+            Box: {}
+        };
 
         $scope.saveRemission = function (remission) {
-            var Remission = {
-                Quantity: remission.Quantity,
-                Butler: remission.Butler,
-                TransportNumber: remission.TransportNumber,
-                Driver: remission.Driver,
-                Elaborate: remission.Elaborate,
-                ReceptionId: receptionService.ReceptionId
-            };
-            remissionService.save(Remission).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[0], 2);
-                ClearForm();
-            }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
-            });
+            if (remission.Field === null) {
+                msgS.msg('err', 28);
+            } else {
+                if (remission.Batch === null) {
+                    msgS.msg('err', 29);
+                } else {
+                    if (remission.Box === null) {
+                        msgS.msg('err', 30);
+                    } else {
+                        var Remission = {
+                            DateCapture: $('#EntryDate').val(),
+                            Quantity: remission.Quantity,
+                            Butler: remission.Butler,
+                            TransportNumber: remission.TransportNumber,
+                            Driver: remission.Driver,
+                            Elaborate: remission.Elaborate,
+                            Folio: $scope.folio,
+                            FieldId: remission.Field.Id,
+                            BatchId: remission.Batch.Id,
+                            BoxId: remission.Box.Id
+                        };
+                        remissionService.save(Remission).then(function (response) {
+                            msgS.toastMessage(msgS.successMessages[0], 2);
+                        }, function (response) {
+                            msgS.toastMessage(msgS.errorMessages[3], 3);
+                        });
+                    }
+                }
+            }
         };
 
         function ClearForm() {
@@ -102,6 +121,62 @@
             });
         };
 
+        var GetFields = function () {
+            fieldService.getFields().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 4);
+                } else {
+                    $scope.fields = response.data;
+                    $scope.remission.Field = $scope.fields[0];
+                    GetBatchesInField($scope.fields[0].Id);
+                }
+            }, function (response) {
+                msgS.msg('err', 11);
+            });
+        };
+
+        var GetBatchesInField = function (fieldId) {
+            fieldService.getBatchesInField(fieldId).then(function (response) {
+                if (response.data.length === 0) {
+                    $scope.batches = {};
+                    $scope.boxes = {};
+                    msgS.msg('info', 10);
+                } else {
+                    $scope.batches = response.data;
+                    $scope.remission.Batch = $scope.batches[0];
+                    GetBoxesInBatch($scope.batches[0].Id);
+                }
+            }, function (response) {
+                msgS.msg('err', 27);
+            });
+        };
+
+        var GetBoxesInBatch = function (batchId) {
+            fieldService.getBoxesInBatch(batchId).then(function (response) {
+                if (response.data.length === 0) {
+                    $scope.boxes = {};
+                    msgS.msg('info', 9);
+                } else {
+                    $scope.boxes = response.data;
+                    $scope.remission.Box = $scope.boxes[0];
+                }
+            }, function (response) {
+                msgS.msg('err', 26);
+            });
+        };
+
+        $scope.getBatchInCurrentField = function (field) {
+            if (field !== null) {
+                GetBatchesInField(field.Id);
+            };
+        };
+
+        $scope.getBoxesInCurrentBatch = function (batch) {
+            if (batch !== null) {
+                GetBoxesInBatch(batch.Id);
+            };
+        };
+
         $scope.return = function () {
             if ($rootScope.prevState.length !== 0) {
                 $state.go($rootScope.prevState);
@@ -129,6 +204,7 @@
                     break;
                 case 'remissionAdd':
                     $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
+                    GetFields();
                     break;
                 default:
                     break;

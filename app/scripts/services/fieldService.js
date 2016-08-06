@@ -5,16 +5,24 @@
             return $http.get(apiPath + 'api/field/getAll');
         }
 
-        var _getFields = function(){
+        var _getFields = function () {
             return $http.get(apiPath + 'api/field/fields');
         }
 
-        var _getBoxes = function(){
+        var _getBatches = function () {
+            return $http.get(apiPath + 'api/field/batches');
+        }
+
+        var _getBoxes = function () {
             return $http.get(apiPath + 'api/field/boxes');
         }
 
-        var _getBatches = function(){
-            return $http.get(apiPath + 'api/field/batches');
+        var _getBatchesInField = function (fieldId) {
+            return $http.get(apiPath + 'api/field/batchesInField/' + fieldId);
+        }
+
+        var _getBoxesInBatch = function (batchId) {
+            return $http.get(apiPath + 'api/field/boxesInBatch/' + batchId);
         }
 
         var _saveField = function (data) {
@@ -40,6 +48,8 @@
             getBoxes: _getBoxes,
             getBatches: _getBatches,
             getFields: _getFields,
+            getBatchesInField: _getBatchesInField,
+            getBoxesInBatch: _getBoxesInBatch,
             getAll: _getAll,
             delete: _delete
         };

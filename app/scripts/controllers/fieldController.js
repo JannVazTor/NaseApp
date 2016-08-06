@@ -34,7 +34,7 @@
             }, function (response) {
                 msgS.msg('err', 24);
             });
-        }
+        };
 
         $scope.saveBox = function (box) {
             var Box = {
@@ -71,18 +71,6 @@
                 }
             }, function (response) {
                 msgS.msg('err', 11);
-            });
-        };
-
-        var GetBoxes = function () {
-            fieldService.getBoxes().then(function (response) {
-                if (response.data.length === 0) {
-                    msgS.msg('info', 9);
-                } else {
-                    $scope.boxes = response.data;
-                }
-            }, function (response) {
-                msgS.msg('err', 26);
             });
         };
 
@@ -129,7 +117,6 @@
         };
         GetAll();
         GetFields();
-        GetBoxes();
         GetBatches();
     });
 })();

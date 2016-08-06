@@ -49,7 +49,7 @@
 
         $scope.UpdateGrill = function (grill) {
             var GrillUpdate = {
-                DateCapture: $('#grillDate').val(),
+                DateCapture: $('#EntryDate').val(),
                 Size: grill.Size.Type,
                 FieldId: grill.Field.Id,
                 Kilos: grill.Kilos,
@@ -68,7 +68,7 @@
 
         $scope.saveGrill = function (grill) {
             var Grill = {
-                DateCapture: $('#grillDate').val(),
+                DateCapture: $('#EntryDate').val(),
                 Size: grill.Size.Type,
                 FieldId: grill.Field.Id,
                 Kilos: grill.Kilos,
@@ -296,6 +296,7 @@
         (function () {
             switch ($state.current.name) {
                 case 'grillAdd':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllVarieties();
                     GetAllFields();
