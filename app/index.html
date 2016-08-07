@@ -115,12 +115,12 @@
                             <li><a ui-sref="humidityLastSamplings">Gestion Ultimas Muestras</a></li>
                         </ul>
                     </li>
+                    <li ng-if="(currentUser.role === userRoles.qualityUser) || (currentUser.role === userRoles.admin)"><a ui-sref="samplingGrillManage"><i class="md md-description"></i>Gestionar Muestreos de Calidad (Parrillas)</a></li>
                     <li class="sub-menu" ng-if="(currentUser.role === userRoles.qualityUser) || (currentUser.role === userRoles.admin)">
-                        <a href><i class="md md-description"></i>Muestreos de Calidad</a>
+                        <a href><i class="md md-system-update-tv"></i>Resultado de Proceso</a>
                         <ul>
-                            <li><a ui-sref="samplingReceptionAdd">Resultado de Proceso</a></li>
+                            <li><a ui-sref="samplingReceptionAdd">Agregar Resultado de Proceso</a></li>
                             <li><a ui-sref="samplingReceptionManage">Gestionar Resultado de Proceso</a></li>
-                            <li><a ui-sref="samplingGrillManage">Gestionar muestreos en Parrillas</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu" ng-if="currentUser.role === userRoles.admin">
@@ -131,7 +131,7 @@
                             <li><a ui-sref="processInventory">Inventario de Proceso</a></li>
                             <li><a ui-sref="currentInventory">Inventario Actual</a></li>
                             <li><a ui-sref="grillIssues">Salidas</a></li>
-                            <li><a ui-sref="dailyABEL">Reporte Diario ABEL</a></li>
+                            <li><a ui-sref="dailyReport">Reporte Diario</a></li>
                             <li><a ui-sref="reportOrigin">Reporte de Origen</a></li>
                         </ul>
                     </li>

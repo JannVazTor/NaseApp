@@ -42,7 +42,7 @@
         function AlreadyExists(cylinderName) {
             var exists = false;
             $.each($scope.cylinders, function (i) {
-                if ($scope.cylinders[i].CylinderName === cylinderName) {
+                if ($scope.cylinders[i].CylinderName.toLowerCase() === cylinderName.toLowerCase()) {
                     exists = true;
                     return false;
                 }

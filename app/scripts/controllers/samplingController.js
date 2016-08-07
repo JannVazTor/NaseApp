@@ -30,6 +30,7 @@
                 if (ValidateNutTypes(Sampling.NutTypes)) {
                     samplingService.saveToReceptionEntry(Sampling).then(function (response) {
                         clearService.clearReceptionService();
+                        msgS.msg('succ',11);
                         $state.go('samplingReceptionAdd');
                     }, function (response) {
                         msgS.toastMessage(msgS.errorMessages[3], 3);;

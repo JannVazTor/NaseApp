@@ -5,6 +5,7 @@
     $scope.users = [];
     $scope.registration = [];
     $scope.registration.Role = "";
+    $scope.passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
     var GetAllUsers = function () {
       userService.getAll().then(function (response) {

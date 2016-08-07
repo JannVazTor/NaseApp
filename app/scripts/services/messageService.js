@@ -123,7 +123,8 @@
             'Los Registros fueron agregados correctamente.',//7
             'La Huerta/Lote fue agregada correctamente.',//8
             'El Cuadro se agrego correctamente.',//9
-            'La Variedad se agrego correctamente.'];
+            'La Variedad se agrego correctamente.',//10
+            'El Muestreo fue agregado de manera exitosa.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1
