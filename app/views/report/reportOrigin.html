@@ -9,7 +9,7 @@
                     <tr>
                         <th>Huerta</th>
                         <th>Hectareas</th>
-                        <th ng-repeat="variety in reportOriginFirst.varieties">{{variety.Variety}}</th>
+                        <th ng-repeat="variety in reportOriginFirst.Varieties">{{variety.Variety}}</th>
                         <th>Produccion Total</th>
                         <th>Rendimiento / Ha</th>
                     </tr>
@@ -18,7 +18,7 @@
                     <tr ng-repeat="report in reportOrigin">
                         <td>{{report.Field}}</td>
                         <td>{{report.Hectares}}</td>
-                        <td ng-repeat="variety in report.varieties">{{variety.Total}}</td>
+                        <td ng-repeat="variety in report.Varieties">{{variety.Total}}</td>
                         <td>{{report.TotalProduction}}</td>
                         <td>{{report.PerformancePerHa}}</td>
                     </tr>

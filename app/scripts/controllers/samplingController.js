@@ -181,6 +181,9 @@
                 case 'samplingAdd':
                     $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     break;
+                case 'samplingUpdate':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
+                    break;
                 default:
                     break;
             }

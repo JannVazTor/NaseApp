@@ -20,6 +20,8 @@
                         <th>Id</th>
                         <th>Fecha</th>
                         <th>Campo</th>
+                        <th>Huerta/Lote</th>
+                        <th>Cuadro</th>
                         <th>Variedad</th>
                         <th>Cantidad</th>
                         <th>Mayordomo</th>
@@ -34,6 +36,8 @@
                         <td>{{remission.Id}}</td>
                         <td>{{remission.DateCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{remission.FieldName}}</td>
+                        <td>{{remission.Batch}}</td>
+                        <td>{{remission.Box}}</td>
                         <td>{{remission.Variety}}</td>
                         <td>{{remission.Quantity}}</td>
                         <td>{{remission.Butler}}</td>
@@ -41,7 +45,7 @@
                         <td>{{remission.Driver}}</td>
                         <td>{{remission.Elaborate}}</td>
                         <td>
-                            <button class="btn btn-icon command-edit" ng-click="redirectUpdate(remission)">
+                            <button class="btn btn-icon command-edit" ng-click="redirectUpdate(remission.Id)">
                         <span class="md md-edit"></span>
                     </button>
                             <button class="btn btn-icon command-delete" ng-click="confirmationDelete(remission.Id)">

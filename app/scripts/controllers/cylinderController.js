@@ -4,10 +4,6 @@
         $scope.cylinders = [];
         $scope.message = "";
 
-        $scope.cylinder = {
-            CylinderName: ""
-        };
-
         $scope.changeState = function (id, state) {
             cylinderService.changeState(id, state).then(function (response) {
                 msgS.msg('succ', 6);
@@ -30,14 +26,30 @@
             });
         };
 
-        $scope.saveCylinder = function () {
-            cylinderService.save($scope.cylinder).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[3], 2);
-                GetAllCylinders();
-            }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
-            });
+        $scope.saveCylinder = function (cylinderName) {
+            if (AlreadyExists(cylinderName)){
+                msgS.msg('err',39);
+            } else {
+                cylinderService.save($scope.cylinder).then(function (response) {
+                    msgS.toastMessage(msgS.successMessages[3], 2);
+                    GetAllCylinders();
+                }, function (response) {
+                    msgS.toastMessage(msgS.errorMessages[3], 3);
+                });
+            }
         };
+
+        function AlreadyExists(cylinderName) {
+            var exists = false;
+            $.each($scope.cylinders, function (i) {
+                if ($scope.cylinders[i].CylinderName === cylinderName) {
+                    exists = true;
+                    return false;
+                }
+            });
+            return exists;
+        };
+
         $scope.confirmationDelete = function (cylinderId) {
             swal({
                 title: "Estas seguro?",

@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('grillIssueController', function (msgS, $scope, grillService) {
+    angular.module('naseNutAppApp').controller('grillIssueController', function (msgS, $filter, $scope, grillService) {
         $scope.grillIssue = {
             Remission: "",
             DateCapture: "",
@@ -9,12 +9,13 @@
             Box: "",
             GrillsIds: []
         };
+        $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
 
         $scope.grills = [];
         $scope.issues = [];
 
         $scope.saveGrillIssue = function () {
-            $scope.grillIssue.DateCapture = $('#grillIssueDate').val();
+            $scope.grillIssue.DateCapture = $('#EntryDate').val();
             $scope.grills.forEach(function (element) {
                 if (element.Added) {
                     $scope.grillIssue.GrillsIds.push(element.Id);
@@ -31,6 +32,7 @@
                             return false;
                         }
                     });
+                    GetAllIssues();
                     msgS.msg('succ', 3);
                 }, function (response) {
                     cleanObj();

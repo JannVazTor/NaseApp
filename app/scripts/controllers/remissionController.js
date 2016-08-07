@@ -42,6 +42,27 @@
             }
         };
 
+        $scope.updateRemission = function (remission) {
+            var Remission = {
+                DateCapture: $('#EntryDate').val(),
+                Quantity: remission.Quantity,
+                Butler: remission.Butler,
+                TransportNumber: remission.TransportNumber,
+                Driver: remission.Driver,
+                Elaborate: remission.Elaborate,
+                Folio: $scope.folio,
+                FieldId: remission.Field.Id,
+                BatchId: remission.Batch.Id,
+                BoxId: remission.Box.Id
+            };
+            remissionService.update(remissionService.remission.Id, Remission).then(function (response) {
+                msgS.toastMessage(msgS.successMessages[1], 2);
+                $state.go('remissionManage');
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[9], 3);
+            });
+        };
+
         function ClearForm() {
             $scope.remission = {};
             $scope.remissionForm.$setPristine();
@@ -55,34 +76,25 @@
             }
         });
 
-        $scope.redirectUpdate = function (remission, receptionId) {
-            receptionService.ReceptionId = receptionId;
-            remissionService.remission = {
-                Id: remission.Id,
-                Quantity: remission.Quantity,
-                Butler: remission.Butler,
-                TransportNumber: remission.TransportNumber,
-                Driver: remission.Driver,
-                Elaborate: remission.Elaborate
-            };
-            $state.go('remissionUpdate');
-        };
-
-        $scope.updateRemission = function (remission) {
-            var Remission = {
-                Quantity: remission.Quantity,
-                Butler: remission.Butler,
-                TransportNumber: remission.TransportNumber,
-                Driver: remission.Driver,
-                Elaborate: remission.Elaborate
-            };
-            remissionService.update(remissionService.remission.Id, Remission).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[1], 2);
-                $state.go('remissionManage');
+        $scope.redirectUpdate = function (remissionId) {
+            remissionService.getById(remissionId).then(function (response) {
+                remissionService.remission = {
+                    Id: response.data.Id,
+                    DateCapture: response.data.DateCapture,
+                    Quantity: response.data.Quantity,
+                    Butler: response.data.Butler,
+                    TransportNumber: response.data.TransportNumber,
+                    Driver: response.data.Driver,
+                    Elaborate: response.data.Elaborate,
+                    FieldId: response.data.FieldId,
+                    BatchId: response.data.BatchId,
+                    BoxId: response.data.BoxId
+                };
+                $state.go('remissionUpdate');
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[9], 3);
+                msgS.msg('err', 40);
             });
-        }
+        };
 
         $scope.confirmationDelete = function (remissionId) {
             swal({
@@ -127,8 +139,13 @@
                     msgS.msg('info', 4);
                 } else {
                     $scope.fields = response.data;
-                    $scope.remission.Field = $scope.fields[0];
-                    GetBatchesInField($scope.fields[0].Id);
+                    if ($state.current.name === 'remissionUpdate') {
+                        $scope.remission.Field = SearchItemObj($scope.fields, 'Id', remissionService.remission.FieldId);
+                        GetBatchesInField($scope.remission.Field.Id);
+                    } else {
+                        $scope.remission.Field = $scope.fields[0];
+                        GetBatchesInField($scope.fields[0].Id);
+                    }
                 }
             }, function (response) {
                 msgS.msg('err', 11);
@@ -143,8 +160,13 @@
                     msgS.msg('info', 10);
                 } else {
                     $scope.batches = response.data;
-                    $scope.remission.Batch = $scope.batches[0];
-                    GetBoxesInBatch($scope.batches[0].Id);
+                    if ($state.current.name === 'remissionUpdate') {
+                        $scope.remission.Batch = SearchItemObj($scope.batches, 'Id', remissionService.remission.BatchId);
+                        GetBoxesInBatch($scope.remission.Batch.Id);
+                    } else {
+                        $scope.remission.Batch = $scope.batches[0];
+                        GetBoxesInBatch($scope.batches[0].Id);
+                    }
                 }
             }, function (response) {
                 msgS.msg('err', 27);
@@ -158,7 +180,11 @@
                     msgS.msg('info', 9);
                 } else {
                     $scope.boxes = response.data;
-                    $scope.remission.Box = $scope.boxes[0];
+                    if ($state.current.name === 'remissionUpdate') {
+                        $scope.remission.Box = SearchItemObj($scope.boxes, 'Id', remissionService.remission.BoxId);
+                    } else {
+                        $scope.remission.Box = $scope.boxes[0];
+                    }
                 }
             }, function (response) {
                 msgS.msg('err', 26);
@@ -194,13 +220,26 @@
                 $scope.remission.Elaborate = remissionUpdateModel.Elaborate
         };
 
+        function SearchItemObj(array, property, id) {
+            var item = {};
+            $.each(array, function (i) {
+                if (array[i][property] === id) {
+                    item = array[i];
+                    return false;
+                }
+            });
+            return item;
+        };
+
         (function () {
             switch ($state.current.name) {
                 case 'remissionManage':
                     GetAllRemissions();
                     break;
                 case 'remissionUpdate':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     FillUpdateRemissionObject(remissionService.remission);
+                    GetFields();
                     break;
                 case 'remissionAdd':
                     $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');

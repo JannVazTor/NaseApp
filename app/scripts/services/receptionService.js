@@ -8,7 +8,6 @@
         var _Folio = "";
         var _ReceptionEntryId = "";
         var _reception = {
-            ReceivedFromField: "",
             FieldId: "",
             CarRegistration: "",
             HeatHoursDrying: "",
