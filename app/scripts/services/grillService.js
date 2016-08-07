@@ -25,6 +25,14 @@
             return $http.delete(apiPath + 'api/grill/' + id);
         }
 
+        var _deleteGrillIssue = function(id){
+            return $http.delete(apiPath + 'api/grill/grillIssue/' + id);
+        }
+
+        var _removeGrillFromGrillIssue = function(id){
+            return $http.put(apiPath + 'api/grill/removeGrillFromGrillIssue/' + id);
+        }
+
         var _update = function (id, data) {
             return $http.put(apiPath + 'api/grill/' + id, data);
         }
@@ -54,7 +62,9 @@
             update: _update,
             saveIssue: _saveIssue,
             getAllIssues: _getAllIssues,
-            grillId: _grillId
+            grillId: _grillId,
+            deleteGrillIssue: _deleteGrillIssue,
+            removeGrillFromGrillIssue: _removeGrillFromGrillIssue
         };
     });
 })();

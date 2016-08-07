@@ -152,6 +152,8 @@
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" target="_self" href="#{{issue.Id}}" aria-expanded="true" aria-controls="{{issue.Id}}">
                                         Remision:&nbsp;<small>{{issue.Remission}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha:&nbsp;<small>{{issue.DateCapture}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Camion:&nbsp;<small>{{issue.Truck}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conductor: <small>{{issue.Driver}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Caja:&nbsp;<small>{{issue.Box}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No. Parrillas:&nbsp;<small>{{issue.Grills.length}}</small></a>
+                                    <u>
+                                        <a href ng-click="confirmIssueDelete(issue.Id, issue.Remission)">Eliminar</a></u>
                                 </h4>
                             </div>
                             <div id="{{issue.Id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
@@ -174,6 +176,7 @@
                                                 <th>No.Nueces</th>
                                                 <th>Rendimiento</th>
                                                 <th>Total</th>
+                                                <th>Regresar a Inv.</th>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="grilli in issue.Grills">
@@ -192,6 +195,12 @@
                                                     <td>{{grilli.WalnutNumber}}</td>
                                                     <td>{{grilli.Performance}}</td>
                                                     <td>{{grilli.TotalWeightOfEdibleNuts}}</td>
+                                                    <td>
+                                                        <button class="btn btn-icon command-edit" ng-click="returnGrillToInventory(grilli.Id, issue.Id)" data-toggle="tooltip" data-placement="bottom"
+                                                            title="Regresar parrilla a inventario">
+                                                            <span class="md md-reply"></span>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>

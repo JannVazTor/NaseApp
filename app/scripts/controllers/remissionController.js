@@ -97,29 +97,21 @@
         };
 
         $scope.confirmationDelete = function (remissionId) {
-            swal({
-                title: "Estas seguro?",
-                text: "Tú eliminaras la remisión: " + remissionId + "!!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            },
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la remision con el numero " + remissionId + "?"),
                 function () {
-                    $scope.deleteRemission(remissionId);
+                    deleteRemission(remissionId);
                 });
-
         };
-        $scope.deleteRemission = function (remissionId) {
+        
+        var deleteRemission = function (remissionId) {
             remissionService.delete(remissionId).then(function (response) {
-                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.remissions, function (i) {
                     if ($scope.remissions[i].Id === remissionId) {
                         $scope.remissions.splice(i, 1);
                         return false;
                     }
                 });
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });

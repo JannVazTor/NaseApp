@@ -111,7 +111,12 @@
             'El Rango de grandes debe contener valores distintos y el valor de inicio debe ser menor al valor de finalizacion.',//37
             'Ocurrio un error y la variedad no pudo ser guardada.',//38
             'El Nombre del cilindro ya existe.',//39
-            'Ocurrio un error y no se pudo obtener la remision.'];
+            'Ocurrio un error y no se pudo obtener la remision.',//40
+            'Ocurrio un error y la salida de parrillas no pudo ser eliminada.',//41
+            'El Productor ya existe.',//42
+            'La Variedad ya existe.',//43
+            'La tabla de rangos es requerida.',//44
+            'Ocurrio un error y la parrilla no pudo ser agregada al inventario.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -124,7 +129,9 @@
             'La Huerta/Lote fue agregada correctamente.',//8
             'El Cuadro se agrego correctamente.',//9
             'La Variedad se agrego correctamente.',//10
-            'El Muestreo fue agregado de manera exitosa.'];
+            'El Muestreo fue agregado de manera exitosa.',//11
+            'La Salida se elimino correctamente, las parrillas estan ahora en inventario.',//12
+            'La Parrilla fue agregada al inventario correctamente.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1
@@ -138,12 +145,29 @@
             'No se encontraron cuadros en la base de datos.',//9
             'No se encontraron huertas/lotes en la base de datos.'];
 
+        var _swalConfig = function (title) {
+            return {
+                title: title,
+                text: "El Registro sera eliminado de forma permanente.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                closeOnConfirm: false
+            };
+        }
+        var _swalSuccess = function () {
+            swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
+        }
+        
         return {
             infoMessages: _arrayInfoMessage,
             errorMessages: _arrayErrorMessage,
             successMessages: _arraySuccessMessage,
             toastMessage: _toastMessage,
-            msg: _msg
+            msg: _msg,
+            swalSuccess: _swalSuccess,
+            swalConfig: _swalConfig,
         };
     });
 })();

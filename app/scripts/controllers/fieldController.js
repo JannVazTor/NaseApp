@@ -87,16 +87,8 @@
             });
         };
 
-        $scope.confirmFieldDel = function (id) {
-            swal({
-                title: "¿Estas seguro que deseas eliminar este registro?",
-                text: "El Campo con el id : " + id + " sera eliminada de forma permanente",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Eliminar",
-                closeOnConfirm: false
-            },
+        $scope.confirmFieldDel = function (id, fieldName) {
+            swal(msgS.swalConfig("¿Estas seguro que deseas eliminar el campo " + fieldName + "?"),
                 function () {
                     deleteField(id);
                 });
@@ -110,7 +102,7 @@
                         return false;
                     }
                 });
-                swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.msg('err', 12);
             });

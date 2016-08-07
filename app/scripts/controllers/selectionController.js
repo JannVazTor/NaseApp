@@ -40,30 +40,20 @@
             });
         };
         $scope.confirmationDelete =  function(selectionId){
-            swal({
-            title: "Estas seguro?",
-            text: "Tú eliminaras la selección: " + selectionId +"!!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-            },
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la seleccion con el id "+selectionId+"?"),
             function(){
                 $scope.deleteSelection(selectionId);
             });
-            
         };
         $scope.deleteSelection = function (selectionId) {
             selectionService.delete(selectionId).then(function (response) {
-                $scope.message = "El registro se elimino de manera exitosa.";
-                swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
                 $.each($scope.selections, function (i) {
                     if ($scope.selections[i].Id === selectionId) {
                         $scope.selections.splice(i, 1);
                         return false;
                     }
                 });
+                msgS.swalSuccess;
             }, function (response) {
                 $scope.message = "Ocurrio un error y el registro no pudo ser eliminado.";
             });

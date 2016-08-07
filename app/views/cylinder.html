@@ -50,7 +50,7 @@
                     <tr ng-repeat="cylinder in cylinders | filter:searchCylinder">
                         <td>{{cylinder.CylinderName}}</td>
                         <td>
-                            <button class="btn btn-icon command-delete" ng-click="confirmationDelete(cylinder.Id)">
+                            <button class="btn btn-icon command-delete" ng-click="confirmationDelete(cylinder.Id, cylinder.CylinderName)">
                                 <span class="md md-delete"></span>
                             </button>
                         </td>
