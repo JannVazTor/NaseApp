@@ -21,47 +21,59 @@
         };
 
         $scope.saveProducer = function (producerName) {
-            var Producer = {
-                ProducerName: producerName
-            };
-            producerService.save(Producer).then(function (response) {
-                msgS.msg('succ', 5);
-                $scope.producerName = '';
-                ClearForm('', 'producerForm');
-                GetAllProducers();
-            }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
-            });
+            if (AlreadyExists(producerName, $scope.producers, 'ProducerName')) {
+                msgS.msg('err', 42);
+            } else {
+                var Producer = {
+                    ProducerName: producerName
+                };
+                producerService.save(Producer).then(function (response) {
+                    msgS.msg('succ', 5);
+                    $scope.producerName = '';
+                    ClearForm('', 'producerForm');
+                    GetAllProducers();
+                }, function (response) {
+                    msgS.toastMessage(msgS.errorMessages[3], 3);
+                });
+            }
         };
 
         $scope.saveVariety = function (variety) {
-            if (variety.MediumStart >= variety.Small || variety.MediumEnd >= variety.Small) {
-                msgS.msg('err', 34);
+            if (AlreadyExists(variety.varietyName, $scope.varieties,'VarietyName')) {
+                msgS.msg('err', 43);
             } else {
-                if ((variety.LargeStart >= variety.MediumStart || variety.LargeStart >= variety.MediumEnd) && (variety.LargeEnd >= variety.MediumStart || variety.LargeEnd >= variety.MediumEnd)) {
-                    msgS.msg('err', 35);
+                if (!variety.MediumStart || !variety.MediumEnd || !variety.Small || !variety.LargeStart || !variety.LargeEnd) {
+                    msgS.msg('err', 44);
                 } else {
-                    if (variety.MediumStart === variety.MediumEnd || variety.MediumStart > variety.MediumEnd) {
-                        msgS.msg('err', 36);
+                    if (variety.MediumStart >= variety.Small || variety.MediumEnd >= variety.Small) {
+                        msgS.msg('err', 34);
                     } else {
-                        if (variety.LargeStart === variety.LargeEnd || variety.LargeStart > variety.LargeEnd) {
-                            msgS.msg('err', 37);
+                        if ((variety.LargeStart >= variety.MediumStart || variety.LargeStart >= variety.MediumEnd) && (variety.LargeEnd >= variety.MediumStart || variety.LargeEnd >= variety.MediumEnd)) {
+                            msgS.msg('err', 35);
                         } else {
-                            var Variety = {
-                                VarietyName: variety.varietyName,
-                                LargeEnd: variety.LargeEnd,
-                                LargeStart: variety.LargeStart,
-                                MediumEnd: variety.MediumEnd,
-                                MediumStart: variety.MediumStart,
-                                Small: variety.Small
-                            };
-                            varietyService.save(Variety).then(function (response) {
-                                msgS.msg('succ', 10);
-                                ClearForm('variety', 'varietyForm');
-                                GetAllVarieties();
-                            }, function (response) {
-                                msgS.msg('err', 38);
-                            });
+                            if (variety.MediumStart === variety.MediumEnd || variety.MediumStart > variety.MediumEnd) {
+                                msgS.msg('err', 36);
+                            } else {
+                                if (variety.LargeStart === variety.LargeEnd || variety.LargeStart > variety.LargeEnd) {
+                                    msgS.msg('err', 37);
+                                } else {
+                                    var Variety = {
+                                        VarietyName: variety.varietyName,
+                                        LargeEnd: variety.LargeEnd,
+                                        LargeStart: variety.LargeStart,
+                                        MediumEnd: variety.MediumEnd,
+                                        MediumStart: variety.MediumStart,
+                                        Small: variety.Small
+                                    };
+                                    varietyService.save(Variety).then(function (response) {
+                                        msgS.msg('succ', 10);
+                                        ClearForm('variety', 'varietyForm');
+                                        GetAllVarieties();
+                                    }, function (response) {
+                                        msgS.msg('err', 38);
+                                    });
+                                }
+                            }
                         }
                     }
                 }
@@ -76,36 +88,29 @@
             }
         };
 
-        $scope.confirmationDelete = function (id) {
-            swal({
-                title: "¿Estas seguro que deseas eliminar este registro?",
-                text: "El productor con el id: " + id + " sera eliminada de forma permanente.",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Eliminar",
-                closeOnConfirm: false
-            },
+        function AlreadyExists(name, array, prop) {
+            var exists = false;
+            $.each(array, function (i) {
+                if (array[i][prop].toLowerCase() === name.toLowerCase()) {
+                    exists = true;
+                    return false;
+                }
+            });
+            return exists;
+        };
+
+        $scope.confirmationDelete = function (id, producerName) {
+            swal(msgS.swalConfig("¿Estas seguro que deseas eliminar al productor " + producerName + "?"),
                 function () {
                     deleteProducer(id);
                 });
-
         };
 
-        $scope.confirmVarietyDel = function (id) {
-            swal({
-                title: "¿Estas seguro que deseas eliminar este registro?",
-                text: "La Variedad con el id : " + id + " sera eliminada de forma permanente",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Eliminar",
-                closeOnConfirm: false
-            },
+        $scope.confirmVarietyDel = function (id, varietyName) {
+            swal(msgS.swalConfig("¿Estas seguro que deseas eliminar a la variedad " + varietyName + "?"),
                 function () {
                     deleteVariety(id);
                 });
-
         };
 
         var deleteProducer = function (producerId) {
@@ -116,7 +121,7 @@
                         return false;
                     }
                 });
-                swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });
@@ -130,7 +135,7 @@
                         return false;
                     }
                 });
-                swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });

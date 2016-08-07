@@ -170,30 +170,23 @@
                 msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         };
-        $scope.confirmationDelete = function (receptionId) {
-            swal({
-                title: "Estas seguro?",
-                text: "Tú eliminaras la recepcion: " + receptionId + "!!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            },
+
+        $scope.confirmationDelete = function (receptionId, folio) {
+            swal(msgS.swalConfig("¿Estas seguro que desea eliminar el folio " + folio + "?"),
                 function () {
-                    $scope.deleteReception(receptionId);
+                    deleteReception(receptionId);
                 });
         };
 
-        $scope.deleteReception = function (receptionId) {
+        var deleteReception = function (receptionId) {
             receptionService.delete(receptionId).then(function (response) {
-                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.receptions, function (i) {
                     if ($scope.receptions[i].Id === receptionId) {
                         $scope.receptions.splice(i, 1);
                         return false;
                     }
                 });
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });
@@ -295,11 +288,11 @@
             return item;
         };
 
-        function FillUpdateReceptionObject(reception){
+        function FillUpdateReceptionObject(reception) {
             $scope.receptionUpdateModel.ReceivedFromField = reception.ReceivedFromField,
-            $scope.receptionUpdateModel.CarRegistration = reception.CarRegistration,
-            $scope.receptionUpdateModel.HeatHoursDrying = reception.HeatHoursDrying,
-            $scope.receptionUpdateModel.Observations = reception.Observations
+                $scope.receptionUpdateModel.CarRegistration = reception.CarRegistration,
+                $scope.receptionUpdateModel.HeatHoursDrying = reception.HeatHoursDrying,
+                $scope.receptionUpdateModel.Observations = reception.Observations
         };
 
         $scope.return = function () {

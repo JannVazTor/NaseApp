@@ -99,7 +99,7 @@
                         <tr ng-repeat="producer in producers | filter:searchProducer">
                             <td>{{producer.ProducerName}}</td>
                             <td>
-                                <button class="btn btn-icon command-delete" ng-click="confirmationDelete(producer.Id)">
+                                <button class="btn btn-icon command-delete" ng-click="confirmationDelete(producer.Id, producer.ProducerName)">
                         <span class="md md-delete"></span>
                     </button>
                             </td>
@@ -142,7 +142,7 @@
                             <td>{{variety.MediumStart.toString() + '-' + variety.MediumEnd.toString()}}</td>
                             <td>{{variety.LargeStart.toString() + '-' + variety.LargeEnd.toString()}}</td>
                             <td>
-                                <button class="btn btn-icon command-delete" ng-click="confirmVarietyDel(variety.Id)">
+                                <button class="btn btn-icon command-delete" ng-click="confirmVarietyDel(variety.Id, variety.VarietyName)">
                         <span class="md md-delete"></span>
                     </button>
                             </td>

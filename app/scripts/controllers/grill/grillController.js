@@ -162,48 +162,27 @@
             }
         };
 
-        $scope.deleteGrill = function (grillId) {
-            grillService.delete(grillId).then(function (response) {
-                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
-                $.each($scope.grills, function (i) {
-                    if ($scope.grills[i].Id === grillId) {
-                        $scope.grills.splice(i, 1);
-                        return false;
-                    }
-                });
-            }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
-            });
-        };
         $scope.confirmationDelete = function (grillId) {
-            swal({
-                title: "Estas seguro?",
-                text: "Tú eliminaras la recepcion: " + grillId + "!!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            },
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la parrilla con el numero: " + grillId + " ?"),
                 function () {
-                    $scope.deleteGrill(grillId);
+                    deleteGrill(grillId);
                 });
 
         };
-
-        $scope.deleteGrill = function (grillId) {
+        var deleteGrill = function (grillId) {
             grillService.delete(grillId).then(function (response) {
-                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.grills, function (i) {
                     if ($scope.grills[i].Id === grillId) {
                         $scope.grills.splice(i, 1);
                         return false;
                     }
                 });
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });
         };
+
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 if (response.data.length === 0) {

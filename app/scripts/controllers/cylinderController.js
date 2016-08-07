@@ -50,30 +50,21 @@
             return exists;
         };
 
-        $scope.confirmationDelete = function (cylinderId) {
-            swal({
-                title: "Estas seguro?",
-                text: "Tú eliminaras el cilindro: " + cylinderId + "!!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            },
+        $scope.confirmationDelete = function (cylinderId, cylinderName) {
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar el cilindro " + cylinderName + "?"),
                 function () {
-                    $scope.deleteCylinder(cylinderId);
+                    deleteCylinder(cylinderId);
                 });
-
         };
-        $scope.deleteCylinder = function (cylinderId) {
+        var deleteCylinder = function (cylinderId) {
             cylinderService.delete(cylinderId).then(function (response) {
-                swal("Eliminado!", "El registro fue eliminado de manera exitosa.", "success");
                 $.each($scope.cylinders, function (i) {
                     if ($scope.cylinders[i].Id === cylinderId) {
                         $scope.cylinders.splice(i, 1);
                         return false;
                     }
                 });
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });
