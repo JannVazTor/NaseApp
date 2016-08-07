@@ -101,7 +101,17 @@
             'Ocurrio un error al intentar cargar las huertas/lotes.',//27
             'El Campo es requerido.',//28
             'La Huerta/Lote es requerida.',//29
-            'El Cuadro es requerido.'];
+            'El Cuadro es requerido.',//30
+            'El Productor es requerido.',//31
+            'El Campo es requerido.',//32
+            'La Variedad es requerida.',//33
+            'El Rango de medianas no puede ser mayor o igual a las chicas.',//34
+            'El Rango de grandes no puede ser mayor o gial al de medianas.',//35
+            'El Rango de medianas debe contener valores distintos y el valor de inicio debe ser menor al valor de finalizacion.',//36
+            'El Rango de grandes debe contener valores distintos y el valor de inicio debe ser menor al valor de finalizacion.',//37
+            'Ocurrio un error y la variedad no pudo ser guardada.',//38
+            'El Nombre del cilindro ya existe.',//39
+            'Ocurrio un error y no se pudo obtener la remision.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -112,7 +122,9 @@
             'El Estado fue cambiado correctamente.',//6
             'Los Registros fueron agregados correctamente.',//7
             'La Huerta/Lote fue agregada correctamente.',//8
-            'El Cuadro se agrego correctamente.'];
+            'El Cuadro se agrego correctamente.',//9
+            'La Variedad se agrego correctamente.',//10
+            'El Muestreo fue agregado de manera exitosa.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1

@@ -287,9 +287,9 @@
             roles: [USER_ROLES.admin]
           }
         })
-        .state('dailyABEL', {
-          url: '/reporteDiarioABEL',
-          templateUrl: 'views/report/dailyABEL.html',
+        .state('dailyReport', {
+          url: '/reporteDiario',
+          templateUrl: 'views/report/dailyReport.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]

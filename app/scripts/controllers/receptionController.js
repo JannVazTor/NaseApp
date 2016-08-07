@@ -76,6 +76,7 @@
                             ReceptionEntry.VarietyId = receptionEntry.Variety.Id;
                             ReceptionEntry.ProducerId = receptionEntry.Producer.Id;
                             receptionService.saveEntry(ReceptionEntry).then(function (response) {
+                                GetAllCylinders();
                                 msgS.msg('succ', 7);
                                 $scope.receptions = [];
                             }, function (response) {

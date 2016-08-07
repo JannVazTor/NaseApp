@@ -6,14 +6,14 @@
             </div>
             <div class="card-body card-padding">
                 <div class="form-group">
-                    <label for="date" class="col-sm-2 control-label">Fecha *</label>
+                    <label for="EntryDate" class="col-sm-2 control-label">Fecha *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input type="text" disabled required class="form-control input-sm" id="samplingDate" placeholder="fecha de captura" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
+                            <input type="text" required disabled class="form-control input-sm" id="EntryDate" placeholder="fecha de captura" value="{{ date | date: 'yyyy/MM/dd HH:mm' }}">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target href><i class="md md-event"></i></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <datetimepicker data-ng-model="data.dateDropDownLink" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
+                                    <datetimepicker data-ng-model="date" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
                                 </ul>
                             </div>
                         </div>
@@ -24,7 +24,7 @@
                     <div class="col-sm-10">
                         <div class="fg-line">
                             <input required type="number" min="1" name="Sampleweight" class="form-control input-sm" id="sampleWeight" placeholder="peso"
-                                ng-model="sampling.SampleWeight">
+                                ng-model="sampling.SampleWeight" ng-change="CalculatePerformance(sampling.TotalWeightOfEdibleNuts, sampling.SampleWeight)">
                             <small class="help-block has-error" style="color:red" ng-show="updateSamplingForm.Sampleweight.$error.number">Numero no valido.</small>
                         </div>
                     </div>
@@ -53,9 +53,9 @@
                     <label for="Performance" class="col-sm-2 control-label">Rendimiento *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required type="number" min="1" class="form-control input-sm" name="Performance" id="Performance" placeholder="rendimiento"
+                            <input required readonly type="number" min="1" name="Performance" class="form-control input-sm" id="Performance" placeholder="Rendimiento"
                                 ng-model="sampling.Performance">
-                            <small class="help-block has-error" style="color:red" ng-show="updateSamplingForm.Performance.$error.number">Numero no valido.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="samplingForm.Performance.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                     <div class="col-sm-10">
                         <div class="fg-line">
                             <input type="number" min="1" class="form-control input-sm" id="TotalWeightOfEdibleNuts" name="Totalweightofediblenuts" placeholder="peso total de nueces comestibles"
-                                ng-model="sampling.TotalWeightOfEdibleNuts">
+                                ng-model="sampling.TotalWeightOfEdibleNuts" ng-change="CalculatePerformance(sampling.TotalWeightOfEdibleNuts, sampling.SampleWeight)">
                             <small class="help-block has-error" style="color:red" ng-show="updateSamplingForm.Totalweightofediblenuts.$error.number">Numero no valido.</small>
                         </div>
                     </div>

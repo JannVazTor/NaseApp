@@ -27,9 +27,8 @@
                     <label for="ipassword" class="col-sm-2 control-label">Contraseña *</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input name="pass" type="password" class="form-control input-sm" id="ipassword" placeholder="contraseña" data-ng-model="registration.Password" ng-minlength="8" ng-pattern="^(?=.{8,20}$)(?=.*\d)(?=.*[a-zA-Z]).*$" required>
-                            <small class="help-block has-error" style="color:red" ng-show="userForm.pass.$error.minlength">La Contraseña debe contener al menos 8 caracteres.</small>
-                            <small class="help-block has-error" style="color:red" ng-show="userForm.pass.$error.pattern">La Contraseña debe contener una mayuscula, una minuscula y un caracter especial.</small>
+                            <input name="pass" type="password" class="form-control input-sm" id="ipassword" placeholder="contraseña" data-ng-model="registration.Password" ng-pattern="passwordRegex" required>
+                            <small class="help-block has-error" style="color:red" ng-show="userForm.pass.$error.pattern">La Contraseña debe contener al menos una mayuscula, una minuscula, un numero y ser mayor a 8 caracteres.</small>
                         </div>
                     </div>
                 </div>
@@ -38,10 +37,9 @@
                     <div class="col-sm-10">
                         <div class="fg-line">
                             <input name="confirmPass" type="password" class="form-control input-sm" id="icpassword" placeholder="confirmar contraseña"
-                                ng-model="registration.ConfirmPassword" ng-minlength="8" confirm-password="registration.Password"
-                                required>
+                                ng-model="registration.ConfirmPassword" confirm-password="registration.Password" ng-pattern="passwordRegex" required>
                             <small class="help-block has-error" style="color:red" ng-show="userForm.confirmPass.$invalid && !userForm.confirmPass.$pristine">Las Contraseñas no coinciden.</small>
-                            <small class="help-block has-error" style="color:red" ng-show="userForm.confirmPass.$error.minlength">La Contraseña debe contener al menos 8 caracteres.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="userForm.confirmPass.$error.pattern">La Contraseña debe contener al menos una mayuscula, una minuscula, un numero y ser mayor a 8 caracteres.</small>
                         </div>
                     </div>
                 </div>

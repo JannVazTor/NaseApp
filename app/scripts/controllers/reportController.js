@@ -140,6 +140,7 @@
 
         var GetColumns = function () {
             return [
+                DTColumnBuilder.newColumn('Id').withTitle('No. De Parrilla'),
                 DTColumnBuilder.newColumn('DateCapture').withTitle('Fecha de Captura').renderWith(function (data, type, full) {
                     return $filter('date')(data, 'dd/MM/yyyy HH:mm');
                 }),

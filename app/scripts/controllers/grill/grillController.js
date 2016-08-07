@@ -7,7 +7,11 @@
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.ReceptionId = receptionAndGrillService.receptionId;
         $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
-        $scope.grill = {};
+        $scope.grill = {
+            Producer: {},
+            Field: {},
+            Variety: {}
+        };
 
         $scope.sizes = [
             { Name: "Grande", Type: 1 },
@@ -67,21 +71,33 @@
         }
 
         $scope.saveGrill = function (grill) {
-            var Grill = {
-                DateCapture: $('#EntryDate').val(),
-                Size: grill.Size.Type,
-                FieldId: grill.Field.Id,
-                Kilos: grill.Kilos,
-                Sacks: grill.Sacks,
-                Quality: grill.Quality.Type,
-                VarietyId: grill.Variety.Id,
-                ProducerId: grill.Producer.Id
-            };
-            grillService.save(Grill).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[3], 2);
-            }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
-            });
+            if ($scope.grill.Producer === null) {
+                msgS.msg('err', 31);
+            } else {
+                if ($scope.grill.Field === null) {
+                    msgS.msg('err', 32);
+                } else {
+                    if ($scope.grill.Variety === null) {
+                        msgS.msg('err', 33);
+                    } else {
+                        var Grill = {
+                            DateCapture: $('#EntryDate').val(),
+                            Size: grill.Size.Type,
+                            FieldId: grill.Field.Id,
+                            Kilos: grill.Kilos,
+                            Sacks: grill.Sacks,
+                            Quality: grill.Quality.Type,
+                            VarietyId: grill.Variety.Id,
+                            ProducerId: grill.Producer.Id
+                        };
+                        grillService.save(Grill).then(function (response) {
+                            msgS.toastMessage(msgS.successMessages[3], 2);
+                        }, function (response) {
+                            msgS.toastMessage(msgS.errorMessages[3], 3);
+                        });
+                    }
+                }
+            }
         };
 
         $scope.redirectReceptionToGrill = function (Id) {
@@ -270,8 +286,8 @@
         function FillUpdateGrillObject(grillU) {
             $scope.grill.Kilos = grillU.Kilos;
             $scope.grill.Sacks = grillU.Sacks;
-            $scope.grill.Size = SearchItemObj($scope.sizes, 'Type', grillU.Size);
-            $scope.grill.Quality = SearchItemObj($scope.qualities, 'Type', grillU.Quality);
+            $scope.grill.Size = SearchItemObj($scope.sizes, 'Name', grillU.Size);
+            $scope.grill.Quality = SearchItemObj($scope.qualities, 'Name', grillU.Quality);
         };
 
         function SearchItemObj(array, property, id) {
@@ -308,6 +324,7 @@
                     GetAllGrillsCurrentInv();
                     break;
                 case 'grillUpdate':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllVarieties();
                     GetAllFields();
