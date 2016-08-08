@@ -67,8 +67,15 @@
             clearService.clearSamplingService();
         });
 
-        $scope.confirmationDelete = function (samplingId) {
-            swal(msgS.swalConfig("¿Esta seguro que desea eliminar el muestreo con el id " + samplingId + "?"),
+        $scope.confirmationDeleteReception = function (folio) {
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar el resultado de proceso con el folio " + folio + "?"),
+                function () {
+                    deleteSampling(samplingId);
+                });
+        };
+
+        $scope.confirmationDeleteGrill = function (grillId) {
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar el muestreo de la parrilla numero " + grillId + "?"),
                 function () {
                     deleteSampling(samplingId);
                 });

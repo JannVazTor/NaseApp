@@ -163,7 +163,7 @@
         };
 
         $scope.confirmationDelete = function (grillId) {
-            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la parrilla con el numero: " + grillId + " ?"),
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la parrilla con el numero " + grillId + " ?"),
                 function () {
                     deleteGrill(grillId);
                 });
