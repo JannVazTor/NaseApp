@@ -29,7 +29,7 @@
         </div>
     <div class="card">
         <div class="card-header">
-            <h2>Reporte Diario ABEL</h2>
+            <h2>Reporte Diario de Proceso</h2>
         </div>
         <div class="card-body table-responsive ">
             <table id="daily" datatable="ng" dt-options="dtOptions" class="table table-striped table-bordered">
@@ -40,9 +40,9 @@
                         <th>Folio</th>
                         <th>Cilindro</th>
                         <th>Variedad</th>
-                        <th>Chica</th>
-                        <th>Mediana</th>
                         <th>Grande</th>
+                        <th>Mediana</th>
+                        <th>Chica</th>
                         <th>Total Primera</th>
                         <th>% Calidad</th>
                         <th>Total Segunda</th>
@@ -55,8 +55,9 @@
                         <td>{{report.Folio}}</td>
                         <td>{{report.Cylinder}}</td>
                         <td>{{report.Variety}}</td>
-                        <td>{{report.SacksFirstSmall}}</td>
+                        <td>{{report.SacksFirstLarge}}</td>
                         <td>{{report.SacksFirstMedium}}</td>
+                        <td>{{report.SacksFirstLarge}}</td>
                         <td>{{report.Total}}</td>
                         <td>{{report.QualityPercent}}</td>
                         <td>{{report.Germinated}}</td>
@@ -65,8 +66,9 @@
                 <tfoot>
                     <tr>
                         <td colspan="5"> Total: </td> 
-                        <td>{{getTotalSmallSacks()}}</td>
+                        <td>{{getTotalLargeSacks()}}</td>
                         <td>{{getTotalMediumSacks()}}</td>
+                        <td>{{getTotalSmallSacks()}}</td>
                         <td>{{getTotal()}}</td>
                         <td></td>
                         <td>{{getTotalGerminated()}}</td>

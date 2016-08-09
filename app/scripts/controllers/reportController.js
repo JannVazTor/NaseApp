@@ -35,8 +35,17 @@
         $scope.getTotalMediumSacks = function(){
                     var total = 0;
                     for(var i = 0; i < $scope.dailyProcess.length; i++){
-                        var smallSacks = $scope.dailyProcess[i];
-                        total += (smallSacks.SacksFirstMedium);
+                        var mediumSacks = $scope.dailyProcess[i];
+                        total += (mediumSacks.SacksFirstMedium);
+                    }
+                    return total;
+                };
+
+        $scope.getTotalLargeSacks = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var largeSacks = $scope.dailyProcess[i];
+                        total += (largeSacks.SacksFirstLarge);
                     }
                     return total;
                 };
