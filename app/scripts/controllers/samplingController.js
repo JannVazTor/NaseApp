@@ -5,7 +5,7 @@
         $scope.samplings = [];
         $scope.receptionEntries = [];
         $scope.sampling = samplingService.sampling;
-        
+
         $scope.CalculatePerformance = function () {
             if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
                 $scope.sampling.Performance = ($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100;
@@ -23,13 +23,14 @@
                 HumidityPercent: sampling.HumidityPercent,
                 SampleWeight: sampling.SampleWeight,
                 Performance: sampling.Performance,
-                DateCapture: $('#samplingDate').val(),
+                DateCapture: $('#EntryDate').val(),
                 ReceptionEntryId: receptionService.receptionEntryId
             };
             if ($state.current.name === 'samplingReceptionEntryAdd') {
                 if (ValidateNutTypes(Sampling.NutTypes)) {
                     samplingService.saveToReceptionEntry(Sampling).then(function (response) {
                         clearService.clearReceptionService();
+                        msgS.msg('succ', 11);
                         $state.go('samplingReceptionAdd');
                     }, function (response) {
                         msgS.toastMessage(msgS.errorMessages[3], 3);;
@@ -66,30 +67,22 @@
             clearService.clearSamplingService();
         });
 
-        $scope.confirmationDelete = function (SamplingId) {
-            swal({
-                title: "Estas seguro?",
-                text: "Tú eliminaras el muestreo con id: " + SamplingId + "!!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Si, eliminarlo!",
-                closeOnConfirm: false
-            },
+        $scope.confirmationDelete = function (samplingId) {
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar el muestreo con el id " + samplingId + "?"),
                 function () {
-                    $scope.deleteSampling(SamplingId);
+                    deleteSampling(samplingId);
                 });
         };
 
-        $scope.deleteSampling = function (SamplingId) {
+        var deleteSampling = function (SamplingId) {
             samplingService.delete(SamplingId).then(function (response) {
-                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.samplings, function (i) {
                     if ($scope.samplings[i].Id === SamplingId) {
                         $scope.samplings.splice(i, 1);
                         return false;
                     }
                 });
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });
@@ -101,7 +94,7 @@
         };
 
         $scope.UpdateSampling = function () {
-            $scope.sampling.DateCapture = $('#samplingDate').val();
+            $scope.sampling.DateCapture = $('#EntryDate').val();
             samplingService.update($scope.sampling).then(function (response) {
                 msgS.toastMessage(msgS.successMessages[1], 2);;
                 $state.go($rootScope.prevState);
@@ -173,9 +166,16 @@
                     GetAllReceptionSamplings();
                     break;
                 case 'samplingReceptionEntryAdd':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     break;
                 case 'samplingGrillManage':
                     GetAllGrillSamplings();
+                    break;
+                case 'samplingAdd':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
+                    break;
+                case 'samplingUpdate':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     break;
                 default:
                     break;

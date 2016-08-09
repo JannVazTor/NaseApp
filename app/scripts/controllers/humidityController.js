@@ -77,23 +77,14 @@
         };
 
         $scope.confirmationDelete = function (Id) {
-            swal({
-                title: "Estas seguro?",
-                text: "Tú eliminaras la humedad: " + Id + "!!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Si, eliminarlo!",
-                closeOnConfirm: false
-            },
+            swal(msgS.swalConfig("¿Estas seguro que deseas eliminar este registro?"),
                 function () {
-                    $scope.deleteHumidity(Id);
+                    deleteHumidity(Id);
                 });
         };
 
-        $scope.deleteHumidity = function (Id) {
+        var deleteHumidity = function (Id) {
             humidityService.delete(Id).then(function (response) {
-                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 if ($state.current.name === 'humidityManage') {
                     $.each($scope.humiditiesInReceptionEntry, function (i) {
                         if ($scope.humiditiesInReceptionEntry[i].Id === Id) {
@@ -117,6 +108,7 @@
                             return false;
                         }
                     });
+                    msgS.swalSuccess();
                     GetAllHumiditiesLastSamplings();
                 }
             }, function (response) {
@@ -124,7 +116,7 @@
             });
         };
 
-        $scope.return = function(){
+        $scope.return = function () {
             $state.go($rootScope.prevState);
         };
 

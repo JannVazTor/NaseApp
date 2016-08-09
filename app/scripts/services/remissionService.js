@@ -3,15 +3,19 @@
     angular.module('naseNutAppApp').factory('remissionService', function ($http, apiPath, receptionService) {
         var _remission = {
             Id: "",
+            DateCapture: "",
             Quantity: "",
             Butler: "",
             TransportNumber: "",
             Driver: "",
-            Elaborate: ""
+            Elaborate: "",
+            FieldId: "",
+            BatchId: "",
+            BoxId: ""
         };
 
         var _getAll = function () {
-            return $http.get(apiPath + 'api/remission/getAll');
+            return $http.get(apiPath + 'api/remission');
         }
         var _save = function (data) {
             return $http.post(apiPath + 'api/remission', data);
@@ -22,12 +26,16 @@
         var _update = function (id, data) {
             return $http.put(apiPath + 'api/remission/' + id, data);
         }
+        var _getById = function (id) {
+            return $http.get(apiPath + 'api/remission/' + id);
+        }
         return {
             remission: _remission,
             getAll: _getAll,
             save: _save,
             delete: _delete,
-            update: _update
+            update: _update,
+            getById: _getById
         };
     });
 })();

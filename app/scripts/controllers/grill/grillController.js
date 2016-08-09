@@ -7,7 +7,11 @@
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
         $scope.ReceptionId = receptionAndGrillService.receptionId;
         $scope.ReceptionFolio = receptionAndGrillService.receptionFolio;
-        $scope.grill = {};
+        $scope.grill = {
+            Producer: {},
+            Field: {},
+            Variety: {}
+        };
 
         $scope.sizes = [
             { Name: "Grande", Type: 1 },
@@ -49,7 +53,7 @@
 
         $scope.UpdateGrill = function (grill) {
             var GrillUpdate = {
-                DateCapture: $('#grillDate').val(),
+                DateCapture: $('#EntryDate').val(),
                 Size: grill.Size.Type,
                 FieldId: grill.Field.Id,
                 Kilos: grill.Kilos,
@@ -67,21 +71,33 @@
         }
 
         $scope.saveGrill = function (grill) {
-            var Grill = {
-                DateCapture: $('#grillDate').val(),
-                Size: grill.Size.Type,
-                FieldId: grill.Field.Id,
-                Kilos: grill.Kilos,
-                Sacks: grill.Sacks,
-                Quality: grill.Quality.Type,
-                VarietyId: grill.Variety.Id,
-                ProducerId: grill.Producer.Id
-            };
-            grillService.save(Grill).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[3], 2);
-            }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
-            });
+            if ($scope.grill.Producer === null) {
+                msgS.msg('err', 31);
+            } else {
+                if ($scope.grill.Field === null) {
+                    msgS.msg('err', 32);
+                } else {
+                    if ($scope.grill.Variety === null) {
+                        msgS.msg('err', 33);
+                    } else {
+                        var Grill = {
+                            DateCapture: $('#EntryDate').val(),
+                            Size: grill.Size.Type,
+                            FieldId: grill.Field.Id,
+                            Kilos: grill.Kilos,
+                            Sacks: grill.Sacks,
+                            Quality: grill.Quality.Type,
+                            VarietyId: grill.Variety.Id,
+                            ProducerId: grill.Producer.Id
+                        };
+                        grillService.save(Grill).then(function (response) {
+                            msgS.toastMessage(msgS.successMessages[3], 2);
+                        }, function (response) {
+                            msgS.toastMessage(msgS.errorMessages[3], 3);
+                        });
+                    }
+                }
+            }
         };
 
         $scope.redirectReceptionToGrill = function (Id) {
@@ -146,48 +162,27 @@
             }
         };
 
-        $scope.deleteGrill = function (grillId) {
-            grillService.delete(grillId).then(function (response) {
-                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
-                $.each($scope.grills, function (i) {
-                    if ($scope.grills[i].Id === grillId) {
-                        $scope.grills.splice(i, 1);
-                        return false;
-                    }
-                });
-            }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
-            });
-        };
         $scope.confirmationDelete = function (grillId) {
-            swal({
-                title: "Estas seguro?",
-                text: "Tú eliminaras la recepcion: " + grillId + "!!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            },
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la parrilla con el numero: " + grillId + " ?"),
                 function () {
-                    $scope.deleteGrill(grillId);
+                    deleteGrill(grillId);
                 });
 
         };
-
-        $scope.deleteGrill = function (grillId) {
+        var deleteGrill = function (grillId) {
             grillService.delete(grillId).then(function (response) {
-                swal("Eliminado!", "El registro fue eliminado  de manera exitosa.", "success");
                 $.each($scope.grills, function (i) {
                     if ($scope.grills[i].Id === grillId) {
                         $scope.grills.splice(i, 1);
                         return false;
                     }
                 });
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });
         };
+
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 if (response.data.length === 0) {
@@ -270,8 +265,8 @@
         function FillUpdateGrillObject(grillU) {
             $scope.grill.Kilos = grillU.Kilos;
             $scope.grill.Sacks = grillU.Sacks;
-            $scope.grill.Size = SearchItemObj($scope.sizes, 'Type', grillU.Size);
-            $scope.grill.Quality = SearchItemObj($scope.qualities, 'Type', grillU.Quality);
+            $scope.grill.Size = SearchItemObj($scope.sizes, 'Name', grillU.Size);
+            $scope.grill.Quality = SearchItemObj($scope.qualities, 'Name', grillU.Quality);
         };
 
         function SearchItemObj(array, property, id) {
@@ -296,6 +291,7 @@
         (function () {
             switch ($state.current.name) {
                 case 'grillAdd':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllVarieties();
                     GetAllFields();
@@ -307,6 +303,7 @@
                     GetAllGrillsCurrentInv();
                     break;
                 case 'grillUpdate':
+                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllVarieties();
                     GetAllFields();

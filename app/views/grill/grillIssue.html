@@ -47,11 +47,11 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group fg-line">
-                                    <input type="text" disabled required class="form-control input-sm" id="grillIssueDate" placeholder="Fecha" value="{{ data.dateDropDownLink | date:'dd-MM-yyyy HH:mm a' }}">
+                                    <input type="text" required disabled class="form-control input-sm" id="EntryDate" placeholder="fecha de captura" value="{{ date | date: 'yyyy/MM/dd HH:mm' }}">
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target href><i class="md md-event"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <datetimepicker data-ng-model="data.dateDropDownLink" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
+                                            <datetimepicker data-ng-model="date" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
                                         </ul>
                                     </div>
                                 </div>
@@ -152,6 +152,8 @@
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" target="_self" href="#{{issue.Id}}" aria-expanded="true" aria-controls="{{issue.Id}}">
                                         Remision:&nbsp;<small>{{issue.Remission}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha:&nbsp;<small>{{issue.DateCapture}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Camion:&nbsp;<small>{{issue.Truck}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conductor: <small>{{issue.Driver}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Caja:&nbsp;<small>{{issue.Box}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No. Parrillas:&nbsp;<small>{{issue.Grills.length}}</small></a>
+                                    <u>
+                                        <a href ng-click="confirmIssueDelete(issue.Id, issue.Remission)">Eliminar</a></u>
                                 </h4>
                             </div>
                             <div id="{{issue.Id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
@@ -174,6 +176,7 @@
                                                 <th>No.Nueces</th>
                                                 <th>Rendimiento</th>
                                                 <th>Total</th>
+                                                <th>Regresar a Inv.</th>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="grilli in issue.Grills">
@@ -192,6 +195,12 @@
                                                     <td>{{grilli.WalnutNumber}}</td>
                                                     <td>{{grilli.Performance}}</td>
                                                     <td>{{grilli.TotalWeightOfEdibleNuts}}</td>
+                                                    <td>
+                                                        <button class="btn btn-icon command-edit" ng-click="returnGrillToInventory(grilli.Id, issue.Id)" data-toggle="tooltip" data-placement="bottom"
+                                                            title="Regresar parrilla a inventario">
+                                                            <span class="md md-reply"></span>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -5,6 +5,7 @@
     $scope.users = [];
     $scope.registration = [];
     $scope.registration.Role = "";
+    $scope.passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
     var GetAllUsers = function () {
       userService.getAll().then(function (response) {
@@ -79,15 +80,22 @@
       $scope.userInf = userInfo;
     };
 
-    $scope.deleteUser = function (userId) {
+    $scope.confirmDeleteUser = function (userId, userName) {
+      swal(msgS.swalConfig("¿Esta seguro que desea eliminar al usuario " + userName + "?"),
+        function () {
+          $scope.deleteUser(userId);
+        });
+    };
+
+    var deleteUser = function (userId) {
       userService.delete(userId).then(function (response) {
-        msgS.msg('succ', 0);
         $.each($scope.users, function (i) {
           if ($scope.users[i].Id === userId) {
             $scope.users.splice(i, 1);
             return false;
           }
         });
+        msgS.swalSuccess();
       }, function (response) {
         msgS.msg('err', 2);
       });

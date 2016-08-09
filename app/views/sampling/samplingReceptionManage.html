@@ -17,7 +17,7 @@
             <table class="table table-striped table-vmiddle">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Folios</th>
                         <th>Fecha</th>
                         <th>Peso</th>
                         <th>Porciento de Humedad</th>
@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="sampling in samplings | filter:searchUser">
-                        <td>{{sampling.Id}}</td>
+                        <td>{{sampling.Folio}}</td>
                         <td>{{sampling.DateCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{sampling.SampleWeight}}</td>
                         <td>{{sampling.HumidityPercent}}</td>
