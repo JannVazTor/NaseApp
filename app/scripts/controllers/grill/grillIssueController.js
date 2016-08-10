@@ -43,7 +43,7 @@
         };
 
         $scope.confirmIssueDelete = function (grillIssueId, remissionIssue) {
-            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la salida con la remision: " + remissionIssue + " ?"),
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la salida con la remision " + remissionIssue + " ?"),
                 function () {
                     deleteGrillIssue(grillIssueId, true);
                 });

@@ -80,7 +80,11 @@
                                 msgS.msg('succ', 7);
                                 $scope.receptions = [];
                             }, function (response) {
-                                msgS.msg('err', 23);
+                                if (response.status === 409) {
+                                    msgS.msg('err', 53);
+                                } else {
+                                    msgS.msg('err', 23);
+                                }
                             });
                         }
                     }

@@ -110,13 +110,21 @@
             'El Rango de medianas debe contener valores distintos y el valor de inicio debe ser menor al valor de finalizacion.',//36
             'El Rango de grandes debe contener valores distintos y el valor de inicio debe ser menor al valor de finalizacion.',//37
             'Ocurrio un error y la variedad no pudo ser guardada.',//38
-            'El Nombre del cilindro ya existe.',//39
+            'El Cilindro ya existe en la base de datos.',//39
             'Ocurrio un error y no se pudo obtener la remision.',//40
             'Ocurrio un error y la salida de parrillas no pudo ser eliminada.',//41
             'El Productor ya existe.',//42
             'La Variedad ya existe.',//43
             'La tabla de rangos es requerida.',//44
-            'Ocurrio un error y la parrilla no pudo ser agregada al inventario.'];
+            'Ocurrio un error y la parrilla no pudo ser agregada al inventario.',//45
+            'Ocurrio un error al intentar cargar las salidas de parrillas.',//46
+            'El Folio de la remisión ya existe en la base de datos.',//47
+            'Ocurrio un error y la remision no pudo ser agregada.',//48
+            'Ocurrio un error y el cilindro no pudo ser agregado.',//49
+            'El Campo ya existe en la base de datos.',//50
+            'La Huerta/Lote ya existe en la base de datos.',//51
+            'El Cuadro ya existe en la base de datos.',//52
+            'Una de los Folios ya existe en la base de datos.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -131,7 +139,9 @@
             'La Variedad se agrego correctamente.',//10
             'El Muestreo fue agregado de manera exitosa.',//11
             'La Salida se elimino correctamente, las parrillas estan ahora en inventario.',//12
-            'La Parrilla fue agregada al inventario correctamente.'];
+            'La Parrilla fue agregada al inventario correctamente.',//13
+            'La Remision se agrego correctamente.',//14
+            'El Cilindro fue agregado correctamente.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1
@@ -143,7 +153,8 @@
             'No se encontraron parrillas en la base de datos.',//7
             'No se encontraron tomas de humedad en la base de datos.',//8
             'No se encontraron cuadros en la base de datos.',//9
-            'No se encontraron huertas/lotes en la base de datos.'];
+            'No se encontraron huertas/lotes en la base de datos.',//10
+            'No se encontraron salidas de parrillas en la base de datos.'];
 
         var _swalConfig = function (title) {
             return {
