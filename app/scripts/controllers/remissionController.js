@@ -30,16 +30,31 @@
                             Folio: $scope.folio,
                             FieldId: remission.Field.Id,
                             BatchId: remission.Batch.Id,
-                            BoxId: remission.Box.Id
+                            BoxId: remission.Box.Id,
+                            RemissionFolio: remission.RemissionFolio
                         };
                         remissionService.save(Remission).then(function (response) {
-                            msgS.toastMessage(msgS.successMessages[0], 2);
+                            cleanRemissionObj();
+                            msgS.msg('succ', 14);
                         }, function (response) {
-                            msgS.toastMessage(msgS.errorMessages[3], 3);
+                            if (response.status === 409) {
+                                msgS.msg('err', 47);
+                            } else {
+                                msgS.msg('err', 48);
+                            };
                         });
                     }
                 }
             }
+        };
+
+        var cleanRemissionObj = function () {
+            $scope.remission.RemissionFolio = "";
+            $scope.remission.Quantity = "";
+            $scope.remission.Butler = "";
+            $scope.remission.TransportNumber = "";
+            $scope.remission.Driver = "";
+            $scope.remission.Elaborate = "";
         };
 
         $scope.updateRemission = function (remission) {
@@ -102,7 +117,7 @@
                     deleteRemission(remissionId);
                 });
         };
-        
+
         var deleteRemission = function (remissionId) {
             remissionService.delete(remissionId).then(function (response) {
                 $.each($scope.remissions, function (i) {

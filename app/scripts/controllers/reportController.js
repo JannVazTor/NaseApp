@@ -1,15 +1,15 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('reportController', function ($filter, $q, msgS, $scope, $state, DTOptionsBuilder, DTColumnBuilder, reportService, producerService) {
+    angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, DTOptionsBuilder, DTColumnBuilder, reportService, producerService) {
         $scope.dtOptions = {};
         $scope.dtColumns = [];
         $scope.reportingProcess = [];
         $scope.dailyProcess = [];
+        $scope.grillIssues = [];
         $scope.reportDate = {
-            ReportDate:""
-        }
+            ReportDate: ""
+        };
 
-        
         $scope.getDailyProcessReport = function (date) {
             var DailyProcess = {
                 ReportDate: $('#reportDate').val(),
@@ -18,44 +18,44 @@
                 $scope.savedSuccessfully = true;
                 $scope.dailyProcess = response.data;
                 $scope.dtOptions = GetDtOptions(GetDailyProcess);
-                msgS.toastMessage(msgS.successMessages[3],2);
+                msgS.toastMessage(msgS.successMessages[3], 2);
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3],3);
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         };
 
-        $scope.getTotalSmallSacks = function(){
-                    var total = 0;
-                    for(var i = 0; i < $scope.dailyProcess.length; i++){
-                        var smallSacks = $scope.dailyProcess[i];
-                        total += (smallSacks.SacksFirstSmall);
-                    }
-                    return total;
-                };
-        $scope.getTotalMediumSacks = function(){
-                    var total = 0;
-                    for(var i = 0; i < $scope.dailyProcess.length; i++){
-                        var smallSacks = $scope.dailyProcess[i];
-                        total += (smallSacks.SacksFirstMedium);
-                    }
-                    return total;
-                };
-        $scope.getTotal = function(){
-                    var total = 0;
-                    for(var i = 0; i < $scope.dailyProcess.length; i++){
-                        var smallSacks = $scope.dailyProcess[i];
-                        total += (smallSacks.Total);
-                    }
-                    return total;
-                };
-        $scope.getTotalGerminated = function(){
-                    var total = 0;
-                    for(var i = 0; i < $scope.dailyProcess.length; i++){
-                        var smallSacks = $scope.dailyProcess[i];
-                        total += (smallSacks.Germinated);
-                    }
-                    return total;
-                };
+        $scope.getTotalSmallSacks = function () {
+            var total = 0;
+            for (var i = 0; i < $scope.dailyProcess.length; i++) {
+                var smallSacks = $scope.dailyProcess[i];
+                total += (smallSacks.SacksFirstSmall);
+            }
+            return total;
+        };
+        $scope.getTotalMediumSacks = function () {
+            var total = 0;
+            for (var i = 0; i < $scope.dailyProcess.length; i++) {
+                var smallSacks = $scope.dailyProcess[i];
+                total += (smallSacks.SacksFirstMedium);
+            }
+            return total;
+        };
+        $scope.getTotal = function () {
+            var total = 0;
+            for (var i = 0; i < $scope.dailyProcess.length; i++) {
+                var smallSacks = $scope.dailyProcess[i];
+                total += (smallSacks.Total);
+            }
+            return total;
+        };
+        $scope.getTotalGerminated = function () {
+            var total = 0;
+            for (var i = 0; i < $scope.dailyProcess.length; i++) {
+                var smallSacks = $scope.dailyProcess[i];
+                total += (smallSacks.Germinated);
+            }
+            return total;
+        };
         $scope.reportOrigin = [];
         $scope.producerReport = [];
 
@@ -116,10 +116,10 @@
         var GetDailyProcess = function () {
             var defer = $q.defer();
             reportService.getDailyProcess().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10],1) };
+                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1) };
                 $scope.dailyProcess = response.data;
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12],3);
+                msgS.toastMessage(msgS.errorMessages[12], 3);
                 defer.reject();
             });
             return defer.promise;
@@ -136,6 +136,24 @@
             }, function (response) {
                 msgS.msg('err', 14);
             })
+        };
+
+        var GetGrillIssues = function () {
+            reportService.getGrillIssuesReport().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 11);
+                } else {
+                    angular.forEach(response.data, function (grillIssue, key) {
+                        delete grillIssue['Id'];
+                        angular.forEach(grillIssue.Grills, function (grill, key) {
+                            delete grill['Status'];
+                        }, this);
+                    }, this);
+                    $scope.grillIssues = response.data;
+                };
+            }, function (response) {
+                msgS.msg('err', 46);
+            });
         };
 
         var GetColumns = function () {
@@ -219,9 +237,27 @@
         };
 
         var GrillIssueSettings = function (promise) {
-            /*return DTOptionsBuilder.fromFnPromise(promise)
-                .withDOM('frtip')
+            return DTOptionsBuilder.fromFnPromise(promise)
                 .withPaginationType('full_numbers')
+                .withOption('responsive', true)
+                .withOption('drawCallback', function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(13, {
+                        page: 'current'
+                    }).data().each(function (group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                            );
+                            last = group;
+                        }
+                    });
+                })
                 .withButtons(['copy', 'excel', 'pdf', 'csv', 'print'])
                 .withBootstrap().withBootstrapOptions({
                     Buttons: {
@@ -237,42 +273,7 @@
                             ul: 'pagination pagination-sm'
                         }
                     }
-                })
-                .withOption('fnDrawCallback', function (oSettings) {
-                    var api = this.api();
-                    var rows = api.rows({ page: 'current' }).nodes();
-                    var last = null;
-                    api.column(15, { page: 'current' }).data().each(function (group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).before(
-                                '<tr class="group"><td colspan="16">' + group + '</td></tr>'
-                            );
-                            last = group;
-                        }
-                    });
-                });*/
-            $('#example').DataTable({
-                "columnDefs": [
-                    { "visible": false, "targets": 2 }
-                ],
-                "order": [[2, 'asc']],
-                "displayLength": 25,
-                "drawCallback": function (settings) {
-                    var api = this.api();
-                    var rows = api.rows({ page: 'current' }).nodes();
-                    var last = null;
-
-                    api.column(15, { page: 'current' }).data().each(function (group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).before(
-                                '<tr class="group"><td colspan="16">' + group + '</td></tr>'
-                            );
-
-                            last = group;
-                        }
-                    });
-                }
-            });
+                });
         };
 
         var GetGrillIssueColumns = function () {
@@ -323,6 +324,26 @@
             ];
         };
 
+        $scope.ExportExcel = function () {
+            $("#tableId").tableExport({
+                type: 'excel',
+                escape: false
+            });
+        };
+        $scope.ExportPdf = function () {
+            $("#tableId").tableExport({
+                type: 'pdf',
+                escape: false,
+                tableName: 'Reporte de Salidas de Parrillas',
+                pdfFontSize: 10
+            });
+        };
+
+        $scope.exportToExcel = function (tableId) { // ex: '#my-table'
+            $scope.exportHref = Excel.tableToExcel(tableId, 'sheet name');
+            $timeout(function () { location.href = $scope.fileData.exportHref; }, 100); // trigger download
+        };
+
         (function () {
             switch ($state.current.name) {
                 case 'producerReport':
@@ -344,8 +365,8 @@
                     $scope.title = 'Inventario de Proceso (Parrillas)';
                     break;
                 case 'grillIssues':
-                    $scope.dtOptions = GetDtOptionsWithPromise(reportService.getGrillIssuesReport);
-                    $scope.dtColumns = GetGrillIssueColumns();
+                    GetGrillIssues();
+                    $scope.dtOptions = GetDtOptions();
                     $scope.title = 'Salidas (Parrillas)';
                     break;
                 case 'reportOrigin':

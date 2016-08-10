@@ -273,7 +273,7 @@
         })
         .state('grillIssues', {
           url: '/parrillasSalidas',
-          templateUrl: 'views/report/grill/grillIssues.html',
+          templateUrl: 'views/report/grill/grillIssuesReport.html',
           controller: 'reportController',
           data: {
             roles: [USER_ROLES.admin]
