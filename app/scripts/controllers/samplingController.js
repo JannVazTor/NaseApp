@@ -8,7 +8,7 @@
 
         $scope.CalculatePerformance = function () {
             if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
-                $scope.sampling.Performance = ($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100;
+                $scope.sampling.Performance = Math.round((($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100) * 100) / 100;
             }
         };
 
