@@ -25,7 +25,6 @@
             });
         };
 
-<<<<<<< HEAD
         $scope.getTotalSmallSacks = function(){
                     var total = 0;
                     for(var i = 0; i < $scope.dailyProcess.length; i++){
@@ -67,7 +66,7 @@
                     }
                     return total;
                 };
-=======
+
         $scope.getTotalSmallSacks = function () {
             var total = 0;
             for (var i = 0; i < $scope.dailyProcess.length; i++) {
@@ -100,7 +99,7 @@
             }
             return total;
         };
->>>>>>> origin/master
+        
         $scope.reportOrigin = [];
         $scope.producerReport = [];
 

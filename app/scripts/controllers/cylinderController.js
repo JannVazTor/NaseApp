@@ -27,7 +27,6 @@
         };
 
         $scope.saveCylinder = function (cylinderName) {
-<<<<<<< HEAD
             if (AlreadyExists(cylinderName)){
                 msgS.msg('err',39);
             } else {
@@ -50,10 +49,8 @@
                 if ($scope.cylinders[i].CylinderName.toLowerCase() === cylinderName.toLowerCase()) {
                     exists = true;
                     return false;
-=======
-            var Cylinder = {
-                CylinderName: cylinderName
             };
+            
             cylinderService.save(Cylinder).then(function (response) {
                 msgS.msg('succ', 14);
                 GetAllCylinders();
@@ -62,7 +59,6 @@
                     msgS.msg('err', 39);
                 } else {
                     msgS.msg('err', 49);
->>>>>>> origin/master
                 }
             });
         };
