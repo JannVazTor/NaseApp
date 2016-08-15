@@ -222,26 +222,35 @@
             roles: [USER_ROLES.qualityUser, USER_ROLES.admin]
           }
         })
-        .state('samplingReceptionAdd', {
-          url: '/agregarMuestreoRecepcion',
-          templateUrl: 'views/sampling/samplingReceptionAdd.html',
-          controller: 'samplingController',
+        /*ProcessResult*/
+        .state('processResult', {
+          url: '/resultadoProceso',
+          templateUrl: 'views/processResult/processResult.html',
+          controller: 'processResultController',
           data: {
             roles: [USER_ROLES.qualityUser, USER_ROLES.admin]
           }
         })
-        .state('samplingReceptionEntryAdd', {
-          url: '/agregarMuestreoRecepcion',
-          templateUrl: 'views/sampling/samplingAdd.html',
-          controller: 'samplingController',
+        .state('processResultAdd', {
+          url: '/agregarResultadoProceso',
+          templateUrl: 'views/processResult/processResultAdd.html',
+          controller: 'processResultController',
           data: {
             roles: [USER_ROLES.qualityUser, USER_ROLES.admin]
           }
         })
-        .state('samplingReceptionManage', {
+        .state('processResultManage', {
+          url: '/resultadosProceso',
+          templateUrl: 'views/processResult/processResultManage.html',
+          controller: 'processResultController',
+          data: {
+            roles: [USER_ROLES.qualityUser, USER_ROLES.admin]
+          }
+        })
+        .state('processResultSampling', {
           url: '/muestreoRecepciones',
-          templateUrl: 'views/sampling/samplingReceptionManage.html',
-          controller: 'samplingController',
+          templateUrl: 'views/sampling/samplingAdd.html',
+          controller: 'processResultController',
           data: {
             roles: [USER_ROLES.qualityUser, USER_ROLES.admin]
           }

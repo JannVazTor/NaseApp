@@ -124,7 +124,9 @@
             'El Campo ya existe en la base de datos.',//50
             'La Huerta/Lote ya existe en la base de datos.',//51
             'El Cuadro ya existe en la base de datos.',//52
-            'Una de los Folios ya existe en la base de datos.'];
+            'Una de los Folios ya existe en la base de datos.',//53
+            'Se debe agregar al menos un tipo de nuez, sacos y kilos.',//54
+            'Ocurrio un error y el resultado de proceso no pudo ser guardado.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -141,7 +143,9 @@
             'La Salida se elimino correctamente, las parrillas estan ahora en inventario.',//12
             'La Parrilla fue agregada al inventario correctamente.',//13
             'La Remision se agrego correctamente.',//14
-            'El Cilindro fue agregado correctamente.'];
+            'El Cilindro fue agregado correctamente.',//15
+            'El Resultado de proceso fue agregado correctamente.',//16
+            'El Muestreo fue agregado correctamente.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1
