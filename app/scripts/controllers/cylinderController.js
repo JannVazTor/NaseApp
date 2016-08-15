@@ -30,8 +30,12 @@
             if (AlreadyExists(cylinderName)){
                 msgS.msg('err',39);
             } else {
-                cylinderService.save($scope.cylinder).then(function (response) {
+                var Cylinder = {
+                CylinderName: cylinderName
+            };
+                cylinderService.save(Cylinder).then(function (response) {
                     msgS.toastMessage(msgS.successMessages[3], 2);
+                    $('#iusername').val('');
                     GetAllCylinders();
                 }, function (response) {
                     msgS.toastMessage(msgS.errorMessages[3], 3);

@@ -107,6 +107,15 @@
                 msgS.msg('err', 12);
             });
         };
+
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('fieldTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Campos Registrados');
+            doc.autoTable(res.columns, res.data, {startY: 60});
+            doc.save("campos.pdf");
+        };
         GetAll();
         GetFields();
         GetBatches();

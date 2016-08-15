@@ -360,6 +360,9 @@
                 case 'reportOrigin':
                     $scope.dtOptions = GetDtOptions(GetReportOrigin());
                     break;
+                case 'dailyReport':
+                    $scope.dtOptions = GetDtOptions(GetDailyProcess());
+                    break;
                 default:
                     break;
             };
