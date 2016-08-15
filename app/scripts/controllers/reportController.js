@@ -9,6 +9,7 @@
         $scope.reportDate = {
             ReportDate: ""
         };
+        $scope.genericGrillReport = [];
 
         $scope.getDailyProcessReport = function (date) {
             var DailyProcess = {
@@ -90,27 +91,21 @@
         };
 
         var GetCurrentInventory = function () {
-            var defer = $q.defer();
             reportService.getCurrentInventoryReport().then(function (response) {
                 if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1); };
-                defer.resolve(response.data);
+                $scope.genericGrillReport = response.data;
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[12], 3);
-                defer.reject();
             });
-            return defer.promise;
         };
 
         var GetProcessInventory = function () {
-            var defer = $q.defer();
             reportService.getProcessInventory().then(function (response) {
                 if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1) };
-                defer.resolve(response.data);
+                $scope.genericGrillReport = response.data;
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[12], 3);
-                defer.reject();
             });
-            return defer.promise;
         };
 
         var GetDailyProcess = function () {
@@ -325,23 +320,100 @@
         };
 
         $scope.ExportExcel = function () {
-            $("#tableId").tableExport({
+            $("#genericReport").tableExport({
                 type: 'excel',
                 escape: false
             });
         };
-        $scope.ExportPdf = function () {
-            $("#tableId").tableExport({
-                type: 'pdf',
-                escape: false,
-                tableName: 'Reporte de Salidas de Parrillas',
-                pdfFontSize: 10
-            });
+
+        $scope.CopyToClipBoard = function (el) {
+            var body = document.body, range, sel;
+            if (document.createRange && window.getSelection) {
+                range = document.createRange();
+                sel = window.getSelection();
+                sel.removeAllRanges();
+                try {
+                    range.selectNodeContents(el);
+                    sel.addRange(range);
+                } catch (e) {
+                    range.selectNode(el);
+                    sel.addRange(range);
+                }
+            } else if (body.createTextRange) {
+                range = body.createTextRange();
+                range.moveToElementText(el);
+                range.select();
+                range.execCommand("Copy");
+            }
         };
 
-        $scope.exportToExcel = function (tableId) { // ex: '#my-table'
-            $scope.exportHref = Excel.tableToExcel(tableId, 'sheet name');
-            $timeout(function () { location.href = $scope.fileData.exportHref; }, 100); // trigger download
+        $scope.GrillExportPdf = function () {
+            switch ($state.current.name) {
+                case 'processInventory':
+                    GrillExportPdf('Inventario de Proceso', $scope.genericGrillReport);
+                    break;
+                case 'currentInventory':
+                    GrillExportPdf('Inventario Actual', $scope.genericGrillReport);
+                    break;
+                default:
+                    break;
+            };
+        };
+
+        var GrillExportPdf = function (title, arrayData) {
+            var properties = [
+                'Id', 'DateCapture', 'Receptions',
+                'Size', 'Sacks', 'Kilos', 'Quality',
+                'Variety', 'Producer', 'FieldName',
+                'SampleWeight', 'HumidityPercent',
+                'WalnutNumber', 'Performance', 'TotalWeightOfEdibleNuts'
+            ];
+            var columns = [
+                'No. Parrilla', 'Fecha', 'Folios',
+                'Tamaño', 'Sacos', 'Kilos', 'Calidad',
+                'Variedad', 'Productor', 'Campo', 'Peso', '% Humedad',
+                'No.Nueces', 'Rendimiento', 'Total'
+            ];
+            var getRows = function () {
+                var rows = [];
+                angular.forEach(arrayData, function (grill, key) {
+                    var arr = [];
+                    for (var i = 0; i < properties.length; i += 1) {
+                        if (properties[i] === 'DateCapture') {
+                            arr.push($filter('date')(grill[properties[i]], 'dd/MM/yyyy HH:mm a'));
+                            continue;
+                        }
+                        arr.push(grill[properties[i]]);
+                    }
+                    rows.push(arr);
+                }, this);
+                return rows;
+            };
+            var getOptions = function () {
+                return {
+                    tableWidth: 'wrap',
+                    styles: { cellPadding: 2, overflow: 'linebreak' },
+                    bodyStyles: { rowHeight: 12, fontSize: 8, valign: 'middle' },
+                    margin: { top: 10, left: 10, right: 10 },
+                    startY: doc.autoTableEndPosY() + 40,
+                    theme: 'grid',
+                    headerStyles: {
+                        fillColor: [44, 62, 80],
+                        fontSize: 8,
+                        rowHeight: 15,
+                        halign: 'center'
+                    },
+                    createdCell: function (cell, data) {
+                        cell.styles.halign = 'center';
+                    }
+                };
+            };
+            var rows = getRows();
+            var doc = new jsPDF('p', 'pt');
+            doc.text(title, 40, doc.autoTableEndPosY() + 30);
+            var options = getOptions();
+            doc.autoTable(columns, rows, options);
+            doc.save(title + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
 
         (function () {

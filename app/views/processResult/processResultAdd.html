@@ -1,7 +1,7 @@
 <div class="animated bounceInRight">
     <div class="card">
         <div class="card-header">
-            <h2>Agregar muestreo a Recepciones</h2>
+            <h2>Agregar Resultado de Proceso</h2>
         </div>
         <div class="card-body table-responsive">
             <div class="col-sm-12 actionbar">
@@ -24,6 +24,7 @@
                         <th>Productor</th>
                         <th>Cilindro</th>
                         <th>Agregar Muestreo</th>
+                        <th>Agregar Resultado de Proceso</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,9 +36,20 @@
                         <td>{{receptionEntry.Producer}}</td>
                         <td>{{receptionEntry.Cylinder}}</td>
                         <td>
-                            <button class="btn btn-icon command-edit" ng-click="redirectToAddSampling(receptionEntry.Id)">
+                            <div ng-if="!receptionEntry.Sampling">
+                                <button class="btn btn-icon command-edit" ng-click="redirectAddSampling(receptionEntry.Id)" data-toggle="tooltip" data-placement="bottom"
+                                    title="agregar muestreo">
                                     <span class="md md-description"></span>
-                                </button>
+                            </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="!receptionEntry.ProcessResult">
+                                <button class="btn btn-icon command-edit" ng-click="redirectAddProcessResult(receptionEntry.Id, receptionEntry.Receptions)"
+                                    data-toggle="tooltip" data-placement="bottom" title="Agregar resultado de proceso">
+                                    <span class="md md-assignment-returned"></span>
+                            </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

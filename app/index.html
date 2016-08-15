@@ -119,8 +119,8 @@
                     <li class="sub-menu" ng-if="(currentUser.role === userRoles.qualityUser) || (currentUser.role === userRoles.admin)">
                         <a href><i class="md md-system-update-tv"></i>Resultado de Proceso</a>
                         <ul>
-                            <li><a ui-sref="samplingReceptionAdd">Agregar Resultado de Proceso</a></li>
-                            <li><a ui-sref="samplingReceptionManage">Gestionar Resultado de Proceso</a></li>
+                            <li><a ui-sref="processResultAdd">Agregar Resultado de Proceso</a></li>
+                            <li><a ui-sref="processResultManage">Gestionar Resultado de Proceso</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu" ng-if="currentUser.role === userRoles.admin">
@@ -195,6 +195,9 @@
     <script src="bower_components/tableExport.jquery.plugin/jspdf/jspdf.js"></script>
     <script src="bower_components/tableExport.jquery.plugin/jspdf/libs/base64.js"></script>
 
+    <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
+    <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
+
     <script src="scripts/js/datetimepicker.js"></script>
     <script src="scripts/js/datetimepicker.templates.js"></script>
 
@@ -217,6 +220,7 @@
     <script src="scripts/controllers/mainController.js"></script>
     <script src="scripts/controllers/homeController.js"></script>
     <script src="scripts/controllers/fieldController.js"></script>
+    <script src="scripts/controllers/processResultController.js"></script>
 
     <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/authInterceptorService.js"></script>
@@ -238,6 +242,7 @@
     <script src="scripts/services/fieldService.js"></script>
     <script src="scripts/services/homeService.js"></script>
     <script src="scripts/services/excelExport.js"></script>
+    <script src="scripts/services/processResultService.js"></script>
 
     <script src="scripts/directives/confirmPassword.js"></script>
 </body>

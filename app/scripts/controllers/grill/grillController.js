@@ -1,7 +1,6 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('grillController', function (msgS, $filter, $scope, $state, fieldService, producerService, varietyService, grillService, receptionAndGrillService, clearService, $rootScope) {
-        $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
@@ -287,7 +286,7 @@
                 $state.go('home');
             }
         };
-
+        
         (function () {
             switch ($state.current.name) {
                 case 'grillAdd':
