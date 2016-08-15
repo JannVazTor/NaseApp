@@ -21,7 +21,7 @@
             <table id="remissionTable" class="table table-striped table-vmiddle">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Folio de Remisión</th>
                         <th>Fecha</th>
                         <th>Campo</th>
                         <th>Huerta/Lote</th>
@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="remission in remissions | filter:searchUser">
-                        <td>{{remission.Id}}</td>
+                        <td>{{remission.RemissionFolio}}</td>
                         <td>{{remission.DateCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{remission.FieldName}}</td>
                         <td>{{remission.Batch}}</td>

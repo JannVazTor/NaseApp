@@ -1,7 +1,6 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('grillController', function (msgS, $filter, $scope, $state, fieldService, producerService, varietyService, grillService, receptionAndGrillService, clearService, $rootScope) {
-        $scope.savedSuccessfully = false;
         $scope.message = "";
         $scope.grills = [];
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
@@ -163,7 +162,7 @@
         };
 
         $scope.confirmationDelete = function (grillId) {
-            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la parrilla con el numero: " + grillId + " ?"),
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la parrilla con el numero " + grillId + " ?"),
                 function () {
                     deleteGrill(grillId);
                 });
@@ -300,7 +299,7 @@
                 $state.go('home');
             }
         };
-
+        
         (function () {
             switch ($state.current.name) {
                 case 'grillAdd':

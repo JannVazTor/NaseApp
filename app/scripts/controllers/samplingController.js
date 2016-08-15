@@ -1,76 +1,37 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, samplingService, clearService, grillService, receptionService, $rootScope) {
-        $scope.message = "";
+    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, samplingService, clearService, grillService, $rootScope) {
         $scope.samplings = [];
-        $scope.receptionEntries = [];
         $scope.sampling = samplingService.sampling;
 
         $scope.CalculatePerformance = function () {
             if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
-                $scope.sampling.Performance = ($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100;
+                $scope.sampling.Performance = Math.round((($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100) * 100) / 100;
             }
         };
 
         $scope.saveSampling = function (sampling) {
-            var nutTypes = [{ NutType: 1, Kilos: sampling.kilosFirst, Sacks: sampling.sacksFirst },
-                { NutType: 2, Kilos: sampling.kilosSecond, Sacks: sampling.sacksSecond },
-                { NutType: 3, Kilos: sampling.kilosThird, Sacks: sampling.sacksThird }]
             var Sampling = {
-                NutTypes: nutTypes,
                 TotalWeightOfEdibleNuts: sampling.TotalWeightOfEdibleNuts,
                 WalnutNumber: sampling.WalnutNumber,
                 HumidityPercent: sampling.HumidityPercent,
                 SampleWeight: sampling.SampleWeight,
                 Performance: sampling.Performance,
                 DateCapture: $('#EntryDate').val(),
-                ReceptionEntryId: receptionService.receptionEntryId
+                GrillId: grillService.grillId
             };
-            if ($state.current.name === 'samplingReceptionEntryAdd') {
-                if (ValidateNutTypes(Sampling.NutTypes)) {
-                    samplingService.saveToReceptionEntry(Sampling).then(function (response) {
-                        clearService.clearReceptionService();
-                        msgS.msg('succ', 11);
-                        $state.go('samplingReceptionAdd');
-                    }, function (response) {
-                        msgS.toastMessage(msgS.errorMessages[3], 3);;
-                    });
-                } else {
-                    msgS.toastMessage(msgS.errorMessages[14], 3);;
-                };
-            } else {
-                delete Sampling['NutTypes'];
-                delete Sampling['ReceptionEntryId'];
-                Sampling.GrillId = grillService.grillId;
-                samplingService.saveToGrill(Sampling).then(function (response) {
-                    $state.go('samplingGrillManage');
-                }, function (response) {
-                    msgS.toastMessage(msgS.errorMessages[3], 3);
-                });
-            }
-        };
-        var ValidateNutTypes = function (nutTypes) {
-            var counter = 0;
-            $.each(nutTypes, function (i) {
-                if (nutTypes[i].Kilos || nutTypes[i].Sacks) {
-                    counter += 1;
-                };
+            samplingService.save(Sampling).then(function (response) {
+                msgS.msg('succ', 17);
+                $state.go('samplingGrillManage');
+            }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
-            return counter >= 1;
         };
 
-        var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
-            if ($state.current.name !== 'samplingReceptionEntryAdd') {
-                clearService.clearReceptionService();
-                onStateChange();
-            };
-            clearService.clearSamplingService();
-        });
-
-        $scope.confirmationDelete = function (samplingId) {
-            swal(msgS.swalConfig("¿Esta seguro que desea eliminar el muestreo con el id " + samplingId + "?"),
+        $scope.confirmationDeleteGrill = function (grillId) {
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar el muestreo de la parrilla numero " + grillId + "?"),
                 function () {
-                    deleteSampling(samplingId);
+                    deleteSampling(grillId);
                 });
         };
 
@@ -116,39 +77,6 @@
             });
         };
 
-        var GetAllReceptionSamplings = function () {
-            samplingService.getAllReceptions().then(function (response) {
-                if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[11], 1);
-                } else {
-                    if ($scope.samplings.length !== 0) $scope.samplings = [];
-                    $scope.samplings = response.data;
-                }
-            }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[13], 3);
-            });
-        };
-        var GetAllReceptionEntries = function () {
-            receptionService.getAllEntries().then(function (response) {
-                if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[6], 1);
-                } else {
-                    $scope.receptionEntries = response.data;
-                }
-            }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[7], 3);
-            });
-        };
-
-        $scope.redirectToAddSampling = function (receptionEntryId) {
-            receptionService.receptionEntryId = receptionEntryId;
-            $state.go('samplingReceptionEntryAdd');
-        };
-
-        $scope.IsReceptionSamplingAdd = function () {
-            return ($state.current.name === 'samplingReceptionEntryAdd');
-        };
-
         $scope.return = function () {
             if ($rootScope.prevState.length !== 0) {
                 $state.go($rootScope.prevState);
@@ -185,15 +113,6 @@
 
         (function () {
             switch ($state.current.name) {
-                case 'samplingReceptionAdd':
-                    GetAllReceptionEntries();
-                    break;
-                case 'samplingReceptionManage':
-                    GetAllReceptionSamplings();
-                    break;
-                case 'samplingReceptionEntryAdd':
-                    $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
-                    break;
                 case 'samplingGrillManage':
                     GetAllGrillSamplings();
                     break;

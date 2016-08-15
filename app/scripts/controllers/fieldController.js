@@ -16,7 +16,11 @@
                 msgS.msg('succ', 2);
                 GetFields();
             }, function (response) {
-                msgS.msg('err', 10);
+                if (response.status === 409) {
+                    msgS.msg('err', 50);
+                } else {
+                    msgS.msg('err', 10);
+                }
             });
         };
 
@@ -67,7 +71,7 @@
                     msgS.msg('info', 4);
                 } else {
                     $scope.fields = response.data;
-                    $scope.batch.Field = $scope.fields[$scope.fields.length-1];
+                    $scope.batch.Field = $scope.fields[$scope.fields.length - 1];
                 }
             }, function (response) {
                 msgS.msg('err', 11);
@@ -80,7 +84,7 @@
                     msgS.msg('info', 10);
                 } else {
                     $scope.batches = response.data;
-                    $scope.box.Batch = $scope.batches[$scope.batches.length-1];
+                    $scope.box.Batch = $scope.batches[$scope.batches.length - 1];
                 }
             }, function (response) {
                 msgS.msg('err', 27);

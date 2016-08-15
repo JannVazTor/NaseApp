@@ -1,0 +1,65 @@
+<div class="animated bounceInRight">
+    <div class="card">
+        <form name="processResultForm" class="form-horizontal" role="form" novalidate>
+            <div class="card-header">
+                <h2>Resultado de Proceso Folios: {{folios}}</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="form-group">
+                    <label for="nutFirst" class="col-sm-2 control-label">Nuez de Primera</label>
+                    <div class="col-sm-3">
+                        <div class="fg-line">
+                            <input type="number" name="sacksFirst" class="form-control input-sm" id="nutFirstSacks" placeholder="sacos de primera" ng-model="processResult.sacksFirst">
+                            <small class="help-block has-error" style="color:red" ng-show="processResultForm.sacksFirst.$error.number">Numero no valido.</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="fg-line">
+                            <input type="number" name="kilosFirst" class="form-control input-sm" id="nutFirstKilos" placeholder="kilos por saco" ng-model="processResult.kilosFirst">
+                            <small class="help-block has-error" style="color:red" ng-show="processResultForm.kilosFirst.$error.number">Numero no valido.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nutSecond" class="col-sm-2 control-label">Nuez de Segunda</label>
+                    <div class="col-sm-3">
+                        <div class="fg-line">
+                            <input type="number" name="sacksSecond" class="form-control input-sm" id="nutSecondSacks" placeholder="sacos de segunda"
+                                ng-model="processResult.sacksSecond">
+                            <small class="help-block has-error" style="color:red" ng-show="processResultForm.sacksSecond.$error.number">Numero no valido.</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="fg-line">
+                            <input type="number" name="kilosSecond" class="form-control input-sm" id="nutSecondKilos" placeholder="kilos por saco" ng-model="processResult.kilosSecond">
+                            <small class="help-block has-error" style="color:red" ng-show="processResultForm.kilosSecond.$error.number">Numero no valido.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nutThird" class="col-sm-2 control-label">Nuez de Tercera</label>
+                    <div class="col-sm-3">
+                        <div class="fg-line">
+                            <input type="number" name="sacksThrid" class="form-control input-sm" id="nutThirdSacks" placeholder="sacos de tercera" ng-model="processResult.sacksThird">
+                            <small class="help-block has-error" style="color:red" ng-show="processResultForm.sacksThrid.$error.number">Numero no valido.</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="fg-line">
+                            <input type="number" name="kilosThird" class="form-control input-sm" id="nutThirdKilos" placeholder="kilos por saco" ng-model="processResult.kilosThird">
+                            <small class="help-block has-error" style="color:red" ng-show="processResultForm.kilosThird.$error.number">Numero no valido.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group marginTop">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveProcessResult(processResult)">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<button id="fixedbuttonLeft" type="submit" class="btn bgm-teal btn-icon" data-ng-click="return()">
+        <i class="md md-arrow-back"></i>
+</button>

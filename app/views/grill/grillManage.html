@@ -13,6 +13,34 @@
                         </div>
                     </div>
                 </div>
+                <div ng-show="showSearchOptions">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input type="text" class="form-control" placeholder="buscar por productor.." ng-model="search.producer">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input type="text" class="form-control" placeholder="buscar por variedad.." ng-model="search.variety">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input type="text" class="form-control" placeholder="buscar por calidad.." ng-model="search.quality">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="checkbox m-b-15">
+                    <label><input type="checkbox" ng-model="showSearchOptions"><i class="input-helper"></i>MOSTRAR MAS OPCIONES DE BUSQUEDA</label>
+                </div>
             </div>
             <hr>
             <button class="btn btn-link" ng-click="generatePDF()">
@@ -41,7 +69,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="grill in grills | filter:searchUser">
+                    <tr ng-repeat="grill in grills | filter:searchUser | filter:{Producer: search.producer, Variety: search.variety, Quality: search.quality}">
                         <td>{{grill.Id}}</td>
                         <td>{{grill.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{grill.Receptions}}</td>
@@ -76,7 +104,7 @@
                                 title="Agregar folio de recepcion">
                                 <span class="md md-assignment"></span>
                             </button>
-                            <button ng-show="grill.Sampling == null" class="btn btn-icon command-edit" ng-click="redirectAddSampling(grill.Id)" data-toggle="tooltip"
+                            <button ng-show="grill.SampleWeight == ''" class="btn btn-icon command-edit" ng-click="redirectAddSampling(grill.Id)" data-toggle="tooltip"
                                 data-placement="bottom" title="Agregar muestreo">
                             <span class="md md-description"></span>
                         </button>

@@ -69,56 +69,6 @@
                         </div>
                     </div>
                 </div>
-                <div ng-show="IsReceptionSamplingAdd()">
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="nutFirst" class="col-sm-2 control-label">Nuez de Primera</label>
-                            <div class="col-sm-3">
-                                <div class="fg-line">
-                                    <input type="number" name="sacksFirst" class="form-control input-sm" id="nutFirstSacks" placeholder="sacos de primera" ng-model="sampling.sacksFirst">
-                                    <small class="help-block has-error" style="color:red" ng-show="samplingForm.sacksFirst.$error.number">Numero no valido.</small>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="fg-line">
-                                    <input type="number" name="kilosFirst" class="form-control input-sm" id="nutFirstKilos" placeholder="kilos por saco" ng-model="sampling.kilosFirst">
-                                    <small class="help-block has-error" style="color:red" ng-show="samplingForm.kilosFirst.$error.number">Numero no valido.</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="nutSecond" class="col-sm-2 control-label">Nuez de Segunda</label>
-                            <div class="col-sm-3">
-                                <div class="fg-line">
-                                    <input type="number" name="sacksSecond" class="form-control input-sm" id="nutSecondSacks" placeholder="sacos de segunda"
-                                        ng-model="sampling.sacksSecond">
-                                    <small class="help-block has-error" style="color:red" ng-show="samplingForm.sacksSecond.$error.number">Numero no valido.</small>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="fg-line">
-                                    <input type="number" name="kilosSecond" class="form-control input-sm" id="nutSecondKilos" placeholder="kilos por saco" ng-model="sampling.kilosSecond">
-                                    <small class="help-block has-error" style="color:red" ng-show="samplingForm.kilosSecond.$error.number">Numero no valido.</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="nutThird" class="col-sm-2 control-label">Nuez de Tercera</label>
-                            <div class="col-sm-3">
-                                <div class="fg-line">
-                                    <input type="number" name="sacksThrid" class="form-control input-sm" id="nutThirdSacks" placeholder="sacos de tercera" ng-model="sampling.sacksThird">
-                                    <small class="help-block has-error" style="color:red" ng-show="samplingForm.sacksThrid.$error.number">Numero no valido.</small>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="fg-line">
-                                    <input type="number" name="kilosThird" class="form-control input-sm" id="nutThirdKilos" placeholder="kilos por saco" ng-model="sampling.kilosThird">
-                                    <small class="help-block has-error" style="color:red" ng-show="samplingForm.kilosThird.$error.number">Numero no valido.</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveSampling(sampling)" ng-disabled="!samplingForm.$valid">Guardar</button>

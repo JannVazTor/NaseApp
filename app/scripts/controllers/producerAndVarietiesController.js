@@ -21,25 +21,25 @@
         };
 
         $scope.saveProducer = function (producerName) {
-            if (AlreadyExists(producerName, $scope.producers, 'ProducerName')) {
-                msgS.msg('err', 42);
-            } else {
-                var Producer = {
-                    ProducerName: producerName
-                };
-                producerService.save(Producer).then(function (response) {
-                    msgS.msg('succ', 5);
-                    $scope.producerName = '';
-                    ClearForm('', 'producerForm');
-                    GetAllProducers();
-                }, function (response) {
+            var Producer = {
+                ProducerName: producerName
+            };
+            producerService.save(Producer).then(function (response) {
+                msgS.msg('succ', 5);
+                $scope.producerName = '';
+                ClearForm('', 'producerForm');
+                GetAllProducers();
+            }, function (response) {
+                if (response.status === 409) {
+                    msgS.msg('err', 42);
+                } else {
                     msgS.toastMessage(msgS.errorMessages[3], 3);
-                });
-            }
+                }
+            });
         };
 
         $scope.saveVariety = function (variety) {
-            if (AlreadyExists(variety.varietyName, $scope.varieties,'VarietyName')) {
+            if (AlreadyExists(variety.varietyName, $scope.varieties, 'VarietyName')) {
                 msgS.msg('err', 43);
             } else {
                 if (!variety.MediumStart || !variety.MediumEnd || !variety.Small || !variety.LargeStart || !variety.LargeEnd) {
@@ -54,7 +54,7 @@
                             if (variety.MediumStart === variety.MediumEnd || variety.MediumStart > variety.MediumEnd) {
                                 msgS.msg('err', 36);
                             } else {
-                                if (variety.LargeStart === variety.LargeEnd || variety.LargeStart > variety.LargeEnd) {
+                                if (variety.LargeStart === variety.LargeEnd || variety.LargeStart < variety.LargeEnd) {
                                     msgS.msg('err', 37);
                                 } else {
                                     var Variety = {

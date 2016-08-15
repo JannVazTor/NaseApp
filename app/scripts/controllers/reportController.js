@@ -1,15 +1,16 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('reportController', function ($filter, $q, msgS, $scope, $state, DTOptionsBuilder, DTColumnBuilder, reportService, producerService) {
+    angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, DTOptionsBuilder, DTColumnBuilder, reportService, producerService) {
         $scope.dtOptions = {};
         $scope.dtColumns = [];
         $scope.reportingProcess = [];
         $scope.dailyProcess = [];
+        $scope.grillIssues = [];
         $scope.reportDate = {
-            ReportDate:""
-        }
+            ReportDate: ""
+        };
+        $scope.genericGrillReport = [];
 
-        
         $scope.getDailyProcessReport = function (date) {
             var DailyProcess = {
                 ReportDate: $('#reportDate').val(),
@@ -18,12 +19,13 @@
                 $scope.savedSuccessfully = true;
                 $scope.dailyProcess = response.data;
                 $scope.dtOptions = GetDtOptions(GetDailyProcess);
-                msgS.toastMessage(msgS.successMessages[3],2);
+                msgS.toastMessage(msgS.successMessages[3], 2);
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3],3);
+                msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         };
 
+<<<<<<< HEAD
         $scope.getTotalSmallSacks = function(){
                     var total = 0;
                     for(var i = 0; i < $scope.dailyProcess.length; i++){
@@ -65,6 +67,40 @@
                     }
                     return total;
                 };
+=======
+        $scope.getTotalSmallSacks = function () {
+            var total = 0;
+            for (var i = 0; i < $scope.dailyProcess.length; i++) {
+                var smallSacks = $scope.dailyProcess[i];
+                total += (smallSacks.SacksFirstSmall);
+            }
+            return total;
+        };
+        $scope.getTotalMediumSacks = function () {
+            var total = 0;
+            for (var i = 0; i < $scope.dailyProcess.length; i++) {
+                var smallSacks = $scope.dailyProcess[i];
+                total += (smallSacks.SacksFirstMedium);
+            }
+            return total;
+        };
+        $scope.getTotal = function () {
+            var total = 0;
+            for (var i = 0; i < $scope.dailyProcess.length; i++) {
+                var smallSacks = $scope.dailyProcess[i];
+                total += (smallSacks.Total);
+            }
+            return total;
+        };
+        $scope.getTotalGerminated = function () {
+            var total = 0;
+            for (var i = 0; i < $scope.dailyProcess.length; i++) {
+                var smallSacks = $scope.dailyProcess[i];
+                total += (smallSacks.Germinated);
+            }
+            return total;
+        };
+>>>>>>> origin/master
         $scope.reportOrigin = [];
         $scope.producerReport = [];
 
@@ -99,36 +135,30 @@
         };
 
         var GetCurrentInventory = function () {
-            var defer = $q.defer();
             reportService.getCurrentInventoryReport().then(function (response) {
                 if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1); };
-                defer.resolve(response.data);
+                $scope.genericGrillReport = response.data;
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[12], 3);
-                defer.reject();
             });
-            return defer.promise;
         };
 
         var GetProcessInventory = function () {
-            var defer = $q.defer();
             reportService.getProcessInventory().then(function (response) {
                 if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1) };
-                defer.resolve(response.data);
+                $scope.genericGrillReport = response.data;
             }, function (response) {
                 msgS.toastMessage(msgS.errorMessages[12], 3);
-                defer.reject();
             });
-            return defer.promise;
         };
 
         var GetDailyProcess = function () {
             var defer = $q.defer();
             reportService.getDailyProcess().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10],1) };
+                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1) };
                 $scope.dailyProcess = response.data;
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12],3);
+                msgS.toastMessage(msgS.errorMessages[12], 3);
                 defer.reject();
             });
             return defer.promise;
@@ -145,6 +175,24 @@
             }, function (response) {
                 msgS.msg('err', 14);
             })
+        };
+
+        var GetGrillIssues = function () {
+            reportService.getGrillIssuesReport().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 11);
+                } else {
+                    angular.forEach(response.data, function (grillIssue, key) {
+                        delete grillIssue['Id'];
+                        angular.forEach(grillIssue.Grills, function (grill, key) {
+                            delete grill['Status'];
+                        }, this);
+                    }, this);
+                    $scope.grillIssues = response.data;
+                };
+            }, function (response) {
+                msgS.msg('err', 46);
+            });
         };
 
         var GetColumns = function () {
@@ -228,9 +276,27 @@
         };
 
         var GrillIssueSettings = function (promise) {
-            /*return DTOptionsBuilder.fromFnPromise(promise)
-                .withDOM('frtip')
+            return DTOptionsBuilder.fromFnPromise(promise)
                 .withPaginationType('full_numbers')
+                .withOption('responsive', true)
+                .withOption('drawCallback', function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(13, {
+                        page: 'current'
+                    }).data().each(function (group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                            );
+                            last = group;
+                        }
+                    });
+                })
                 .withButtons(['copy', 'excel', 'pdf', 'csv', 'print'])
                 .withBootstrap().withBootstrapOptions({
                     Buttons: {
@@ -246,42 +312,7 @@
                             ul: 'pagination pagination-sm'
                         }
                     }
-                })
-                .withOption('fnDrawCallback', function (oSettings) {
-                    var api = this.api();
-                    var rows = api.rows({ page: 'current' }).nodes();
-                    var last = null;
-                    api.column(15, { page: 'current' }).data().each(function (group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).before(
-                                '<tr class="group"><td colspan="16">' + group + '</td></tr>'
-                            );
-                            last = group;
-                        }
-                    });
-                });*/
-            $('#example').DataTable({
-                "columnDefs": [
-                    { "visible": false, "targets": 2 }
-                ],
-                "order": [[2, 'asc']],
-                "displayLength": 25,
-                "drawCallback": function (settings) {
-                    var api = this.api();
-                    var rows = api.rows({ page: 'current' }).nodes();
-                    var last = null;
-
-                    api.column(15, { page: 'current' }).data().each(function (group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).before(
-                                '<tr class="group"><td colspan="16">' + group + '</td></tr>'
-                            );
-
-                            last = group;
-                        }
-                    });
-                }
-            });
+                });
         };
 
         var GetGrillIssueColumns = function () {
@@ -332,6 +363,103 @@
             ];
         };
 
+        $scope.ExportExcel = function () {
+            $("#genericReport").tableExport({
+                type: 'excel',
+                escape: false
+            });
+        };
+
+        $scope.CopyToClipBoard = function (el) {
+            var body = document.body, range, sel;
+            if (document.createRange && window.getSelection) {
+                range = document.createRange();
+                sel = window.getSelection();
+                sel.removeAllRanges();
+                try {
+                    range.selectNodeContents(el);
+                    sel.addRange(range);
+                } catch (e) {
+                    range.selectNode(el);
+                    sel.addRange(range);
+                }
+            } else if (body.createTextRange) {
+                range = body.createTextRange();
+                range.moveToElementText(el);
+                range.select();
+                range.execCommand("Copy");
+            }
+        };
+
+        $scope.GrillExportPdf = function () {
+            switch ($state.current.name) {
+                case 'processInventory':
+                    GrillExportPdf('Inventario de Proceso', $scope.genericGrillReport);
+                    break;
+                case 'currentInventory':
+                    GrillExportPdf('Inventario Actual', $scope.genericGrillReport);
+                    break;
+                default:
+                    break;
+            };
+        };
+
+        var GrillExportPdf = function (title, arrayData) {
+            var properties = [
+                'Id', 'DateCapture', 'Receptions',
+                'Size', 'Sacks', 'Kilos', 'Quality',
+                'Variety', 'Producer', 'FieldName',
+                'SampleWeight', 'HumidityPercent',
+                'WalnutNumber', 'Performance', 'TotalWeightOfEdibleNuts'
+            ];
+            var columns = [
+                'No. Parrilla', 'Fecha', 'Folios',
+                'Tamaño', 'Sacos', 'Kilos', 'Calidad',
+                'Variedad', 'Productor', 'Campo', 'Peso', '% Humedad',
+                'No.Nueces', 'Rendimiento', 'Total'
+            ];
+            var getRows = function () {
+                var rows = [];
+                angular.forEach(arrayData, function (grill, key) {
+                    var arr = [];
+                    for (var i = 0; i < properties.length; i += 1) {
+                        if (properties[i] === 'DateCapture') {
+                            arr.push($filter('date')(grill[properties[i]], 'dd/MM/yyyy HH:mm a'));
+                            continue;
+                        }
+                        arr.push(grill[properties[i]]);
+                    }
+                    rows.push(arr);
+                }, this);
+                return rows;
+            };
+            var getOptions = function () {
+                return {
+                    tableWidth: 'wrap',
+                    styles: { cellPadding: 2, overflow: 'linebreak' },
+                    bodyStyles: { rowHeight: 12, fontSize: 8, valign: 'middle' },
+                    margin: { top: 10, left: 10, right: 10 },
+                    startY: doc.autoTableEndPosY() + 40,
+                    theme: 'grid',
+                    headerStyles: {
+                        fillColor: [44, 62, 80],
+                        fontSize: 8,
+                        rowHeight: 15,
+                        halign: 'center'
+                    },
+                    createdCell: function (cell, data) {
+                        cell.styles.halign = 'center';
+                    }
+                };
+            };
+            var rows = getRows();
+            var doc = new jsPDF('p', 'pt');
+            doc.text(title, 40, doc.autoTableEndPosY() + 30);
+            var options = getOptions();
+            doc.autoTable(columns, rows, options);
+            doc.save(title + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
         (function () {
             switch ($state.current.name) {
                 case 'producerReport':
@@ -353,8 +481,8 @@
                     $scope.title = 'Inventario de Proceso (Parrillas)';
                     break;
                 case 'grillIssues':
-                    $scope.dtOptions = GetDtOptionsWithPromise(reportService.getGrillIssuesReport);
-                    $scope.dtColumns = GetGrillIssueColumns();
+                    GetGrillIssues();
+                    $scope.dtOptions = GetDtOptions();
                     $scope.title = 'Salidas (Parrillas)';
                     break;
                 case 'reportOrigin':

@@ -146,67 +146,61 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-group" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-collapse" ng-repeat="issue in issues | filter:searchGrillIssues">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" target="_self" href="#{{issue.Id}}" aria-expanded="true" aria-controls="{{issue.Id}}">
-                                        Remision:&nbsp;<small>{{issue.Remission}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha:&nbsp;<small>{{issue.DateCapture}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Camion:&nbsp;<small>{{issue.Truck}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conductor: <small>{{issue.Driver}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Caja:&nbsp;<small>{{issue.Box}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No. Parrillas:&nbsp;<small>{{issue.Grills.length}}</small></a>
-                                    <u>
-                                        <a href ng-click="confirmIssueDelete(issue.Id, issue.Remission)">Eliminar</a></u>
-                                </h4>
-                            </div>
-                            <div id="{{issue.Id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                    <div class="card-body table-responsive">
-                                        <table class="table table-striped table-vmiddle">
-                                            <thead>
-                                                <th>Id</th>
-                                                <th>Fecha de Captura</th>
-                                                <th>Recepciones</th>
-                                                <th>Tamaño</th>
-                                                <th>Sacos</th>
-                                                <th>Kilos</th>
-                                                <th>Calidad</th>
-                                                <th>Variedad</th>
-                                                <th>Productor</th>
-                                                <th>Campo</th>
-                                                <th>Peso de la Muestra</th>
-                                                <th>Humedad</th>
-                                                <th>No.Nueces</th>
-                                                <th>Rendimiento</th>
-                                                <th>Total</th>
-                                                <th>Regresar a Inv.</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr ng-repeat="grilli in issue.Grills">
-                                                    <td>{{grilli.Id}}</td>
-                                                    <td>{{grilli.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
-                                                    <td>{{grilli.Receptions}}</td>
-                                                    <td>{{grilli.Size}}</td>
-                                                    <td>{{grilli.Sacks}}</td>
-                                                    <td>{{grilli.Kilos}}</td>
-                                                    <td>{{grilli.Quality}}</td>
-                                                    <td>{{grilli.Variety}}</td>
-                                                    <td>{{grilli.Producer}}</td>
-                                                    <td>{{grilli.FieldName}}</td>
-                                                    <td>{{grilli.SampleWeight}}</td>
-                                                    <td>{{grilli.HumidityPercent}}</td>
-                                                    <td>{{grilli.WalnutNumber}}</td>
-                                                    <td>{{grilli.Performance}}</td>
-                                                    <td>{{grilli.TotalWeightOfEdibleNuts}}</td>
-                                                    <td>
-                                                        <button class="btn btn-icon command-edit" ng-click="returnGrillToInventory(grilli.Id, issue.Id)" data-toggle="tooltip" data-placement="bottom"
-                                                            title="Regresar parrilla a inventario">
-                                                            <span class="md md-reply"></span>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="card-body card-padding">
+                        <div class="table-responsive">
+                            <table id="tableId" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No. de Parrilla</th>
+                                        <th>Fecha de Captura</th>
+                                        <th>Folios</th>
+                                        <th>Tamaño</th>
+                                        <th>Sacos</th>
+                                        <th>Kilos</th>
+                                        <th>Calidad</th>
+                                        <th>Variedad</th>
+                                        <th>Productor</th>
+                                        <th>Huerta/Lote</th>
+                                        <th>Peso de la Muestra</th>
+                                        <th>% Humedad</th>
+                                        <th>Número de nueces</th>
+                                        <th>Rendimiento</th>
+                                        <th>Peso total de nueces comestibles</th>
+                                        <th>Regresar a Inv.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat-start="grillIssue in issues | filter: searchGrillIssues">
+                                        <td colspan="3"><b>Remision: </b>{{grillIssue.Remission}}</td>
+                                        <td colspan="3"><b>Fecha de Captura: </b>:{{grillIssue.DateCapture}}</td>
+                                        <td colspan="3"><b>Camion: </b>{{grillIssue.Truck}}</td>
+                                        <td colspan="3"><b>Conductor: </b>{{grillIssue.Driver}}</td>
+                                        <td colspan="3"><b>Caja:</b>{{grillIssue.Box}}</td>
+                                    </tr>
+                                    <tr ng-repeat-end ng-repeat="grill in grillIssue.Grills">
+                                        <td>{{grill.Id}}</td>
+                                        <td>{{grill.DateCapture}}</td>
+                                        <td>{{grill.Receptions}}</td>
+                                        <td>{{grill.Size}}</td>
+                                        <td>{{grill.Sacks}}</td>
+                                        <td>{{grill.Kilos}}</td>
+                                        <td>{{grill.Quality}}</td>
+                                        <td>{{grill.Variety}}</td>
+                                        <td>{{grill.Producer}}</td>
+                                        <td>{{grill.FieldName}}</td>
+                                        <td>{{grill.SampleWeight}}</td>
+                                        <td>{{grill.HumidityPercent}}</td>
+                                        <td>{{grill.WalnutNumber}}</td>
+                                        <td>{{grill.Performance}}</td>
+                                        <td>{{grill.TotalWeightOfEdibleNuts}}</td>
+                                        <td>
+                                            <button class="btn btn-icon command-edit" ng-click="returnGrillToInventory(grill.Id, grillIssue.Id)" data-toggle="tooltip" data-placement="bottom"
+                                                title="Regresar parrilla a inventario"><span class="md md-reply"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
