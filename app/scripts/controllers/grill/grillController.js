@@ -169,6 +169,19 @@
                 });
 
         };
+
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('grillManageTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Parrillas Procesadas');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 10}
+            });
+            doc.save("ParrillasProcesadas.pdf");
+        };
         var deleteGrill = function (grillId) {
             grillService.delete(grillId).then(function (response) {
                 $.each($scope.grills, function (i) {

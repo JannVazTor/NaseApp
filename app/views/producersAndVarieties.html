@@ -88,7 +88,11 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-striped table-vmiddle">
+                <hr>
+                <button class="btn btn-link" ng-click="generateProducersPDF()">
+                    <span class="glyphicon glyphicon-share"></span>Exportar PDF
+                </button>
+                <table id="producerTable" class="table table-striped table-vmiddle">
                     <thead>
                         <tr>
                             <th data-column-id="id">Nombre</th>
@@ -125,7 +129,11 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-striped table-vmiddle">
+                <hr>
+                <button class="btn btn-link" ng-click="generateVarietiesPDF()">
+                    <span class="glyphicon glyphicon-share"></span>Exportar PDF
+                </button>
+                <table id="varietyTable" class="table table-striped table-vmiddle">
                     <thead>
                         <tr>
                             <th data-column-id="id">Nombre</th>

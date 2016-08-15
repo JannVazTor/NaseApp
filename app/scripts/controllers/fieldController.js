@@ -114,7 +114,7 @@
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Campos Registrados');
             doc.autoTable(res.columns, res.data, {startY: 60});
-            doc.save("campos.pdf");
+            doc.save("CamposRegistrados.pdf");
         };
         GetAll();
         GetFields();

@@ -141,6 +141,24 @@
             });
         };
 
+        $scope.generateProducersPDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('producerTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Productores Registrados');
+            doc.autoTable(res.columns, res.data, {startY: 60});
+            doc.save("ProductoresRegistrados.pdf");
+        };
+
+        $scope.generateVarietiesPDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('varietyTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Variedades Registradas');
+            doc.autoTable(res.columns, res.data, {startY: 60});
+            doc.save("VariedadesRegistradas.pdf");
+        };
+
         (function () {
             GetAllProducers();
             GetAllVarieties();

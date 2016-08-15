@@ -303,6 +303,19 @@
             }
         };
 
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('receptionTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Recepciones Registradas');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:8},
+                margin: {horizontal: 10}
+            });
+            doc.save("RecepcionesRegistradas.pdf");
+        };
+
         (function () {
             switch ($state.current.name) {
                 case 'receptionManage':
