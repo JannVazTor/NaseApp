@@ -10,6 +10,7 @@
             ReportDate: ""
         };
         $scope.genericGrillReport = [];
+        $scope.secondCurrentInventory = [];
 
         $scope.getDailyProcessReport = function (date) {
             var DailyProcess = {
@@ -138,6 +139,15 @@
                 if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1); };
                 $scope.genericGrillReport = response.data;
             }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[12], 3);
+            });
+        };
+
+        var GetSecondCurrentInventory = function(){
+            reportService.getSecondCurrentInvetory().then(function(response){
+                if (response.data.length === 0) {msgS.toastMessage(msgS.infoMessaged[10], 1); };
+                $scope.secondCurrentInventory = response.data;
+            }, function(response){
                 msgS.toastMessage(msgS.errorMessages[12], 3);
             });
         };
@@ -363,8 +373,12 @@
         };
 
         $scope.ExportExcel = function () {
-            $("#genericReport").tableExport({
-                type: 'excel',
+            $("reportingProcess").tableExport({
+                headings: true,
+                footers: true,
+                formats: ["xls"],
+                fileName:"ReporteProceso",
+                type: 'xls',
                 escape: false
             });
         };
@@ -388,6 +402,83 @@
                 range.select();
                 range.execCommand("Copy");
             }
+        };
+
+        $scope.reportingProcessExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('reportingProcess');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Proceso');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 8}
+            });
+            doc.save('Proceso' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.producerReportExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('producerReport');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Productor');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 8}
+            });
+            doc.save('Productor' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.grillIssuesExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('grillIssues');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Salidas');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 8}
+            });
+            doc.save('Salidas' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.dailyExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('daily');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte Diario de Proceso');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 8}
+            });
+            doc.save('Proceso Diario' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.originReportExportPdf = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('originReportTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Origen Acumulado');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:12},
+            });
+            doc.save('Produccion Origen Acumulado' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.issuesExportPdf = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('daily');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Producción de Nuez Acumulado');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:7},
+                margin: {horizontal: 10}
+            });
+            doc.save('ReporteProduccionAcumulado' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
 
         $scope.GrillExportPdf = function () {
@@ -473,6 +564,9 @@
                     $scope.dtOptions = GetDtOptionsWithPromise(GetCurrentInventory())
                     $scope.dtColumns = GetColumns();
                     $scope.title = 'Inventario Actual (Parrillas)'
+                    break;
+                case 'secondGrillCurrent':
+                    GetSecondCurrentInvetory();
                     break;
                 case 'processInventory':
                     $scope.dtOptions = GetDtOptionsWithPromise(GetProcessInventory());

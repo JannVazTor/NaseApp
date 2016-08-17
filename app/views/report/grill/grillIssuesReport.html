@@ -5,16 +5,16 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
+                <button class="btn btn-link" ng-click="grillIssuesExportPdf()">
+                    <span class="glyphicon glyphicon-share"></span> Exportar a PDF
+                </button>
                 <button class="btn btn-link" ng-click="ExportExcel()">
                     <span class="glyphicon glyphicon-share"></span> Importar a Excel
-                </button>
-                <button class="btn btn-link" ng-click="ExportPdf()">
-                    <span class="glyphicon glyphicon-share"></span> Importar a Pdf
                 </button>
                 <button class="btn btn-link" ng-click="exportToExcel('#tableId')">
                     <span class="glyphicon glyphicon-share"></span> Export to Excel
                 </button>
-                <table id="tableId" class="table table-bordered">
+                <table id="grillIssues" class="table table-bordered">
                     <thead>
                         <tr>
                             <th>No. de Parrilla</th>

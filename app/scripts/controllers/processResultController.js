@@ -133,6 +133,19 @@
             }
         };
 
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('SamplingReceptionTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Resultado de Proceso (Recepciones)');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:7},
+                margin: {horizontal: 10}
+            });
+            doc.save("ResultadoProcesoRecepciones.pdf");
+        };
+
         (function () {
             switch ($state.current.name) {
                 case 'processResultSampling':

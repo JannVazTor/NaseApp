@@ -27,30 +27,9 @@
         };
 
         $scope.saveCylinder = function (cylinderName) {
-            if (AlreadyExists(cylinderName)){
-                msgS.msg('err',39);
-            } else {
-                var Cylinder = {
+            var Cylinder = {
                 CylinderName: cylinderName
             };
-                cylinderService.save(Cylinder).then(function (response) {
-                    msgS.toastMessage(msgS.successMessages[3], 2);
-                    $('#iusername').val('');
-                    GetAllCylinders();
-                }, function (response) {
-                    msgS.toastMessage(msgS.errorMessages[3], 3);
-                });
-            }
-        };
-
-        function AlreadyExists(cylinderName) {
-            var exists = false;
-            $.each($scope.cylinders, function (i) {
-                if ($scope.cylinders[i].CylinderName.toLowerCase() === cylinderName.toLowerCase()) {
-                    exists = true;
-                    return false;
-            };
-            
             cylinderService.save(Cylinder).then(function (response) {
                 msgS.msg('succ', 14);
                 GetAllCylinders();

@@ -58,6 +58,7 @@
             }
         };
         $scope.saveReceptionEntry = function (receptionEntry) {
+            debugger;
             if ($scope.receptions.length === 0) {
                 msgS.toastMessage(msgS.infoMessages[0], 1);
             } else {

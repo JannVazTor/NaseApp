@@ -24,6 +24,9 @@
         var _getReportOrigin = function(){
             return $http.get(apiPath + 'api/report/originReport');
         }
+        var _getSecondCurrentInventory = function(){
+            return $http.get(apiPath + 'api/report/secondCurrentInventoryGrills')
+        }
         return {
             getProducerReport: _getProducerReport,
             getReportingProcess: _getReportingProcess,
@@ -31,7 +34,8 @@
             getProcessInventory: _getProcessInventory,
             getDailyProcess: _getDailyProcessReport,
             getGrillIssuesReport: _getGrillIssuesReport,
-            getReportOrigin: _getReportOrigin
+            getReportOrigin: _getReportOrigin,
+            getSecondCurrentInventory: _getSecondCurrentInventory
         };
     });
 })();

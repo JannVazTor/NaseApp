@@ -320,6 +320,14 @@
             roles: [USER_ROLES.admin]
           }
         })
+        .state('secondGrillCurrent',{
+          url: '/InventarioActualParrillasSegunda',
+          templateUrl: 'views/report/SecondCurrentInv.html',
+          controller: 'reportController',
+          data:{
+            roles: [USER_ROLES.admin]
+          }
+        })
         .state('field', {
           url: '/campos',
           templateUrl: 'views/field.html',
