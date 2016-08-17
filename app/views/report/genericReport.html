@@ -50,7 +50,7 @@
                     <tbody>
                         <tr ng-repeat="grill in genericGrillReport | filter:searchGrillReport">
                             <td>{{grill.Id}}</td>
-                            <td>{{grill.DateCapture}}</td>
+                            <td>{{grill.DateCapture | date:'dd/MM/yyyy'}}</td>
                             <td>{{grill.Receptions}}</td>
                             <td>{{grill.Size}}</td>
                             <td>{{grill.Sacks}}</td>

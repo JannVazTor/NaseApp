@@ -288,6 +288,14 @@
             roles: [USER_ROLES.admin]
           }
         })
+        .state('secondGrillIssues', {
+          url: '/parrillasSalidasSegunda',
+          templateUrl: 'views/report/grill/secondGrillIssues.html',
+          controller: 'reportController',
+          data: {
+            roles: [USER_ROLES.admin]
+          }
+        })
         .state('currentInventory', {
           url: '/InvenarioActualParrillas',
           templateUrl: 'views/report/genericReport.html',
@@ -320,9 +328,9 @@
             roles: [USER_ROLES.admin]
           }
         })
-        .state('secondGrillCurrent',{
+        .state('secondGrillCurrentInv',{
           url: '/InventarioActualParrillasSegunda',
-          templateUrl: 'views/report/SecondCurrentInv.html',
+          templateUrl: 'views/report/grill/secondGrillCurrentInv.html',
           controller: 'reportController',
           data:{
             roles: [USER_ROLES.admin]

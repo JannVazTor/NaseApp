@@ -20,10 +20,8 @@
                             <th>No. de Parrilla</th>
                             <th>Fecha de Captura</th>
                             <th>Folios</th>
-                            <th>Tamaño</th>
                             <th>Sacos</th>
                             <th>Kilos</th>
-                            <th>Calidad</th>
                             <th>Variedad</th>
                             <th>Productor</th>
                             <th>Huerta/Lote</th>
@@ -35,7 +33,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat-start="grillIssue in grillIssues">
+                        <tr ng-repeat-start="grillIssue in secondGrillIssues">
                             <td colspan="3"><b>Remision: </b>{{grillIssue.Remission}}</td>
                             <td colspan="3"><b>Fecha de Captura: </b>:{{grillIssue.DateCapture}}</td>
                             <td colspan="3"><b>Camion: </b>{{grillIssue.Truck}}</td>
@@ -44,12 +42,10 @@
                         </tr>
                         <tr ng-repeat-end ng-repeat="grill in grillIssue.Grills">
                             <td>{{grill.Id}}</td>
-                            <td>{{grill.DateCapture | date:'dd/MM/yyyy'}}</td>
+                            <td>{{grill.DateCapture}}</td>
                             <td>{{grill.Receptions}}</td>
-                            <td>{{grill.Size}}</td>
                             <td>{{grill.Sacks}}</td>
                             <td>{{grill.Kilos}}</td>
-                            <td>{{grill.Quality}}</td>
                             <td>{{grill.Variety}}</td>
                             <td>{{grill.Producer}}</td>
                             <td>{{grill.FieldName}}</td>

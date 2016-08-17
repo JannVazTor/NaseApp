@@ -11,6 +11,7 @@
         };
         $scope.genericGrillReport = [];
         $scope.secondCurrentInventory = [];
+        $scope.secondGrillIssues = [];
 
         $scope.getDailyProcessReport = function (date) {
             var DailyProcess = {
@@ -144,8 +145,8 @@
         };
 
         var GetSecondCurrentInventory = function(){
-            reportService.getSecondCurrentInvetory().then(function(response){
-                if (response.data.length === 0) {msgS.toastMessage(msgS.infoMessaged[10], 1); };
+            reportService.getSecondCurrentInventory().then(function(response){
+                if (response.data.length === 0) {msgS.toastMessage(msgS.infoMessages[10], 1); };
                 $scope.secondCurrentInventory = response.data;
             }, function(response){
                 msgS.toastMessage(msgS.errorMessages[12], 3);
@@ -202,6 +203,29 @@
             }, function (response) {
                 msgS.msg('err', 46);
             });
+        };
+
+        var GetSecondGrillIssues = function () {
+            reportService.getSecondGrillIssuesReport().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 11);
+                } else {
+                    angular.forEach(response.data, function (grillIssue, key) {
+                        delete grillIssue['Id'];
+                        angular.forEach(grillIssue.Grills, function (grill, key) {
+                            delete grill['Status'];
+                        }, this);
+                    }, this);
+                    $scope.secondGrillIssues = response.data;
+                };
+            }, function (response) {
+                msgS.msg('err', 46);
+            });
+        };
+
+        $scope.myFilter = function(item) {
+            debugger;
+            return item.Quality == 2;
         };
 
         var GetColumns = function () {
@@ -565,8 +589,8 @@
                     $scope.dtColumns = GetColumns();
                     $scope.title = 'Inventario Actual (Parrillas)'
                     break;
-                case 'secondGrillCurrent':
-                    GetSecondCurrentInvetory();
+                case 'secondGrillCurrentInv':
+                    GetSecondCurrentInventory();
                     break;
                 case 'processInventory':
                     $scope.dtOptions = GetDtOptionsWithPromise(GetProcessInventory());
@@ -577,6 +601,10 @@
                     GetGrillIssues();
                     $scope.dtOptions = GetDtOptions();
                     $scope.title = 'Salidas (Parrillas)';
+                    break;
+                case 'secondGrillIssues':
+                    GetSecondGrillIssues();
+                    $scope.title = 'Salidas de Segunda Calidad (Parrillas)';
                     break;
                 case 'reportOrigin':
                     $scope.dtOptions = GetDtOptions(GetReportOrigin());
