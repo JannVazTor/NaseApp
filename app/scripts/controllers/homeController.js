@@ -2,17 +2,18 @@
     'use strict'
     angular.module('naseNutAppApp').controller('homeController', function (msgS, $q, $scope, homeService) {
 
-        var GetProductionVariety = function (callback) {
+        var GetProductionVariety = function () {
             homeService.getProductionVariety().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 6);
                 } else {
-                    callback(response.data);
+                    ProduccionVarietyChart(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 15);
             });
         };
+
         function ProduccionVarietyChart(dataO) {
             Highcharts.chart('productionVariety', {
                 chart: {
@@ -21,8 +22,11 @@
                     plotShadow: false,
                     type: 'pie'
                 },
+                credits: {
+                    enabled: false
+                },
                 title: {
-                    text: 'Browser market shares January, 2015 to May, 2015'
+                    text: 'Produccion Acumulada por Variedad'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -103,10 +107,7 @@
             });
         };
         (function () {
-            GetProductionVariety(function(response){
-                ProduccionVarietyChart(JSON.stringify(response));
-            });
-            AcumulatedByProducer();
+            GetProductionVariety();
         })();
     });
 })();
