@@ -14,6 +14,30 @@
             });
         };
 
+        var GetGrillIssuesAndInventory = function () {
+            homeService.grillIssuesAndInventory().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 7);
+                } else {
+                    GrillsIssuesAndInventory(response.data);
+                }
+            }, function (response) {
+                msgS.msg('err', 19);
+            });
+        };
+
+        var GetCylinderOccupiedHours = function () {
+            homeService.cylinderOccupiedHours().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 1);
+                } else {
+                    CylinderOccupiedHours(response.data);
+                }
+            }, function (response) {
+                msgS.msg('err', 6);
+            });
+        };
+
         function ProduccionVarietyChart(dataO) {
             Highcharts.chart('productionVariety', {
                 chart: {
@@ -58,27 +82,25 @@
                     type: 'column'
                 },
                 title: {
-                    text: 'Monthly Average Rainfall'
+                    text: 'Acumulado por Productor'
                 },
                 subtitle: {
-                    text: 'Source: WorldClimate.com'
+                    text: ''
                 },
                 xAxis: {
-                    categories: [
-                        'Acumulado'
-                    ],
+                    categories: [''],
                     crosshair: true
                 },
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'Rainfall (mm)'
+                        text: 'Nuez Acumulada (Kilos)'
                     }
                 },
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
                     footerFormat: '</table>',
                     shared: true,
                     useHTML: true
@@ -91,23 +113,99 @@
                 },
                 series: [{
                     name: 'Nase',
-                    data: [12000]
+                    data: [49.9]
+
                 }, {
-                        name: 'Titanes',
-                        data: [10000]
+                        name: 'Sierra',
+                        data: [83.6]
 
                     }, {
-                        name: 'Otro1',
-                        data: [9000]
+                        name: 'Juan',
+                        data: [48.9]
 
-                    }, {
-                        name: 'Otro2',
-                        data: [15000]
                     }]
             });
         };
+
+        function CylinderOccupiedHours(dataO) {
+            Highcharts.chart('cylinderOccupiedHours', {
+                chart: {
+                    type: 'column'
+                },
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    text: 'Cilindros Ocupados'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: [
+                        ''
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Horas totales ocupadas'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} horas</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: dataO
+            });
+        };
+
+        function GrillsIssuesAndInventory(dataO) {
+            Highcharts.chart('grillIssuesAndInventory', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Parrillas en Inventario y Salidas'
+                },
+                xAxis: {
+                    categories: ['Primeras', 'Segundas']
+                },
+                credits: {
+                    enabled: false
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ''
+                    }
+                },
+                legend: {
+                    reversed: true
+                },
+                plotOptions: {
+                    series: {
+                        stacking: 'normal'
+                    }
+                },
+                series: dataO
+            });
+        }
         (function () {
             GetProductionVariety();
+            GetGrillIssuesAndInventory();
+            GetCylinderOccupiedHours();
         })();
     });
 })();
