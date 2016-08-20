@@ -168,6 +168,32 @@
                 });
 
         };
+
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('grillManageTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Parrillas Procesadas');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:7},
+                margin: {horizontal: 10}
+            });
+            doc.save("ParrillasProcesadas.pdf");
+        };
+
+        $scope.generatePDFCurrent = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('grillCurrentInvTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Inventario Actual de Proceso');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:7},
+                margin: {horizontal: 10}
+            });
+            doc.save("InventarioActual.pdf");
+        };
         var deleteGrill = function (grillId) {
             grillService.delete(grillId).then(function (response) {
                 $.each($scope.grills, function (i) {

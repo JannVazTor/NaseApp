@@ -10,6 +10,8 @@
             ReportDate: ""
         };
         $scope.genericGrillReport = [];
+        $scope.secondCurrentInventory = [];
+        $scope.secondGrillIssues = [];
 
         $scope.getDailyProcessReport = function (date) {
             var DailyProcess = {
@@ -24,6 +26,48 @@
                 msgS.toastMessage(msgS.errorMessages[3], 3);
             });
         };
+
+        $scope.getTotalSmallSacks = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var smallSacks = $scope.dailyProcess[i];
+                        total += (smallSacks.SacksFirstSmall);
+                    }
+                    return total;
+                };
+        $scope.getTotalMediumSacks = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var mediumSacks = $scope.dailyProcess[i];
+                        total += (mediumSacks.SacksFirstMedium);
+                    }
+                    return total;
+                };
+
+        $scope.getTotalLargeSacks = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var largeSacks = $scope.dailyProcess[i];
+                        total += (largeSacks.SacksFirstLarge);
+                    }
+                    return total;
+                };
+        $scope.getTotal = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var smallSacks = $scope.dailyProcess[i];
+                        total += (smallSacks.Total);
+                    }
+                    return total;
+                };
+        $scope.getTotalGerminated = function(){
+                    var total = 0;
+                    for(var i = 0; i < $scope.dailyProcess.length; i++){
+                        var smallSacks = $scope.dailyProcess[i];
+                        total += (smallSacks.Germinated);
+                    }
+                    return total;
+                };
 
         $scope.getTotalSmallSacks = function () {
             var total = 0;
@@ -57,6 +101,7 @@
             }
             return total;
         };
+        
         $scope.reportOrigin = [];
         $scope.producerReport = [];
 
@@ -95,6 +140,15 @@
                 if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1); };
                 $scope.genericGrillReport = response.data;
             }, function (response) {
+                msgS.toastMessage(msgS.errorMessages[12], 3);
+            });
+        };
+
+        var GetSecondCurrentInventory = function(){
+            reportService.getSecondCurrentInventory().then(function(response){
+                if (response.data.length === 0) {msgS.toastMessage(msgS.infoMessages[10], 1); };
+                $scope.secondCurrentInventory = response.data;
+            }, function(response){
                 msgS.toastMessage(msgS.errorMessages[12], 3);
             });
         };
@@ -149,6 +203,29 @@
             }, function (response) {
                 msgS.msg('err', 46);
             });
+        };
+
+        var GetSecondGrillIssues = function () {
+            reportService.getSecondGrillIssuesReport().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 11);
+                } else {
+                    angular.forEach(response.data, function (grillIssue, key) {
+                        delete grillIssue['Id'];
+                        angular.forEach(grillIssue.Grills, function (grill, key) {
+                            delete grill['Status'];
+                        }, this);
+                    }, this);
+                    $scope.secondGrillIssues = response.data;
+                };
+            }, function (response) {
+                msgS.msg('err', 46);
+            });
+        };
+
+        $scope.myFilter = function(item) {
+            debugger;
+            return item.Quality == 2;
         };
 
         var GetColumns = function () {
@@ -320,31 +397,91 @@
         };
 
         $scope.ExportExcel = function () {
-            $("#genericReport").tableExport({
-                type: 'excel',
+            $("reportingProcess").tableExport({
+                headings: true,
+                footers: true,
+                formats: ["xls"],
+                fileName:"ReporteProceso",
+                type: 'xls',
                 escape: false
             });
         };
+        
+        $scope.reportingProcessExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('reportingProcess');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Proceso');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 8}
+            });
+            doc.save('Proceso' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
 
-        $scope.CopyToClipBoard = function (el) {
-            var body = document.body, range, sel;
-            if (document.createRange && window.getSelection) {
-                range = document.createRange();
-                sel = window.getSelection();
-                sel.removeAllRanges();
-                try {
-                    range.selectNodeContents(el);
-                    sel.addRange(range);
-                } catch (e) {
-                    range.selectNode(el);
-                    sel.addRange(range);
-                }
-            } else if (body.createTextRange) {
-                range = body.createTextRange();
-                range.moveToElementText(el);
-                range.select();
-                range.execCommand("Copy");
-            }
+        $scope.producerReportExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('producerReport');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Productor');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 8}
+            });
+            doc.save('Productor' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.grillIssuesExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('grillIssues');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Salidas');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 8}
+            });
+            doc.save('Salidas' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.dailyExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('daily');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte Diario de Proceso');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 8}
+            });
+            doc.save('Proceso Diario' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.originReportExportPdf = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('originReportTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Origen Acumulado');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:12},
+            });
+            doc.save('Produccion Origen Acumulado' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.issuesExportPdf = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('daily');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Producción de Nuez Acumulado');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:7},
+                margin: {horizontal: 10}
+            });
+            doc.save('ReporteProduccionAcumulado' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
 
         $scope.GrillExportPdf = function () {
@@ -416,6 +553,21 @@
             doc.save(title + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
 
+        $scope.generatePdf = function () {
+            var
+             form = $('#PDF'),
+             cache_width = form.width(),
+             a4 = [595.28, 841.89];  // for a4 size paper width and height
+             var doc = new jsPDF({
+                 unit: 'px',
+                 format: 'a4'
+                });
+                doc.addHTML(document.body,function() {
+                    doc.save('SalidasSegunda.pdf');
+                form.width(cache_width);
+                });
+            };
+
         (function () {
             switch ($state.current.name) {
                 case 'producerReport':
@@ -431,6 +583,9 @@
                     $scope.dtColumns = GetColumns();
                     $scope.title = 'Inventario Actual (Parrillas)'
                     break;
+                case 'secondGrillCurrentInv':
+                    GetSecondCurrentInventory();
+                    break;
                 case 'processInventory':
                     $scope.dtOptions = GetDtOptionsWithPromise(GetProcessInventory());
                     $scope.dtColumns = GetColumns();
@@ -441,8 +596,14 @@
                     $scope.dtOptions = GetDtOptions();
                     $scope.title = 'Salidas (Parrillas)';
                     break;
+                case 'secondGrillIssues':
+                    GetSecondGrillIssues();
+                    $scope.title = 'Salidas de Segunda Calidad (Parrillas)';
+                    break;
                 case 'reportOrigin':
                     $scope.dtOptions = GetDtOptions(GetReportOrigin());
+                    break;
+                case 'dailyReport':
                     break;
                 default:
                     break;

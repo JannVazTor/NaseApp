@@ -14,7 +14,11 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-vmiddle">
+            <hr>
+            <button class="btn btn-link" ng-click="generatePDF()">
+                <span class="glyphicon glyphicon-share"></span>Exportar PDF
+            </button>
+            <table id="receptionTable" class="table table-striped table-vmiddle">
                 <thead>
                     <tr>
                         <th>Folio</th>
@@ -53,7 +57,7 @@
                             <span class="md md-delete"></span>
                         </button>
                             <button class="btn btn-icon command-edit" ng-click="redirectReceptionToGrill(reception.Folio, reception.Id)" data-toggle="tooltip"
-                                data-placement="bottom" title="Asignar resepcion a parrilla">
+                                data-placement="bottom" title="Asignar recepcion a parrilla">
                             <span class="md md-view-module"></span>
                         </button>
                             <button class="btn btn-icon command-edit" ng-click="redirectAddRemission(reception.Folio)" data-toggle="tooltip"

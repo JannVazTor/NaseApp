@@ -83,6 +83,17 @@
                 });
         };
 
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('data-table-command');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Humedades Registradas');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+            });
+            doc.save("Humedades Registradas.pdf");
+        };
+
         var deleteHumidity = function (Id) {
             humidityService.delete(Id).then(function (response) {
                 if ($state.current.name === 'humidityManage') {

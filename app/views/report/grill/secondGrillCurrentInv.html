@@ -1,7 +1,7 @@
 <div class="animated bounceInRight">
     <div class="card">
         <div class="card-header">
-            <h2>{{title}}</h2>
+            <h2>Inventario Actual Segunda Calidad (Parrillas)</h2>
         </div>
         <div class="card-body card-padding">
             <div class="row">
@@ -30,10 +30,8 @@
                             <th>No. Parrilla</th>
                             <th>Fecha de Captura</th>
                             <th>Folios</th>
-                            <th>Tamaño</th>
                             <th>Sacos</th>
                             <th>Kilos</th>
-                            <th>Calidad</th>
                             <th>Variedad</th>
                             <th>Productor</th>
                             <th>Campo</th>
@@ -45,14 +43,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="grill in genericGrillReport | filter:searchGrillReport">
+                        <tr ng-repeat="grill in secondCurrentInventory | filter:searchGrillReport">
                             <td>{{grill.Id}}</td>
                             <td>{{grill.DateCapture}}</td>
                             <td>{{grill.Receptions}}</td>
-                            <td>{{grill.Size}}</td>
                             <td>{{grill.Sacks}}</td>
                             <td>{{grill.Kilos}}</td>
-                            <td>{{grill.Quality}}</td>
                             <td>{{grill.Variety}}</td>
                             <td>{{grill.Producer}}</td>
                             <td>{{grill.FieldName}}</td>

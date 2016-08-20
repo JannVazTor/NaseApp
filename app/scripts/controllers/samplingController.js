@@ -85,6 +85,32 @@
             }
         };
 
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('samplingGrillTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Muestreos de Parrillas');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:8},
+                margin: {horizontal: 10}
+            });
+            doc.save("MuestreosParrillas.pdf");
+        };
+
+        $scope.generatePDFReceptions = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('SamplingReceptionTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Muestreos de Recepciones');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:8},
+                margin: {horizontal: 10}
+            });
+            doc.save("MuestreosRecepciones.pdf");
+        };
+
         (function () {
             switch ($state.current.name) {
                 case 'samplingGrillManage':
