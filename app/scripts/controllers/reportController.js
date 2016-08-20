@@ -18,12 +18,9 @@
                 ReportDate: $('#reportDate').val(),
             };
             reportService.getDailyProcess(DailyProcess).then(function (response) {
-                $scope.savedSuccessfully = true;
                 $scope.dailyProcess = response.data;
-                $scope.dtOptions = GetDtOptions(GetDailyProcess);
-                msgS.toastMessage(msgS.successMessages[3], 2);
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
+                msgS.toastMessage(msgS.errorMessages[8], 3);
             });
         };
 
