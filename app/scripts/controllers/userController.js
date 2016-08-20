@@ -7,6 +7,15 @@
     $scope.registration.Role = "";
     $scope.passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
+    $scope.generatePDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('userTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Usuarios Registrados');
+            doc.autoTable(res.columns, res.data, {startY: 60});
+            doc.save("UsuariosRegistrados.pdf");
+        };
+
     var GetAllUsers = function () {
       userService.getAll().then(function (response) {
         $scope.users = ReplaceRoleNames(response.data, 'Role');

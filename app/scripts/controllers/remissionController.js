@@ -218,6 +218,19 @@
             }
         };
 
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('remissionTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Remisiones Registradas');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:8},
+                margin: {horizontal: 10}
+            });
+            doc.save("RemisionesRegistradas.pdf");
+        };
+
         function FillUpdateRemissionObject(remissionUpdateModel) {
             $scope.remission.Id = remissionUpdateModel.Id
             $scope.remission.Quantity = remissionUpdateModel.Quantity,

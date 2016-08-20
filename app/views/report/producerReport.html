@@ -23,35 +23,39 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <table datatable="ng" dt-options="dtOptions" class="table table-striped table-bordered">
+            <hr>
+            <button class="btn btn-link" ng-click="producerReportExportPdf()">
+                    <span class="glyphicon glyphicon-share"></span> Exportar PDF
+            </button>
+            <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('producerReport'))">
+                    <span class="glyphicon glyphicon-share"></span> Copiar Reporte
+            </button>
+                <table id="producerReport" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th rowspan="2">Remisión</th>
-                            <th rowspan="2">Fecha de Captura</th>
-                            <th rowspan="2">Fecha de Proceso</th>
-                            <th rowspan="2">Variedad</th>
-                            <th rowspan="2">Huerta/s</th>
-                            <th rowspan="2">Cilindro</th>
-                            <th rowspan="2">Folio</th>
-                            <th rowspan="2">Kgs. Origen</th>
-                            <th rowspan="2">Sacos de Primera</th>
-                            <th rowspan="2">Kgs. de Primera</th>
-                            <th rowspan="2">Sacos Segunda</th>
-                            <th rowspan="2">Kgs. de Segunda</th>
-                            <th rowspan="2">Total</th>
-                            <th colspan="3">Sacos de Primera</th>
-                            <th rowspan="2">Total</th>
-                        </tr>
-                        <tr>
+                            <th>Remisión</th>
+                            <th>Fecha de Captura</th>
+                            <th>Fecha de Proceso</th>
+                            <th>Variedad</th>
+                            <th>Huerta/s</th>
+                            <th>Cilindro</th>
+                            <th>Folio</th>
+                            <th>Kgs. Origen</th>
+                            <th>Sacos de Primera</th>
+                            <th>Kgs. de Primera</th>
+                            <th>Sacos Segunda</th>
+                            <th>Kgs. de Segunda</th>
+                            <th>Total</th>
                             <th>Chica</th>
                             <th>Mediana</th>
                             <th>Grande</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="report in producerReport">
                             <td>{{report.Remission}}</td>
-                            <td>{{report.DateReceptionCapture | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{report.DateReceptionCapture}}</td>
                             <td>{{report.ProcessDate | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{report.Variety}}</td>
                             <td>{{report.Batch}}</td>

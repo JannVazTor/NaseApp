@@ -58,6 +58,7 @@
             }
         };
         $scope.saveReceptionEntry = function (receptionEntry) {
+            debugger;
             if ($scope.receptions.length === 0) {
                 msgS.toastMessage(msgS.infoMessages[0], 1);
             } else {
@@ -305,6 +306,19 @@
             } else {
                 $state.go('home');
             }
+        };
+
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('receptionTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Recepciones Registradas');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:8},
+                margin: {horizontal: 10}
+            });
+            doc.save("RecepcionesRegistradas.pdf");
         };
 
         (function () {

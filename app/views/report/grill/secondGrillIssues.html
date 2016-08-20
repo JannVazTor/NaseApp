@@ -5,22 +5,22 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <button class="btn btn-link" ng-click="grillIssuesExportPdf()">
-                    <span class="glyphicon glyphicon-share"></span> Exportar a PDF
-                </button>
+                <button class="btn btn-link" id="generar" onclick="generatePdf()">
+                    <span class="glyphicon glyphicon-share"></span> Exportar PDF
+                    </button>
                 <button class="btn btn-link" onclick="selectElementContents(document.getElementById('grillIssues'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
                 </button>
+                <body>
+                <div id="PDF">
                 <table id="grillIssues" class="table table-bordered">
                     <thead>
                         <tr>
                             <th>No. de Parrilla</th>
                             <th>Fecha de Captura</th>
                             <th>Folios</th>
-                            <th>Tamaño</th>
                             <th>Sacos</th>
                             <th>Kilos</th>
-                            <th>Calidad</th>
                             <th>Variedad</th>
                             <th>Productor</th>
                             <th>Huerta/Lote</th>
@@ -32,7 +32,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat-start="grillIssue in grillIssues">
+                        <tr ng-repeat-start="grillIssue in secondGrillIssues">
                             <td colspan="3"><b>Remision: </b>{{grillIssue.Remission}}</td>
                             <td colspan="3"><b>Fecha de Captura: </b>:{{grillIssue.DateCapture}}</td>
                             <td colspan="3"><b>Camion: </b>{{grillIssue.Truck}}</td>
@@ -43,10 +43,8 @@
                             <td>{{grill.Id}}</td>
                             <td>{{grill.DateCapture}}</td>
                             <td>{{grill.Receptions}}</td>
-                            <td>{{grill.Size}}</td>
                             <td>{{grill.Sacks}}</td>
                             <td>{{grill.Kilos}}</td>
-                            <td>{{grill.Quality}}</td>
                             <td>{{grill.Variety}}</td>
                             <td>{{grill.Producer}}</td>
                             <td>{{grill.FieldName}}</td>
@@ -58,7 +56,42 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
+                </body>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function generatePdf () {
+            var
+             form = $('#PDF'),
+             cache_width = form.width(),
+             a4 = [595.28, 841.89];  // for a4 size paper width and height
+             
+             $('body').scrollTop(0);
+             createPDF();
+            //create pdf
+            function createPDF() {
+                getCanvas().then(function (canvas) {
+                    var
+                    doc = new jsPDF({
+                        unit: 'px',
+                        format: 'a4'
+                    });
+                    doc.addHTML(document.body, function() {
+                        doc.save('ReporteInventarioSegunda.pdf');
+                        form.width(cache_width);
+                    });
+                });
+            }
+
+            // create canvas object
+            function getCanvas() {
+                //form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+                return html2canvas(form, {
+                    removeContainer: true
+                });
+            }
+        }
+</script>

@@ -61,6 +61,16 @@
                 msgS.toastMessage(msgS.errorMessages[4], 3);
             });
         };
+
+        $scope.generatePDF = function(){
+            var doc = new jsPDF('p', 'pt');
+            var elem = document.getElementById('cylinderTable');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Cilindros Registrados');
+            doc.autoTable(res.columns, res.data, {startY: 60});
+            doc.save("CilindrosRegistrados.pdf");
+        };
+
         GetAllCylinders();
     });
 })();
