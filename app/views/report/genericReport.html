@@ -20,11 +20,8 @@
             <button class="btn btn-link" ng-click="GrillExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
             </button>
-            <button class="btn btn-link" ng-click="ExportExcel()">
-                    <span class="glyphicon glyphicon-share"></span> Exportar Excel
-            </button>
-            <button class="btn btn-link" value="select genericReport" ng-click="CopyToClipBoard(document.getElementById('genericReport'))">
-                    <span class="glyphicon glyphicon-share"></span> Copiar
+            <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('genericReport'))">
+                    <span class="glyphicon glyphicon-share"></span> Copiar Reporte
             </button>
             <div class="table-responsive">
                 <table id="genericReport" class="table table-striped table-bordered">
@@ -50,7 +47,7 @@
                     <tbody>
                         <tr ng-repeat="grill in genericGrillReport | filter:searchGrillReport">
                             <td>{{grill.Id}}</td>
-                            <td>{{grill.DateCapture | date:'dd/MM/yyyy'}}</td>
+                            <td>{{grill.DateCapture}}</td>
                             <td>{{grill.Receptions}}</td>
                             <td>{{grill.Size}}</td>
                             <td>{{grill.Sacks}}</td>

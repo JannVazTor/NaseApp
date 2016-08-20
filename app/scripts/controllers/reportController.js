@@ -406,28 +406,7 @@
                 escape: false
             });
         };
-
-        $scope.CopyToClipBoard = function (el) {
-            var body = document.body, range, sel;
-            if (document.createRange && window.getSelection) {
-                range = document.createRange();
-                sel = window.getSelection();
-                sel.removeAllRanges();
-                try {
-                    range.selectNodeContents(el);
-                    sel.addRange(range);
-                } catch (e) {
-                    range.selectNode(el);
-                    sel.addRange(range);
-                }
-            } else if (body.createTextRange) {
-                range = body.createTextRange();
-                range.moveToElementText(el);
-                range.select();
-                range.execCommand("Copy");
-            }
-        };
-
+        
         $scope.reportingProcessExportPdf = function(){
             var doc = new jsPDF('l', 'pt');
             var elem = document.getElementById('reportingProcess');
@@ -574,6 +553,21 @@
             doc.save(title + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
 
+        $scope.generatePdf = function () {
+            var
+             form = $('#PDF'),
+             cache_width = form.width(),
+             a4 = [595.28, 841.89];  // for a4 size paper width and height
+             var doc = new jsPDF({
+                 unit: 'px',
+                 format: 'a4'
+                });
+                doc.addHTML(document.body,function() {
+                    doc.save('SalidasSegunda.pdf');
+                form.width(cache_width);
+                });
+            };
+
         (function () {
             switch ($state.current.name) {
                 case 'producerReport':
@@ -610,7 +604,6 @@
                     $scope.dtOptions = GetDtOptions(GetReportOrigin());
                     break;
                 case 'dailyReport':
-                    $scope.dtOptions = GetDtOptions(GetDailyProcess());
                     break;
                 default:
                     break;

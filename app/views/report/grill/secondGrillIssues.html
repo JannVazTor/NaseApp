@@ -5,15 +5,14 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <button class="btn btn-link" ng-click="grillIssuesExportPdf()">
-                    <span class="glyphicon glyphicon-share"></span> Exportar a PDF
+                <button class="btn btn-link" id="generar" onclick="generatePdf()">
+                    <span class="glyphicon glyphicon-share"></span> Exportar PDF
+                    </button>
+                <button class="btn btn-link" onclick="selectElementContents(document.getElementById('grillIssues'))">
+                    <span class="glyphicon glyphicon-share"></span> Copiar Reporte
                 </button>
-                <button class="btn btn-link" ng-click="ExportExcel()">
-                    <span class="glyphicon glyphicon-share"></span> Importar a Excel
-                </button>
-                <button class="btn btn-link" ng-click="exportToExcel('#tableId')">
-                    <span class="glyphicon glyphicon-share"></span> Export to Excel
-                </button>
+                <body>
+                <div id="PDF">
                 <table id="grillIssues" class="table table-bordered">
                     <thead>
                         <tr>
@@ -57,7 +56,42 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
+                </body>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function generatePdf () {
+            var
+             form = $('#PDF'),
+             cache_width = form.width(),
+             a4 = [595.28, 841.89];  // for a4 size paper width and height
+             
+             $('body').scrollTop(0);
+             createPDF();
+            //create pdf
+            function createPDF() {
+                getCanvas().then(function (canvas) {
+                    var
+                    doc = new jsPDF({
+                        unit: 'px',
+                        format: 'a4'
+                    });
+                    doc.addHTML(document.body, function() {
+                        doc.save('ReporteInventarioSegunda.pdf');
+                        form.width(cache_width);
+                    });
+                });
+            }
+
+            // create canvas object
+            function getCanvas() {
+                //form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+                return html2canvas(form, {
+                    removeContainer: true
+                });
+            }
+        }
+</script>

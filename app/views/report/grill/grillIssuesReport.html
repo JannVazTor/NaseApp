@@ -8,11 +8,8 @@
                 <button class="btn btn-link" ng-click="grillIssuesExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar a PDF
                 </button>
-                <button class="btn btn-link" ng-click="ExportExcel()">
-                    <span class="glyphicon glyphicon-share"></span> Importar a Excel
-                </button>
-                <button class="btn btn-link" ng-click="exportToExcel('#tableId')">
-                    <span class="glyphicon glyphicon-share"></span> Export to Excel
+                <button class="btn btn-link" onclick="selectElementContents(document.getElementById('grillIssues'))">
+                    <span class="glyphicon glyphicon-share"></span> Copiar Reporte
                 </button>
                 <table id="grillIssues" class="table table-bordered">
                     <thead>
@@ -44,7 +41,7 @@
                         </tr>
                         <tr ng-repeat-end ng-repeat="grill in grillIssue.Grills">
                             <td>{{grill.Id}}</td>
-                            <td>{{grill.DateCapture | date:'dd/MM/yyyy'}}</td>
+                            <td>{{grill.DateCapture}}</td>
                             <td>{{grill.Receptions}}</td>
                             <td>{{grill.Size}}</td>
                             <td>{{grill.Sacks}}</td>

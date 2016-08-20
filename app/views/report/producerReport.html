@@ -27,11 +27,8 @@
             <button class="btn btn-link" ng-click="producerReportExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
             </button>
-            <button class="btn btn-link" ng-click="">
-                    <span class="glyphicon glyphicon-share"></span> Exportar Excel
-            </button>
-            <button class="btn btn-link" value="select genericReport" ng-click="CopyToClipBoard(document.getElementById('producerReport'))">
-                    <span class="glyphicon glyphicon-share"></span> Copiar
+            <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('producerReport'))">
+                    <span class="glyphicon glyphicon-share"></span> Copiar Reporte
             </button>
                 <table id="producerReport" class="table table-striped table-bordered">
                     <thead>
@@ -58,7 +55,7 @@
                     <tbody>
                         <tr ng-repeat="report in producerReport">
                             <td>{{report.Remission}}</td>
-                            <td>{{report.DateReceptionCapture | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{report.DateReceptionCapture}}</td>
                             <td>{{report.ProcessDate | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{report.Variety}}</td>
                             <td>{{report.Batch}}</td>
