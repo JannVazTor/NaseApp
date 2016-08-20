@@ -38,6 +38,18 @@
             });
         };
 
+        var GetAverageNumberOfNuts = function () {
+            homeService.averageNumberOfNuts().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 2);
+                } else {
+                    AverageNumberOfNuts(response.data);
+                }
+            }, function (response) {
+                msgS.msg('err', 7);
+            });
+        };
+
         function ProduccionVarietyChart(dataO) {
             Highcharts.chart('productionVariety', {
                 chart: {
@@ -201,11 +213,63 @@
                 },
                 series: dataO
             });
-        }
+        };
+
+        function AverageNumberOfNuts(dataO) {
+            Highcharts.chart('averageNumberOfNuts', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Nummero de Nueces promedio por Variedad'
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Numero de nueces promedio'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}'
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> of total<br/>'
+                },
+
+                series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: dataO
+                }],
+                drilldown: {
+                    series: []
+                }
+            });
+        };
         (function () {
             GetProductionVariety();
             GetGrillIssuesAndInventory();
             GetCylinderOccupiedHours();
+            GetAverageNumberOfNuts();
         })();
     });
 })();

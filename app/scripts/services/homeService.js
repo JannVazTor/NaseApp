@@ -13,10 +13,15 @@
             return $http.get(apiPath + 'api/homeDash/cylinderOccupiedHours');
         }
 
+        var _averageNumberOfNuts = function(){
+            return $http.get(apiPath + 'api/homeDash/averageNumberOfNuts');
+        }
+
         return{
             getProductionVariety: _getProductionVariety,
             grillIssuesAndInventory: _grillIssuesAndInventory,
-            cylinderOccupiedHours: _cylinderOccupiedHours
+            cylinderOccupiedHours: _cylinderOccupiedHours,
+            averageNumberOfNuts: _averageNumberOfNuts
         };
     });
 })();
