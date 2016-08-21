@@ -131,7 +131,8 @@
             'Ocurrio un error y la grafica "Numero de Nueces promedio por variedad" no pudo ser cargada.',//57
             'Ocurrio un error y la grafica "Cilindros ocupados" no pudo ser cargada.',//58
             'Ocurrio un error y la grafica "Parrillas en Inventario" no pudo ser cargada.',//59
-            'Ocurrio un error y la grafica "Produccion acumulada por variedad" no pudo ser cargada.'];
+            'Ocurrio un error y la grafica "Produccion acumulada por variedad" no pudo ser cargada.',//60
+            'Ocurrio un error y la grafica "Porcentaje de Primeras y Segundas (Variedades)" no pudo ser cargada.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -168,7 +169,8 @@
             'No se encontraron datos para la grafica "Numero de Nueces promedio por variedad"',//13
             'No se encontraron datos para la grafica "Cilindros ocupados"',//14
             'No se encontraron datos para la grafica "Parrillas en Inventario"',//15
-            'No se encontraron datos para la grafica "Produccion acumulada por variedad"'];
+            'No se encontraron datos para la grafica "Produccion acumulada por variedad"',//16
+            'No se encontraron datos para la grafica "Porcentaje de Primeras y Segundas (Variedades)"'];
 
         var _swalConfig = function (title) {
             return {

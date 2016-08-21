@@ -61,6 +61,22 @@
             });
         };
 
+        var GetPercentageOfFirstAndSecond = function () {
+            homeService.percentageOfFirstAndSecond().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 17);
+                } else {
+                    var categories = response.data[0].categories;
+                    $.each(response.data, function (i) {
+                       delete response.data[i]['categories'];
+                    });
+                    PercentageOfFirstAndSecond(categories, response.data);
+                }
+            }, function (response) {
+                msgS.msg('err', 61);
+            });
+        };
+
         function ProduccionVarietyChart(dataO) {
             Highcharts.chart('productionVariety', {
                 chart: {
@@ -126,7 +142,7 @@
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.1f} kilos</b></td></tr>',
                     footerFormat: '</table>',
                     shared: true,
                     useHTML: true
@@ -254,7 +270,7 @@
 
                 tooltip: {
                     headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> of total<br/>'
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> promedio<br/>'
                 },
 
                 series: [{
@@ -267,12 +283,46 @@
                 }
             });
         };
+
+        function PercentageOfFirstAndSecond(categories, dataO) {
+            Highcharts.chart('percentageOfFirstAndSecond', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Porcentaje de Primeras y Segundas (Variedades)'
+                },
+                xAxis: {
+                    categories: categories
+                },
+                credits: {
+                    enabled: false
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'porcentaje de primeras y segundas'
+                    }
+                },
+                tooltip: {
+                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y} kilos</b> ({point.percentage:.0f}%)<br/>',
+                    shared: true
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'percent'
+                    }
+                },
+                series: dataO
+            });
+        };
         (function () {
             GetProductionVariety();
             GetGrillIssuesAndInventory();
             GetCylinderOccupiedHours();
             GetAverageNumberOfNuts();
             GetAcumulatedByProducer();
+            GetPercentageOfFirstAndSecond();
         })();
     });
 })();
