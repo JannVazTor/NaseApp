@@ -17,11 +17,15 @@
             return $http.get(apiPath + 'api/homeDash/averageNumberOfNuts');
         }
 
+        var _accumulatedNutProducer = function(){
+            return $http.get(apiPath + 'api/homeDash/accumulatedNutProducer');
+        }
         return{
             getProductionVariety: _getProductionVariety,
             grillIssuesAndInventory: _grillIssuesAndInventory,
             cylinderOccupiedHours: _cylinderOccupiedHours,
-            averageNumberOfNuts: _averageNumberOfNuts
+            averageNumberOfNuts: _averageNumberOfNuts,
+            accumulatedNutProducer: _accumulatedNutProducer
         };
     });
 })();

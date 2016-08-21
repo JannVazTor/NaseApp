@@ -1,52 +1,63 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('homeController', function (msgS, $q, $scope, homeService) {
-
         var GetProductionVariety = function () {
             homeService.getProductionVariety().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 6);
+                    msgS.msg('info', 16);
                 } else {
                     ProduccionVarietyChart(response.data);
                 }
             }, function (response) {
-                msgS.msg('err', 15);
+                msgS.msg('err', 60);
             });
         };
 
         var GetGrillIssuesAndInventory = function () {
             homeService.grillIssuesAndInventory().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 7);
+                    msgS.msg('info', 15);
                 } else {
                     GrillsIssuesAndInventory(response.data);
                 }
             }, function (response) {
-                msgS.msg('err', 19);
+                msgS.msg('err', 59);
             });
         };
 
         var GetCylinderOccupiedHours = function () {
             homeService.cylinderOccupiedHours().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 1);
+                    msgS.msg('info', 14);
                 } else {
                     CylinderOccupiedHours(response.data);
                 }
             }, function (response) {
-                msgS.msg('err', 6);
+                msgS.msg('err', 58);
             });
         };
 
         var GetAverageNumberOfNuts = function () {
             homeService.averageNumberOfNuts().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 2);
+                    msgS.msg('info', 13);
                 } else {
                     AverageNumberOfNuts(response.data);
                 }
             }, function (response) {
-                msgS.msg('err', 7);
+                msgS.msg('err', 57);
+            });
+        };
+
+        var GetAcumulatedByProducer = function () {
+            homeService.accumulatedNutProducer().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 12);
+                } else {
+                    AcumulatedByProducer(response.data);
+                }
+            }, function (response) {
+                msgS.msg('err', 56);
             });
         };
 
@@ -88,7 +99,7 @@
             });
         };
 
-        function AcumulatedByProducer() {
+        function AcumulatedByProducer(dataO) {
             Highcharts.chart('acumulatedByProducer', {
                 chart: {
                     type: 'column'
@@ -98,6 +109,9 @@
                 },
                 subtitle: {
                     text: ''
+                },
+                credits: {
+                    enabled: false
                 },
                 xAxis: {
                     categories: [''],
@@ -123,19 +137,7 @@
                         borderWidth: 0
                     }
                 },
-                series: [{
-                    name: 'Nase',
-                    data: [49.9]
-
-                }, {
-                        name: 'Sierra',
-                        data: [83.6]
-
-                    }, {
-                        name: 'Juan',
-                        data: [48.9]
-
-                    }]
+                series: dataO
             });
         };
 
@@ -270,6 +272,7 @@
             GetGrillIssuesAndInventory();
             GetCylinderOccupiedHours();
             GetAverageNumberOfNuts();
+            GetAcumulatedByProducer();
         })();
     });
 })();

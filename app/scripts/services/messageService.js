@@ -126,7 +126,12 @@
             'El Cuadro ya existe en la base de datos.',//52
             'Una de los Folios ya existe en la base de datos.',//53
             'Se debe agregar al menos un tipo de nuez, sacos y kilos.',//54
-            'Ocurrio un error y el resultado de proceso no pudo ser guardado.'];
+            'Ocurrio un error y el resultado de proceso no pudo ser guardado.',//55
+            'Ocurrio un error y la grafica "Acumulado por Productor" no pudo ser cargada.',//56
+            'Ocurrio un error y la grafica "Numero de Nueces promedio por variedad" no pudo ser cargada.',//57
+            'Ocurrio un error y la grafica "Cilindros ocupados" no pudo ser cargada.',//58
+            'Ocurrio un error y la grafica "Parrillas en Inventario" no pudo ser cargada.',//59
+            'Ocurrio un error y la grafica "Produccion acumulada por variedad" no pudo ser cargada.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -158,7 +163,12 @@
             'No se encontraron tomas de humedad en la base de datos.',//8
             'No se encontraron cuadros en la base de datos.',//9
             'No se encontraron huertas/lotes en la base de datos.',//10
-            'No se encontraron salidas de parrillas en la base de datos.'];
+            'No se encontraron salidas de parrillas en la base de datos.',//11
+            'No se encontraron datos para la grafica "Acumulado por Productor"',//12
+            'No se encontraron datos para la grafica "Numero de Nueces promedio por variedad"',//13
+            'No se encontraron datos para la grafica "Cilindros ocupados"',//14
+            'No se encontraron datos para la grafica "Parrillas en Inventario"',//15
+            'No se encontraron datos para la grafica "Produccion acumulada por variedad"'];
 
         var _swalConfig = function (title) {
             return {
