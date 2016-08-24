@@ -74,10 +74,10 @@
                         element.Added = false;
                     }, this);
                 } else {
-                    msgS.toastMessage(msgS.infoMessages[12], 1);
+                    msgS.msg('info', 7);
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessage[15], 3);
+                msgS.msg('err', 19);
             });
         };
 
@@ -85,10 +85,10 @@
             grillService.getAllIssues().then(function (response) {
                 $scope.issues = response.data;
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[13], 1);
+                    msgS.msg('info', 11);
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessage[16], 3);
+                msgS.msg('err', 46);
             });
         };
 

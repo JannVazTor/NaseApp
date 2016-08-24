@@ -24,7 +24,7 @@
                 msgS.msg('succ', 17);
                 $state.go('samplingGrillManage');
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
+                msgS.msg('err', 72);
             });
         };
 
@@ -45,7 +45,7 @@
                 });
                 msgS.swalSuccess();
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
+                msgS.msg('err', 73);
             });
         };
 
@@ -57,23 +57,23 @@
         $scope.UpdateSampling = function () {
             $scope.sampling.DateCapture = $('#EntryDate').val();
             samplingService.update($scope.sampling).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[1], 2);;
+                msgS.msg('succ', 27);
                 $state.go($rootScope.prevState);
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[9], 3);
+                msgS.msg('err', 91);
             });
         }
 
         var GetAllGrillSamplings = function () {
             samplingService.getAllGrills().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[11], 1);
+                    msgS.msg('info', 19);
                 } else {
                     if ($scope.samplings.length !== 0) $scope.samplings = [];
                     $scope.samplings = response.data;
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[13], 3);
+                msgS.msg('err', 92);
             });
         };
 

@@ -15,10 +15,10 @@
                 if (response.data.length !== 0) {
                     $scope.humiditiesInReceptionEntry = response.data;
                 } else {
-                    msgS.toastMessage(msgS.infoMessages[9], 1);
+                    msgS.msg('info', 18);
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[11], 3);
+                msgS.msg('err',71);
             });
         };
 
@@ -27,10 +27,10 @@
                 if (response.data.length !== 0) {
                     $scope.humiditiesInReceptionEntry = response.data;
                 } else {
-                    msgS.toastMessage(msgS.infoMessages[6], 1);
+                    msgS.msg('info', 18);
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[7], 3);
+                msgS.msg('err', 71);
             });
         };
 
@@ -70,9 +70,9 @@
             };
             humidityService.save(Humidity).then(function (response) {
                 GetAllHumiditiesByReception();
-                msgS.toastMessage(msgS.successMessages[3], 2);
+                msgS.msg('succ', 21);
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
+                msgS.msg('err', 69);
             });
         };
 
@@ -123,7 +123,7 @@
                     GetAllHumiditiesLastSamplings();
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
+                msgS.msg('err', 70);
             });
         };
 
