@@ -18,9 +18,13 @@
                 ReportDate: $('#reportDate').val(),
             };
             reportService.getDailyProcess(DailyProcess).then(function (response) {
-                $scope.dailyProcess = response.data;
+                if (response.data.length === 0){
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.dailyProcess = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[8], 3);
+                msgS.msg('err', 14);
             });
         };
 
@@ -104,68 +108,87 @@
 
         $scope.getProducerReport = function (id) {
             reportService.getProducerReport(id).then(function (response) {
-                $scope.producerReport = response.data;
+                if (response.data.length === 0){
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.producerReport = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[8], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[5], 1);
+                    msgS.msg('info', 5);
                 } else {
                     $scope.producers = response.data;
                     $scope.producer = $scope.producers[0];
                 };
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[8], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetReportingProcess = function () {
             reportService.getReportingProcess().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[7], 1);; }
-                $scope.reportingProcess = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.reportingProcess = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetCurrentInventory = function () {
             reportService.getCurrentInventoryReport().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1); };
-                $scope.genericGrillReport = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.genericGrillReport = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetSecondCurrentInventory = function () {
             reportService.getSecondCurrentInventory().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1); };
-                $scope.secondCurrentInventory = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.secondCurrentInventory = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetProcessInventory = function () {
             reportService.getProcessInventory().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1) };
-                $scope.genericGrillReport = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.genericGrillReport = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetDailyProcess = function () {
             var defer = $q.defer();
             reportService.getDailyProcess().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1) };
-                $scope.dailyProcess = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.dailyProcess = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
                 defer.reject();
             });
             return defer.promise;
@@ -174,7 +197,7 @@
         var GetReportOrigin = function () {
             reportService.getReportOrigin().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 5)
+                    msgS.msg('info', 5);
                 } else {
                     $scope.reportOrigin = response.data;
                     $scope.reportOriginFirst = $scope.reportOrigin[0];
@@ -217,22 +240,6 @@
                 };
             }, function (response) {
                 msgS.msg('err', 46);
-            });
-        };
-
-        $scope.myFilter = function (item) {
-            debugger;
-            return item.Quality == 2;
-        };
-
-        $scope.ExportExcel = function () {
-            $("reportingProcess").tableExport({
-                headings: true,
-                footers: true,
-                formats: ["xls"],
-                fileName: "ReporteProceso",
-                type: 'xls',
-                escape: false
             });
         };
 
