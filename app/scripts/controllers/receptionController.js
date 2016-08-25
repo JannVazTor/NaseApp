@@ -54,22 +54,21 @@
                     Observations: reception.Observations
                 });
             } else {
-                msgS.toastMessage(msgS.infoMessages[1], 1);
+                msgS.msg('err', 78);
             }
         };
         $scope.saveReceptionEntry = function (receptionEntry) {
-            debugger;
             if ($scope.receptions.length === 0) {
-                msgS.toastMessage(msgS.infoMessages[0], 1);
+                msgS.msg('err', 79);
             } else {
                 if (!receptionEntry.Cylinder) {
-                    msgS.toastMessage(msgS.infoMessages[2], 1);
+                    msgS.msg('err', 80);
                 } else {
                     if (!receptionEntry.Variety) {
-                        msgS.toastMessage(msgS.infoMessages[3], 1);
+                        msgS.msg('err', 81);
                     } else {
                         if (!receptionEntry.Producer) {
-                            msgS.toastMessage(msgS.infoMessages[4], 1);
+                            msgS.msg('err', 82);
                         } else {
                             var ReceptionEntry = {};
                             ReceptionEntry.receptions = $scope.receptions;
@@ -130,17 +129,17 @@
                 Folio: receptionService.Folio
             };
             receptionService.update(receptionService.ReceptionId, ReceptionUpdate).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[1], 2);
+                msgS.msg('succ', 22);
                 $scope.return();
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[1], 3);
+                msgS.msg('err', 83);
             });
         }
 
         $scope.addReceptionToGrill = function (receptionId, checked) {
             if (checked) {
                 receptionAndGrillService.addReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    msgS.toastMessage(msgS.successMessages[0], 2);
+                    msgS.msg('succ', 23);
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -148,11 +147,11 @@
                             return false;
                         }
                     });
-                    msgS.toastMessage(msgS.errorMessages[2], 3);
+                    msgS.msg('err', 84);
                 });
             } else {
                 receptionAndGrillService.removeReceptionToGrill(receptionId, $scope.GrillId).then(function (response) {
-                    msgS.toastMessage(msgS.successMessages[2], 2);
+                    msgS.msg('succ', 24);
                 }, function (response) {
                     $.each($scope.receptions, function (i) {
                         if ($scope.receptions[i].Id === receptionId) {
@@ -160,7 +159,7 @@
                             return false;
                         }
                     });
-                    msgS.toastMessage(msgS.errorMessages[4], 3);
+                    msgS.msg('err', 85);
                 });
             }
         };
@@ -169,10 +168,10 @@
             $scope.reception.EntryDate = $('#EntryDate').val();
             receptionService.save($scope.reception).then(function (response) {
                 $scope.savedSuccesfully = true;
-                msgS.toastMessage(msgS.successMessages[0], 2);
+                msgS.msg('succ', 25);
                 $state.go('receptionManage');
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
+                msgS.msg('err', 86);
             });
         };
 
@@ -193,7 +192,7 @@
                 });
                 msgS.swalSuccess();
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
+                msgS.msg('err', 87);
             });
         };
 
