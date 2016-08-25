@@ -449,7 +449,7 @@
             doc.text(40, 50, 'Reporte Diario de Proceso');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: {fontSize:6},
+                headerStyles: {fontSize:8},
                 margin: {horizontal: 8}
             });
             doc.save('Proceso Diario' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
@@ -480,89 +480,32 @@
             doc.save('ReporteProduccionAcumulado' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
 
+        var GenericExportPdf = function(title){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('genericReport');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, title);
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:8},
+                margin: {horizontal: 10},
+                fontSize: 8
+            });
+            doc.save(title + ' (ReporteParrillas) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
         $scope.GrillExportPdf = function () {
             switch ($state.current.name) {
                 case 'processInventory':
-                    GrillExportPdf('Inventario de Proceso', $scope.genericGrillReport);
+                    GenericExportPdf('Inventario de Proceso')
                     break;
                 case 'currentInventory':
-                    GrillExportPdf('Inventario Actual', $scope.genericGrillReport);
+                    GenericExportPdf('Inventario Actual');
                     break;
                 default:
                     break;
             };
         };
-
-        var GrillExportPdf = function (title, arrayData) {
-            var properties = [
-                'Id', 'DateCapture', 'Receptions',
-                'Size', 'Sacks', 'Kilos', 'Quality',
-                'Variety', 'Producer', 'FieldName',
-                'SampleWeight', 'HumidityPercent',
-                'WalnutNumber', 'Performance', 'TotalWeightOfEdibleNuts'
-            ];
-            var columns = [
-                'No. Parrilla', 'Fecha', 'Folios',
-                'Tamaño', 'Sacos', 'Kilos', 'Calidad',
-                'Variedad', 'Productor', 'Campo', 'Peso', '% Humedad',
-                'No.Nueces', 'Rendimiento', 'Total'
-            ];
-            var getRows = function () {
-                var rows = [];
-                angular.forEach(arrayData, function (grill, key) {
-                    var arr = [];
-                    for (var i = 0; i < properties.length; i += 1) {
-                        if (properties[i] === 'DateCapture') {
-                            arr.push($filter('date')(grill[properties[i]], 'dd/MM/yyyy HH:mm a'));
-                            continue;
-                        }
-                        arr.push(grill[properties[i]]);
-                    }
-                    rows.push(arr);
-                }, this);
-                return rows;
-            };
-            var getOptions = function () {
-                return {
-                    tableWidth: 'wrap',
-                    styles: { cellPadding: 2, overflow: 'linebreak' },
-                    bodyStyles: { rowHeight: 12, fontSize: 8, valign: 'middle' },
-                    margin: { top: 10, left: 10, right: 10 },
-                    startY: doc.autoTableEndPosY() + 40,
-                    theme: 'grid',
-                    headerStyles: {
-                        fillColor: [44, 62, 80],
-                        fontSize: 8,
-                        rowHeight: 15,
-                        halign: 'center'
-                    },
-                    createdCell: function (cell, data) {
-                        cell.styles.halign = 'center';
-                    }
-                };
-            };
-            var rows = getRows();
-            var doc = new jsPDF('p', 'pt');
-            doc.text(title, 40, doc.autoTableEndPosY() + 30);
-            var options = getOptions();
-            doc.autoTable(columns, rows, options);
-            doc.save(title + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
-        };
-
-        $scope.generatePdf = function () {
-            var
-             form = $('#PDF'),
-             cache_width = form.width(),
-             a4 = [595.28, 841.89];  // for a4 size paper width and height
-             var doc = new jsPDF({
-                 unit: 'px',
-                 format: 'a4'
-                });
-                doc.addHTML(document.body,function() {
-                    doc.save('SalidasSegunda.pdf');
-                form.width(cache_width);
-                });
-            };
 
         (function () {
             switch ($state.current.name) {
