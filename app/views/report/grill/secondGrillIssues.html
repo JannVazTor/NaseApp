@@ -5,15 +5,14 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <button class="btn btn-link" id="generar" onclick="generatePdf()">
+                <button class="btn btn-link" ng-click="secondGrillIssuesExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
-                    </button>
+                </button>
                 <button class="btn btn-link" onclick="selectElementContents(document.getElementById('grillIssues'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
                 </button>
                 <body>
-                <div id="PDF">
-                <table id="grillIssues" class="table table-bordered">
+                <table id="secondGrillIssues" class="table table-bordered">
                     <thead>
                         <tr>
                             <th>No. de Parrilla</th>
@@ -34,7 +33,7 @@
                     <tbody>
                         <tr ng-repeat-start="grillIssue in secondGrillIssues">
                             <td colspan="3"><b>Remision: </b>{{grillIssue.Remission}}</td>
-                            <td colspan="3"><b>Fecha de Captura: </b>:{{grillIssue.DateCapture}}</td>
+                            <td colspan="3"><b>Fecha de Captura: </b>:{{grillIssue.DateCapture | date: 'dd/MM/yyyy'}}</td>
                             <td colspan="3"><b>Camion: </b>{{grillIssue.Truck}}</td>
                             <td colspan="3"><b>Conductor: </b>{{grillIssue.Driver}}</td>
                             <td colspan="3"><b>Caja:</b>{{grillIssue.Box}}</td>
@@ -56,7 +55,6 @@
                         </tr>
                     </tbody>
                 </table>
-                </div>
                 </body>
             </div>
         </div>

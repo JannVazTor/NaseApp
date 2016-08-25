@@ -220,11 +220,6 @@
             });
         };
 
-        $scope.myFilter = function(item) {
-            debugger;
-            return item.Quality == 2;
-        };
-
         var GetColumns = function () {
             return [
                 DTColumnBuilder.newColumn('Id').withTitle('No. De Parrilla'),
@@ -392,17 +387,6 @@
                 DTColumnBuilder.newColumn('KilosTotal').withTitle('Kgs. Totales')
             ];
         };
-
-        $scope.ExportExcel = function () {
-            $("reportingProcess").tableExport({
-                headings: true,
-                footers: true,
-                formats: ["xls"],
-                fileName:"ReporteProceso",
-                type: 'xls',
-                escape: false
-            });
-        };
         
         $scope.reportingProcessExportPdf = function(){
             var doc = new jsPDF('l', 'pt');
@@ -438,9 +422,24 @@
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
                 headerStyles: {fontSize:6},
-                margin: {horizontal: 8}
+                margin: {horizontal: 6},
+                fontSize: 6
             });
             doc.save('Salidas' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.secondGrillIssuesExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('secondGrillIssues');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Salidas de Segunda');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 6},
+                fontSize: 6
+            });
+            doc.save('Salidas de Segunda' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
 
         $scope.dailyExportPdf = function(){
