@@ -83,7 +83,7 @@
                 msgS.msg('succ', 17);
                 $state.go('processResultManage');
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
+                msgS.msg('err', 72);
             });
         };
 
@@ -97,31 +97,31 @@
                 });
                 msgS.swalSuccess();
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
+                msgS.msg('err', 73);
             });
         };
 
         var GetAllReceptionSamplings = function () {
             samplingService.getAllReceptions().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[11], 1);
+                    msgS.msg('info', 19);
                 } else {
                     $scope.samplings = response.data;
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[13], 3);
+                msgS.msg('err', 74);
             });
         };
 
         var GetAllReceptionEntries = function () {
             receptionService.getAllEntries().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[6], 1);
+                    msgS.msg('info', 20);
                 } else {
                     $scope.receptionEntries = response.data;
                 }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[7], 3);
+                msgS.msg('err', 5);
             });
         };
 

@@ -1,52 +1,79 @@
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('homeController', function (msgS, $q, $scope, homeService) {
-
         var GetProductionVariety = function () {
             homeService.getProductionVariety().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 6);
+                    msgS.msg('info', 16);
                 } else {
                     ProduccionVarietyChart(response.data);
                 }
             }, function (response) {
-                msgS.msg('err', 15);
+                msgS.msg('err', 60);
             });
         };
 
         var GetGrillIssuesAndInventory = function () {
             homeService.grillIssuesAndInventory().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 7);
+                    msgS.msg('info', 15);
                 } else {
                     GrillsIssuesAndInventory(response.data);
                 }
             }, function (response) {
-                msgS.msg('err', 19);
+                msgS.msg('err', 59);
             });
         };
 
         var GetCylinderOccupiedHours = function () {
             homeService.cylinderOccupiedHours().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 1);
+                    msgS.msg('info', 14);
                 } else {
                     CylinderOccupiedHours(response.data);
                 }
             }, function (response) {
-                msgS.msg('err', 6);
+                msgS.msg('err', 58);
             });
         };
 
         var GetAverageNumberOfNuts = function () {
             homeService.averageNumberOfNuts().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 2);
+                    msgS.msg('info', 13);
                 } else {
                     AverageNumberOfNuts(response.data);
                 }
             }, function (response) {
-                msgS.msg('err', 7);
+                msgS.msg('err', 57);
+            });
+        };
+
+        var GetAcumulatedByProducer = function () {
+            homeService.accumulatedNutProducer().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 12);
+                } else {
+                    AcumulatedByProducer(response.data);
+                }
+            }, function (response) {
+                msgS.msg('err', 56);
+            });
+        };
+
+        var GetPercentageOfFirstAndSecond = function () {
+            homeService.percentageOfFirstAndSecond().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 17);
+                } else {
+                    var categories = response.data[0].categories;
+                    $.each(response.data, function (i) {
+                       delete response.data[i]['categories'];
+                    });
+                    PercentageOfFirstAndSecond(categories, response.data);
+                }
+            }, function (response) {
+                msgS.msg('err', 61);
             });
         };
 
@@ -88,7 +115,7 @@
             });
         };
 
-        function AcumulatedByProducer() {
+        function AcumulatedByProducer(dataO) {
             Highcharts.chart('acumulatedByProducer', {
                 chart: {
                     type: 'column'
@@ -98,6 +125,9 @@
                 },
                 subtitle: {
                     text: ''
+                },
+                credits: {
+                    enabled: false
                 },
                 xAxis: {
                     categories: [''],
@@ -112,7 +142,7 @@
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.1f} kilos</b></td></tr>',
                     footerFormat: '</table>',
                     shared: true,
                     useHTML: true
@@ -123,19 +153,7 @@
                         borderWidth: 0
                     }
                 },
-                series: [{
-                    name: 'Nase',
-                    data: [49.9]
-
-                }, {
-                        name: 'Sierra',
-                        data: [83.6]
-
-                    }, {
-                        name: 'Juan',
-                        data: [48.9]
-
-                    }]
+                series: dataO
             });
         };
 
@@ -252,7 +270,7 @@
 
                 tooltip: {
                     headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> of total<br/>'
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> promedio<br/>'
                 },
 
                 series: [{
@@ -265,11 +283,46 @@
                 }
             });
         };
+
+        function PercentageOfFirstAndSecond(categories, dataO) {
+            Highcharts.chart('percentageOfFirstAndSecond', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Porcentaje de Primeras y Segundas (Variedades)'
+                },
+                xAxis: {
+                    categories: categories
+                },
+                credits: {
+                    enabled: false
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'porcentaje de primeras y segundas'
+                    }
+                },
+                tooltip: {
+                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y} kilos</b> ({point.percentage:.0f}%)<br/>',
+                    shared: true
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'percent'
+                    }
+                },
+                series: dataO
+            });
+        };
         (function () {
             GetProductionVariety();
             GetGrillIssuesAndInventory();
             GetCylinderOccupiedHours();
             GetAverageNumberOfNuts();
+            GetAcumulatedByProducer();
+            GetPercentageOfFirstAndSecond();
         })();
     });
 })();

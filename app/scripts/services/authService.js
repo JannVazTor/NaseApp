@@ -8,10 +8,7 @@
     };
 
     var _saveRegistration = function (registration) {
-      _logOut();
-      return $http.post(apiPath + 'api/account/register', registration).then(function (response) {
-        return response;
-      });
+      return $http.post(apiPath + 'api/account/register', registration);
     };
 
     var _isInRole = function (roleArray) {

@@ -3,18 +3,23 @@
   angular.module('naseNutAppApp').controller('userController', function (msgS, toastr, $scope, $state, authService, roleService, userService) {
     $scope.roles = [];
     $scope.users = [];
-    $scope.registration = [];
-    $scope.registration.Role = "";
+    $scope.registration = {
+      Role: "",
+      UserName: "",
+      Password: "",
+      ConfirmPassword: "",
+      Email: ""
+    };
     $scope.passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
-    $scope.generatePDF = function(){
-            var doc = new jsPDF('p', 'pt');
-            var elem = document.getElementById('userTable');
-            var res = doc.autoTableHtmlToJson(elem);
-            doc.text(40, 50, 'Usuarios Registrados');
-            doc.autoTable(res.columns, res.data, {startY: 60});
-            doc.save("UsuariosRegistrados.pdf");
-        };
+    $scope.generatePDF = function () {
+      var doc = new jsPDF('p', 'pt');
+      var elem = document.getElementById('userTable');
+      var res = doc.autoTableHtmlToJson(elem);
+      doc.text(40, 50, 'Usuarios Registrados');
+      doc.autoTable(res.columns, res.data, { startY: 60 });
+      doc.save("UsuariosRegistrados.pdf");
+    };
 
     var GetAllUsers = function () {
       userService.getAll().then(function (response) {
@@ -56,6 +61,10 @@
         msgS.msg('err', 18);
       } else {
         authService.saveRegistration(User).then(function (response) {
+          $scope.registration.UserName = "";
+          $scope.registration.Password = "";
+          $scope.registration.ConfirmPassword = "";
+          $scope.registration.Email = "";
           GetAllUsers();
           msgS.msg('succ', 1);
         },
@@ -92,7 +101,7 @@
     $scope.confirmDeleteUser = function (userId, userName) {
       swal(msgS.swalConfig("¿Esta seguro que desea eliminar al usuario " + userName + "?"),
         function () {
-          $scope.deleteUser(userId);
+          deleteUser(userId);
         });
     };
 

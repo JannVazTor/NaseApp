@@ -71,10 +71,10 @@
                 BoxId: remission.Box.Id
             };
             remissionService.update(remissionService.remission.Id, Remission).then(function (response) {
-                msgS.toastMessage(msgS.successMessages[1], 2);
+                msgS.msg('succ', 26);
                 $state.go('remissionManage');
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[9], 3);
+                msgS.msg('err', 88);
             });
         };
 
@@ -111,8 +111,8 @@
             });
         };
 
-        $scope.confirmationDelete = function (remissionId) {
-            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la remision con el numero " + remissionId + "?"),
+        $scope.confirmationDelete = function (remissionId, remissionFolio) {
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar la remision con el numero " + remissionFolio + "?"),
                 function () {
                     deleteRemission(remissionId);
                 });
@@ -128,7 +128,7 @@
                 });
                 msgS.swalSuccess();
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
+                msgS.msg('err', 89);
             });
         };
 
@@ -136,7 +136,7 @@
             remissionService.getAll().then(function (response) {
                 $scope.remissions = response.data;
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[10], 3);
+                msgS.msg('err', 90);
             });
         };
 
