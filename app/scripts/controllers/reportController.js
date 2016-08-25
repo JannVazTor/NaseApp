@@ -18,12 +18,9 @@
                 ReportDate: $('#reportDate').val(),
             };
             reportService.getDailyProcess(DailyProcess).then(function (response) {
-                $scope.savedSuccessfully = true;
                 $scope.dailyProcess = response.data;
-                $scope.dtOptions = GetDtOptions(GetDailyProcess);
-                msgS.toastMessage(msgS.successMessages[3], 2);
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[3], 3);
+                msgS.toastMessage(msgS.errorMessages[8], 3);
             });
         };
 
@@ -272,13 +269,28 @@
             doc.text(40, 50, 'Reporte de Salidas');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: { fontSize: 6 },
-                margin: { horizontal: 8 }
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 6},
+                fontSize: 6
             });
             doc.save('Salidas' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
 
-        $scope.dailyExportPdf = function () {
+        $scope.secondGrillIssuesExportPdf = function(){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('secondGrillIssues');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, 'Reporte de Salidas de Segunda');
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:6},
+                margin: {horizontal: 6},
+                fontSize: 6
+            });
+            doc.save('Salidas de Segunda' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
+        $scope.dailyExportPdf = function(){
             var doc = new jsPDF('l', 'pt');
             var elem = document.getElementById('daily');
             var res = doc.autoTableHtmlToJson(elem);
