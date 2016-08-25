@@ -8,7 +8,7 @@
             producerService.getAll().then(function (response) {
                 $scope.producers = response.data;
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[8], 3);
+                msgS.msg('err', 8);
             });
         };
 
@@ -16,7 +16,7 @@
             varietyService.getAll().then(function (response) {
                 $scope.varieties = response.data;
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[5], 3);
+                msgS.msg('err', 7);
             });
         };
 
@@ -33,7 +33,7 @@
                 if (response.status === 409) {
                     msgS.msg('err', 42);
                 } else {
-                    msgS.toastMessage(msgS.errorMessages[3], 3);
+                    msgS.msg('err', 75);
                 }
             });
         };
@@ -123,7 +123,7 @@
                 });
                 msgS.swalSuccess();
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
+                msgS.msg('err', 76);
             });
         };
 
@@ -137,7 +137,7 @@
                 });
                 msgS.swalSuccess();
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
+                msgS.msg('err', 77);
             });
         };
 

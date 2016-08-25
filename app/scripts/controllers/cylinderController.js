@@ -22,7 +22,7 @@
             cylinderService.getAll().then(function (response) {
                 $scope.cylinders = response.data;
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[6], 3);
+                msgS.msg('err', 6);
             });
         };
 
@@ -31,7 +31,7 @@
                 CylinderName: cylinderName
             };
             cylinderService.save(Cylinder).then(function (response) {
-                msgS.msg('succ', 14);
+                msgS.msg('succ', 15);
                 GetAllCylinders();
             }, function (response) {
                 if (response.status === 409) {
@@ -58,7 +58,7 @@
                 });
                 msgS.swalSuccess();
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[4], 3);
+                msgS.msg('err', 68);
             });
         };
 

@@ -11,10 +11,7 @@
       'LocalStorageModule',
       'ui.router',
       'ui.bootstrap.datetimepicker',
-      'datatables',
-      'datatables.buttons',
       'toastr',
-      'datatables.bootstrap'
     ])
     .config(function ($stateProvider, $urlRouterProvider, USER_ROLES) {
       $stateProvider
