@@ -122,7 +122,8 @@
             'Ocurrio un error y la remision no pudo ser eliminada.',//89
             'Ocurrio un error y las remisiones no pudieron ser cargadas.',//90
             'Ocurrio un error y el muestreo de calidad no pudo ser actualizado.',//91
-            'Ocurrio un error y los muestreos de calidad no pudieron ser cargados.'];
+            'Ocurrio un error y los muestreos de calidad no pudieron ser cargados.',//92
+            'El Numero de parrilla ya existe en la base de datos.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1

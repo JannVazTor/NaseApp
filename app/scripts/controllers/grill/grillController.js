@@ -9,7 +9,8 @@
         $scope.grill = {
             Producer: {},
             Field: {},
-            Variety: {}
+            Variety: {},
+            Batch: {}
         };
 
         $scope.sizes = [
@@ -59,7 +60,8 @@
                 Sacks: grill.Sacks,
                 Quality: grill.Quality.Type,
                 VarietyId: grill.Variety.Id,
-                ProducerId: grill.Producer.Id
+                ProducerId: grill.Producer.Id,
+                BatchId: grill.Batch.Id
             };
             grillService.update(grillService.grillId, GrillUpdate).then(function (response) {
                 msgS.msg('succ', 19);
@@ -70,30 +72,42 @@
         }
 
         $scope.saveGrill = function (grill) {
-            if ($scope.grill.Producer === null) {
-                msgS.msg('err', 31);
+            if ($scope.grill.Batch === null) {
+                msgS.msg('err', 29);
             } else {
-                if ($scope.grill.Field === null) {
-                    msgS.msg('err', 32);
+                if ($scope.grill.Producer === null) {
+                    msgS.msg('err', 31);
                 } else {
-                    if ($scope.grill.Variety === null) {
-                        msgS.msg('err', 33);
+                    if ($scope.grill.Field === null) {
+                        msgS.msg('err', 32);
                     } else {
-                        var Grill = {
-                            DateCapture: $('#EntryDate').val(),
-                            Size: grill.Size.Type,
-                            FieldId: grill.Field.Id,
-                            Kilos: grill.Kilos,
-                            Sacks: grill.Sacks,
-                            Quality: grill.Quality.Type,
-                            VarietyId: grill.Variety.Id,
-                            ProducerId: grill.Producer.Id
-                        };
-                        grillService.save(Grill).then(function (response) {
-                            msgS.msg('succ', 18);
-                        }, function (response) {
-                            msgS.msg('err', 66);
-                        });
+                        if ($scope.grill.Variety === null) {
+                            msgS.msg('err', 33);
+                        } else {
+                            var Grill = {
+                                DateCapture: $('#EntryDate').val(),
+                                Size: grill.Size.Type,
+                                BatchId: grill.Batch.Id,
+                                Kilos: grill.Kilos,
+                                Sacks: grill.Sacks,
+                                Quality: grill.Quality.Type,
+                                VarietyId: grill.Variety.Id,
+                                ProducerId: grill.Producer.Id,
+                                Folio: grill.Folio === null ? -1 : grill.Folio
+                            };
+                            grillService.save(Grill).then(function (response) {
+                                $scope.grill.Kilos = "";
+                                $scope.grill.Folio = "";
+                                $scope.grill.Sacks = "";
+                                msgS.msg('succ', 18);
+                            }, function (response) {
+                                if (response.status === 409) {
+                                    msgS.msg('err', 93);
+                                } else {
+                                    msgS.msg('err', 66);
+                                }
+                            });
+                        }
                     }
                 }
             }
@@ -169,28 +183,28 @@
 
         };
 
-        $scope.generatePDF = function(){
+        $scope.generatePDF = function () {
             var doc = new jsPDF('l', 'pt');
             var elem = document.getElementById('grillManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Parrillas Procesadas');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: {fontSize:7},
-                margin: {horizontal: 10}
+                headerStyles: { fontSize: 7 },
+                margin: { horizontal: 10 }
             });
             doc.save("ParrillasProcesadas.pdf");
         };
 
-        $scope.generatePDFCurrent = function(){
+        $scope.generatePDFCurrent = function () {
             var doc = new jsPDF('l', 'pt');
             var elem = document.getElementById('grillCurrentInvTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Inventario Actual de Proceso');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: {fontSize:7},
-                margin: {horizontal: 10}
+                headerStyles: { fontSize: 7 },
+                margin: { horizontal: 10 }
             });
             doc.save("InventarioActual.pdf");
         };
@@ -243,7 +257,7 @@
         };
 
         var GetAllFields = function (defaultItem) {
-            fieldService.getAll().then(function (response) {
+            fieldService.getFields().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 4);
                 } else {
@@ -256,6 +270,47 @@
                 };
             }, function (response) {
                 msgS.msg('err', 13);
+            });
+        };
+
+        var GetAllBatches = function (defaultItem) {
+            fieldService.getBatches().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 10);
+                } else {
+                    $scope.batches = response.data;
+                    if ($state.current.name === 'grillUpdate') {
+                        $scope.grill.Batch = SearchItemObj($scope.batches, 'Batch', grillService.grill.BatchId);
+                    } else {
+                        $scope.grill.Batch = $scope.batches[0];
+                    }
+                };
+            }, function (response) {
+                msgS.msg('err', 27);
+            });
+        };
+
+        $scope.getBatchInCurrentField = function (field) {
+            if (field !== null) {
+                GetBatchesInField(field.Id);
+            };
+        };
+
+        var GetBatchesInField = function (fieldId) {
+            fieldService.getBatchesInField(fieldId).then(function (response) {
+                if (response.data.length === 0) {
+                    $scope.batches = {};
+                    msgS.msg('info', 10);
+                } else {
+                    $scope.batches = response.data;
+                    if ($state.current.name === 'grillUpdate') {
+                        $scope.grill.Batch = SearchItemObj($scope.batches, 'Id', grillService.grill.BatchId);
+                    } else {
+                        $scope.grill.Batch = $scope.batches[0];
+                    }
+                }
+            }, function (response) {
+                msgS.msg('err', 27);
             });
         };
 
@@ -312,13 +367,14 @@
                 $state.go('home');
             }
         };
-        
+
         (function () {
             switch ($state.current.name) {
                 case 'grillAdd':
                     $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllVarieties();
+                    GetAllBatches();
                     GetAllFields();
                     break;
                 case 'grillManage':
@@ -331,6 +387,7 @@
                     $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllVarieties();
+                    GetAllBatches();
                     GetAllFields();
                     FillUpdateGrillObject(grillService.grill);
                     break;

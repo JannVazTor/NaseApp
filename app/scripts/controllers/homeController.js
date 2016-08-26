@@ -239,7 +239,7 @@
                     type: 'column'
                 },
                 title: {
-                    text: 'Nummero de Nueces promedio por Variedad'
+                    text: 'Nummero de Nueces Promedio por Kilo (Variedades)'
                 },
                 subtitle: {
                     text: ''
@@ -252,7 +252,7 @@
                 },
                 yAxis: {
                     title: {
-                        text: 'Numero de nueces promedio'
+                        text: 'numero de nueces promedio por kilo'
                     }
                 },
                 legend: {
