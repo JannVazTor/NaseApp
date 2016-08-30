@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('fieldController', function (msgS, $scope, fieldService) {
+    angular.module('naseNutAppApp').controller('fieldController', function (msgS, $scope, fieldService, ModalService) {
         $scope.batch = {
             Field: {}
         };
@@ -112,12 +112,33 @@
             });
         };
 
-        $scope.generatePDF = function(){
+        $scope.showAddVarietyModal = function () {
+            $('#addVarietyModal.html').appendTo("body");
+            ModalService.showModal({
+                templateUrl: 'addVarietyModal.html',
+                controller: function ($scope, close) {
+                    $scope.close = function (result) {
+                        close(result, 500);
+                    };
+                }
+            }).then(function (modal) {
+                modal.element.modal();
+                modal.close.then(function (result) {
+                    if (result === 0) {
+                        console.log("You said " + result);
+                    } else {
+                        console.log("You said " + result);
+                    }
+                });
+            });
+        };
+
+        $scope.generatePDF = function () {
             var doc = new jsPDF('p', 'pt');
             var elem = document.getElementById('fieldTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Campos Registrados');
-            doc.autoTable(res.columns, res.data, {startY: 60});
+            doc.autoTable(res.columns, res.data, { startY: 60 });
             doc.save("CamposRegistrados.pdf");
         };
         GetAll();

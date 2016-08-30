@@ -12,6 +12,7 @@
       'ui.router',
       'ui.bootstrap.datetimepicker',
       'toastr',
+      'angularModalService'
     ])
     .config(function ($stateProvider, $urlRouterProvider, USER_ROLES) {
       $stateProvider
@@ -335,7 +336,7 @@
         })
         .state('field', {
           url: '/campos',
-          templateUrl: 'views/field.html',
+          templateUrl: 'views/field/field.html',
           controller: 'fieldController',
           data: {
             roles: [USER_ROLES.admin]
