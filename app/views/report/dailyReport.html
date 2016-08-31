@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="report in dailyProcess">
-                        <td>{{report.Date | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{report.Date | date:'dd/MM/yyyy HH:mm' }}</td>
                         <td>{{report.Producer}}</td>
                         <td>{{report.Folio}}</td>
                         <td>{{report.Cylinder}}</td>

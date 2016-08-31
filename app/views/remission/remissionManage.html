@@ -18,7 +18,7 @@
             <button class="btn btn-link" ng-click="generatePDF()">
                 <span class="glyphicon glyphicon-share"></span>Exportar PDF
             </button>
-            <table id="remissionTable" class="table table-striped table-vmiddle">
+            <table id="remissionTable" class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Folio de Remisión</th>
@@ -49,11 +49,11 @@
                         <td>{{remission.Driver}}</td>
                         <td>{{remission.Elaborate}}</td>
                         <td>
-                            <button class="btn btn-icon command-edit" ng-click="redirectUpdate(remission.Id)">
-                        <span class="md md-edit"></span>
+                            <button class="btn btn-default" ng-click="redirectUpdate(remission.Id)">
+                        <i class="md md-edit"></i>
                     </button>
-                            <button class="btn btn-icon command-delete" ng-click="confirmationDelete(remission.Id, remission.RemissionFolio)">
-                        <span class="md md-delete"></span>
+                            <button class="btn btn-default" ng-click="confirmationDelete(remission.Id, remission.RemissionFolio)">
+                        <i class="md md-delete"></i>
                     </button>
                         </td>
                     </tr>

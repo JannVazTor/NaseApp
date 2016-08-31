@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('fieldController', function (msgS, $scope, fieldService, ModalService) {
+    angular.module('naseNutAppApp').controller('fieldController', function (msgS, $scope, fieldService, ModalService, varietyService) {
         $scope.batch = {
             Field: {}
         };
@@ -112,11 +112,26 @@
             });
         };
 
+        var GetAllVarieties = function () {
+            varietyService.getAll().then(function (response) {
+                if (response.data.length === 0) {
+                    msgS.msg('info', 2);
+                } else {
+                    $scope.varieties = response.data;
+                }
+            }, function (response) {
+                msgS.msg('err', 7);
+            });
+        };
+
         $scope.showAddVarietyModal = function () {
             $('#addVarietyModal.html').appendTo("body");
             ModalService.showModal({
                 templateUrl: 'addVarietyModal.html',
                 controller: function ($scope, close) {
+                    $scope.varieties = {};
+                    $scope.varietiesInBatch = [];
+                    GetAllVarieties();
                     $scope.close = function (result) {
                         close(result, 500);
                     };

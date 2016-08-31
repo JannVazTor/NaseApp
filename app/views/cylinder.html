@@ -46,6 +46,8 @@
                 <thead>
                     <tr>
                         <th>Cilindro</th>
+                        <th>Folio/s</th>
+                        <th>Humedad</th>
                         <th>Opciones</th>
                         <th>Disponibilidad</th>
                     </tr>
@@ -53,9 +55,11 @@
                 <tbody>
                     <tr ng-repeat="cylinder in cylinders | filter:searchCylinder">
                         <td>{{cylinder.CylinderName}}</td>
+                        <td>{{cylinder.Folios}}</td>
+                        <td>{{cylinder.LastHumidity}}</td>
                         <td>
-                            <button class="btn btn-icon command-delete" ng-click="confirmationDelete(cylinder.Id, cylinder.CylinderName)">
-                                <span class="md md-delete"></span>
+                            <button class="btn btn-default" ng-click="confirmationDelete(cylinder.Id, cylinder.CylinderName)">
+                                <i class="md md-delete"></i>
                             </button>
                         </td>
                         <td>

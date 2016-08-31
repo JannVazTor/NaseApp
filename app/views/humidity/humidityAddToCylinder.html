@@ -29,7 +29,7 @@
         </div>
         <div class="card-body table-responsive">
             <div>
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Cilindro</th>
@@ -72,8 +72,8 @@
                         <td>{{humidity.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{humidity.HumidityPercentage}}</td>
                         <td>
-                            <button class="btn btn-icon command-delete" ng-click="confirmationDelete(humidity.Id)">
-                                <span class="md md-delete"></span>
+                            <button class="btn btn-default" ng-click="confirmationDelete(humidity.Id)">
+                                <i class="md md-delete"></i>
                             </button>
                         </td>
                     </tr>

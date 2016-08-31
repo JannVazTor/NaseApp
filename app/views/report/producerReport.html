@@ -55,8 +55,8 @@
                     <tbody>
                         <tr ng-repeat="report in producerReport">
                             <td>{{report.Remission}}</td>
-                            <td>{{report.DateReceptionCapture}}</td>
-                            <td>{{report.ProcessDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{report.DateReceptionCapture | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{report.ProcessDate | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{report.Variety}}</td>
                             <td>{{report.Batch}}</td>
                             <td>{{report.Cylinder}}</td>

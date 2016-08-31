@@ -87,7 +87,7 @@
                                 <table class="table table-striped table-vmiddle">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
+                                            <th>No. de Parrilla</th>
                                             <th>Fecha de Captura</th>
                                             <th>Recepciones</th>
                                             <th>Tamaño</th>
@@ -99,7 +99,7 @@
                                             <th>Campo</th>
                                             <th>Peso de la Muestra</th>
                                             <th>Humedad</th>
-                                            <th>No.Nueces</th>
+                                            <th>No.Nueces por Kilo</th>
                                             <th>Rendimiento</th>
                                             <th>Total</th>
                                             <th>Agregar</th>
@@ -107,7 +107,7 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="grill in grills | filter:searchUser">
-                                            <td>{{grill.Id}}</td>
+                                            <td>{{grill.Folio}}</td>
                                             <td>{{grill.DateCapture | date: 'dd/MM/yyyy'}}</td>
                                             <td>{{grill.Receptions}}</td>
                                             <td>{{grill.Size}}</td>
@@ -163,7 +163,7 @@
                                         <th>Huerta/Lote</th>
                                         <th>Peso de la Muestra</th>
                                         <th>% Humedad</th>
-                                        <th>Número de nueces</th>
+                                        <th>No.Nueces por Kilo</th>
                                         <th>Rendimiento</th>
                                         <th>Peso total de nueces comestibles</th>
                                         <th>Regresar a Inv.</th>
@@ -178,8 +178,8 @@
                                         <td colspan="3"><b>Caja:</b>{{grillIssue.Box}}</td>
                                     </tr>
                                     <tr ng-repeat-end ng-repeat="grill in grillIssue.Grills">
-                                        <td>{{grill.Id}}</td>
-                                        <td>{{grill.DateCapture}}</td>
+                                        <td>{{grill.Folio}}</td>
+                                        <td>{{grill.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
                                         <td>{{grill.Receptions}}</td>
                                         <td>{{grill.Size}}</td>
                                         <td>{{grill.Sacks}}</td>
@@ -194,8 +194,8 @@
                                         <td>{{grill.Performance}}</td>
                                         <td>{{grill.TotalWeightOfEdibleNuts}}</td>
                                         <td>
-                                            <button class="btn btn-icon command-edit" ng-click="returnGrillToInventory(grill.Id, grillIssue.Id)" data-toggle="tooltip" data-placement="bottom"
-                                                title="Regresar parrilla a inventario"><span class="md md-reply"></span>
+                                            <button class="btn btn-default" ng-click="returnGrillToInventory(grill.Id, grillIssue.Id)" data-toggle="tooltip" data-placement="bottom"
+                                                title="Regresar parrilla a inventario"><i class="md md-reply"></i>
                                             </button>
                                         </td>
                                     </tr>
