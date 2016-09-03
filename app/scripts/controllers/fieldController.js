@@ -39,12 +39,17 @@
                     GetAll();
                     GetBatches();
                     GetFields();
-                    $scope.batch.Batch = ""; 
-                    $scope.batch.NutsInBatch = [];
+                    $scope.batch.Batch = "";
+                    $scope.batch.NutInBatch = [];
+                    $scope.batch.NutsInBatch = "";
                     $scope.batch.Hectares = "";
                     $scope.batch.isValid = false;
                 }, function (response) {
-                    msgS.msg('err', 24);
+                    if (response.status === 409) {
+                        msgS.msg('err', 97);
+                    } else {
+                        msgS.msg('err', 24);
+                    }
                 });
             } else {
                 msgS.msg('err', 96);
