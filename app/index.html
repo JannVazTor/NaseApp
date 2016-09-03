@@ -245,8 +245,8 @@
                 <h4 class="modal-title">Agregar Variedades a la Huerta/Campo</h4>
               </div>
               <div class="modal-body">
-                <table class="table table-striped table-vmiddle">
-                    <thead>
+                <table class="table">
+                    <thead class="thead-default">
                         <tr>
                             <th>Tipo</th>
                             <th>Porcentage%</th>
@@ -255,13 +255,17 @@
                     <tbody>
                         <tr ng-repeat="variety in varieties">
                             <td>{{variety.VarietyName}}</td>
+                            <td>
+                                <input type="number" min="1" class="form-control input-sm" placeholder="porcentaje de nuez %"
+                                        data-ng-model="variety.nutPercentage">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
               </div>
               <div class="modal-footer">
                 <button type="button" ng-click="close(0)" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="button" ng-click="close(1)" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                <button type="button" ng-click="close(varieties)" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
               </div>
             </div>
           </div>

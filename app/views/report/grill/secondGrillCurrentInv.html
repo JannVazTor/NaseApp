@@ -4,27 +4,27 @@
             <h2>Inventario Actual Segunda Calidad (Parrillas)</h2>
         </div>
         <div class="card-body card-padding">
-            <div class="row">
-                <div class="col-sm-12 actionbar">
-                    <div class="form-group">
-                        <label for="isearch" class="col-sm-2 control-label">Buscar</label>
-                        <div class="col-sm-12">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchGrillReport">
+            <div class="table-responsive">
+                <div class="row">
+                    <div class="col-sm-12 actionbar">
+                        <div class="form-group">
+                            <label for="isearch" class="col-sm-2 control-label">Buscar</label>
+                            <div class="col-sm-12">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchGrillReport">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <button class="btn btn-link" ng-click="GrillExportPdf()">
+                <hr>
+                <button class="btn btn-link" ng-click="GrillExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
             </button>
-            <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('genericReport'))">
+                <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('genericReport'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
             </button>
-            <div class="table-responsive">
-                <table id="genericReport" class="table table-striped table-bordered">
+                <table id="genericReport" class="table table-striped table-bordered table-condensed table-hover">
                     <thead>
                         <tr>
                             <th>No. Parrilla</th>

@@ -123,7 +123,10 @@
             'Ocurrio un error y las remisiones no pudieron ser cargadas.',//90
             'Ocurrio un error y el muestreo de calidad no pudo ser actualizado.',//91
             'Ocurrio un error y los muestreos de calidad no pudieron ser cargados.',//92
-            'El Numero de parrilla ya existe en la base de datos.'];
+            'El Numero de parrilla ya existe en la base de datos.',//93
+            'La Suma de los porcentajes debe ser igual a 100',//94
+            'Debe agregar al menos un variedad y porcentaje para poder guardar la huerta.',//95
+            'Corrija los errores en los porcentajes de variedad antes de continuar.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1

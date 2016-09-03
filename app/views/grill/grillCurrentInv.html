@@ -3,69 +3,70 @@
         <div class="card-header">
             <h2>Inventario Actual</h2>
         </div>
-        <div class="card-body table-responsive">
-            <div class="col-sm-12 actionbar">
-                <div class="form-group">
-                    <label for="isearch" class="col-sm-2 control-label">Buscar</label>
-                    <div class="col-sm-12">
-                        <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchGrills">
+        <div class="card-body card-padding">
+            <div class="table-responsive">
+                <div class="col-sm-12 actionbar">
+                    <div class="form-group">
+                        <label for="isearch" class="col-sm-2 control-label">Buscar</label>
+                        <div class="col-sm-12">
+                            <div class="fg-line">
+                                <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchGrills">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <button class="btn btn-link" ng-click="generatePDFCurrent()">
+                <hr>
+                <button class="btn btn-link" ng-click="generatePDFCurrent()">
                 <span class="glyphicon glyphicon-share"></span>Exportar PDF
             </button>
-            <table id="grillCurrentInvTable" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>No. de Parilla</th>
-                        <th>Fecha de Captura</th>
-                        <th>Recepciones</th>
-                        <th>Tamaño</th>
-                        <th>Sacos</th>
-                        <th>Kilos</th>
-                        <th>Calidad</th>
-                        <th>Variedad</th>
-                        <th>Productor</th>
-                        <th>Campo</th>
-                        <th>Peso de la Muestra</th>
-                        <th>Humedad</th>
-                        <th>No.Nueces por Kilo</th>
-                        <th>Rendimiento</th>
-                        <th>Total</th>
-                        <th>Operaciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="grill in grills | filter:searchGrills">
-                        <td>{{grill.Folio}}</td>
-                        <td>{{grill.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
-                        <td>{{grill.Receptions}}</td>
-                        <td>{{grill.Size}}</td>
-                        <td>{{grill.Sacks}}</td>
-                        <td>{{grill.Kilos}}</td>
-                        <td>{{grill.Quality}}</td>
-                        <td>{{grill.Variety}}</td>
-                        <td>{{grill.Producer}}</td>
-                        <td>{{grill.FieldName}}</td>
-                        <td>{{grill.SampleWeight}}</td>
-                        <td>{{grill.HumidityPercent}}</td>
-                        <td>{{grill.WalnutNumber}}</td>
-                        <td>{{grill.Performance}}</td>
-                        <td>{{grill.TotalWeightOfEdibleNuts}}</td>
-                        <td>
-                            <button class="btn btn-default" ng-click="confirmationDelete(grill.Id)" data-toggle="tooltip" data-placement="bottom"
-                                title="Eliminar">
+                <table id="grillCurrentInvTable" class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>No. de Parilla</th>
+                            <th>Fecha de Captura</th>
+                            <th>Recepciones</th>
+                            <th>Tamaño</th>
+                            <th>Sacos</th>
+                            <th>Kilos</th>
+                            <th>Calidad</th>
+                            <th>Variedad</th>
+                            <th>Productor</th>
+                            <th>Campo</th>
+                            <th>Peso de la Muestra</th>
+                            <th>Humedad</th>
+                            <th>No.Nueces por Kilo</th>
+                            <th>Rendimiento</th>
+                            <th>Total</th>
+                            <th>Operaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="grill in grills | filter:searchGrills">
+                            <td>{{grill.Folio}}</td>
+                            <td>{{grill.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{grill.Receptions}}</td>
+                            <td>{{grill.Size}}</td>
+                            <td>{{grill.Sacks}}</td>
+                            <td>{{grill.Kilos}}</td>
+                            <td>{{grill.Quality}}</td>
+                            <td>{{grill.Variety}}</td>
+                            <td>{{grill.Producer}}</td>
+                            <td>{{grill.FieldName}}</td>
+                            <td>{{grill.SampleWeight}}</td>
+                            <td>{{grill.HumidityPercent}}</td>
+                            <td>{{grill.WalnutNumber}}</td>
+                            <td>{{grill.Performance}}</td>
+                            <td>{{grill.TotalWeightOfEdibleNuts}}</td>
+                            <td>
+                                <button class="btn btn-default" ng-click="confirmationDelete(grill.Id)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                 <i class="md md-delete"></i>
                             </button>
-                        </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
