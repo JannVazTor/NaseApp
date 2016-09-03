@@ -3,57 +3,59 @@
         <div class="card-header">
             <h2>Agregar Resultado de Proceso</h2>
         </div>
-        <div class="card-body table-responsive">
-            <div class="col-sm-12 actionbar">
-                <div class="form-group">
-                    <label for="isearch" class="col-sm-2 control-label">Buscar</label>
-                    <div class="col-sm-12">
-                        <div class="fg-line">
-                            <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchReceptionEntry">
+        <div class="card-body card-padding">
+            <div class="table-responsive">
+                <div class="col-sm-12 actionbar">
+                    <div class="form-group">
+                        <label for="isearch" class="col-sm-2 control-label">Buscar</label>
+                        <div class="col-sm-12">
+                            <div class="fg-line">
+                                <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchReceptionEntry">
+                            </div>
                         </div>
                     </div>
                 </div>
+                <table class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Recepciones</th>
+                            <th>Fecha de Entrada</th>
+                            <th>Variedad</th>
+                            <th>Productor</th>
+                            <th>Cilindro</th>
+                            <th>Agregar Muestreo</th>
+                            <th>Agregar Resultado de Proceso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="receptionEntry in receptionEntries | filter:searchReceptionEntry">
+                            <td>{{receptionEntry.Id}}</td>
+                            <td>{{receptionEntry.Receptions}}</td>
+                            <td>{{receptionEntry.DateEntry | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{receptionEntry.Variety}}</td>
+                            <td>{{receptionEntry.Producer}}</td>
+                            <td>{{receptionEntry.Cylinder}}</td>
+                            <td>
+                                <div ng-if="!receptionEntry.Sampling">
+                                    <button class="btn btn-default" ng-click="redirectAddSampling(receptionEntry.Id)" data-toggle="tooltip" data-placement="bottom"
+                                        title="agregar muestreo">
+                                    <i class="md md-description"></i>
+                            </button>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-if="!receptionEntry.ProcessResult">
+                                    <button class="btn btn-default" ng-click="redirectAddProcessResult(receptionEntry.Id, receptionEntry.Receptions)" data-toggle="tooltip"
+                                        data-placement="bottom" title="Agregar resultado de proceso">
+                                    <i class="md md-assignment-returned"></i>
+                            </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table class="table table-striped table-vmiddle">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Recepciones</th>
-                        <th>Fecha de Entrada</th>
-                        <th>Variedad</th>
-                        <th>Productor</th>
-                        <th>Cilindro</th>
-                        <th>Agregar Muestreo</th>
-                        <th>Agregar Resultado de Proceso</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="receptionEntry in receptionEntries | filter:searchReceptionEntry">
-                        <td>{{receptionEntry.Id}}</td>
-                        <td>{{receptionEntry.Receptions}}</td>
-                        <td>{{receptionEntry.DateEntry | date:'dd/MM/yyyy HH:mm'}}</td>
-                        <td>{{receptionEntry.Variety}}</td>
-                        <td>{{receptionEntry.Producer}}</td>
-                        <td>{{receptionEntry.Cylinder}}</td>
-                        <td>
-                            <div ng-if="!receptionEntry.Sampling">
-                                <button class="btn btn-icon command-edit" ng-click="redirectAddSampling(receptionEntry.Id)" data-toggle="tooltip" data-placement="bottom"
-                                    title="agregar muestreo">
-                                    <span class="md md-description"></span>
-                            </button>
-                            </div>
-                        </td>
-                        <td>
-                            <div ng-if="!receptionEntry.ProcessResult">
-                                <button class="btn btn-icon command-edit" ng-click="redirectAddProcessResult(receptionEntry.Id, receptionEntry.Receptions)"
-                                    data-toggle="tooltip" data-placement="bottom" title="Agregar resultado de proceso">
-                                    <span class="md md-assignment-returned"></span>
-                            </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>

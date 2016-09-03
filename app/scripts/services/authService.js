@@ -65,6 +65,7 @@
         case '4f76500a-ba89-47d5-8a48-ed4b880ada40': return USER_ROLES.remRecepUser;
         case 'cc74bc28-2050-4be5-8ca9-da71c55d1403': return USER_ROLES.qualityUser;
         case 'ba05c2a8-4c32-44af-a26a-a3eb9bd8240f': return USER_ROLES.grillUser;
+        case 'b64a6b00-4480-42b8-9b10-40435164494a': return USER_ROLES.producerUser;
         default: return '';
       }
     };

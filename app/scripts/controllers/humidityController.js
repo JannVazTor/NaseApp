@@ -119,9 +119,9 @@
                             return false;
                         }
                     });
-                    msgS.swalSuccess();
                     GetAllHumiditiesLastSamplings();
                 }
+                msgS.swalSuccess();
             }, function (response) {
                 msgS.msg('err', 70);
             });

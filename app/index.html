@@ -6,7 +6,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/dist/sweetalert.css">
     <link rel="stylesheet" href="styles/app.css">
     <link rel="stylesheet" href="vendors/animate-css/animate.min.css">
@@ -180,6 +180,8 @@
     <script src="bower_components/tableExport.jquery.plugin/jspdf/libs/sprintf.js"></script>
     <script src="bower_components/tableExport.jquery.plugin/jspdf/jspdf.js"></script>
     <script src="bower_components/tableExport.jquery.plugin/jspdf/libs/base64.js"></script>
+    <script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
+
 
     <script src="scripts/js/datetimepicker.js"></script>
     <script src="scripts/js/datetimepicker.templates.js"></script>
@@ -229,12 +231,46 @@
     <script type="text/javascript" src="scripts/js/selectElementContents.js"></script>
 
     <script src="scripts/directives/confirmPassword.js"></script>
-    
+    <script></script>
     <!--jsPDF-->
     <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
     <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.src.js"></script>
     <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
-
+    <script type="text/ng-template" id="addVarietyModal.html">
+         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Agregar Variedades a la Huerta/Campo</h4>
+              </div>
+              <div class="modal-body">
+                <table class="table">
+                    <thead class="thead-default">
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Porcentage%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="variety in varieties">
+                            <td>{{variety.VarietyName}}</td>
+                            <td>
+                                <input type="number" min="1" class="form-control input-sm" placeholder="porcentaje de nuez %"
+                                        data-ng-model="variety.nutPercentage">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="close(0)" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" ng-click="close(varieties)" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+     </script>
 </body>
 
 </html>

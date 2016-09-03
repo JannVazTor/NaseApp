@@ -10,7 +10,8 @@
             Sacks: "",
             Quality: "",
             VarietyId: "",
-            ProducerId: ""
+            ProducerId: "",
+            BatchId: ""
         };
 
         var _getAll = function () {

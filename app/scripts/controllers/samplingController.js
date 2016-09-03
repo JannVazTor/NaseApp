@@ -10,6 +10,12 @@
             }
         };
 
+        $scope.CalculateWalnutNumberPerKilo = function(){
+            if($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0){
+             $scope.sampling.WalnutNumberPerKilo = Math.round(($scope.sampling.WalnutNumber * 1000 )/$scope.sampling.SampleWeight);   
+            }
+        };
+
         $scope.saveSampling = function (sampling) {
             var Sampling = {
                 TotalWeightOfEdibleNuts: sampling.TotalWeightOfEdibleNuts,
