@@ -4,15 +4,15 @@
         $scope.samplings = [];
         $scope.sampling = samplingService.sampling;
 
+        $scope.CalculateWalnutNumberPerKilo = function () {
+            if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
+                $scope.sampling.WalnutNumberPerKilo = Math.round(($scope.sampling.WalnutNumber * 1000) / $scope.sampling.SampleWeight);
+            }
+        };
+        
         $scope.CalculatePerformance = function () {
             if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
                 $scope.sampling.Performance = Math.round((($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100) * 100) / 100;
-            }
-        };
-
-        $scope.CalculateWalnutNumberPerKilo = function(){
-            if($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0){
-             $scope.sampling.WalnutNumberPerKilo = Math.round(($scope.sampling.WalnutNumber * 1000 )/$scope.sampling.SampleWeight);   
             }
         };
 
@@ -91,31 +91,38 @@
             }
         };
 
-        $scope.generatePDF = function(){
+        $scope.generatePDF = function () {
             var doc = new jsPDF('p', 'pt');
             var elem = document.getElementById('samplingGrillTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Muestreos de Parrillas');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: {fontSize:8},
-                margin: {horizontal: 10}
+                headerStyles: { fontSize: 8 },
+                margin: { horizontal: 10 }
             });
             doc.save("MuestreosParrillas.pdf");
         };
 
-        $scope.generatePDFReceptions = function(){
+        $scope.generatePDFReceptions = function () {
             var doc = new jsPDF('p', 'pt');
             var elem = document.getElementById('SamplingReceptionTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Muestreos de Recepciones');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: {fontSize:8},
-                margin: {horizontal: 10}
+                headerStyles: { fontSize: 8 },
+                margin: { horizontal: 10 }
             });
             doc.save("MuestreosRecepciones.pdf");
         };
+
+        var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+            if ($state.current.name !== 'samplingUpdate') {
+                clearService.clearSamplingService();
+                onStateChange();
+            }
+        });
 
         (function () {
             switch ($state.current.name) {
