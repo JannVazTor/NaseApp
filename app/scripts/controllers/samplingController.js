@@ -4,15 +4,15 @@
         $scope.samplings = [];
         $scope.sampling = samplingService.sampling;
 
-        $scope.CalculatePerformance = function () {
-            if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
-                $scope.sampling.Performance = Math.round((($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100) * 100) / 100;
-            }
-        };
-
         $scope.CalculateWalnutNumberPerKilo = function () {
             if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
                 $scope.sampling.WalnutNumberPerKilo = Math.round(($scope.sampling.WalnutNumber * 1000) / $scope.sampling.SampleWeight);
+            }
+        };
+        
+        $scope.CalculatePerformance = function () {
+            if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
+                $scope.sampling.Performance = Math.round((($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100) * 100) / 100;
             }
         };
 
