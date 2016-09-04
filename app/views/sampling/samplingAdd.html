@@ -44,7 +44,7 @@
                     <div class="col-sm-10">
                         <div class="fg-line">
                             <input required type="number" min="1" name="Walnutnumber" class="form-control input-sm" id="WalnutNumer" placeholder="numero de nueces"
-                                ng-model="sampling.WalnutNumber" ng-change="CalculateWalnutNumberPerKilo()">
+                                data-ng-model="sampling.WalnutNumber" ng-change="CalculateWalnutNumberPerKilo()">
                             <small class="help-block has-error" style="color:red" ng-show="samplingForm.Walnutnumber.$error.number">Numero no valido.</small>
                         </div>
                     </div>
@@ -63,19 +63,19 @@
                     <label for="Performance" class="col-sm-2 control-label">Rendimiento</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required readonly type="number" min="1" name="Performance" class="form-control input-sm" id="Performance" placeholder="Rendimiento"
+                            <input readonly type="number" min="1" name="Performance" class="form-control input-sm" id="Performance" placeholder="Rendimiento"
                                 ng-model="sampling.Performance">
                             <small class="help-block has-error" style="color:red" ng-show="samplingForm.Performance.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="WalnutNumberPerKilo" class="col-sm-2 control-label">Numero de Nueces por Kilo</label>
+                    <label for="Walnutnumberperkilo" class="col-sm-2 control-label">Numero de Nueces por Kilo</label>
                     <div class="col-sm-10">
                         <div class="fg-line">
-                            <input required readonly type="number" min="1" name="WalnutNumberPerKilo" class="form-control input-sm" id="WalnutNumberPerKilo" placeholder="numero de nueces por kilo"
+                            <input readonly type="number" min="1" name="WalnutnumberperKilo" class="form-control input-sm" id="WalnutnumberKilo" placeholder="numero de nueces por kilo"
                                 ng-model="sampling.WalnutNumberPerKilo">
-                            <small class="help-block has-error" style="color:red" ng-show="samplingForm.WalnutNumberPerKilo.$error.number">Numero no valido.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="samplingForm.WalnutnumberperKilo.$error.number">Numero no valido.</small>
                         </div>
                     </div>
                 </div>

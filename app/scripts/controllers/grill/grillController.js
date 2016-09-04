@@ -93,7 +93,7 @@
                                 Quality: grill.Quality.Type,
                                 VarietyId: grill.Variety.Id,
                                 ProducerId: grill.Producer.Id,
-                                Folio: grill.Folio === null ? -1 : grill.Folio
+                                Folio: grill.Folio === undefined || grill.Folio === "" ? 0 : grill.Folio
                             };
                             grillService.save(Grill).then(function (response) {
                                 $scope.grill.Kilos = "";

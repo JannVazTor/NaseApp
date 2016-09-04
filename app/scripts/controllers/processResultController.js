@@ -2,11 +2,17 @@
     'use strict'
     angular.module('naseNutAppApp').controller('processResultController', function (clearService, processResultService, $rootScope, msgS, $filter, $scope, $state, samplingService, receptionService) {
 
-        $scope.confirmationDeleteReception = function (id ,folio) {
+        $scope.confirmationDeleteReception = function (id, folio) {
             swal(msgS.swalConfig("¿Esta seguro que desea eliminar el resultado de proceso con el folio " + folio + "?"),
                 function () {
                     deleteSampling(id);
                 });
+        };
+        
+        $scope.CalculateWalnutNumberPerKilo = function () {
+            if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
+                $scope.sampling.WalnutNumberPerKilo = Math.round(($scope.sampling.WalnutNumber * 1000) / $scope.sampling.SampleWeight);
+            }
         };
 
         $scope.redirectUpdate = function (sampling) {
@@ -51,8 +57,8 @@
 
         $scope.saveProcessResult = function (processResult) {
             var nutTypes = [{ NutType: 1, Kilos: processResult.kilosFirst, Sacks: processResult.sacksFirst },
-                    { NutType: 2, Kilos: processResult.kilosSecond, Sacks: processResult.sacksSecond },
-                    { NutType: 3, Kilos: processResult.kilosThird, Sacks: processResult.sacksThird }]
+                { NutType: 2, Kilos: processResult.kilosSecond, Sacks: processResult.sacksSecond },
+                { NutType: 3, Kilos: processResult.kilosThird, Sacks: processResult.sacksThird }]
             if (ValidateNutTypes(nutTypes)) {
                 var ProcessResult = {
                     ReceptionEntryId: receptionService.receptionEntryId,
@@ -133,15 +139,15 @@
             }
         };
 
-        $scope.generatePDF = function(){
+        $scope.generatePDF = function () {
             var doc = new jsPDF('l', 'pt');
             var elem = document.getElementById('SamplingReceptionTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Resultado de Proceso (Recepciones)');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: {fontSize:7},
-                margin: {horizontal: 10}
+                headerStyles: { fontSize: 7 },
+                margin: { horizontal: 10 }
             });
             doc.save("ResultadoProcesoRecepciones.pdf");
         };
