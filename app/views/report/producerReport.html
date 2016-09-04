@@ -23,14 +23,14 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-            <hr>
-            <button class="btn btn-link" ng-click="producerReportExportPdf()">
+                <hr>
+                <button class="btn btn-link" ng-click="producerReportExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
             </button>
-            <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('producerReport'))">
+                <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('producerReport'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
             </button>
-                <table id="producerReport" class="table table-striped table-bordered">
+                <table id="producerReport" class="table table-striped table-bordered table-condensed table-hover">
                     <thead>
                         <tr>
                             <th>Remisión</th>
@@ -55,8 +55,8 @@
                     <tbody>
                         <tr ng-repeat="report in producerReport">
                             <td>{{report.Remission}}</td>
-                            <td>{{report.DateReceptionCapture}}</td>
-                            <td>{{report.ProcessDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{report.DateReceptionCapture | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{report.ProcessDate | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{report.Variety}}</td>
                             <td>{{report.Batch}}</td>
                             <td>{{report.Cylinder}}</td>

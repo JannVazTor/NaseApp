@@ -11,7 +11,7 @@
                 <button class="btn btn-link" onclick="selectElementContents(document.getElementById('grillIssues'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
                 </button>
-                <table id="grillIssues" class="table table-bordered">
+                <table id="grillIssues" class="table table-striped table-bordered table-condensed table-hover">
                     <thead>
                         <tr>
                             <th>No. de Parrilla</th>
@@ -40,8 +40,8 @@
                             <td colspan="3"><b>Caja:</b>{{grillIssue.Box}}</td>
                         </tr>
                         <tr ng-repeat-end ng-repeat="grill in grillIssue.Grills">
-                            <td>{{grill.Id}}</td>
-                            <td>{{grill.DateCapture | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{grill.Folio}}</td>
+                            <td>{{grill.DateCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{grill.Receptions}}</td>
                             <td>{{grill.Size}}</td>
                             <td>{{grill.Sacks}}</td>

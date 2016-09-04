@@ -230,7 +230,6 @@
                 }
             }, function (response) {
                 msgS.msg('err', 7);
-
             });
         };
 

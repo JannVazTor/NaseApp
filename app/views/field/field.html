@@ -1,0 +1,167 @@
+<div class="animated bounceInRight">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Alta de Campos</h2>
+                </div>
+                <div class="card-body card-padding">
+                    <form name="fieldForm" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="fg-line">
+                                    <input required type="text" name="fieldName" class="form-control input-sm" id="field" ng-maxlength="100" ng-minlength="3"
+                                        placeholder="Nombre del campo *" data-ng-model="fieldName">
+                                    <small class="help-block has-error" style="color:red" ng-show="fieldForm.fieldName.$error.minlength">El nombre del campo debe contener al menos 3 caracteres.</small>
+                                    <small class="help-block has-error" style="color:red" ng-show="fieldForm.fieldName.$error.maxlength">El nombre del campo es demasiado extenso, debe contener menos de 100 caracteres.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveField(fieldName)" ng-disabled="!fieldForm.$valid">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Alta de Huertas/Lotes</h2>
+                </div>
+                <div class="card-body card-padding">
+                    <form name="batchForm" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <p class="f-500 m-b-15 c-black">Campo *</p>
+                            <div class="col-sm-10">
+                                <div class="fg-line select">
+                                    <select id="fieldF" class="form-control" ng-model="batch.Field" ng-options="batch.FieldName for batch in fields"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="fg-line">
+                                    <input required type="text" name="Batch" class="form-control input-sm" id="batchName" ng-maxlength="150" ng-minlength="3"
+                                        placeholder="Huerta/Lote *" data-ng-model="batch.Batch">
+                                    <small class="help-block has-error" style="color:red" ng-show="batchForm.Batch.$error.minlength">El nombre del lote debe contener al menos 3 caracteres.</small>
+                                    <small class="help-block has-error" style="color:red" ng-show="batchForm.Batch.$error.maxlength">El nombre del lote es demasiado extenso, debe contener menos de 150 caracteres.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="fg-line">
+                                    <input required name="hectares" type="number" min="1" class="form-control input-sm" id="hectaresNum" placeholder="Hectareas *"
+                                        data-ng-model="batch.Hectares">
+                                    <small class="help-block has-error" style="color:red" ng-show="batchForm.hectares.$error.number">Numero no valido.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="fg-line">
+                                    <input readonly name="nutInBatch" type="text" class="form-control input-sm" placeholder="nueces en huerta/lote *" data-ng-model="batch.NutsInBatch">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveBatch(batch)" ng-disabled="!batchForm.$valid">Guardar</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button class="btn btn-info btn-sm" data-ng-click="showAddVarietyModal()" ng-disabled="!batchForm.$valid">Agregar Variedades</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Alta de Cuadros</h2>
+                </div>
+                <div class="card-body card-padding">
+                    <form name="boxForm" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <p class="f-500 m-b-15 c-black">Huerta/Lote *</p>
+                            <div class="col-sm-10">
+                                <div class="fg-line select">
+                                    <select id="batchD" class="form-control" ng-model="box.Batch" ng-options="box.Batch for box in batches"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="fg-line">
+                                    <input required type="text" name="fieldName" class="form-control input-sm" id="field" ng-maxlength="20" placeholder="Cuadro *"
+                                        data-ng-model="box.Box">
+                                    <small class="help-block has-error" style="color:red" ng-show="boxForm.fieldName.$error.maxlength">El nombre del campo es demasiado extenso, debe contener menos de 20 caracteres.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary btn-sm" data-ng-click="saveBox(box)" ng-disabled="!boxForm.$valid">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2>Campos</h2>
+        </div>
+        <div class="card-body card-padding">
+            <div class="table-responsive">
+                <div class="col-sm-12 actionbar">
+                    <div class="form-group">
+                        <label for="isearch" class="col-sm-2 control-label">Buscar</label>
+                        <div class="col-sm-12">
+                            <div class="fg-line">
+                                <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchField">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <button class="btn btn-link" ng-click="generatePDF()">
+                <span class="glyphicon glyphicon-share"></span>Exportar PDF
+            </button>
+                <table id="fieldTable" class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Huerta/Lote</th>
+                            <th>Cuadro</th>
+                            <th>Hectareas</th>
+                            <th>Porcentajes de Nuez</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="field in fieldsAndBatches | filter:searchField">
+                            <td>{{field.FieldName}}</td>
+                            <td>{{field.Batch}}</td>
+                            <td>{{field.Box}}</td>
+                            <td>{{field.Hectares}}</td>
+                            <td>{{field.NutPercentages}}</td>
+                            <td>
+                                <button class="btn btn-default" ng-click="confirmFieldDel(field.Id, field.FieldName)">
+                        <i class="md md-delete"></i>
+                    </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

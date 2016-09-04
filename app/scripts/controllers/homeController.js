@@ -89,7 +89,7 @@
                     enabled: false
                 },
                 title: {
-                    text: 'Produccion Acumulada por Variedad'
+                    text: 'Producción Acumulada por Variedad'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -239,7 +239,7 @@
                     type: 'column'
                 },
                 title: {
-                    text: 'Nummero de Nueces promedio por Variedad'
+                    text: 'Número de Nueces Promedio por Kilo (Variedades)'
                 },
                 subtitle: {
                     text: ''
@@ -252,7 +252,7 @@
                 },
                 yAxis: {
                     title: {
-                        text: 'Numero de nueces promedio'
+                        text: 'número de nueces promedio por kilo'
                     }
                 },
                 legend: {

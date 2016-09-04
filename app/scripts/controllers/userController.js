@@ -40,11 +40,12 @@
     };
     function ReplaceRoleNames(data, propertyName) {
       $.each(data, function (i) {
-        if (data[i][propertyName] == 'admin') { data[i][propertyName] = 'Administrador' };
-        if (data[i][propertyName] == 'grillUser') { data[i][propertyName] = 'Capturista de Parrillas' };
-        if (data[i][propertyName] == 'humidityUser') { data[i][propertyName] = 'Capturista de Humedad' };
-        if (data[i][propertyName] == 'qualityUser') { data[i][propertyName] = 'Capturista de Muestreos' };
-        if (data[i][propertyName] == 'remRecepUser') { data[i][propertyName] = 'Capturista de Recepciones y Remisiones' };
+        if (data[i][propertyName] === 'admin') { data[i][propertyName] = 'Administrador' };
+        if (data[i][propertyName] === 'grillUser') { data[i][propertyName] = 'Capturista de Parrillas' };
+        if (data[i][propertyName] === 'humidityUser') { data[i][propertyName] = 'Capturista de Humedad' };
+        if (data[i][propertyName] === 'qualityUser') { data[i][propertyName] = 'Capturista de Muestreos' };
+        if (data[i][propertyName] === 'remRecepUser') { data[i][propertyName] = 'Capturista de Recepciones y Remisiones' };
+        if (data[i][propertyName] === 'producerUser') { data[i][propertyName] = 'Productor Externo'};
       });
       return data;
     };
@@ -92,6 +93,8 @@
         case 'remRecepUser':
           userInfo.role = 'Capturista de Recepciones y Remisiones';
           break;
+        case 'producerUser':
+          userInfo.role = 'Productor Externo'
         default:
           break;
       }
