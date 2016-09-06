@@ -12,7 +12,8 @@
       'ui.router',
       'ui.bootstrap.datetimepicker',
       'toastr',
-      'angularModalService'
+      'angularModalService',
+      'anguFixedHeaderTable'
     ])
     .config(function ($stateProvider, $urlRouterProvider, USER_ROLES) {
       $stateProvider

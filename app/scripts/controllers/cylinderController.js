@@ -32,6 +32,7 @@
             };
             cylinderService.save(Cylinder).then(function (response) {
                 msgS.msg('succ', 15);
+                $('#iusername').val('');
                 GetAllCylinders();
             }, function (response) {
                 if (response.status === 409) {
