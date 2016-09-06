@@ -189,7 +189,7 @@
           }
         }).
         state('humidityLastSamplings', {
-          ulr: '/ultimasHumedades',
+          url: '/ultimasHumedades',
           templateUrl: 'views/humidity/humidityLastSamplings.html',
           controller: 'humidityController',
           data: {
