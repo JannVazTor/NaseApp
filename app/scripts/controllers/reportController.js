@@ -18,9 +18,13 @@
                 ReportDate: $('#reportDate').val(),
             };
             reportService.getDailyProcess(DailyProcess).then(function (response) {
-                $scope.dailyProcess = response.data;
+                if (response.data.length === 0){
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.dailyProcess = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[8], 3);
+                msgS.msg('err', 14);
             });
         };
 
@@ -104,68 +108,87 @@
 
         $scope.getProducerReport = function (id) {
             reportService.getProducerReport(id).then(function (response) {
-                $scope.producerReport = response.data;
+                if (response.data.length === 0){
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.producerReport = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[8], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetAllProducers = function () {
             producerService.getAll().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.toastMessage(msgS.infoMessages[5], 1);
+                    msgS.msg('info', 5);
                 } else {
                     $scope.producers = response.data;
                     $scope.producer = $scope.producers[0];
                 };
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[8], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetReportingProcess = function () {
             reportService.getReportingProcess().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[7], 1);; }
-                $scope.reportingProcess = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.reportingProcess = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetCurrentInventory = function () {
             reportService.getCurrentInventoryReport().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1); };
-                $scope.genericGrillReport = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.genericGrillReport = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetSecondCurrentInventory = function () {
             reportService.getSecondCurrentInventory().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1); };
-                $scope.secondCurrentInventory = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.secondCurrentInventory = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetProcessInventory = function () {
             reportService.getProcessInventory().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1) };
-                $scope.genericGrillReport = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.genericGrillReport = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
             });
         };
 
         var GetDailyProcess = function () {
             var defer = $q.defer();
             reportService.getDailyProcess().then(function (response) {
-                if (response.data.length === 0) { msgS.toastMessage(msgS.infoMessages[10], 1) };
-                $scope.dailyProcess = response.data;
+                if (response.data.length === 0) {
+                    msgS.msg('info', 5);
+                } else{
+                    $scope.dailyProcess = response.data;
+                }
             }, function (response) {
-                msgS.toastMessage(msgS.errorMessages[12], 3);
+                msgS.msg('err', 14);
                 defer.reject();
             });
             return defer.promise;
@@ -174,7 +197,7 @@
         var GetReportOrigin = function () {
             reportService.getReportOrigin().then(function (response) {
                 if (response.data.length === 0) {
-                    msgS.msg('info', 5)
+                    msgS.msg('info', 5);
                 } else {
                     $scope.reportOrigin = response.data;
                     $scope.reportOriginFirst = $scope.reportOrigin[0];
@@ -217,22 +240,6 @@
                 };
             }, function (response) {
                 msgS.msg('err', 46);
-            });
-        };
-
-        $scope.myFilter = function (item) {
-            debugger;
-            return item.Quality == 2;
-        };
-
-        $scope.ExportExcel = function () {
-            $("reportingProcess").tableExport({
-                headings: true,
-                footers: true,
-                formats: ["xls"],
-                fileName: "ReporteProceso",
-                type: 'xls',
-                escape: false
             });
         };
 
@@ -297,8 +304,8 @@
             doc.text(40, 50, 'Reporte Diario de Proceso');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: { fontSize: 6 },
-                margin: { horizontal: 8 }
+                headerStyles: {fontSize:8},
+                margin: {horizontal: 8}
             });
             doc.save('Proceso Diario' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
@@ -328,88 +335,31 @@
             doc.save('ReporteProduccionAcumulado' + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
         };
 
+        var GenericExportPdf = function(title){
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('genericReport');
+            var res = doc.autoTableHtmlToJson(elem);
+            doc.text(40, 50, title);
+            doc.autoTable(res.columns, res.data, {
+                startY: 60,
+                headerStyles: {fontSize:8},
+                margin: {horizontal: 10},
+                fontSize: 8
+            });
+            doc.save(title + ' (ReporteParrillas) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
+        };
+
         $scope.GrillExportPdf = function () {
             switch ($state.current.name) {
                 case 'processInventory':
-                    GrillExportPdf('Inventario de Proceso', $scope.genericGrillReport);
+                    GenericExportPdf('Inventario de Proceso')
                     break;
                 case 'currentInventory':
-                    GrillExportPdf('Inventario Actual', $scope.genericGrillReport);
+                    GenericExportPdf('Inventario Actual');
                     break;
                 default:
                     break;
             };
-        };
-
-        var GrillExportPdf = function (title, arrayData) {
-            var properties = [
-                'Id', 'DateCapture', 'Receptions',
-                'Size', 'Sacks', 'Kilos', 'Quality',
-                'Variety', 'Producer', 'FieldName',
-                'SampleWeight', 'HumidityPercent',
-                'WalnutNumber', 'Performance', 'TotalWeightOfEdibleNuts'
-            ];
-            var columns = [
-                'No. Parrilla', 'Fecha', 'Folios',
-                'Tamaño', 'Sacos', 'Kilos', 'Calidad',
-                'Variedad', 'Productor', 'Campo', 'Peso', '% Humedad',
-                'No.Nueces', 'Rendimiento', 'Total'
-            ];
-            var getRows = function () {
-                var rows = [];
-                angular.forEach(arrayData, function (grill, key) {
-                    var arr = [];
-                    for (var i = 0; i < properties.length; i += 1) {
-                        if (properties[i] === 'DateCapture') {
-                            arr.push($filter('date')(grill[properties[i]], 'dd/MM/yyyy HH:mm a'));
-                            continue;
-                        }
-                        arr.push(grill[properties[i]]);
-                    }
-                    rows.push(arr);
-                }, this);
-                return rows;
-            };
-            var getOptions = function () {
-                return {
-                    tableWidth: 'wrap',
-                    styles: { cellPadding: 2, overflow: 'linebreak' },
-                    bodyStyles: { rowHeight: 12, fontSize: 8, valign: 'middle' },
-                    margin: { top: 10, left: 10, right: 10 },
-                    startY: doc.autoTableEndPosY() + 40,
-                    theme: 'grid',
-                    headerStyles: {
-                        fillColor: [44, 62, 80],
-                        fontSize: 8,
-                        rowHeight: 15,
-                        halign: 'center'
-                    },
-                    createdCell: function (cell, data) {
-                        cell.styles.halign = 'center';
-                    }
-                };
-            };
-            var rows = getRows();
-            var doc = new jsPDF('p', 'pt');
-            doc.text(title, 40, doc.autoTableEndPosY() + 30);
-            var options = getOptions();
-            doc.autoTable(columns, rows, options);
-            doc.save(title + ' (Reporte) - ' + $filter('date')(new Date(), 'dd/MM/yyyy') + '.pdf');
-        };
-
-        $scope.generatePdf = function () {
-            var
-                form = $('#PDF'),
-                cache_width = form.width(),
-                a4 = [595.28, 841.89];  // for a4 size paper width and height
-            var doc = new jsPDF({
-                unit: 'px',
-                format: 'a4'
-            });
-            doc.addHTML(document.body, function () {
-                doc.save('SalidasSegunda.pdf');
-                form.width(cache_width);
-            });
         };
 
         (function () {
