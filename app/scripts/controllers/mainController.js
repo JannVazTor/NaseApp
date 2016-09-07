@@ -10,6 +10,10 @@
             $state.go('login');
         };
 
+        $scope.redirectHome = function(){
+            $state.go('home');
+        };
+
         $scope.isLoggedIn = function () {
             return userService.isLoggedIn();
         };

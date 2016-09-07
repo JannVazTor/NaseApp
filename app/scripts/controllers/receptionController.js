@@ -262,24 +262,6 @@
             });
         };
 
-        var GetAllFields = function () {
-            fieldService.getAll().then(function (response) {
-                if (response.data.length === 0) {
-                    msgS.msg('info', 4);
-                } else {
-                    $scope.fields = response.data;
-                    if ($state.current.name === 'receptionUpdate') {
-                        $scope.receptionUpdateModel.Field = SearchItemObj($scope.fields, 'FieldName', receptionService.reception.FieldId);
-                    } else {
-                        $scope.receptionUpdateModel.Field = $scope.fields[0];
-                        $scope.reception.Field = $scope.fields[0];
-                    }
-                };
-            }, function (response) {
-                msgS.msg('err', 13);
-            });
-        };
-
         function SearchItemObj(array, property, id) {
             var item = {};
             $.each(array, function (i) {
@@ -329,10 +311,8 @@
                     GetAllProducers();
                     GetAllCylinders();
                     GetAllVarieties();
-                    GetAllFields();
                     break;
                 case 'receptionUpdate':
-                    GetAllFields();
                     FillUpdateReceptionObject(receptionService.reception);
                     break;
                 default:

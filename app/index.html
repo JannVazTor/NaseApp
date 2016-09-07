@@ -92,13 +92,13 @@
                         </ul>
                     </li>
                     <li ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)"><a ui-sref="remissionManage"><i class="md md-description"></i> Remisiones</a></li>
-                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.grillUser) || (currentUser.role === userRoles.admin)">
+                    <li class="sub-menu" ng-if="(currentUser.role === userRoles.grillUser) || (currentUser.role === userRoles.admin) || (currentUser.role === userRoles.qualityUser)">
                         <a href><i class="md md-view-module"></i>Parillas</a>
                         <ul>
-                            <li><a ui-sref="grillAdd">Alta de Parillas</a></li>
-                            <li><a ui-sref="grillManage">Inventario de Proceso</a></li>
-                            <li><a ui-sref="grillCurrentInv">Inventario Actual</a></li>
-                            <li><a ui-sref="grillIssue">Salida de Parillas</a></li>
+                            <li ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)"><a ui-sref="grillAdd">Alta de Parillas</a></li>
+                            <li ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin) || (currentUser.role === userRoles.qualityUser)"><a ui-sref="grillManage">Inventario de Proceso</a></li>
+                            <li ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)"><a ui-sref="grillCurrentInv">Inventario Actual</a></li>
+                            <li ng-if="(currentUser.role === userRoles.remRecepUser) || (currentUser.role === userRoles.admin)"><a ui-sref="grillIssue">Salida de Parillas</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu" ng-if="(currentUser.role === userRoles.admin) || (currentUser.role === userRoles.humidityUser)">
@@ -143,9 +143,11 @@
                 <div ui-view></div>
             </div>
         </section>
-        <button id="fixedbuttonRight" class="btn btn-primary btn-icon">
+        <div ng-if="isLoggedIn()">
+            <button id="fixedbuttonRight" class="btn btn-primary btn-icon" ng-click="redirectHome()">
             <i class="md md-home"></i>
         </button>
+        </div>
     </section>
 
     <!-- Javascript Libraries -->
@@ -174,14 +176,16 @@
     <script src="bower_components/highcharts/highcharts.js"></script>
     <script src="bower_components/highcharts/highcharts-3d.js"></scriipt>
     <script src="bower_components/highcharts/modules/exporting.js"></script>
-
+    <script src="bower_components/angu-fixed-header-table/angu-fixed-header-table.js"></script>
     <script src="bower_components/tableExport.jquery.plugin/tableExport.js"></script>
     <script src="bower_components/tableExport.jquery.plugin/jquery.base64.js"></script>
     <script src="bower_components/tableExport.jquery.plugin/jspdf/libs/sprintf.js"></script>
     <script src="bower_components/tableExport.jquery.plugin/jspdf/jspdf.js"></script>
     <script src="bower_components/tableExport.jquery.plugin/jspdf/libs/base64.js"></script>
     <script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
-
+    <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
+    <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.src.js"></script>
+    <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
 
     <script src="scripts/js/datetimepicker.js"></script>
     <script src="scripts/js/datetimepicker.templates.js"></script>
@@ -231,16 +235,7 @@
     <script type="text/javascript" src="scripts/js/selectElementContents.js"></script>
 
     <script src="scripts/directives/confirmPassword.js"></script>
-    <script></script>
-    <!--jsPDF-->
-    <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
-    <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.src.js"></script>
-    <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
 
-    <!--Fixed header-->
-    <script src="bower_components/angu-fixed-header-table/angu-fixed-header-table.js"></script>
-
-    
     <script type="text/ng-template" id="addVarietyModal.html">
          <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);">
           <div class="modal-dialog">

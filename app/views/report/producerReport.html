@@ -23,6 +23,18 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
+                <div class="row">
+                    <div class="col-sm-12 actionbar">
+                        <div class="form-group">
+                            <label for="isearch" class="col-sm-2 control-label">Buscar</label>
+                            <div class="col-sm-12">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchReport">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <hr>
                 <button class="btn btn-link" ng-click="producerReportExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
@@ -30,7 +42,9 @@
                 <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('producerReport'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
             </button>
-                <table id="producerReport" class="table table-striped table-bordered table-condensed table-hover" style="height: 400px;" fixed-header>
+                <hr>
+                <table id="producerReport" class="table table-striped table-bordered table-condensed table-hover" style="height: 400px;"
+                    fixed-header>
                     <thead>
                         <tr>
                             <th>Remisión</th>
@@ -53,7 +67,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="report in producerReport">
+                        <tr ng-repeat="report in producerReport | filter:searchReport">
                             <td>{{report.Remission}}</td>
                             <td>{{report.DateReceptionCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{report.ProcessDate | date:'dd/MM/yyyy HH:mm'}}</td>
