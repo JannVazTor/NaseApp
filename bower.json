@@ -16,8 +16,7 @@
     "foundation-apps": "^1.2.0",
     "angular-material": "^1.0.9",
     "json-export-excel": "ng-json-export-excel#^1.0.2",
-    "jspdf-plugins": "jsPDF-plugins#*",
-    "angular-fixed-table-header": "^0.2.1"
+    "jspdf-plugins": "jsPDF-plugins#*"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"

@@ -59,13 +59,14 @@
                             <th>Calidad</th>
                             <th>Variedad</th>
                             <th>Productor</th>
+                            <th>Campo</th>
                             <th>Huerta/Lote</th>
                             <th>Peso de la Muestra</th>
                             <th>Humedad</th>
                             <th>No.Nueces por Kilo</th>
                             <th>Rendimiento</th>
                             <th>Total</th>
-                            <th ng-if="!IsGrillToReception">Status</th>
+                            <th ng-hide="currentUser.role === userRoles.qualityUser" ng-if="!IsGrillToReception">Status</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
@@ -80,34 +81,35 @@
                             <td>{{grill.Quality}}</td>
                             <td>{{grill.Variety}}</td>
                             <td>{{grill.Producer}}</td>
+                            <td>{{grill.Field}}</td>
                             <td>{{grill.Batch}}</td>
                             <td>{{grill.SampleWeight}}</td>
                             <td>{{grill.HumidityPercent}}</td>
                             <td>{{grill.WalnutNumber}}</td>
                             <td>{{grill.Performance}}</td>
                             <td>{{grill.TotalWeightOfEdibleNuts}}</td>
-                            <td ng-if="!IsGrillToReception">
+                            <td ng-hide="currentUser.role === userRoles.qualityUser" ng-if="!IsGrillToReception">
                                 <div class="toggle-switch">
                                     <input id="{{grill.Id + g}}" type="checkbox" hidden="hidden" ng-model="grill.Status" ng-change="changeStatus(grill.Status, grill.Id)">
                                     <label for="{{grill.Id + g}}" class="ts-helper"></label>
                                 </div>
                             </td>
                             <td ng-if="!IsGrillToReception">
-                                <button class="btn btn-default" ng-click="redirectUpdate(grill.Id, grill)" data-toggle="tooltip" data-placement="bottom"
+                                <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="redirectUpdate(grill.Id, grill)" data-toggle="tooltip" data-placement="bottom"
                                     title="Modificar">
                                 <i class="md md-edit"></i>
                             </button>
-                                <button class="btn btn-default" ng-click="confirmationDelete(grill.Id)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="confirmationDelete(grill.Id)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                 <i class="md md-delete"></i>
                             </button>
-                                <button class="btn btn-default" ng-click="redirectReceptionToGrill(grill.Id)" data-toggle="tooltip" data-placement="bottom"
+                                <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="redirectReceptionToGrill(grill.Id)" data-toggle="tooltip" data-placement="bottom"
                                     title="Agregar folio de recepcion">
                                 <i class="md md-assignment"></i>
                             </button>
-                                <button ng-show="grill.SampleWeight == ''" class="btn btn-default" ng-click="redirectAddSampling(grill.Id)" data-toggle="tooltip"
+                            <button ng-show="grill.SampleWeight == ''" class="btn btn-default" ng-click="redirectAddSampling(grill.Id)" data-toggle="tooltip"
                                     data-placement="bottom" title="Agregar muestreo">
-                            <i class="md md-description"></i>
-                        </button>
+                                    <i class="md md-description"></i>
+                            </button>
                             </td>
                             <td ng-if="IsGrillToReception">
                                 <div class="toggle-switch">

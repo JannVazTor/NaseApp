@@ -43,7 +43,6 @@ module.exports = function(config) {
       'bower_components/angular-material/angular-material.js',
       'bower_components/file-saver/FileSaver.js',
       'bower_components/json-export-excel/src/json-export-excel.js',
-      'bower_components/angular-fixed-table-header/src/fixed-table-header.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

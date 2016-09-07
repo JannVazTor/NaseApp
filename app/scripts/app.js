@@ -86,7 +86,7 @@
           templateUrl: 'views/reception/receptionManage.html',
           controller: 'receptionController',
           data: {
-            roles: [USER_ROLES.remRecepUser, USER_ROLES.admin]
+            roles: [USER_ROLES.remRecepUser, USER_ROLES.admin, USER_ROLES.grillUser]
           }
         })
         .state('receptionUpdate', {
@@ -136,7 +136,7 @@
           templateUrl: 'views/grill/grillManage.html',
           controller: 'grillController',
           data: {
-            roles: [USER_ROLES.grillUser, USER_ROLES.admin]
+            roles: [USER_ROLES.grillUser, USER_ROLES.admin, USER_ROLES.qualityUser]
           }
         })
         .state('grillIssue', {
