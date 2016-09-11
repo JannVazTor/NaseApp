@@ -30,7 +30,7 @@
                         <tr ng-repeat="receptionEntry in humiditiesInReceptionEntry | filter:searchUser">
                             <td>{{receptionEntry.Cylinder}}</td>
                             <td>{{receptionEntry.Receptions}}</td>
-                            <td>{{receptionEntry.DateEntry | date: 'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{receptionEntry.EntryDate | date: 'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{receptionEntry.Variety}}</td>
                             <td>{{receptionEntry.Producer}}</td>
                             <td>

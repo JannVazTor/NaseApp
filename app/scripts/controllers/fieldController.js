@@ -112,7 +112,6 @@
                 function () {
                     deleteField(id);
                 });
-
         };
         var deleteField = function (id) {
             fieldService.delete(id).then(function (response) {

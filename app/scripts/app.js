@@ -327,11 +327,11 @@
             roles: [USER_ROLES.admin]
           }
         })
-        .state('secondGrillCurrentInv',{
+        .state('secondGrillCurrentInv', {
           url: '/InventarioActualParrillasSegunda',
           templateUrl: 'views/report/grill/secondGrillCurrentInv.html',
           controller: 'reportController',
-          data:{
+          data: {
             roles: [USER_ROLES.admin]
           }
         })
@@ -339,6 +339,14 @@
           url: '/campos',
           templateUrl: 'views/field/field.html',
           controller: 'fieldController',
+          data: {
+            roles: [USER_ROLES.admin]
+          }
+        })
+        .state('harvestSeason', {
+          url: '/temporadas',
+          templateUrl: 'views/harvestSeason.html',
+          controller: 'harvestSeasonController',
           data: {
             roles: [USER_ROLES.admin]
           }

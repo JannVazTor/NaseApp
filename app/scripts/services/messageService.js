@@ -127,7 +127,10 @@
             'La Suma de los porcentajes debe ser igual a 100',//94
             'Debe agregar al menos un variedad y porcentaje para poder guardar la huerta.',//95
             'Corrija los errores en los porcentajes de variedad antes de continuar.',//96
-            'La Huerta ya existe en el campo.'];
+            'La Huerta ya existe en el campo.',//97
+            'Ocurrio un error y la temporada no pudo ser agregada.',//98
+            'Ocurrio un error y las temporadas no pudieron ser cargadas.',//99
+            'Ocurrio un error y la temporada no pudo ser eliminada.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -156,7 +159,8 @@
             'La Recepcion fue removida exitosamente.',//24
             'La Recepcion se agrego correctamente.',//25
             'La Remision fue actualizada correctamente.',//26
-            'El Muestreo fue actualizado correctamente.'];
+            'El Muestreo fue actualizado correctamente.',//27
+            'La Temporada fue agregada exitosamente.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1
@@ -178,7 +182,8 @@
             'No se encontraron datos para la grafica "Porcentaje de Primeras y Segundas (Variedades)"',//17
             'No se encontraron muestras de humedad en la base de datos.',//18
             'No se encontraron muestreos de calidad en la base de datos.',//19
-            'No se encontraron recepciones en la base de datos.'];
+            'No se encontraron recepciones en la base de datos.',//20
+            'No se encontraron temporadas en la base de datos.'];
 
         var _swalConfig = function (title) {
             return {
