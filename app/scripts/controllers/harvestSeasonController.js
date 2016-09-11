@@ -32,20 +32,31 @@
         };
 
         $scope.changeState = function (harvestSeasonId, state) {
-            harvestSeasonService.changeState(harvestSeasonId, state).then(function (response) {
-                msgS.msg('succ', 6);
-            }, function (response) {
+            if ($scope.harvestSeasons.length === 1) {
                 $.each($scope.harvestSeasons, function (i) {
                     if ($scope.harvestSeasons[i].Id === harvestSeasonId) {
-                        $scope.harvestSeasons[i].Active = state;
+                        $scope.harvestSeasons[i].Active = true;
                         return false;
                     }
                 });
-                msgS.msg('err', 22);
-            });
+                msgS.msg('info', 22);
+            } else {
+                harvestSeasonService.changeState(harvestSeasonId, state ? 1 : 0).then(function (response) {
+                    msgS.msg('succ', 6);
+                    GetAll();
+                }, function (response) {
+                    $.each($scope.harvestSeasons, function (i) {
+                        if ($scope.harvestSeasons[i].Id === harvestSeasonId) {
+                            $scope.harvestSeasons[i].Active = !state;
+                            return false;
+                        }
+                    });
+                    msgS.msg('err', 22);
+                });
+            }
         };
         $scope.confirmationDelete = function (harvestSeasonId, name) {
-            swal(msgS.swalConfig("¿Estas seguro que deseas eliminar la temporada " + name + "?"),
+            swal(msgS.swalConfig("¿Estas seguro que deseas eliminar la temporada con el nombre: " + name + "?"),
                 function () {
                     deleteHarvestSeason(harvestSeasonId);
                 });

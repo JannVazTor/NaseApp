@@ -183,7 +183,8 @@
             'No se encontraron muestras de humedad en la base de datos.',//18
             'No se encontraron muestreos de calidad en la base de datos.',//19
             'No se encontraron recepciones en la base de datos.',//20
-            'No se encontraron temporadas en la base de datos.'];
+            'No se encontraron temporadas en la base de datos.',//21
+            'La Temporada no puede ser desactivada debido a que no hay otra temporada para asignar.'];
 
         var _swalConfig = function (title) {
             return {
