@@ -32,12 +32,14 @@
         });
 
         (function () {
-            harvestSeasonService.getAll().then(function (response) {
-                if (response.data.length === 0) {
-                    $state.go('harvestSeason');
-                }
-            }, function (response) {
-            });
+            if (authService.authentication.role === 'admin') {
+                harvestSeasonService.getAll().then(function (response) {
+                    if (response.data.length === 0) {
+                        $state.go('harvestSeason');
+                    }
+                }, function (response) {
+                });
+            }
         })();
     });
 })();

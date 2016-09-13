@@ -122,7 +122,6 @@
         $scope.updateReception = function (reception) {
             var ReceptionUpdate = {
                 ReceivedFromField: reception.ReceivedFromField,
-                FieldId: reception.Field.Id,
                 CarRegistration: reception.CarRegistration,
                 HeatHoursDrying: reception.HeatHoursDrying,
                 Observations: reception.Observations,
@@ -224,6 +223,8 @@
             varietyService.getAll().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 2);
+                    $scope.varieties = response.data;
+                    $scope.receptionEntry.Variety = $scope.varieties[0];
                 } else {
                     $scope.varieties = response.data;
                     $scope.receptionEntry.Variety = $scope.varieties[0];
@@ -237,6 +238,8 @@
             cylinderService.getAllActive().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 1);
+                    $scope.cylinders = response.data;
+                    $scope.receptionEntry.Cylinder = $scope.cylinders[0];
                 } else {
                     $scope.cylinders = response.data;
                     $scope.receptionEntry.Cylinder = $scope.cylinders[0];

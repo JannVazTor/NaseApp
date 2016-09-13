@@ -136,7 +136,7 @@
           templateUrl: 'views/grill/grillManage.html',
           controller: 'grillController',
           data: {
-            roles: [USER_ROLES.grillUser, USER_ROLES.admin, USER_ROLES.qualityUser]
+            roles: [USER_ROLES.grillUser, USER_ROLES.admin, USER_ROLES.qualityUser, USER_ROLES.remRecepUser]
           }
         })
         .state('grillIssue', {
@@ -202,7 +202,7 @@
           templateUrl: 'views/sampling/samplingGrillManage.html',
           controller: 'samplingController',
           data: {
-            roles: [USER_ROLES.qualityUser, USER_ROLES.admin]
+            roles: [USER_ROLES.qualityUser, USER_ROLES.admin, USER_ROLES.grillUser]
           }
         })
         .state('samplingAdd', {
@@ -210,7 +210,7 @@
           templateUrl: 'views/sampling/samplingAdd.html',
           controller: 'samplingController',
           data: {
-            roles: [USER_ROLES.qualityUser, USER_ROLES.admin]
+            roles: [USER_ROLES.qualityUser, USER_ROLES.admin, USER_ROLES.grillUser]
           }
         })
         .state('samplingUpdate', {
@@ -218,7 +218,7 @@
           templateUrl: 'views/sampling/samplingUpdate.html',
           controller: 'samplingController',
           data: {
-            roles: [USER_ROLES.qualityUser, USER_ROLES.admin]
+            roles: [USER_ROLES.qualityUser, USER_ROLES.admin, USER_ROLES.grillUser]
           }
         })
         /*ProcessResult*/
