@@ -112,7 +112,6 @@
                 function () {
                     deleteField(id);
                 });
-
         };
         var deleteField = function (id) {
             fieldService.delete(id).then(function (response) {
@@ -154,12 +153,14 @@
                 modal.element.modal();
                 modal.close.then(function (result) {
                     var hasAnyNutPercentage = false;
-                    result.forEach(function (element) {
-                        if (element.nutPercentage !== "") {
-                            hasAnyNutPercentage = true;
-                            return;
-                        }
-                    }, this);
+                    if (result !== 0) {
+                        result.forEach(function (element) {
+                            if (element.nutPercentage !== "") {
+                                hasAnyNutPercentage = true;
+                                return;
+                            }
+                        }, this);
+                    }
                     if (!hasAnyNutPercentage) {
                         msgS.msg('err', 95);
                         $scope.batch.NutsInBatch = "";

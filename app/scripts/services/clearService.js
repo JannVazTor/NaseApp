@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').factory('clearService', function (receptionAndGrillService, samplingService, remissionService, receptionService, grillService) {
+    angular.module('naseNutAppApp').factory('clearService', function (receptionAndGrillService, harvestSeasonService, samplingService, remissionService, receptionService, grillService) {
 
         var _clearReceptionAndGrillService = function () {
             receptionAndGrillService.IsGrillToReception = false;
@@ -55,12 +55,22 @@
             };
         }
 
+        var _clearHarvestSeason = function () {
+            harvestSeasonService.harvestSeason = {
+                Id: "",
+                Name: "",
+                Description: "",
+                EntryDate: "",
+                IssueDate: ""
+            }
+        }
         return {
             clearReceptionAndGrillService: _clearReceptionAndGrillService,
             clearReceptionService: _clearReceptionService,
             clearGrillService: _clearGrillService,
             clearSamplingService: _clearSamplingService,
-            clearRemissionService: _clearRemissionService
+            clearRemissionService: _clearRemissionService,
+            clearHarvestSeason: _clearHarvestSeason
         }
     });
 })();

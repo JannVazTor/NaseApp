@@ -1,0 +1,134 @@
+<div class="animated bounceInRight">
+    <div class="card">
+        <form name="harvestSeasonForm" class="form-horizontal" role="form">
+            <div class="card-header">
+                <h2>Alta de Temporadas</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div ng-show="harvestSeasons.length === 0">
+                    <div class="alert alert-danger" role="alert">
+                        <p>
+                            <h3>!ATENCIÓN:</h5>
+                                <br>
+                                <h4>No hay temporadas en el sistema.</h4>
+                                <br>
+                                <p>Es necesario que agregue al menos una "Temporada" antes de poder continuar, esto debido a
+                                    que la informacion que agregue posteriormente pertenecera a dicho elemento.</p>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="hname" class="col-sm-2 control-label">Nombre *</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input name="name" type="text" class="form-control input-sm" id="hname" placeholder="nombre" ng-maxlength="100" ng-model="harvestSeason.name"
+                                required>
+                            <small class="help-block has-error" style="color:red" ng-show="harvestSeason.name.$error.maxlength">El nombre es demasiado extenso, debe contener menos de 100 caracteres.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="EntryDate" class="col-sm-2 control-label">Fecha de Entrada *</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" required disabled class="form-control input-sm" id="EntryDate" placeholder="fecha de captura" value="{{ entrydate | date: 'yyyy/MM/dd HH:mm' }}">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target href><i class="md md-event"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <datetimepicker data-ng-model="entrydate" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="IssueDate" class="col-sm-2 control-label">Fecha de Salida *</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input type="text" required disabled class="form-control input-sm" id="IssueDate" placeholder="fecha de captura" value="{{ issuedate | date: 'yyyy/MM/dd HH:mm' }}">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target href><i class="md md-event"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <datetimepicker data-ng-model="issuedate" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" />
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="observations" class="col-sm-2 control-label">Descripción *</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <textarea required name="description" class="form-control auto-size" placeholder="descripción..." ng-minlength="3" ng-maxlength="500"
+                                data-ng-model="harvestSeason.description"></textarea>
+                            <small class="help-block has-error" style="color:red" ng-show="harvestSeasonForm.description.$error.minlength">Este campo debe contener al menos 3 caracteres.</small>
+                            <small class="help-block has-error" style="color:red" ng-show="harvestSeasonForm.description.$error.maxlength">La descripción es muy extensa, debe contener menos de 500 caracteres.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn bgm-teal waves-effect" data-ng-click="save(harvestSeason)" ng-disabled="!harvestSeasonForm.$valid">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2>Temporadas</h2>
+        </div>
+        <div class="card-body card-padding">
+            <div class="table-responsive">
+                <div class="col-sm-12 actionbar">
+                    <div class="form-group">
+                        <label for="isearch" class="col-sm-2 control-label">Buscar</label>
+                        <div class="col-sm-12">
+                            <div class="fg-line">
+                                <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchSeasons">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <button class="btn btn-link" ng-click="generatePDF()">
+                <span class="glyphicon glyphicon-share"></span>Exportar PDF
+            </button>
+                <table class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Fecha de Entrada</th>
+                            <th>Fecha de Salida</th>
+                            <th>Descripción</th>
+                            <th>Activo</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="harvestSeason in harvestSeasons | filter:searchSeasons">
+                            <td>{{harvestSeason.Name}}</td>
+                            <td>{{harvestSeason.EntryDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{harvestSeason.IssueDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{harvestSeason.Description}}</td>
+                            <td>
+                                <div class="toggle-switch">
+                                    <input id="{{harvestSeason.Id}}" type="checkbox" hidden="hidden" ng-model="harvestSeason.Active" ng-change="changeState(harvestSeason.Id, harvestSeason.Active)">
+                                    <label for="{{harvestSeason.Id}}" class="ts-helper"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-default" ng-click="redirectUpdate(harvestSeason)" data-toggle="tooltip" data-placement="bottom" title="Modificar">
+                                    <i class="md md-edit"></i>
+                                </button>
+                                <button class="btn btn-default" ng-click="confirmationDelete(harvestSeason.Id, harvestSeason.Name)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                    <i class="md md-delete"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
