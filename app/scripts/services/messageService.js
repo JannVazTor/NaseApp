@@ -130,7 +130,8 @@
             'La Huerta ya existe en el campo.',//97
             'Ocurrio un error y la temporada no pudo ser agregada.',//98
             'Ocurrio un error y las temporadas no pudieron ser cargadas.',//99
-            'Ocurrio un error y la temporada no pudo ser eliminada.'];
+            'Ocurrio un error y la temporada no pudo ser eliminada.',//100
+            'Ocurrio un error y la temporada no pudo ser actualizada.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1
@@ -160,7 +161,8 @@
             'La Recepcion se agrego correctamente.',//25
             'La Remision fue actualizada correctamente.',//26
             'El Muestreo fue actualizado correctamente.',//27
-            'La Temporada fue agregada exitosamente.'];
+            'La Temporada fue agregada exitosamente.',//28
+            'La Temporada fue actualizada correctamente.'];
 
         var info = ['No se encontraron recepciones en la base de datos.',//0
             'No se encontraron cilindros en la base de datos.',//1

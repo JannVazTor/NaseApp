@@ -345,7 +345,15 @@
         })
         .state('harvestSeason', {
           url: '/temporadas',
-          templateUrl: 'views/harvestSeason.html',
+          templateUrl: 'views/harvestSeason/harvestSeason.html',
+          controller: 'harvestSeasonController',
+          data: {
+            roles: [USER_ROLES.admin]
+          }
+        })
+        .state('harvestSeasonUpdate', {
+          url: '/modificarTemporadas',
+          templateUrl: 'views/harvestSeason/harvestSeasonUpdate.html',
           controller: 'harvestSeasonController',
           data: {
             roles: [USER_ROLES.admin]
