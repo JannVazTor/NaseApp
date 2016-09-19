@@ -48,7 +48,6 @@
             if (!findDuplicateByFolio(reception.Folio, $scope.receptions)) {
                 $scope.receptions.push({
                     Folio: reception.Folio,
-                    EntryDate: $('#EntryDate').val(),
                     CarRegistration: reception.CarRegistration,
                     HeatHoursDrying: reception.HeatHoursDrying,
                     Observations: reception.Observations
@@ -70,11 +69,13 @@
                         if (!receptionEntry.Producer) {
                             msgS.msg('err', 82);
                         } else {
-                            var ReceptionEntry = {};
-                            ReceptionEntry.receptions = $scope.receptions;
-                            ReceptionEntry.CylinderId = receptionEntry.Cylinder.Id;
-                            ReceptionEntry.VarietyId = receptionEntry.Variety.Id;
-                            ReceptionEntry.ProducerId = receptionEntry.Producer.Id;
+                            var ReceptionEntry = {
+                                receptions: $scope.receptions,
+                                CylinderId: receptionEntry.Cylinder.Id,
+                                VarietyId: receptionEntry.Variety.Id,
+                                ProducerId: receptionEntry.Producer.Id,
+                                EntryDate: $('#EntryDate').val()
+                            };
                             receptionService.saveEntry(ReceptionEntry).then(function (response) {
                                 GetAllCylinders();
                                 msgS.msg('succ', 7);
@@ -106,7 +107,8 @@
                 CarRegistration: reception.CarRegistration,
                 HeatHoursDrying: reception.HeatHoursDrying,
                 HumidityPercent: reception.HumidityPercent,
-                Observations: reception.Observations
+                Observations: reception.Observations,
+                EntryDate: reception.EntryDate
             };
             $state.go('receptionUpdate');
         };
@@ -122,11 +124,11 @@
         $scope.updateReception = function (reception) {
             var ReceptionUpdate = {
                 ReceivedFromField: reception.ReceivedFromField,
-                FieldId: reception.Field.Id,
                 CarRegistration: reception.CarRegistration,
                 HeatHoursDrying: reception.HeatHoursDrying,
                 Observations: reception.Observations,
-                Folio: receptionService.Folio
+                Folio: receptionService.Folio,
+                EntryDate: $('#EntryDate').val()
             };
             receptionService.update(receptionService.ReceptionId, ReceptionUpdate).then(function (response) {
                 msgS.msg('succ', 22);
@@ -224,6 +226,8 @@
             varietyService.getAll().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 2);
+                    $scope.varieties = response.data;
+                    $scope.receptionEntry.Variety = $scope.varieties[0];
                 } else {
                     $scope.varieties = response.data;
                     $scope.receptionEntry.Variety = $scope.varieties[0];
@@ -237,6 +241,8 @@
             cylinderService.getAllActive().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 1);
+                    $scope.cylinders = response.data;
+                    $scope.receptionEntry.Cylinder = $scope.cylinders[0];
                 } else {
                     $scope.cylinders = response.data;
                     $scope.receptionEntry.Cylinder = $scope.cylinders[0];
@@ -277,7 +283,8 @@
             $scope.receptionUpdateModel.ReceivedFromField = reception.ReceivedFromField,
                 $scope.receptionUpdateModel.CarRegistration = reception.CarRegistration,
                 $scope.receptionUpdateModel.HeatHoursDrying = reception.HeatHoursDrying,
-                $scope.receptionUpdateModel.Observations = reception.Observations
+                $scope.receptionUpdateModel.Observations = reception.Observations,
+                $scope.date = reception.EntryDate
         };
 
         $scope.return = function () {
@@ -288,15 +295,15 @@
             }
         };
 
-        $scope.generatePDF = function(){
+        $scope.generatePDF = function () {
             var doc = new jsPDF('p', 'pt');
             var elem = document.getElementById('receptionTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Recepciones Registradas');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: {fontSize:8},
-                margin: {horizontal: 10}
+                headerStyles: { fontSize: 8 },
+                margin: { horizontal: 10 }
             });
             doc.save("RecepcionesRegistradas.pdf");
         };

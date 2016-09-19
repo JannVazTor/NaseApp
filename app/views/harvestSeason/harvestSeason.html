@@ -9,11 +9,11 @@
                     <div class="alert alert-danger" role="alert">
                         <p>
                             <h3>!ATENCIÓN:</h5>
-                            <br>
-                            <h4>No hay temporadas en el sistema.</h4>
-                            <br>
-                            <p>Es necesario que agregue al menos una "Temporada" antes de poder continuar, esto debido a que
-                                la informacion que agregue posteriormente pertenecera a dicho elemento.</p>
+                                <br>
+                                <h4>No hay temporadas en el sistema.</h4>
+                                <br>
+                                <p>Es necesario que agregue al menos una "Temporada" antes de poder continuar, esto debido a
+                                    que la informacion que agregue posteriormente pertenecera a dicho elemento.</p>
                         </p>
                     </div>
                 </div>
@@ -47,9 +47,9 @@
                         <div class="fg-line">
                             <input type="text" required disabled class="form-control input-sm" id="IssueDate" placeholder="fecha de captura" value="{{ issuedate | date: 'yyyy/MM/dd HH:mm' }}">
                             <div class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target href><i class="md md-event"></i></a>
+                                <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target href><i class="md md-event"></i></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <datetimepicker data-ng-model="issuedate" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
+                                    <datetimepicker data-ng-model="issuedate" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" />
                                 </ul>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm" data-ng-click="save(harvestSeason)" ng-disabled="!harvestSeasonForm.$valid">Guardar</button>
+                        <button type="submit" class="btn bgm-teal waves-effect" data-ng-click="save(harvestSeason)" ng-disabled="!harvestSeasonForm.$valid">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -118,9 +118,12 @@
                                 </div>
                             </td>
                             <td>
-                                <button class="btn btn-default" ng-click="confirmationDelete(harvestSeason.Id, harvestSeason.Name)">
-                                <i class="md md-delete"></i>
-                            </button>
+                                <button class="btn btn-default" ng-click="redirectUpdate(harvestSeason)" data-toggle="tooltip" data-placement="bottom" title="Modificar">
+                                    <i class="md md-edit"></i>
+                                </button>
+                                <button class="btn btn-default" ng-click="confirmationDelete(harvestSeason.Id, harvestSeason.Name)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                    <i class="md md-delete"></i>
+                                </button>
                             </td>
                         </tr>
                     </tbody>

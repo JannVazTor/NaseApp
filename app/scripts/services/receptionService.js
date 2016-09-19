@@ -11,7 +11,8 @@
             FieldId: "",
             CarRegistration: "",
             HeatHoursDrying: "",
-            Observations: ""
+            Observations: "",
+            EntryDate: ""
         };
 
         var _getAll = function () {
