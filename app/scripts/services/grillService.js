@@ -5,13 +5,11 @@
         var _grill = {
             DateCapture: "",
             Size: "",
-            FieldId: "",
             Kilos: "",
             Sacks: "",
             Quality: "",
             VarietyId: "",
-            ProducerId: "",
-            BatchId: ""
+            ProducerId: ""
         };
 
         var _getAll = function () {
