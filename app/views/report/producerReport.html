@@ -47,7 +47,6 @@
                     fixed-header>
                     <thead>
                         <tr>
-                            <th>Remisión</th>
                             <th>Fecha de Captura</th>
                             <th>Fecha de Proceso</th>
                             <th>Variedad</th>
@@ -68,7 +67,6 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="report in producerReport | filter:searchReport">
-                            <td>{{report.Remission}}</td>
                             <td>{{report.DateReceptionCapture | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{report.ProcessDate | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{report.Variety}}</td>

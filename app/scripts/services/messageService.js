@@ -131,7 +131,8 @@
             'Ocurrio un error y la temporada no pudo ser agregada.',//98
             'Ocurrio un error y las temporadas no pudieron ser cargadas.',//99
             'Ocurrio un error y la temporada no pudo ser eliminada.',//100
-            'Ocurrio un error y la temporada no pudo ser actualizada.'];
+            'Ocurrio un error y la temporada no pudo ser actualizada.',//101
+            'Los tamaños y los sacos de primera no coinciden.'];
 
         var success = ['El Usuario fue eliminado de manera exitosa.',//0
             'El Usuario fue agregado de manera exitosa.',//1

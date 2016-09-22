@@ -21,6 +21,27 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="nutFirst" class="col-sm-2 control-label">Tamaños de Primeras</label>
+                    <div class="col-md-1">
+                        <div class="fg-line">
+                            <input type="number" name="largeSize" class="form-control input-sm" id="largeSize" placeholder="Grandes" ng-model="processResult.largeSize">
+                            <small class="help-block has-error" style="color:red" ng-show="processResultForm.largeSize.$error.number">Numero no valido.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="fg-line">
+                            <input type="number" name="mediumSize" class="form-control input-sm" id="mediumSize" placeholder="Medianas" ng-model="processResult.mediumSize">
+                            <small class="help-block has-error" style="color:red" ng-show="processResultForm.mediumSize.$error.number">Numero no valido.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="fg-line">
+                            <input type="number" name="smallSize" class="form-control input-sm" id="smallSize" placeholder="Chicas" ng-model="processResult.smallSize">
+                            <small class="help-block has-error" style="color:red" ng-show="processResultForm.smallSize.$error.number">Numero no valido.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="nutSecond" class="col-sm-2 control-label">Nuez de Segunda</label>
                     <div class="col-sm-3">
                         <div class="fg-line">

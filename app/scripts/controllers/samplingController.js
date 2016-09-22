@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, samplingService, clearService, grillService, $rootScope) {
+    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, samplingService, clearService, grillService, $rootScope, processResultService) {
         $scope.samplings = [];
         $scope.sampling = samplingService.sampling;
 
@@ -9,7 +9,7 @@
                 $scope.sampling.WalnutNumberPerKilo = Math.round(($scope.sampling.WalnutNumber * 1000) / $scope.sampling.SampleWeight);
             }
         };
-        
+
         $scope.CalculatePerformance = function () {
             if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
                 $scope.sampling.Performance = Math.round((($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100) * 100) / 100;
@@ -61,14 +61,24 @@
         };
 
         $scope.UpdateSampling = function () {
-            $scope.sampling.DateCapture = $('#EntryDate').val();
-            samplingService.update($scope.sampling).then(function (response) {
-                msgS.msg('succ', 27);
-                $state.go($rootScope.prevState);
-            }, function (response) {
-                msgS.msg('err', 91);
-            });
-        }
+            if ($rootScope.prevState === 'processResultManage') {
+                $scope.sampling.DateCapture = $('#EntryDate').val();
+                processResultService.update($scope.sampling).then(function (response) {
+                    msgS.msg('succ', 27);
+                    $state.go($rootScope.prevState);
+                }, function (response) {
+                    msgS.msg('err', 91);
+                });
+            } else {
+                $scope.sampling.DateCapture = $('#EntryDate').val();
+                samplingService.update($scope.sampling).then(function (response) {
+                    msgS.msg('succ', 27);
+                    $state.go($rootScope.prevState);
+                }, function (response) {
+                    msgS.msg('err', 91);
+                });
+            }
+        };
 
         var GetAllGrillSamplings = function () {
             samplingService.getAllGrills().then(function (response) {
