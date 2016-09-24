@@ -67,8 +67,8 @@
                             <tr>
                                 <th>Folio</th>
                                 <th>Camion/Placas</th>
-                                <th>Fecha de Captura</th>
                                 <th>Horas de Secado</th>
+                                <th>Observaciones</th>
                                 <th>Remover</th>
                             </tr>
                         </thead>
@@ -76,8 +76,8 @@
                             <tr ng-repeat="reception in receptions track by reception.Folio">
                                 <td>{{reception.Folio}}</td>
                                 <td>{{reception.CarRegistration}}</td>
-                                <td>{{reception.EntryDate}}</td>
                                 <td>{{reception.HeatHoursDrying}}</td>
+                                <td>{{reception.Observations}}</td>
                                 <td>
                                     <button class="btn btn-icon command-delete" ng-click="removeReception(reception.Folio)" data-toggle="tooltip" data-placement="bottom"
                                         title="Remover">
