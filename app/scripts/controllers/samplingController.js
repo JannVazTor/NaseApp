@@ -1,6 +1,6 @@
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, samplingService, clearService, grillService, $rootScope, processResultService) {
+    angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, receptionAndGrillService, samplingService, clearService, grillService, $rootScope, processResultService) {
         $scope.samplings = [];
         $scope.sampling = samplingService.sampling;
 
@@ -16,7 +16,7 @@
             }
         };
 
-        $scope.saveSampling = function (sampling) {
+        $scope.saveSampling = function (sampling, redirectType) {
             var Sampling = {
                 TotalWeightOfEdibleNuts: sampling.TotalWeightOfEdibleNuts,
                 WalnutNumber: sampling.WalnutNumber,
@@ -28,10 +28,30 @@
             };
             samplingService.save(Sampling).then(function (response) {
                 msgS.msg('succ', 17);
-                $state.go('samplingGrillManage');
+                if (redirectType) {
+                    if (redirectType === 1) {
+                        $scope.redirectAddGrill();
+                    } else {
+                        if (redirectType === 2) {
+                            $scope.redirectReceptionToGrill(grillService.grillId);
+                        } else {
+                            $state.go('samplingGrillManage');
+                        }
+                    }
+                }
             }, function (response) {
                 msgS.msg('err', 72);
             });
+        };
+
+        $scope.redirectReceptionToGrill = function (Id) {
+            receptionAndGrillService.IsGrillToReception = true;
+            receptionAndGrillService.grillId = Id;
+            $state.go('receptionManage');
+        };
+
+        $scope.redirectAddGrill = function () {
+            $state.go('grillAdd');
         };
 
         $scope.confirmationDeleteGrill = function (grillId) {
@@ -140,6 +160,7 @@
                     GetAllGrillSamplings();
                     break;
                 case 'samplingAdd':
+                    $scope.title = "No.Parrilla: " + grillService.grillFolio;
                     $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     break;
                 case 'samplingUpdate':

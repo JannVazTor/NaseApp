@@ -32,8 +32,9 @@
             }
         });
 
-        $scope.redirectAddSampling = function (grillId) {
+        $scope.redirectAddSampling = function (grillId, grillNumber) {
             grillService.grillId = grillId;
+            grillService.grillFolio = grillNumber;
             $state.go('samplingAdd');
         };
         $scope.redirectUpdate = function (grillId, grill) {
@@ -68,7 +69,7 @@
             });
         }
 
-        $scope.saveGrill = function (grill) {
+        $scope.saveGrill = function (grill, redirectType) {
             if ($scope.grill.Batch === null) {
                 msgS.msg('err', 29);
             } else {
@@ -96,6 +97,14 @@
                                 $scope.grill.Folio = "";
                                 $scope.grill.Sacks = "";
                                 msgS.msg('succ', 18);
+                                if (redirectType) {
+                                    if (redirectType === 1) {
+                                        $scope.redirectAddSampling(response.data.Id, response.data.Folio);
+                                    }
+                                    if (redirectType === 2) {
+                                        $scope.redirectReceptionToGrill(response.data.Id);
+                                    }
+                                }
                             }, function (response) {
                                 if (response.status === 409) {
                                     msgS.msg('err', 93);

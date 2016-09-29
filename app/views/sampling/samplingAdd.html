@@ -2,7 +2,7 @@
     <div class="card">
         <form name="samplingForm" class="form-horizontal" role="form" novalidate>
             <div class="card-header">
-                <h2>Alta de muestreo</h2>
+                <h2>Alta de muestreo {{title}}</h2>
             </div>
             <div class="card-body card-padding">
                 <div class="form-group">
@@ -82,6 +82,18 @@
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn bgm-teal waves-effect" data-ng-click="saveSampling(sampling)" ng-disabled="!samplingForm.$valid">Guardar</button>
+                    </div>
+                </div>
+                <div ng-if="(currentUser.role === userRoles.admin) || (currentUser.role === userRoles.grillUser)">
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn bgm-red waves-effect" data-ng-click="saveSampling(sampling, 1)" ng-disabled="!samplingForm.$valid">Guardar y Agregar Nueva Parrilla</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn bgm-bluegray waves-effect" data-ng-click="saveSampling(sampling, 2)" ng-disabled="!samplingForm.$valid">Guardar y Asignar Folio</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@
                             <td>{{receptionEntry.Cylinder}}</td>
                             <td>
                                 <div ng-if="!receptionEntry.Sampling">
-                                    <button class="btn btn-default" ng-click="redirectAddSampling(receptionEntry.Id)" data-toggle="tooltip" data-placement="bottom"
+                                    <button class="btn btn-default" ng-click="redirectAddSampling(receptionEntry.Id, receptionEntry.Receptions)" data-toggle="tooltip" data-placement="bottom"
                                         title="agregar muestreo">
                                     <i class="md md-description"></i>
                             </button>

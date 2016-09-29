@@ -2,6 +2,7 @@
     'use strict'
     angular.module('naseNutAppApp').factory('grillService', function ($http, apiPath) {
         var _grillId = "";
+        var _grillFolio = "";
         var _grill = {
             DateCapture: "",
             Size: "",
@@ -24,11 +25,11 @@
             return $http.delete(apiPath + 'api/grill/' + id);
         }
 
-        var _deleteGrillIssue = function(id){
+        var _deleteGrillIssue = function (id) {
             return $http.delete(apiPath + 'api/grill/grillIssue/' + id);
         }
 
-        var _removeGrillFromGrillIssue = function(id){
+        var _removeGrillFromGrillIssue = function (id) {
             return $http.put(apiPath + 'api/grill/removeGrillFromGrillIssue/' + id);
         }
 
@@ -62,6 +63,7 @@
             saveIssue: _saveIssue,
             getAllIssues: _getAllIssues,
             grillId: _grillId,
+            grillFolio: _grillFolio,
             deleteGrillIssue: _deleteGrillIssue,
             removeGrillFromGrillIssue: _removeGrillFromGrillIssue
         };
