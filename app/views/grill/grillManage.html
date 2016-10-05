@@ -95,7 +95,7 @@
                                     title="Modificar">
                                 <i class="md md-edit"></i>
                             </button>
-                                <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="confirmationDelete(grill.Id)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="confirmationDelete(grill.Id, grill.Folio)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                 <i class="md md-delete"></i>
                             </button>
                                 <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="redirectReceptionToGrill(grill.Id)" data-toggle="tooltip" data-placement="bottom"

@@ -29,16 +29,18 @@
                     fixed-header>
                     <thead>
                         <tr>
-                            <th rowspan="2">Huerta/Lote</th>
-                            <th rowspan="2">Hectareas</th>
-                            <th ng-repeat="variety in reportOriginFirst.Varieties">{{variety.Variety}}(Sacos)</th>
-                            <th rowspan="2">Produccion Total</th>
+                            <th>Campo</th>
+                            <th>Huerta/Lote</th>
+                            <th>Hectareas</th>
+                            <th ng-repeat="variety in reportOriginFirst.Varieties">{{variety.Variety}}</th>
+                            <th>Produccion Total</th>
                             <th>Rendimiento / Ha</th>
                             <th ng-repeat="variety in reportOriginFirst.Varieties">{{variety.Variety}}(R%)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="report in reportOrigin | filter:searchReport">
+                            <td>{{report.Field}}</td>
                             <td>{{report.Batch}}</td>
                             <td>{{report.Hectares}}</td>
                             <td ng-repeat="variety in report.Varieties">{{variety.Total}}</td>

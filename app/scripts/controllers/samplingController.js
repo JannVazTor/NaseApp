@@ -54,8 +54,8 @@
             $state.go('grillAdd');
         };
 
-        $scope.confirmationDeleteGrill = function (grillId) {
-            swal(msgS.swalConfig("¿Esta seguro que desea eliminar el muestreo de la parrilla numero " + grillId + "?"),
+        $scope.confirmationDeleteGrill = function (grillId, grillFolio) {
+            swal(msgS.swalConfig("¿Esta seguro que desea eliminar el muestreo de la parrilla numero " + grillFolio + "?"),
                 function () {
                     deleteSampling(grillId);
                 });
