@@ -43,7 +43,12 @@
             } else {
                 return false;
             }
-        }
+        };
+
+        $scope.redirectAddGrill = function(){
+            $state.go('grillAdd');
+        };
+
         $scope.addReception = function (reception) {
             if (!findDuplicateByFolio(reception.Folio, $scope.receptions)) {
                 $scope.receptions.push({

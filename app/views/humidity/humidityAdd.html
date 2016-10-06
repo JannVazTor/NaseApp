@@ -27,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="receptionEntry in humiditiesInReceptionEntry | filter:searchReceptionEntries">
+                        <tr ng-repeat="receptionEntry in humiditiesInReceptionEntry | filter:searchReceptionEntries | orderBy: 'Cylinder'">
                             <td>{{receptionEntry.Cylinder}}</td>
                             <td>{{receptionEntry.Receptions}}</td>
                             <td>{{receptionEntry.EntryDate | date: 'dd/MM/yyyy HH:mm'}}</td>

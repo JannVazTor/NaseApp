@@ -47,7 +47,7 @@
                 <button class="btn btn-link" ng-click="generatePDF()">
                 <span class="glyphicon glyphicon-share"></span>Exportar PDF
             </button>
-                <table id="grillManageTable" class="table table-striped table-bordered table-condensed table-hover" style="height: 400px;" fixed-header>
+                <table id="grillManageTable" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em" fixed-header>
                     <thead>
                         <tr>
                             <th>No. de Parrilla</th>
@@ -59,8 +59,6 @@
                             <th>Calidad</th>
                             <th>Variedad</th>
                             <th>Productor</th>
-                            <th>Campo</th>
-                            <th>Huerta/Lote</th>
                             <th>Peso de la Muestra</th>
                             <th>Humedad</th>
                             <th>No.Nueces por Kilo</th>
@@ -81,8 +79,6 @@
                             <td>{{grill.Quality}}</td>
                             <td>{{grill.Variety}}</td>
                             <td>{{grill.Producer}}</td>
-                            <td>{{grill.Field}}</td>
-                            <td>{{grill.Batch}}</td>
                             <td>{{grill.SampleWeight}}</td>
                             <td>{{grill.HumidityPercent}}</td>
                             <td>{{grill.WalnutNumber}}</td>
@@ -106,7 +102,7 @@
                                     title="Agregar folio de recepcion">
                                 <i class="md md-assignment"></i>
                             </button>
-                            <button ng-show="grill.SampleWeight == ''" class="btn btn-default" ng-click="redirectAddSampling(grill.Id)" data-toggle="tooltip"
+                            <button ng-show="grill.SampleWeight == ''" class="btn btn-default" ng-click="redirectAddSampling(grill.Id, grill.Folio)" data-toggle="tooltip"
                                     data-placement="bottom" title="Agregar muestreo">
                                     <i class="md md-description"></i>
                             </button>

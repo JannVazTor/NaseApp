@@ -8,7 +8,7 @@
                     deleteSampling(id);
                 });
         };
-        
+
         $scope.CalculateWalnutNumberPerKilo = function () {
             if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
                 $scope.sampling.WalnutNumberPerKilo = Math.round(($scope.sampling.WalnutNumber * 1000) / $scope.sampling.SampleWeight);
@@ -49,6 +49,26 @@
             return counter >= 1;
         };
 
+        var ValidateNutSizeProcessResult = function (nutSizes) {
+            var counter = 0;
+            $.each(nutSizes, function (i) {
+                if (nutSizes[i].Sacks) {
+                    counter += 1;
+                }
+            });
+            return counter >= 1;
+        };
+
+        var ValidateNutSizeProcessResultSum = function (nutSizes, sacks) {
+            var total = 0;
+            $.each(nutSizes, function (i) {
+                if (nutSizes[i].Sacks) {
+                    total += nutSizes[i].Sacks;
+                }
+            });
+            return total === sacks;
+        };
+
         $scope.CalculatePerformance = function () {
             if ($scope.sampling.SampleWeight !== 0 && $scope.sampling.SampleWeight > 0) {
                 $scope.sampling.Performance = Math.round((($scope.sampling.TotalWeightOfEdibleNuts / $scope.sampling.SampleWeight) * 100) * 100) / 100;
@@ -58,18 +78,26 @@
         $scope.saveProcessResult = function (processResult) {
             var nutTypes = [{ NutType: 1, Kilos: processResult.kilosFirst, Sacks: processResult.sacksFirst },
                 { NutType: 2, Kilos: processResult.kilosSecond, Sacks: processResult.sacksSecond },
-                { NutType: 3, Kilos: processResult.kilosThird, Sacks: processResult.sacksThird }]
-            if (ValidateNutTypes(nutTypes)) {
-                var ProcessResult = {
-                    ReceptionEntryId: receptionService.receptionEntryId,
-                    NutTypes: nutTypes
-                };
-                processResultService.saveNutTypes(ProcessResult).then(function (response) {
-                    msgS.msg('succ', 16);
-                    $state.go('processResultManage');
-                }, function (response) {
-                    msgS.msg('err', 55);
-                });
+                { NutType: 3, Kilos: processResult.kilosThird, Sacks: processResult.sacksThird }];
+            var nutSizeProcessResult = [{ NutSize: 1, Sacks: processResult.largeSize },
+                { NutSize: 2, Sacks: processResult.mediumSize },
+                { NutSize: 3, Sacks: processResult.smallSize }];
+            if (ValidateNutTypes(nutTypes) && ValidateNutSizeProcessResult(nutSizeProcessResult)) {
+                if (ValidateNutSizeProcessResultSum(nutSizeProcessResult, processResult.sacksFirst)) {
+                    var ProcessResult = {
+                        ReceptionEntryId: receptionService.receptionEntryId,
+                        NutTypes: nutTypes,
+                        NutSizeProcessResult: nutSizeProcessResult
+                    };
+                    processResultService.saveNutTypes(ProcessResult).then(function (response) {
+                        msgS.msg('succ', 16);
+                        $state.go('processResultManage');
+                    }, function (response) {
+                        msgS.msg('err', 55);
+                    });
+                }else{
+                    msgS.msg('err', 102);
+                }
             } else {
                 msgS.msg('err', 54);
             }
@@ -94,7 +122,7 @@
         };
 
         var deleteSampling = function (SamplingId) {
-            samplingService.delete(SamplingId).then(function (response) {
+            processResultService.delete(SamplingId).then(function (response) {
                 $.each($scope.samplings, function (i) {
                     if ($scope.samplings[i].Id === SamplingId) {
                         $scope.samplings.splice(i, 1);

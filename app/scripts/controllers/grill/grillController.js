@@ -32,8 +32,9 @@
             }
         });
 
-        $scope.redirectAddSampling = function (grillId) {
+        $scope.redirectAddSampling = function (grillId, grillNumber) {
             grillService.grillId = grillId;
+            grillService.grillFolio = grillNumber;
             $state.go('samplingAdd');
         };
         $scope.redirectUpdate = function (grillId, grill) {
@@ -41,8 +42,6 @@
             grillService.grill = {
                 DateCapture: grill.DateCapture,
                 Size: grill.Size,
-                FieldId: grill.Field,
-                BatchId: grill.Batch,
                 Kilos: grill.Kilos,
                 Sacks: grill.Sacks,
                 Quality: grill.Quality,
@@ -56,13 +55,11 @@
             var GrillUpdate = {
                 DateCapture: $('#EntryDate').val(),
                 Size: grill.Size.Type,
-                FieldId: grill.Field.Id,
                 Kilos: grill.Kilos,
                 Sacks: grill.Sacks,
                 Quality: grill.Quality.Type,
                 VarietyId: grill.Variety.Id,
-                ProducerId: grill.Producer.Id,
-                BatchId: grill.Batch.Id
+                ProducerId: grill.Producer.Id
             };
             grillService.update(grillService.grillId, GrillUpdate).then(function (response) {
                 msgS.msg('succ', 19);
@@ -72,7 +69,7 @@
             });
         }
 
-        $scope.saveGrill = function (grill) {
+        $scope.saveGrill = function (grill, redirectType) {
             if ($scope.grill.Batch === null) {
                 msgS.msg('err', 29);
             } else {
@@ -88,7 +85,6 @@
                             var Grill = {
                                 DateCapture: $('#EntryDate').val(),
                                 Size: grill.Size.Type,
-                                BatchId: grill.Batch.Id,
                                 Kilos: grill.Kilos,
                                 Sacks: grill.Sacks,
                                 Quality: grill.Quality.Type,
@@ -101,6 +97,14 @@
                                 $scope.grill.Folio = "";
                                 $scope.grill.Sacks = "";
                                 msgS.msg('succ', 18);
+                                if (redirectType) {
+                                    if (redirectType === 1) {
+                                        $scope.redirectAddSampling(response.data.Id, response.data.Folio);
+                                    }
+                                    if (redirectType === 2) {
+                                        $scope.redirectReceptionToGrill(response.data.Id);
+                                    }
+                                }
                             }, function (response) {
                                 if (response.status === 409) {
                                     msgS.msg('err', 93);
@@ -257,42 +261,6 @@
             });
         };
 
-        var GetAllFields = function (defaultItem) {
-            fieldService.getFields().then(function (response) {
-                if (response.data.length === 0) {
-                    msgS.msg('info', 4);
-                } else {
-                    $scope.fields = response.data;
-                    if ($state.current.name === 'grillUpdate') {
-                        $scope.grill.Field = SearchItemObj($scope.fields, 'FieldName', grillService.grill.FieldId);
-                        GetBatchesInField($scope.grill.Field.Id);
-                    } else {
-                        $scope.grill.Field = $scope.fields[0];
-                        GetBatchesInField($scope.grill.Field.Id);
-                    }
-                };
-            }, function (response) {
-                msgS.msg('err', 13);
-            });
-        };
-
-        /*var GetAllBatches = function () {
-            fieldService.getBatches().then(function (response) {
-                if (response.data.length === 0) {
-                    msgS.msg('info', 10);
-                } else {
-                    $scope.batches = response.data;
-                    if ($state.current.name === 'grillUpdate') {
-                        $scope.grill.Batch = SearchItemObj($scope.batches, 'Batch', grillService.grill.BatchId);
-                    } else {
-                        $scope.grill.Batch = $scope.batches[0];
-                    }
-                };
-            }, function (response) {
-                msgS.msg('err', 27);
-            });
-        };*/
-
         var GetAllGrillsCurrentInv = function () {
             grillService.getAllCurrentInv().then(function (response) {
                 if (response.data.length === 0) {
@@ -347,34 +315,6 @@
             }
         };
 
-
-        $scope.getBatchInCurrentField = function (field) {
-            if (field !== null) {
-                GetBatchesInField(field.Id);
-            };
-        };
-
-        var GetBatchesInField = function (fieldId) {
-            fieldService.getBatchesInField(fieldId).then(function (response) {
-                if (response.data.length === 0) {
-                    $scope.batches = {};
-                    msgS.msg('info', 10);
-                } else {
-                    $scope.batches = response.data;
-                    if ($state.current.name === 'grillUpdate') {
-                        $scope.grill.Batch = SearchItemObj($scope.batches, 'Batch', grillService.grill.BatchId);
-                        if(isEmpty($scope.grill.Batch)){
-                            $scope.grill.Batch = $scope.batches[0];
-                        }
-                    } else {
-                        $scope.grill.Batch = $scope.batches[0];
-                    }
-                }
-            }, function (response) {
-                msgS.msg('err', 27);
-            });
-        };
-
         function isEmpty(obj) {
             for (var prop in obj) {
                 if (obj.hasOwnProperty(prop))
@@ -389,7 +329,6 @@
                     $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllVarieties();
-                    GetAllFields();
                     break;
                 case 'grillManage':
                     GetAllGrills();
@@ -401,7 +340,6 @@
                     $scope.date = $filter('date')(Date.now(), 'yyyy/MM/dd HH:mm');
                     GetAllProducers();
                     GetAllVarieties();
-                    GetAllFields();
                     FillUpdateGrillObject(grillService.grill);
                     break;
                 default:
