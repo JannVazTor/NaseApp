@@ -13,11 +13,8 @@
         $scope.secondCurrentInventory = [];
         $scope.secondGrillIssues = [];
 
-        $scope.getDailyProcessReport = function (date) {
-            var DailyProcess = {
-                ReportDate: $('#reportDate').val(),
-            };
-            reportService.getDailyProcess(DailyProcess).then(function (response) {
+        $scope.getDailyProcessReport = function () {
+            reportService.getDailyProcess().then(function (response) {
                 if (response.data.length === 0){
                     msgS.msg('info', 5);
                 } else{
@@ -394,6 +391,7 @@
                     GetReportOrigin();
                     break;
                 case 'dailyReport':
+                    GetDailyProcess();
                     break;
                 default:
                     break;

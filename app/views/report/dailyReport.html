@@ -1,33 +1,5 @@
 <div class="animated bounceInRight">
     <div class="card">
-        <form name="dailyProcessReport" class="form-horizontal" role="form">
-            <div class="card-header">
-                <h2>Seleccionar Fecha del Reporte</h2>
-            </div>
-            <div class="card-body card-padding">
-                <div class="form-group">
-                    <label for="iusername" class="col-sm-2 control-label">Fecha</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="text" required disabled class="form-control input-sm" id="reportDate" placeholder="fecha del reporte" value="{{ data.dateDropDownLink | date:'MM-dd-yyyy' }}">
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown"><i class="large md md-event"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <datetimepicker data-ng-model="data.dateDropDownLink" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" />
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn bgm-teal waves-effect" data-ng-click="getDailyProcessReport(data.dateDropDownLink)">Generar Reporte</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="card">
         <div class="card-header">
             <h2>Reporte Diario de Proceso</h2>
         </div>

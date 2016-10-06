@@ -14,8 +14,8 @@
             return $http.get(apiPath + 'api/report/processInventory');
         }
 
-        var _getDailyProcessReport = function(date){
-            return $http.post(apiPath + 'api/report/dailyProcess', date);
+        var _getDailyProcessReport = function(){
+            return $http.get(apiPath + 'api/report/dailyProcess');
         }
 
         var _getGrillIssuesReport = function(){
