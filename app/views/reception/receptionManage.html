@@ -5,7 +5,7 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <div class="col-sm-12 actionbar">
+                <!--<div class="col-sm-12 actionbar">
                     <div class="form-group">
                         <label for="isearch" class="col-sm-2 control-label">Buscar</label>
                         <div class="col-sm-12">
@@ -43,72 +43,84 @@
                         <label><input type="checkbox" ng-model="showSearchOptions"><i class="input-helper"></i>MOSTRAR MAS OPCIONES DE BUSQUEDA</label>
                     </div>
                 </div>
-                <hr>
-                <button class="btn btn-link" ng-click="generatePDF()">
-                <span class="glyphicon glyphicon-share"></span>Exportar PDF
-                </button>
-                <button class="btn btn-success waves-effect" ng-if="IsGrillToReception" ng-click="redirectAddGrill()">Agregar Nueva Parrilla</button>
-            </button>
-                <table id="receptionTable" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;" fixed-header>
-                    <thead>
-                        <tr>
-                            <th>Folio</th>
-                            <th>Remisiones</th>
-                            <th>Productor</th>
-                            <th>Huerta/Lote</th>
-                            <th>Variedad</th>
-                            <th>Estado</th>
-                            <th>Camion/Placas</th>
-                            <th>Recibido</th>
-                            <th>Cilindro</th>
-                            <th>Fecha de Captura</th>
-                            <th>Horas de Secado</th>
-                            <th>Parrillas</th>
-                            <th ng-if="!IsGrillToReception">Opciones</th>
-                            <th ng-if="IsGrillToReception">Asignar Folio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="reception in receptions | filter:searchReception  | filter:{Folio: search.folio, Variety:search.variety, ProducerName: search.producer}">
-                            <td>{{reception.Folio}}</td>
-                            <td>{{reception.Remissions}}</td>
-                            <td>{{reception.ProducerName}}</td>
-                            <td>{{reception.FieldName}}</td>
-                            <td>{{reception.Variety}}</td>
-                            <td>{{reception.Active}}</td>
-                            <td>{{reception.CarRegistration}}</td>
-                            <td>{{reception.ReceivedFromField}}</td>
-                            <td>{{reception.Cylinder}}</td>
-                            <td>{{reception.EntryDate | date:'dd/MM/yyyy HH:mm'}}</td>
-                            <td>{{reception.HeatHoursDrying}}</td>
-                            <td>{{reception.Grills}}</td>
-                            <td ng-if="!IsGrillToReception">
-                                <button class="btn btn-default" ng-click="redirectUpdate(reception.Id,reception,reception.Folio)" data-toggle="tooltip" data-placement="bottom"
-                                    title="Modificar">
-                            <i class="md md-edit"></i>
+                <hr>-->
+                <div ng-show="receptions.length >= 1">
+                    <div id="toolbar">
+                        <button class="btn btn-link" ng-click="generatePDF()">
+                            <span class="glyphicon glyphicon-share"></span>Exportar PDF
                         </button>
-                                <button class="btn btn-default" ng-click="confirmationDelete(reception.Id, reception.Folio)" data-toggle="tooltip" data-placement="bottom"
-                                    title="Eliminar">
-                            <i class="md md-delete"></i>
-                        </button>
-                                <button class="btn btn-default" ng-click="redirectReceptionToGrill(reception.Folio, reception.Id)" data-toggle="tooltip"
-                                    data-placement="bottom" title="Asignar recepcion a parrilla">
-                            <i class="md md-view-module"></i>
-                        </button>
-                                <button class="btn btn-default" ng-click="redirectAddRemission(reception.Folio)" data-toggle="tooltip" data-placement="bottom"
-                                    title="Agregar remisiones">
-                            <i class="md md-description"></i>
-                        </button>
-                            </td>
-                            <td ng-if="IsGrillToReception">
-                                <div class="toggle-switch">
-                                    <input id="{{reception.Id}}" type="checkbox" hidden="hidden" ng-model="reception.IsAlreadyAssigned" ng-change="addReceptionToGrill(reception.Id, reception.IsAlreadyAssigned)">
-                                    <label for="{{reception.Id}}" class="ts-helper"></label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <button class="btn btn-success waves-effect" ng-if="IsGrillToReception" ng-click="redirectAddGrill()">Agregar Nueva Parrilla</button>
+                    </div>
+                    <table id="receptionManageTable" 
+                            data-toggle="table" 
+                            data-show-refresh="true" 
+                            data-show-columns="true" 
+                            data-toolbar="#toolbar"
+                            data-unique-id="Id" 
+                            data-pagination="true" 
+                            data-search="true" 
+                            data-show-export="true" 
+                            data-page-list="[10, 50, 100, 200, TODO]">
+                        <thead>
+                            <tr>
+                                <th data-field="Folio" data-align="center" data-sortable="true">Folio</th>
+                                <th data-field="Remissions" data-align="center" data-sortable="true">Remisiones</th>
+                                <th data-field="ProducerName" data-align="center" data-sortable="true">Productor</th>
+                                <th data-field="FieldName" data-align="center" data-sortable="true">Huerta/Lote</th>
+                                <th data-field="Variety" data-align="center" data-sortable="true">Variedad</th>
+                                <th data-field="Active" data-align="center" data-sortable="true">Estado</th>
+                                <th data-field="CarRegistration" data-align="center" data-sortable="true">Camion/Placas</th>
+                                <th data-field="ReceivedFromField" data-align="center" data-sortable="true">Recibido</th>
+                                <th data-field="Cylinder" data-align="center" data-sortable="true">Cilindro</th>
+                                <th data-field="EntryDate" data-align="center" data-sortable="true" data-formatter="dateFormatter">Fecha de Captura</th>
+                                <th data-field="HeatHoursDrying" data-align="center" data-sortable="true">Horas de Secado</th>
+                                <th data-field="Grills" data-align="center" data-sortable="true">Parrillas</th>
+                                <th ng-if="!IsGrillToReception" data-align="center" data-formatter="operateFormatter" data-events="operateEvents">Opciones</th>
+                                <th ng-if="IsGrillToReception" data-align="center" data-formatter="operateFormatterIfIsReceptionToGrill">Asignar Folio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--<tr ng-repeat="reception in receptions | filter:searchReception  | filter:{Folio: search.folio, Variety:search.variety, ProducerName: search.producer}">
+                                <td>{{reception.Folio}}</td>
+                                <td>{{reception.Remissions}}</td>
+                                <td>{{reception.ProducerName}}</td>
+                                <td>{{reception.FieldName}}</td>
+                                <td>{{reception.Variety}}</td>
+                                <td>{{reception.Active}}</td>
+                                <td>{{reception.CarRegistration}}</td>
+                                <td>{{reception.ReceivedFromField}}</td>
+                                <td>{{reception.Cylinder}}</td>
+                                <td>{{reception.EntryDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                                <td>{{reception.HeatHoursDrying}}</td>
+                                <td>{{reception.Grills}}</td>
+                                <td ng-if="!IsGrillToReception">
+                                    <button class="btn btn-default" ng-click="redirectUpdate(reception.Id,reception,reception.Folio)" data-toggle="tooltip" data-placement="bottom"
+                                        title="Modificar">
+                                <i class="md md-edit"></i>
+                            </button>
+                                    <button class="btn btn-default" ng-click="confirmationDelete(reception.Id, reception.Folio)" data-toggle="tooltip" data-placement="bottom"
+                                        title="Eliminar">
+                                <i class="md md-delete"></i>
+                            </button>
+                                    <button class="btn btn-default" ng-click="redirectReceptionToGrill(reception.Folio, reception.Id)" data-toggle="tooltip"
+                                        data-placement="bottom" title="Asignar recepcion a parrilla">
+                                <i class="md md-view-module"></i>
+                            </button>
+                                    <button class="btn btn-default" ng-click="redirectAddRemission(reception.Folio)" data-toggle="tooltip" data-placement="bottom"
+                                        title="Agregar remisiones">
+                                <i class="md md-description"></i>
+                            </button>
+                                </td>
+                                <td ng-if="IsGrillToReception">
+                                    <div class="toggle-switch">
+                                        <input id="{{reception.Id}}" type="checkbox" hidden="hidden" ng-model="reception.IsAlreadyAssigned" ng-change="addReceptionToGrill(reception.Id, reception.IsAlreadyAssigned)">
+                                        <label for="{{reception.Id}}" class="ts-helper"></label>
+                                    </div>
+                                </td>
+                            </tr>-->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -1,3 +1,7 @@
+var operateFormatter; 
+var operateEvents; 
+var dateFormatter;
+
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, receptionAndGrillService, samplingService, clearService, grillService, $rootScope, processResultService) {
@@ -63,6 +67,7 @@
 
         var deleteSampling = function (SamplingId) {
             samplingService.delete(SamplingId).then(function (response) {
+                $('#samplingGrillManageTable').bootstrapTable('removeByUniqueId', SamplingId);
                 $.each($scope.samplings, function (i) {
                     if ($scope.samplings[i].Id === SamplingId) {
                         $scope.samplings.splice(i, 1);
@@ -104,9 +109,11 @@
             samplingService.getAllGrills().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 19);
+                    fillTable(response.data);
                 } else {
                     if ($scope.samplings.length !== 0) $scope.samplings = [];
                     $scope.samplings = response.data;
+                    fillTable(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 92);
@@ -153,6 +160,41 @@
                 onStateChange();
             }
         });
+
+        /* Start Table Functions*/
+        function fillTable(samplings) {
+            $('#samplingGrillManageTable').bootstrapTable({
+                data: samplings
+            });
+        };
+
+        $('#samplingGrillManageTable').on('refresh.bs.table', function (params) {
+            GetAllGrillSamplings();
+        });
+
+        operateFormatter = function (value, row, index) {
+            return [
+                '<button class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
+                '<i class="md md-edit"></i>',
+                '</button>',
+                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                '<i class="md md-delete"></i>',
+                '</button>'
+            ].join('');
+        };
+        operateEvents = {
+            'click .edit': function (e, value, row, index) {
+                $scope.redirectUpdate(row)
+            },
+            'click .delete': function (e, value, row, index) {
+                $scope.confirmationDeleteGrill(row.Id, row.Folio)
+            }
+        };
+
+        dateFormatter = function (value) {
+            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+        };
+        /* End Table Functions*/
 
         (function () {
             switch ($state.current.name) {

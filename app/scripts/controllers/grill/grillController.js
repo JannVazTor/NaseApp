@@ -363,17 +363,17 @@ var operateFormatterGrillCurrentInv;
                 '<button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
                 '<i class="md md-delete"></i>',
                 '</button>',
-                '<a ng- hide="currentUser.role === userRoles.qualityUser" class="btn btn-default redirectReceptionToGrill" href="javascript:void(0)" title="Agregar folio de recepción">',
+                '<button ng- hide="currentUser.role === userRoles.qualityUser" class="btn btn-default redirectReceptionToGrill" href="javascript:void(0)" title="Agregar folio de recepción">',
                 '<i class="md md-assignment"></i>',
-                '</a>',
-                '<a ng-show="grill.SampleWeight == \'\'" class="btn btn-default redirectToAddSampling" href="javascript:void(0)" title="Agregar muestreo">',
+                '</button>',
+                '<button ng-show="grill.SampleWeight == \'\'" class="btn btn-default redirectToAddSampling" href="javascript:void(0)" title="Agregar muestreo">',
                 '<i class="md md-description"></i>',
-                '</a>'
+                '</button>'
             ].join('');
         };
 
         operateFormmatterIfIsGrillToReception = function (value, row, index) {
-            var isChecked = value ? "checked" : "";
+            var isChecked = row.IsAlreadyAssigned ? "checked" : "";
             return [
                 '<div class="toggle-switch">',
                 '<input id="' + row.Id + '" type="checkbox" onclick="onAddGrillToReceptionChange(this)" hidden="hidden" ' + isChecked + '>',
@@ -384,9 +384,9 @@ var operateFormatterGrillCurrentInv;
 
         operateFormatterGrillCurrentInv = function (valu, row, index) {
             return [
-                '<a class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
                 '<i class="md md-delete"></i>',
-                '</a>'
+                '</button>'
             ].join('');
         };
 
