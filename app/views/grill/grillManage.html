@@ -5,7 +5,7 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <div class="col-sm-12 actionbar">
+                <!--<div class="col-sm-12 actionbar">
                     <div class="form-group">
                         <label for="isearch" class="col-sm-2 control-label">Buscar</label>
                         <div class="col-sm-12">
@@ -43,33 +43,47 @@
                         <label><input type="checkbox" ng-model="showSearchOptions"><i class="input-helper"></i>MOSTRAR MAS OPCIONES DE BUSQUEDA</label>
                     </div>
                 </div>
-                <hr>
-                <button class="btn btn-link" ng-click="generatePDF()">
-                <span class="glyphicon glyphicon-share"></span>Exportar PDF
-            </button>
-                <table id="grillManageTable" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em" fixed-header>
-                    <thead>
-                        <tr>
-                            <th>No. de Parrilla</th>
-                            <th>Fecha de Captura</th>
-                            <th>Recepciones</th>
-                            <th>Tamaño</th>
-                            <th>Sacos</th>
-                            <th>Kilos</th>
-                            <th>Calidad</th>
-                            <th>Variedad</th>
-                            <th>Productor</th>
-                            <th>Peso de la Muestra</th>
-                            <th>Humedad</th>
-                            <th>No.Nueces por Kilo</th>
-                            <th>Rendimiento</th>
-                            <th>Total</th>
-                            <th ng-hide="currentUser.role === userRoles.qualityUser" ng-if="!IsGrillToReception">Status</th>
-                            <th>Operaciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="grill in grills | filter:searchUser | filter:{Producer: search.producer, Variety: search.variety, Quality: search.quality}">
+                <hr>-->
+                <div ng-show="grills.length >= 1">
+                    <div id="toolbar">
+                        <button class="btn btn-link" ng-click="generatePDF()">
+                            <span class="glyphicon glyphicon-share"></span>Exportar PDF
+                        </button>
+                    </div>
+                    <table id="grillManageTable" 
+                        data-toggle="table" 
+                        data-show-refresh="true" 
+                        data-show-columns="true" 
+                        data-toolbar="#toolbar"
+                        data-unique-id="Id" 
+                        data-pagination="true" 
+                        data-search="true" 
+                        data-show-export="true" 
+                        data-page-list="[10, 50, 100, 200, TODO]">
+                        <thead>
+                            <tr>
+                                <th data-field="Folio" data-align="center" data-sortable="true">No. de Parrilla</th>
+                                <th data-field="DateCapture" data-align="center" data-sortable="true" data-formatter="dateFormatter">Fecha de Captura</th>
+                                <th data-field="Receptions" data-align="center" data-sortable="true">Recepciones</th>
+                                <th data-field="Size" data-align="center" data-sortable="true">Tamaño</th>
+                                <th data-field="Sacks" data-align="center" data-sortable="true">Sacos</th>
+                                <th data-field="Kilos" data-align="center" data-sortable="true">Kilos</th>
+                                <th data-field="Quality" data-align="center" data-sortable="true">Calidad</th>
+                                <th data-field="Variety" data-align="center" data-sortable="true">Variedad</th>
+                                <th data-field="Producer" data-align="center" data-sortable="true">Productor</th>
+                                <th data-field="SampleWeight" data-align="center" data-sortable="true">Peso de la Muestra</th>
+                                <th data-field="HumidityPercent" data-align="center" data-sortable="true">Humedad</th>
+                                <th data-field="WalnutNumber" data-align="center" data-sortable="true">No.Nueces por Kilo</th>
+                                <th data-field="Performance" data-align="center" data-sortable="true">Rendimiento</th>
+                                <th data-field="TotalWeightOfEdibleNuts" data-align="center" data-sortable="true">Total</th>
+                                <th ng-if="!IsGrillToReception" data-field="Status" data-formatter="statusFormatter" data-align="center" data-sortable="true"
+                                    ng-hide="currentUser.role === userRoles.qualityUser">Status</th>
+                                <th ng-if="!IsGrillToReception" data-align="center" data-formatter="operateFormatter" data-events="operateEvents">Operaciones</th>
+                                <th ng-if="IsGrillToReception" data-align="center" data-formatter="operateFormmatterIfIsGrillToReception">Asignar Parrilla</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--<tr ng-repeat="grill in grills | filter:searchUser | filter:{Producer: search.producer, Variety: search.variety, Quality: search.quality}">
                             <td>{{grill.Folio}}</td>
                             <td>{{grill.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
                             <td>{{grill.Receptions}}</td>
@@ -95,27 +109,29 @@
                                     title="Modificar">
                                 <i class="md md-edit"></i>
                             </button>
-                                <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="confirmationDelete(grill.Id)" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                    <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="confirmationDelete(grill.Id, grill.Folio)"
+                        data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                 <i class="md md-delete"></i>
                             </button>
-                                <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="redirectReceptionToGrill(grill.Id)" data-toggle="tooltip" data-placement="bottom"
-                                    title="Agregar folio de recepcion">
+                    <button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default" ng-click="redirectReceptionToGrill(grill.Id)"
+                        data-toggle="tooltip" data-placement="bottom" title="Agregar folio de recepcion">
                                 <i class="md md-assignment"></i>
                             </button>
-                            <button ng-show="grill.SampleWeight == ''" class="btn btn-default" ng-click="redirectAddSampling(grill.Id, grill.Folio)" data-toggle="tooltip"
-                                    data-placement="bottom" title="Agregar muestreo">
+                    <button ng-show="grill.SampleWeight == ''" class="btn btn-default" ng-click="redirectAddSampling(grill.Id, grill.Folio)"
+                        data-toggle="tooltip" data-placement="bottom" title="Agregar muestreo">
                                     <i class="md md-description"></i>
                             </button>
-                            </td>
-                            <td ng-if="IsGrillToReception">
-                                <div class="toggle-switch">
-                                    <input id="{{grill.Id}}" type="checkbox" hidden="hidden" ng-model="grill.IsAlreadyAssigned" ng-change="addGrillToReception(grill.Id, grill.IsAlreadyAssigned)">
-                                    <label for="{{grill.Id}}" class="ts-helper"></label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    </td>
+                    <td ng-if="IsGrillToReception">
+                        <div class="toggle-switch">
+                            <input id="{{grill.Id}}" type="checkbox" hidden="hidden" ng-model="grill.IsAlreadyAssigned" ng-change="addGrillToReception(grill.Id, grill.IsAlreadyAssigned)">
+                            <label for="{{grill.Id}}" class="ts-helper"></label>
+                        </div>
+                    </td>
+                    </tr>-->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -123,3 +139,6 @@
 <button ng-if="IsGrillToReception" id="fixedbuttonLeft" type="submit" class="btn bgm-teal btn-icon" data-ng-click="return()">
         <i class="md md-arrow-back"></i>
 </button>
+<script type="text/javascript">
+        
+</script>

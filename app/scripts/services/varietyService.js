@@ -1,5 +1,5 @@
 (function () {
-    'use strict'
+    'use strict';
     angular.module('naseNutAppApp').factory('varietyService', function ($http, apiPath) {
         var _getAll = function () {
             return $http.get(apiPath + 'api/variety');
