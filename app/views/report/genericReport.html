@@ -5,7 +5,7 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-sm-12 actionbar">
                         <div class="form-group">
                             <label for="isearch" class="col-sm-2 control-label">Buscar</label>
@@ -16,7 +16,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <hr>
                 <button class="btn btn-link" ng-click="GrillExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
@@ -24,8 +24,30 @@
                 <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('genericReport'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
             </button>
-            <hr>
-                <table id="genericReport" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;" fixed-header>
+                <table id="genericReport" data-toggle="table" data-show-refresh="true" data-show-columns="true" data-toolbar="#toolbar"
+                    data-unique-id="Id" data-pagination="true" data-search="true" data-show-export="true" data-page-list="[10, 50, 100, 200, TODO]">
+                    <thead>
+                        <tr>
+                            <th data-field="Folio" data-align="center" data-sortable="true">No. Parrilla</th>
+                            <th data-field="DateCapture" data-align="center" data-sortable="true" data-formatter="dateFormatter">Fecha de Captura</th>
+                            <th data-field="Receptions" data-align="center" data-sortable="true">Folios</th>
+                            <th data-field="Size" data-align="center" data-sortable="true">Tamaño</th>
+                            <th data-field="Sacks" data-align="center" data-sortable="true">Sacos</th>
+                            <th data-field="Kilos" data-align="center" data-sortable="true">Kilos</th>
+                            <th data-field="Quality" data-align="center" data-sortable="true">Calidad</th>
+                            <th data-field="Variety" data-align="center" data-sortable="true">Variedad</th>
+                            <th data-field="Producer" data-align="center" data-sortable="true">Productor</th>
+                            <th data-field="Field" data-align="center" data-sortable="true">Campo</th>
+                            <th data-field="Batch" data-align="center" data-sortable="true">Huerta/Lote</th>
+                            <th data-field="SampleWeight" data-align="center" data-sortable="true">Peso</th>
+                            <th data-field="HumidityPercent" data-align="center" data-sortable="true">% Humedad</th>
+                            <th data-field="WalnutNumber" data-align="center" data-sortable="true">No. Nueces</th>
+                            <th data-field="Performance" data-align="center" data-sortable="true">Rendimiento</th>
+                            <th data-field="TotalWeightOfEdibleNuts" data-align="center" data-sortable="true">Total Nueces Comestibles</th>
+                        </tr>
+                    </thead>
+                </table>
+                <!--<table id="genericReport" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;" fixed-header>
                     <thead>
                         <tr>
                             <th>No. Parrilla</th>
@@ -66,7 +88,7 @@
                             <td>{{grill.TotalWeightOfEdibleNuts}}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table>-->
             </div>
         </div>
     </div>

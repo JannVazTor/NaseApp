@@ -1,17 +1,19 @@
+var dateFormatter;
+
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, reportService, producerService) {
         $scope.dtOptions = {};
         $scope.dtColumns = [];
-        $scope.reportingProcess = [];
-        $scope.dailyProcess = [];
-        $scope.grillIssues = [];
+        //$scope.reportingProcess = [];
+        //$scope.dailyProcess = [];
+        //$scope.grillIssues = [];
         $scope.reportDate = {
             ReportDate: ""
         };
-        $scope.genericGrillReport = [];
-        $scope.secondCurrentInventory = [];
-        $scope.secondGrillIssues = [];
+        //$scope.genericGrillReport = [];
+        //$scope.secondCurrentInventory = [];
+        //$scope.secondGrillIssues = [];
 
         $scope.getDailyProcessReport = function () {
             reportService.getDailyProcess().then(function (response) {
@@ -106,9 +108,12 @@
         $scope.getProducerReport = function (id) {
             reportService.getProducerReport(id).then(function (response) {
                 if (response.data.length === 0){
+                    $scope.producerReport = response.data;
+                    fillProducerReportTable(response.data);
                     msgS.msg('info', 5);
                 } else{
                     $scope.producerReport = response.data;
+                    fillProducerReportTable(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 14);
@@ -131,9 +136,12 @@
         var GetReportingProcess = function () {
             reportService.getReportingProcess().then(function (response) {
                 if (response.data.length === 0) {
+                    $scope.reportingProcess = response.data;
+                    fillProcessReportTable(response.data);
                     msgS.msg('info', 5);
                 } else{
                     $scope.reportingProcess = response.data;
+                    fillProcessReportTable(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 14);
@@ -143,9 +151,12 @@
         var GetCurrentInventory = function () {
             reportService.getCurrentInventoryReport().then(function (response) {
                 if (response.data.length === 0) {
+                    $scope.genericGrillReport = response.data;
+                    fillProcessInventoryReportTable(response.data);
                     msgS.msg('info', 5);
                 } else{
                     $scope.genericGrillReport = response.data;
+                    fillProcessInventoryReportTable(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 14);
@@ -155,9 +166,12 @@
         var GetSecondCurrentInventory = function () {
             reportService.getSecondCurrentInventory().then(function (response) {
                 if (response.data.length === 0) {
+                    $scope.secondCurrentInventory = response.data;
+                    fillProcessInventoryReportTable(response.data);
                     msgS.msg('info', 5);
                 } else{
                     $scope.secondCurrentInventory = response.data;
+                    fillProcessInventoryReportTable(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 14);
@@ -167,9 +181,12 @@
         var GetProcessInventory = function () {
             reportService.getProcessInventory().then(function (response) {
                 if (response.data.length === 0) {
+                    $scope.genericGrillReport = response.data;
+                    fillProcessInventoryReportTable(response.data);
                     msgS.msg('info', 5);
                 } else{
                     $scope.genericGrillReport = response.data;
+                    fillProcessInventoryReportTable(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 14);
@@ -180,9 +197,12 @@
             var defer = $q.defer();
             reportService.getDailyProcess().then(function (response) {
                 if (response.data.length === 0) {
+                    $scope.dailyProcess = response.data;
+                    fillDailyReportTable(response.data);
                     msgS.msg('info', 5);
                 } else{
                     $scope.dailyProcess = response.data;
+                    fillDailyReportTable(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 14);
@@ -207,6 +227,8 @@
         var GetGrillIssues = function () {
             reportService.getGrillIssuesReport().then(function (response) {
                 if (response.data.length === 0) {
+                    $scope.grillIssues = response.data;
+                    //fillIssuesReportTable(response.data);
                     msgS.msg('info', 11);
                 } else {
                     angular.forEach(response.data, function (grillIssue, key) {
@@ -216,6 +238,7 @@
                         }, this);
                     }, this);
                     $scope.grillIssues = response.data;
+                    //fillIssuesReportTable(response.data);
                 };
             }, function (response) {
                 msgS.msg('err', 46);
@@ -358,6 +381,65 @@
                     break;
             };
         };
+
+        /* Start Process Report Table Functions*/
+        function fillProcessReportTable(process) {
+            $('#reportingProcess').bootstrapTable({
+                data: process
+            });
+        };
+
+        $('#reportingProcess').on('refresh.bs.table', function (params) {
+            GetReportingProcess()
+        });
+
+        /*End Process Report Table Functions */
+
+        /* Start Producer Report Table Functions*/
+        function fillProducerReportTable(producerReport) {
+            $('#producerReport').bootstrapTable({
+                data: producerReport
+            });
+        };
+
+        dateFormatter = function (value) {
+            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+        };
+
+        /*End Producer Report Table Functions */
+
+        /* Start Process Inventory Report Table Functions*/
+        function fillProcessInventoryReportTable(process) {
+            $('#genericReport').bootstrapTable({
+                data: process
+            });
+        };
+
+        /*End Producer Report Table Functions */
+
+        /* Start Daily Report Table Functions*/
+        function fillDailyReportTable(daily) {
+            $('#daily').bootstrapTable({
+                data: daily
+            });
+        };
+        /*End Daily Report Table Functions */
+
+        /* Start Daily Report Table Functions*/
+        function fillIssuesReportTable(issues) {
+            $('#grillIssues').bootstrapTable({
+                data: issues
+            });
+        };
+
+        function detailFormatter(index, row) {
+        var html = [];
+        $.each(row, function (key, value) {
+            html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+        });
+        return html.join('');
+    }
+        /*End Daily Report Table Functions */
 
         (function () {
             switch ($state.current.name) {
