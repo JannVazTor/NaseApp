@@ -1,5 +1,4 @@
 var dateFormatter;
-
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, reportService, producerService) {
@@ -102,17 +101,16 @@ var dateFormatter;
             return total;
         };
 
-        $scope.producerReport = [];
-
         $scope.getProducerReport = function (id) {
+            debugger;
             reportService.getProducerReport(id).then(function (response) {
-                if (response.data.length === 0){
+                if (response.data.length !== 0){
                     $scope.producerReport = response.data;
                     fillProducerReportTable(response.data);
-                    msgS.msg('info', 5);
                 } else {
-                    $scope.producerReport = response.data;
                     fillProducerReportTable(response.data);
+                    $scope.producerReport = response.data;
+                    msgS.msg('info', 5);
                 }
             }, function (response) {
                 msgS.msg('err', 14);
@@ -479,23 +477,17 @@ var dateFormatter;
             });
         };
 
-        $('#reportingProcess').on('refresh.bs.table', function (params) {
-            GetReportingProcess()
-        });
-
         /*End Process Report Table Functions */
 
         /* Start Producer Report Table Functions*/
-        function fillProducerReportTable(producerReport) {
-            $('#producerReport').bootstrapTable({
-                data: producerReport
+        function fillProducerReportTable(data) {
+            $('#producerReportTable').bootstrapTable({
+                data: data
             });
         };
-
         dateFormatter = function (value) {
             return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
         };
-
         /*End Producer Report Table Functions */
 
         /* Start Process Inventory Report Table Functions*/
@@ -513,22 +505,6 @@ var dateFormatter;
                 data: daily
             });
         };
-        /*End Daily Report Table Functions */
-
-        /* Start Daily Report Table Functions*/
-        function fillIssuesReportTable(issues) {
-            $('#grillIssues').bootstrapTable({
-                data: issues
-            });
-        };
-
-        function detailFormatter(index, row) {
-        var html = [];
-        $.each(row, function (key, value) {
-            html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-        });
-        return html.join('');
-    }
         /*End Daily Report Table Functions */
 
         (function () {
