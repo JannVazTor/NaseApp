@@ -106,13 +106,9 @@ var dateFormatter;
 
         $scope.getProducerReport = function (id) {
             reportService.getProducerReport(id).then(function (response) {
-<<<<<<< HEAD
                 if (response.data.length === 0){
                     $scope.producerReport = response.data;
                     fillProducerReportTable(response.data);
-=======
-                if (response.data.length === 0) {
->>>>>>> origin/Pancho
                     msgS.msg('info', 5);
                 } else {
                     $scope.producerReport = response.data;

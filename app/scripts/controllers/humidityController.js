@@ -98,8 +98,8 @@ var dateFormatter;
         };
 
         $scope.generatePDF = function () {
-            var doc = new jsPDF('p', 'pt');
-            var elem = document.getElementById('data-table-command');
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('humidityManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Humedades Registradas');
             doc.autoTable(res.columns, res.data, {

@@ -310,8 +310,8 @@ var onAddReceptionToGrillChange;
         };
 
         $scope.generatePDF = function () {
-            var doc = new jsPDF('p', 'pt');
-            var elem = document.getElementById('receptionTable');
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('receptionManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Recepciones Registradas');
             doc.autoTable(res.columns, res.data, {

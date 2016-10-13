@@ -129,8 +129,8 @@ var dateFormatter;
         };
 
         $scope.generatePDF = function () {
-            var doc = new jsPDF('p', 'pt');
-            var elem = document.getElementById('samplingGrillTable');
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('samplingGrillManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Muestreos de Parrillas');
             doc.autoTable(res.columns, res.data, {

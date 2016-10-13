@@ -210,7 +210,7 @@ var operateFormatterGrillCurrentInv;
 
         $scope.generatePDFCurrent = function () {
             var doc = new jsPDF('l', 'pt');
-            var elem = document.getElementById('grillCurrentInvTable');
+            var elem = document.getElementById('grillManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Inventario Actual de Proceso');
             doc.autoTable(res.columns, res.data, {
