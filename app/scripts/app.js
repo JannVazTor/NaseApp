@@ -13,7 +13,8 @@
       'ui.bootstrap.datetimepicker',
       'toastr',
       'angularModalService',
-      'anguFixedHeaderTable'
+      'anguFixedHeaderTable',
+      'angular-loading-bar'
     ])
     .config(function ($stateProvider, $urlRouterProvider, USER_ROLES) {
       $stateProvider

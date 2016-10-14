@@ -5,61 +5,43 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <div class="col-sm-12 actionbar">
-                    <div class="form-group">
-                        <label for="isearch" class="col-sm-2 control-label">Buscar</label>
-                        <div class="col-sm-12">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchUser">
-                            </div>
-                        </div>
-                    </div>
+                <div ng-show="remissions.length >= 1">
+                    <div id="toolbar">
+                        <button class="btn btn-link" ng-click="generatePDF()">
+                            <span class="glyphicon glyphicon-share"></span>Exportar PDF
+                        </button>
+                    </div>                
+                    <table id="remissionManageTable" 
+                                data-toggle="table" 
+                                data-show-refresh="true" 
+                                data-show-columns="true" 
+                                data-toolbar="#toolbar"
+                                data-unique-id="Id" 
+                                data-pagination="true" 
+                                data-search="true" 
+                                data-show-export="true" 
+                                data-page-list="[10, 50, 100, 200, TODO]">
+                        <thead>
+                            <tr>
+                                <th data-field="Folio" data-align="center" data-sortable="true">Folio de Recepción</th>
+                                <th data-field="RemissionFolio" data-align="center" data-sortable="true">Folio de Remisión</th>
+                                <th data-field="DateCapture" data-align="center" data-sortable="true" data-formatter="dateFormatter">Fecha</th>
+                                <th data-field="FieldName" data-align="center" data-sortable="true">Campo</th>
+                                <th data-field="Batch" data-align="center" data-sortable="true">Huerta/Lote</th>
+                                <th data-field="Box" data-align="center" data-sortable="true">Cuadro</th>
+                                <th data-field="Variety" data-align="center" data-sortable="true">Variedad</th>
+                                <th data-field="Quantity" data-align="center" data-sortable="true">Cantidad</th>
+                                <th data-field="Butler" data-align="center" data-sortable="true">Mayordomo</th>
+                                <th data-field="TransportNumber" data-align="center" data-sortable="true">Transporte No.</th>
+                                <th data-field="Driver" data-align="center" data-sortable="true">Conductor</th>
+                                <th data-field="Elaborate" data-align="center" data-sortable="true">Elaboro</th>
+                                <th data-align="center" data-formatter="operateFormatter" data-events="operateEvents">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
-                <hr>
-                <button class="btn btn-link" ng-click="generatePDF()">
-                <span class="glyphicon glyphicon-share"></span>Exportar PDF
-            </button>
-                <table id="remissionTable" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;" fixed-header>
-                    <thead>
-                        <tr>
-                            <th>Folio de Remisión</th>
-                            <th>Fecha</th>
-                            <th>Campo</th>
-                            <th>Huerta/Lote</th>
-                            <th>Cuadro</th>
-                            <th>Variedad</th>
-                            <th>Cantidad</th>
-                            <th>Mayordomo</th>
-                            <th>Transporte No.</th>
-                            <th>Conductor</th>
-                            <th>Elaboro</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="remission in remissions | filter:searchUser">
-                            <td>{{remission.RemissionFolio}}</td>
-                            <td>{{remission.DateCapture | date:'dd/MM/yyyy HH:mm'}}</td>
-                            <td>{{remission.FieldName}}</td>
-                            <td>{{remission.Batch}}</td>
-                            <td>{{remission.Box}}</td>
-                            <td>{{remission.Variety}}</td>
-                            <td>{{remission.Quantity}}</td>
-                            <td>{{remission.Butler}}</td>
-                            <td>{{remission.TransportNumber}}</td>
-                            <td>{{remission.Driver}}</td>
-                            <td>{{remission.Elaborate}}</td>
-                            <td>
-                                <button class="btn btn-default" ng-click="redirectUpdate(remission.Id)">
-                        <i class="md md-edit"></i>
-                    </button>
-                                <button class="btn btn-default" ng-click="confirmationDelete(remission.Id, remission.RemissionFolio)">
-                        <i class="md md-delete"></i>
-                    </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

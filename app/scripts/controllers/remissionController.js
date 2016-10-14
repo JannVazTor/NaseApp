@@ -1,3 +1,7 @@
+var operateFormatter; 
+var operateEvents; 
+var dateFormatter;
+
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('remissionController', function ($filter, $scope, msgS, toastr, $state, remissionService, fieldService, clearService, receptionService, $rootScope) {
@@ -120,6 +124,7 @@
 
         var deleteRemission = function (remissionId) {
             remissionService.delete(remissionId).then(function (response) {
+                $('#remissionManageTable').bootstrapTable('removeByUniqueId', remissionId);
                 $.each($scope.remissions, function (i) {
                     if ($scope.remissions[i].Id === remissionId) {
                         $scope.remissions.splice(i, 1);
@@ -135,6 +140,7 @@
         var GetAllRemissions = function () {
             remissionService.getAll().then(function (response) {
                 $scope.remissions = response.data;
+                fillTable(response.data);
             }, function (response) {
                 msgS.msg('err', 90);
             });
@@ -218,15 +224,15 @@
             }
         };
 
-        $scope.generatePDF = function(){
-            var doc = new jsPDF('p', 'pt');
-            var elem = document.getElementById('remissionTable');
+        $scope.generatePDF = function () {
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('remissionManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Remisiones Registradas');
             doc.autoTable(res.columns, res.data, {
                 startY: 60,
-                headerStyles: {fontSize:8},
-                margin: {horizontal: 10}
+                headerStyles: { fontSize: 8 },
+                margin: { horizontal: 10 }
             });
             doc.save("RemisionesRegistradas.pdf");
         };
@@ -251,6 +257,40 @@
             return item;
         };
 
+        /* Start Table Functions*/
+        function fillTable(remissions) {
+            $('#remissionManageTable').bootstrapTable({
+                data: remissions
+            });
+        };
+
+        $('#remissionManageTable').on('refresh.bs.table', function (params) {
+            GetAllRemissions()
+        });
+
+        operateFormatter = function (value, row, index) {
+            return [
+                '<button class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
+                '<i class="md md-edit"></i>',
+                '</button>',
+                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                '<i class="md md-delete"></i>',
+                '</button>'
+            ].join('');
+        };
+        operateEvents = {
+            'click .edit': function (e, value, row, index) {
+                $scope.redirectUpdate(row.Id);
+            },
+            'click .delete': function (e, value, row, index) {
+                $scope.confirmationDelete(row.Id, row.RemissionFolio);
+            }
+        };
+
+        dateFormatter = function (value) {
+            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+        };
+        /* End Table Functions*/
         (function () {
             switch ($state.current.name) {
                 case 'remissionManage':

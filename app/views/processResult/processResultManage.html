@@ -5,67 +5,24 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <div class="col-sm-12 actionbar">
-                    <div class="form-group">
-                        <label for="isearch" class="col-sm-2 control-label">Buscar</label>
-                        <div class="col-sm-12">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchUser">
-                            </div>
-                        </div>
+                <div ng-show="samplings.length >= 0">
+                    <div id="toolbar">
+                        <button class="btn btn-link" ng-click="generatePDF()">
+                            <span class="glyphicon glyphicon-share"></span>Exportar PDF
+                        </button>
                     </div>
+                    <table id="processResultManageTable" 
+                        data-toggle="table" 
+                        data-show-refresh="true" 
+                        data-show-columns="true" 
+                        data-unique-id="Id"
+                        data-toolbar="#toolbar" 
+                        data-pagination="true" 
+                        data-search="true" 
+                        data-show-export="true" 
+                        data-page-list="[50, 100, 200, TODO]">
+                    </table>
                 </div>
-                <hr>
-                <button class="btn btn-link" ng-click="generatePDF()">
-                <span class="glyphicon glyphicon-share"></span>Exportar PDF
-            </button>
-                <table id="SamplingReceptionTable" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;" fixed-header>
-                    <thead>
-                        <tr>
-                            <th>Folios</th>
-                            <th>Variedad</th>
-                            <th>Fecha</th>
-                            <th>Peso</th>
-                            <th>Porciento de Humedad</th>
-                            <th>Número de nueces</th>
-                            <th>Rendimiento</th>
-                            <th>Peso total de nueces Comestibles</th>
-                            <th>Sacos de Primera</th>
-                            <th>Kilos de Primera</th>
-                            <th>Sacos de Segunda</th>
-                            <th>Kilos de Segunda</th>
-                            <th>Sacos de Tercera</th>
-                            <th>Kilos de Tercera</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="sampling in samplings | filter:searchUser">
-                            <td>{{sampling.Folio}}</td>
-                            <td>{{sampling.Variety}}</td>
-                            <td>{{sampling.DateCapture | date:'dd/MM/yyyy HH:mm'}}</td>
-                            <td>{{sampling.SampleWeight}}</td>
-                            <td>{{sampling.HumidityPercent}}</td>
-                            <td>{{sampling.WalnutNumber}}</td>
-                            <td>{{sampling.Performance}}</td>
-                            <td>{{sampling.TotalWeightOfEdibleNuts}}</td>
-                            <td>{{sampling.SacksFirst}}</td>
-                            <td>{{sampling.KilosFirst}}</td>
-                            <td>{{sampling.SacksSecond}}</td>
-                            <td>{{sampling.KilosSecond}}</td>
-                            <td>{{sampling.SacksThird}}</td>
-                            <td>{{sampling.KilosThird}}</td>
-                            <td>
-                                <button class="btn btn-default" ng-click="redirectUpdate(sampling)">
-                        <i class="md md-edit"></i>
-                    </button>
-                                <button class="btn btn-default" ng-click="confirmationDeleteReception(sampling.Id, sampling.Folio)">
-                        <i class="md md-delete"></i>
-                    </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

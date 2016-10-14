@@ -1,7 +1,13 @@
+var operateFormatterHumidityAdd;
+var operateEventsHumidityAdd;
+var operateFormatterHumidity;
+var operateEventsHumidity;
+var dateFormatter;
+
 (function () {
     'use strict'
-    angular.module('naseNutAppApp').controller('humidityController', function (msgS, $state, $scope, humidityService, receptionService, clearService, $rootScope) {
-        $scope.humiditiesInReceptionEntry = [];
+    angular.module('naseNutAppApp').controller('humidityController', function ($filter, msgS, $state, $scope, humidityService, receptionService, clearService, $rootScope) {
+        $scope.humiditiesInReceptionEntry;
 
         var onStateChange = $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
             if ($state.current.name !== 'humidityAddToReception') {
@@ -18,7 +24,7 @@
                     msgS.msg('info', 18);
                 }
             }, function (response) {
-                msgS.msg('err',71);
+                msgS.msg('err', 71);
             });
         };
 
@@ -26,7 +32,10 @@
             humidityService.getAll().then(function (response) {
                 if (response.data.length !== 0) {
                     $scope.humiditiesInReceptionEntry = response.data;
+                    fillHumidityManageTable(response.data);
                 } else {
+                    $scope.humiditiesInReceptionEntry = response.data;
+                    fillHumidityManageTable(response.data);
                     msgS.msg('info', 18);
                 }
             }, function (response) {
@@ -38,7 +47,10 @@
             humidityService.getLastHumiditiesSamplings().then(function (response) {
                 if (response.data.length !== 0) {
                     $scope.humiditiesInReceptionEntry = response.data;
+                    fillHumidityLastSamplingsTable(response.data);
                 } else {
+                    $scope.humiditiesInReceptionEntry = response.data;
+                    fillHumidityLastSamplingsTable(response.data);
                     msgS.msg('info', 8);
                 }
             }, function (response) {
@@ -49,9 +61,11 @@
         var GetAllReceptionEntries = function () {
             receptionService.getAllEntries().then(function (response) {
                 if (response.data.length === 0) {
+                    fillHumidityAddTable(response.data);
                     msgS.msg('info', 0);
                 } else {
                     $scope.humiditiesInReceptionEntry = response.data;
+                    fillHumidityAddTable(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 5);
@@ -83,9 +97,9 @@
                 });
         };
 
-        $scope.generatePDF = function(){
-            var doc = new jsPDF('p', 'pt');
-            var elem = document.getElementById('data-table-command');
+        $scope.generatePDF = function () {
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('humidityManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Humedades Registradas');
             doc.autoTable(res.columns, res.data, {
@@ -97,6 +111,7 @@
         var deleteHumidity = function (Id) {
             humidityService.delete(Id).then(function (response) {
                 if ($state.current.name === 'humidityManage') {
+                    $('#humidityManageTable').bootstrapTable('removeByUniqueId', Id);
                     $.each($scope.humiditiesInReceptionEntry, function (i) {
                         if ($scope.humiditiesInReceptionEntry[i].Id === Id) {
                             $scope.humiditiesInReceptionEntry.splice(i, 1);
@@ -113,6 +128,7 @@
                     });
                 }
                 if ($state.current.name === 'humidityLastSamplings') {
+                    $('#humidityLastSamplingTable').bootstrapTable('removeByUniqueId', Id);
                     $.each($scope.humiditiesInReceptionEntry, function (i) {
                         if ($scope.humiditiesInReceptionEntry[i].Id === Id) {
                             $scope.humiditiesInReceptionEntry.splice(i, 1);
@@ -130,6 +146,173 @@
         $scope.return = function () {
             $state.go($rootScope.prevState);
         };
+
+        /* Start Table Functions*/
+        function fillHumidityAddTable(humidities) {
+            $('#humidityAddTable').bootstrapTable({
+                columns: [
+                    {
+                        field: 'Cylinder',
+                        align: 'center',
+                        title: 'Cilindro'
+                    }, {
+                        field: 'Receptions',
+                        align: 'center',
+                        title: 'Recepciones (Folios)'
+                    }, {
+                        field: 'EntryDate',
+                        align: 'center',
+                        formatter: 'dateFormatter',
+                        title: 'Fecha de Captura'
+                    }, {
+                        field: 'Variety',
+                        align: 'center',
+                        title: 'Variedad'
+                    }, {
+                        field: 'Producer',
+                        align: 'center',
+                        title: 'Productor'
+                    }, {
+                        field: 'operate',
+                        align: 'center',
+                        title: 'Operadores',
+                        events: 'operateEventsHumidityAdd',
+                        formatter: 'operateFormatterHumidityAdd'
+                    }],
+                data: humidities
+            });
+        };
+
+        function fillHumidityLastSamplingsTable(humidities) {
+            $('#humidityLastSamplingTable').bootstrapTable({
+                columns: [
+                    {
+                        field: 'CylinderName',
+                        align: 'center',
+                        title: 'Cilindro'
+                    }, {
+                        field: 'FieldName',
+                        align: 'center',
+                        title: 'Campos'
+                    }, {
+                        field: 'Tons',
+                        align: 'center',
+                        title: 'Toneladas'
+                    }, {
+                        field: 'EntryDate',
+                        align: 'center',
+                        formatter: 'dateFormatter',
+                        title: 'Fecha de Entrada'
+                    }, {
+                        field: 'Folio',
+                        align: 'center',
+                        title: 'Folios'
+                    }, {
+                        field: 'DateCapture',
+                        align: 'center',
+                        formatter: 'dateFormatter',
+                        title: 'Fecha de Captura'
+                    }, {
+                        field: 'HumidityPercentage',
+                        align: 'center',
+                        title: '% Humedad'
+                    }, {
+                        field: 'operate',
+                        align: 'center',
+                        title: 'Operadores',
+                        events: 'operateEventsHumidity',
+                        formatter: 'operateFormatterHumidity'
+                    }],
+                data: humidities
+            });
+        };
+
+        function fillHumidityManageTable(humidities) {
+            $('#humidityManageTable').bootstrapTable({
+                columns: [
+                    {
+                        field: 'CylinderName',
+                        align: 'center',
+                        title: 'Cilindro'
+                    }, {
+                        field: 'FieldName',
+                        align: 'center',
+                        title: 'Campos'
+                    }, {
+                        field: 'Tons',
+                        align: 'center',
+                        title: 'Toneladas'
+                    }, {
+                        field: 'EntryDate',
+                        align: 'center',
+                        formatter: 'dateFormatter',
+                        title: 'Fecha de Entrada'
+                    }, {
+                        field: 'Folio',
+                        align: 'center',
+                        title: 'Folios'
+                    }, {
+                        field: 'DateCapture',
+                        align: 'center',
+                        formatter: 'dateFormatter',
+                        title: 'Fecha de Captura'
+                    }, {
+                        field: 'HumidityPercentage',
+                        align: 'center',
+                        title: '% Humedad'
+                    }, {
+                        field: 'operate',
+                        align: 'center',
+                        title: 'Operadores',
+                        events: 'operateEventsHumidity',
+                        formatter: 'operateFormatterHumidity'
+                    }],
+                data: humidities
+            });
+        };
+
+        $('#humidityAddTable').on('refresh.bs.table', function (params) {
+            GetAllReceptionEntries();
+        });
+
+        $('#humidityLastSamplingTable').on('refresh.bs.table', function (params) {
+            GetAllHumiditiesLastSamplings();
+        });
+
+        $('#humidityManageTable').on('refresh.bs.table', function (params) {
+            GetAllHumidities();
+        });
+
+        operateFormatterHumidityAdd = function (value, row, index) {
+            return [
+                '<button class="btn btn-default redirect" href="javascript:void(0)" title="Agregar Humedades">',
+                '<i class="md md-format-color-reset"></i>',
+                '</button>'
+            ].join('');
+        };
+        operateFormatterHumidity = function (value, row, index) {
+            return [
+                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                '<i class="md md-delete"></i>',
+                '</button>'
+            ].join('');
+        };
+
+        operateEventsHumidityAdd = {
+            'click .redirect': function (e, value, row, index) {
+                $scope.redirectToAddHumidity(row.Id);
+            }
+        };
+        operateEventsHumidity = {
+            'click .delete': function (e, value, row, index) {
+                $scope.confirmationDelete(row.Id);
+            }
+        };
+
+        dateFormatter = function (value) {
+            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+        };
+        /* End Table Functions*/
 
         (function () {
             switch ($state.current.name) {

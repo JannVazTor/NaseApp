@@ -1,3 +1,8 @@
+var operateFormatter;
+var operateFormatterIfIsReceptionToGrill;
+var operateEvents;
+var onAddReceptionToGrillChange;
+
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('receptionController', function (fieldService, toastr, msgS, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService, $rootScope) {
@@ -45,7 +50,7 @@
             }
         };
 
-        $scope.redirectAddGrill = function(){
+        $scope.redirectAddGrill = function () {
             $state.go('grillAdd');
         };
 
@@ -191,6 +196,7 @@
 
         var deleteReception = function (receptionId) {
             receptionService.delete(receptionId).then(function (response) {
+                $('#receptionManageTable').bootstrapTable('removeByUniqueId', receptionId);
                 $.each($scope.receptions, function (i) {
                     if ($scope.receptions[i].Id === receptionId) {
                         $scope.receptions.splice(i, 1);
@@ -262,11 +268,14 @@
             receptionService.getAll().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 0);
+                    $scope.receptions = response.data;
+                    fillTable(response.data);
                 } else {
                     $scope.receptions = response.data;
                     response.data.forEach(function (element) {
                         element.IsAlreadyAssigned = element.Grills.indexOf($scope.GrillId) === -1 ? false : true;
                     }, this);
+                    fillTable(response.data);
                 }
             }, function (response) {
                 msgS.msg('err', 5);
@@ -301,8 +310,8 @@
         };
 
         $scope.generatePDF = function () {
-            var doc = new jsPDF('p', 'pt');
-            var elem = document.getElementById('receptionTable');
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('receptionManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Recepciones Registradas');
             doc.autoTable(res.columns, res.data, {
@@ -312,6 +321,66 @@
             });
             doc.save("RecepcionesRegistradas.pdf");
         };
+
+        /* Start Table Functions*/
+        function fillTable(receptions) {
+            $('#receptionManageTable').bootstrapTable({
+                data: receptions
+            });
+        };
+
+        $('#receptionManageTable').on('refresh.bs.table', function (params) {
+            GetAllReceptions();
+        });
+
+        operateFormatter = function (value, row, index) {
+            return [
+                '<button class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
+                '<i class="md md-edit"></i>',
+                '</button>',
+                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                '<i class="md md-delete"></i>',
+                '</button>',
+                '<button class="btn btn-default redirectReceptionToGrill" href="javascript:void(0)" title="Asignar Parrillas">',
+                '<i class="md md-view-module"></i>',
+                '</button>',
+                '<button class="btn btn-default redirectToAddRemission" href="javascript:void(0)" title="Agregar Remisión">',
+                '<i class="md md-description"></i>',
+                '</button>'
+            ].join('');
+        };
+        operateFormatterIfIsReceptionToGrill = function (value, row, index) {
+            var isChecked = value ? "checked" : "";
+            return [
+                '<div class="toggle-switch">',
+                '<input id="' + row.Id + '" type="checkbox" onclick="onAddReceptionToGrillChange(this)" hidden="hidden" ' + isChecked + '>',
+                '<label for="' + row.Id + '" class="ts-helper"></label>',
+                '</div>'
+            ].join('');
+        };
+        onAddReceptionToGrillChange = function (checkBox) {
+            var id = $(checkBox).attr('id');
+            $scope.addReceptionToGrill(id, checkBox.checked)
+        };
+        operateEvents = {
+            'click .edit': function (e, value, row, index) {
+                $scope.redirectUpdate(row.Id, row, row.Folio);
+            },
+            'click .delete': function (e, value, row, index) {
+                $scope.confirmationDelete(row.Id, row.Folio);
+            },
+            'click .redirectReceptionToGrill': function (e, value, row, index) {
+                $scope.redirectReceptionToGrill(row.Folio, row.Id);
+            },
+            'click .redirectToAddRemission': function (e, value, row, index) {
+                $scope.redirectAddRemission(row.Folio);
+            }
+        };
+
+        dateFormatter = function (value) {
+            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+        };
+        /* End Table Functions*/
 
         (function () {
             switch ($state.current.name) {

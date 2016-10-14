@@ -1,74 +1,50 @@
 <div class="animated bounceInRight">
-    <div class="card">
-        <div class="card-header">
-            <h2>Reporte Diario de Proceso</h2>
-        </div>
-        <div class="card-body card-padding">
-            <div class="table-responsive">
-                <div class="row">
-                    <div class="col-sm-12 actionbar">
-                        <div class="form-group">
-                            <label for="isearch" class="col-sm-2 control-label">Buscar</label>
-                            <div class="col-sm-12">
-                                <div class="fg-line">
-                                    <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="reportSearch">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <button class="btn btn-link" ng-click="dailyExportPdf()">
+	<div class="card">
+		<div class="card-header">
+			<h2>Reporte Diario de Proceso</h2>
+		</div>
+		<div class="card-body card-padding">
+			<div class="table-responsive">
+				<div id="toolbar">
+					<button class="btn btn-link" ng-click="dailyExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
             </button>
-                <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('daily'))">
+					<button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('daily'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
             </button>
-            <hr>
-                <table id="daily" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;" fixed-header>
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Productor</th>
-                            <th>Folio</th>
-                            <th>Cilindro</th>
-                            <th>Variedad</th>
-                            <th>Grande</th>
-                            <th>Mediana</th>
-                            <th>Chica</th>
-                            <th>Total Primera</th>
-                            <th>% Calidad</th>
-                            <th>Total Segunda</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="report in dailyProcess | filter:reportSearch">
-                            <td>{{report.Date | date:'dd/MM/yyyy' }}</td>
-                            <td>{{report.Producer}}</td>
-                            <td>{{report.Folio}}</td>
-                            <td>{{report.Cylinder}}</td>
-                            <td>{{report.Variety}}</td>
-                            <td>{{report.SacksFirstLarge}}</td>
-                            <td>{{report.SacksFirstMedium}}</td>
-                            <td>{{report.SacksFirstSmall}}</td>
-                            <td>{{report.Total}}</td>
-                            <td>{{report.QualityPercent}}</td>
-                            <td>{{report.Germinated}}</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5"> Total: </td>
-                            <td>{{getTotalLargeSacks()}}</td>
-                            <td>{{getTotalMediumSacks()}}</td>
-                            <td>{{getTotalSmallSacks()}}</td>
-                            <td>{{getTotal()}}</td>
-                            <td></td>
-                            <td>{{getTotalGerminated()}}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-    </div>
+				</div>
+				<table id="daily" data-toggle="table" data-show-columns="true" data-toolbar="#toolbar" data-unique-id="Id" data-pagination="true"
+					data-search="true" data-show-export="true" data-page-list="[10, 50, 100, 200, TODO]">
+					<thead>
+						<tr>
+							<th data-field="Date" data-align="center" data-sortable="true" data-formatter="dateFormatter">Fecha</th>
+							<th data-field="Producer" data-align="center" data-sortable="true">Productor</th>
+							<th data-field="Folio" data-align="center" data-sortable="true">Folio</th>
+							<th data-field="Cylinder" data-align="center" data-sortable="true">Cilindro</th>
+							<th data-field="Variety" data-align="center" data-sortable="true">Variedad</th>
+							<th data-field="SacksFirstLarge" data-align="center" data-sortable="true">Grande</th>
+							<th data-field="SacksFirstMedium" data-align="center" data-sortable="true">Mediana</th>
+							<th data-field="SacksFirstSmall" data-align="center" data-sortable="true">Chica</th>
+							<th data-field="Total" data-align="center" data-sortable="true">Total Primera</th>
+							<th data-field="QualityPercent" data-align="center" data-sortable="true">% Calidad</th>
+							<th data-field="Germinated" data-align="center" data-sortable="true">Total Segunda</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5"> Total: </td>
+							<td>{{getTotalLargeSacks()}}</td>
+							<td>{{getTotalMediumSacks()}}</td>
+							<td>{{getTotalSmallSacks()}}</td>
+							<td>{{getTotal()}}</td>
+							<td></td>
+							<td>{{getTotalGerminated()}}</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

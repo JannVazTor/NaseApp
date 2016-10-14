@@ -5,45 +5,18 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <div class="col-sm-12 actionbar">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <div class="fg-line">
-                                <input type="text" class="form-control input-sm" id="isearch" placeholder="buscar...." data-ng-model="searchHumities">
-                            </div>
-                        </div>
-                    </div>
+                <div ng-show="humiditiesInReceptionEntry.length >= 0">
+                    <table id="humidityLastSamplingTable" 
+                            data-toggle="table"
+                            data-show-refresh="true"
+                            data-show-columns="true"
+                            data-unique-id="Id"
+                            data-pagination="true"
+                            data-search="true"
+                            data-show-export="true"
+                            data-page-list="[100, 200, 300, TODO]">
+                    </table>
                 </div>
-                <table id="data-table-command" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;" fixed-header>
-                    <thead>
-                        <tr>
-                            <td>Cilindro</td>
-                            <td>Campos</td>
-                            <td>Toneladas</td>
-                            <td>Fecha de Entrada</td>
-                            <td>Folios</td>
-                            <td>Fecha de Captura</td>
-                            <td>% Humedad</td>
-                            <td>Eliminar</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="humidity in humiditiesInReceptionEntry | filter:searchHumities | orderBy: 'CylinderName'">
-                            <td>{{humidity.CylinderName}}</td>
-                            <td>{{humidity.FieldName}}</td>
-                            <td>{{humidity.Tons}}</td>
-                            <td>{{humidity.EntryDate | date: 'dd/MM/yyyy HH:mm'}}</td>
-                            <td>{{humidity.Folio}}</td>
-                            <td>{{humidity.DateCapture | date: 'dd/MM/yyyy HH:mm'}}</td>
-                            <td>{{humidity.HumidityPercentage}}</td>
-                            <td>
-                                <button class="btn btn-default" ng-click="confirmationDelete(humidity.Id)">
-                                <i class="md md-delete"></i>
-                            </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
