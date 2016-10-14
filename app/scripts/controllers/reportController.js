@@ -1,3 +1,5 @@
+var dateFormatter;
+
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, reportService, producerService) {
@@ -5,13 +7,11 @@
         $scope.dtColumns = [];
         $scope.reportingProcess = [];
         $scope.dailyProcess = [];
-        $scope.grillIssues = [];
         $scope.reportDate = {
             ReportDate: ""
         };
         $scope.genericGrillReport = [];
         $scope.secondCurrentInventory = [];
-        $scope.secondGrillIssues = [];
 
         $scope.getDailyProcessReport = function () {
             reportService.getDailyProcess().then(function (response) {
@@ -255,23 +255,23 @@
                     title: value.Variety + ' (R%)'
                 });
             });
-            $.each(originReport, function(index, value){
+            $.each(originReport, function (index, value) {
                 var obj = {
                     Field: value.Field,
                     Batch: value.Batch,
                     Hectares: value.Hectares
                 };
-                $.each(value.Varieties, function(index, value){
+                $.each(value.Varieties, function (index, value) {
                     obj['Variety' + (index + 1)] = value.Total;
                     totalPerVariety.push(value.Total);
                 });
                 obj.TotalProduction = value.TotalProduction;
                 obj.PerformancePerHa = value.PerformancePerHa;
-                $.each(value.Varieties, function(index, value){
+                $.each(value.Varieties, function (index, value) {
                     obj['Performance' + (index + 1)] = value.Performance;
                     totalRenVariety.push(value.Performance);
                 });
-                totalHectares += parseFloat(value.Hectares); 
+                totalHectares += parseFloat(value.Hectares);
                 originReportData.push(obj);
             });
             var totalObj = {
@@ -279,12 +279,12 @@
                 Batch: '',
                 Hectares: totalHectares
             };
-            $.each(totalPerVariety, function(index, value){
+            $.each(totalPerVariety, function (index, value) {
                 totalObj['Variety' + (index + 1)] = value;
             });
             totalObj.TotalProduction = varietyTotalProduction;
             totalObj.PerformancePerHa = '';
-            $.each(totalRenVariety, function(index, value){
+            $.each(totalRenVariety, function (index, value) {
                 totalObj['Performance' + (index + 1)] = value;
             });
             originReportData.push(totalObj);
@@ -298,17 +298,155 @@
             reportService.getGrillIssuesReport().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 11);
-                } else {
-                    angular.forEach(response.data, function (grillIssue, key) {
-                        delete grillIssue['Id'];
-                        angular.forEach(grillIssue.Grills, function (grill, key) {
-                            delete grill['Status'];
-                        }, this);
-                    }, this);
                     $scope.grillIssues = response.data;
+                    fillGrillIssuesReport(response.data);
+                } else {
+                    $scope.grillIssues = response.data;
+                    fillGrillIssuesReport(response.data);
                 };
             }, function (response) {
                 msgS.msg('err', 46);
+            });
+        };
+
+        $('#grillIssuestTable').on('refresh.bs.table', function (params) {
+            GetGrillIssues();
+        });
+
+        function fillGrillIssuesReport(grillIssues) {
+            var $grillIssuesTable = $('#grillIssuestTable');
+            var data = [];
+            $.each(grillIssues, function (index, value) {
+                var obj = {
+                    Remission: value.Remission,
+                    DateCapture: value.DateCapture,
+                    Truck: value.Truck,
+                    Driver: value.Driver,
+                    Box: value.Box,
+                    NestedGrills: []
+                };
+                var nestedData = [];
+                $.each(value.Grills, function (index, nvalue) {
+                    var nestedObj = {
+                        Folio: nvalue.Folio,
+                        DateCapture: nvalue.DateCapture,
+                        Receptions: nvalue.Receptions,
+                        Size: nvalue.Size,
+                        Sacks: nvalue.Sacks,
+                        Kilos: nvalue.Kilos,
+                        Quality: nvalue.Quality,
+                        Variety: nvalue.Variety,
+                        Producer: nvalue.Producer,
+                        Batch: nvalue.Batch,
+                        SampleWeight: nvalue.SampleWeight,
+                        HumidityPercent: nvalue.HumidityPercent,
+                        WalnutNumber: nvalue.WalnutNumber,
+                        Performance: nvalue.Performance,
+                        TotalWeightOfEdibleNuts: nvalue.TotalWeightOfEdibleNuts
+                    };
+                    nestedData.push(nestedObj);
+                });
+                obj.NestedGrills = nestedData;
+                data.push(obj);
+            });
+            $grillIssuesTable.bootstrapTable({
+                columns: [{
+                    field: 'Remission',
+                    align: 'center',
+                    title: 'Remisión'
+                }, {
+                    field: 'DateCapture',
+                    align: 'center',
+                    formatter: 'dateFormatter',
+                    title: 'Fecha de Captura'
+                }, {
+                    field: 'Truck',
+                    align: 'center',
+                    title: 'Camion'
+                }, {
+                    field: 'Driver',
+                    align: 'center',
+                    title: 'Conductor'
+                }, {
+                    field: 'Box',
+                    align: 'center',
+                    title: 'Caja'
+                }],
+                data: data,
+                showRefresh: true,
+                showColumns: true,
+                search: true,
+                pageList: '[10, 50, 100, 200, TODO]',
+                pagination: true,
+                toolbar: '#toolbar',
+                detailView: true,
+                onExpandRow: function (index, row, $detail) {
+                    $detail.html('<table></table>').find('table').bootstrapTable({
+                        columns: [{
+                            field: 'Folio',
+                            align: 'center',
+                            title: 'No. de Parrilla'
+                        }, {
+                            field: 'DateCapture',
+                            align: 'center',
+                            formatter: 'dateFormatter',
+                            title: 'Fecha de Captura'
+                        }, {
+                            field: 'Receptions',
+                            align: 'center',
+                            title: 'Folios'
+                        }, {
+                            field: 'Size',
+                            align: 'center',
+                            title: 'Tamaño'
+                        }, {
+                            field: 'Sacks',
+                            align: 'center',
+                            title: 'Sacos'
+                        }, {
+                            field: 'Kilos',
+                            align: 'center',
+                            title: 'Kilos'
+                        }, {
+                            field: 'Quality',
+                            align: 'center',
+                            title: 'Calidad'
+                        }, {
+                            field: 'Variety',
+                            align: 'center',
+                            title: 'Variedad'
+                        }, {
+                            field: 'Producer',
+                            align: 'center',
+                            title: 'Productor'
+                        }, {
+                            field: 'Batch',
+                            align: 'center',
+                            title: 'Huerta/Lote'
+                        }, {
+                            field: 'SampleWeight',
+                            align: 'center',
+                            title: 'Peso de la Muestra'
+                        }, {
+                            field: 'HumidityPercent',
+                            align: 'center',
+                            title: '% Humedad'
+                        }, {
+                            field: 'WalnutNumber',
+                            align: 'center',
+                            title: 'Número de nueces'
+                        }, {
+                            field: 'Performance',
+                            align: 'center',
+                            title: 'Rendimiento'
+                        }, {
+                            field: 'TotalWeightOfEdibleNuts',
+                            align: 'center',
+                            title: 'Peso total de nueces comestibles'
+                        }],
+                        data: row.NestedGrills
+                    });
+                }
             });
         };
 
@@ -316,14 +454,11 @@
             reportService.getSecondGrillIssuesReport().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 11);
-                } else {
-                    angular.forEach(response.data, function (grillIssue, key) {
-                        delete grillIssue['Id'];
-                        angular.forEach(grillIssue.Grills, function (grill, key) {
-                            delete grill['Status'];
-                        }, this);
-                    }, this);
                     $scope.secondGrillIssues = response.data;
+                    fillGrillIssuesReport(response.data);
+                } else {
+                    $scope.secondGrillIssues = response.data;
+                    fillGrillIssuesReport(response.data);
                 };
             }, function (response) {
                 msgS.msg('err', 46);
@@ -447,6 +582,10 @@
                 default:
                     break;
             };
+        };
+
+        dateFormatter = function (value) {
+            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
         };
 
         (function () {
