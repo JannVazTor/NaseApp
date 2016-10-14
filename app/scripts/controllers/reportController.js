@@ -3,7 +3,6 @@ var dateFormatter;
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, reportService, producerService) {
-
         $scope.reportDate = {
             ReportDate: ""
         };
@@ -96,14 +95,11 @@ var dateFormatter;
         };
 
         $scope.getProducerReport = function (id) {
-            debugger;
             reportService.getProducerReport(id).then(function (response) {
                 if (response.data.length !== 0) {
-                    $scope.producerReport = response.data;
                     fillProducerReportTable(response.data);
                 } else {
                     fillProducerReportTable(response.data);
-                    $scope.producerReport = response.data;
                     msgS.msg('info', 5);
                 }
             }, function (response) {
@@ -127,11 +123,9 @@ var dateFormatter;
         var GetReportingProcess = function () {
             reportService.getReportingProcess().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.reportingProcess = response.data;
                     fillProcessReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.reportingProcess = response.data;
                     fillProcessReportTable(response.data);
                 }
             }, function (response) {
@@ -142,11 +136,9 @@ var dateFormatter;
         var GetCurrentInventory = function () {
             reportService.getCurrentInventoryReport().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.genericGrillReport = response.data;
                     fillProcessInventoryReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.genericGrillReport = response.data;
                     fillProcessInventoryReportTable(response.data);
                 }
             }, function (response) {
@@ -157,11 +149,9 @@ var dateFormatter;
         var GetSecondCurrentInventory = function () {
             reportService.getSecondCurrentInventory().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.secondCurrentInventory = response.data;
                     fillProcessInventoryReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.secondCurrentInventory = response.data;
                     fillProcessInventoryReportTable(response.data);
                 }
             }, function (response) {
@@ -172,11 +162,9 @@ var dateFormatter;
         var GetProcessInventory = function () {
             reportService.getProcessInventory().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.genericGrillReport = response.data;
                     fillProcessInventoryReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.genericGrillReport = response.data;
                     fillProcessInventoryReportTable(response.data);
                 }
             }, function (response) {
@@ -188,11 +176,9 @@ var dateFormatter;
             var defer = $q.defer();
             reportService.getDailyProcess().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.dailyProcess = response.data;
                     fillDailyReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.dailyProcess = response.data;
                     fillDailyReportTable(response.data);
                 }
             }, function (response) {
@@ -206,10 +192,8 @@ var dateFormatter;
             reportService.getReportOrigin().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 5);
-                    $scope.reportOrigin = response.data;
                     fillOriginReport(response.data);
                 } else {
-                    $scope.reportOrigin = response.data;
                     fillOriginReport(response.data);
                 }
             }, function (response) {
@@ -221,10 +205,8 @@ var dateFormatter;
             reportService.getGrillIssuesReport().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 11);
-                    $scope.grillIssues = response.data;
                     fillGrillIssuesReport(response.data);
                 } else {
-                    $scope.grillIssues = response.data;
                     fillGrillIssuesReport(response.data);
                 };
             }, function (response) {
@@ -236,10 +218,8 @@ var dateFormatter;
             reportService.getSecondGrillIssuesReport().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 11);
-                    $scope.secondGrillIssues = response.data;
                     fillGrillIssuesReport(response.data);
                 } else {
-                    $scope.secondGrillIssues = response.data;
                     fillGrillIssuesReport(response.data);
                 };
             }, function (response) {
@@ -381,21 +361,25 @@ var dateFormatter;
             originReportColumns.push({
                 field: 'Field',
                 align: 'center',
+                sortable: true,
                 title: 'Campo'
             });
             originReportColumns.push({
                 field: 'Batch',
                 align: 'center',
+                sortable: true,
                 title: 'Huerta/Lote'
             });
             originReportColumns.push({
                 field: 'Hectares',
                 align: 'center',
+                sortable: true,
                 title: 'Hectareas'
             });
             $.each(originReport[0].Varieties, function (index, value) {
                 originReportColumns.push({
                     field: 'Variety' + (index + 1),
+                    sortable: true,
                     align: 'center',
                     title: value.Variety
                 });
@@ -403,17 +387,20 @@ var dateFormatter;
             originReportColumns.push({
                 field: 'TotalProduction',
                 align: 'center',
+                sortable: true,
                 title: 'Produccion Total'
             });
             originReportColumns.push({
                 field: 'PerformancePerHa',
                 align: 'center',
+                sortable: true,
                 title: 'Rendimiento / Ha'
             });
             $.each(originReport[0].Varieties, function (index, value) {
                 originReportColumns.push({
                     field: 'Performance' + (index + 1),
                     align: 'center',
+                    sortable: true,
                     title: value.Variety + ' (R%)'
                 });
             });
@@ -502,23 +489,28 @@ var dateFormatter;
                 columns: [{
                     field: 'Remission',
                     align: 'center',
+                    sortable: true,
                     title: 'Remisión'
                 }, {
                     field: 'DateCapture',
                     align: 'center',
+                    sortable: true,
                     formatter: 'dateFormatter',
                     title: 'Fecha de Captura'
                 }, {
                     field: 'Truck',
                     align: 'center',
+                    sortable: true,
                     title: 'Camion'
                 }, {
                     field: 'Driver',
                     align: 'center',
+                    sortable: true,
                     title: 'Conductor'
                 }, {
                     field: 'Box',
                     align: 'center',
+                    sortable: true,
                     title: 'Caja'
                 }],
                 data: data,
@@ -534,63 +526,78 @@ var dateFormatter;
                         columns: [{
                             field: 'Folio',
                             align: 'center',
+                            sortable: true,
                             title: 'No. de Parrilla'
                         }, {
                             field: 'DateCapture',
                             align: 'center',
+                            sortable: true,
                             formatter: 'dateFormatter',
                             title: 'Fecha de Captura'
                         }, {
                             field: 'Receptions',
                             align: 'center',
+                            sortable: true,
                             title: 'Folios'
                         }, {
                             field: 'Size',
                             align: 'center',
+                            sortable: true,
                             title: 'Tamaño'
                         }, {
                             field: 'Sacks',
                             align: 'center',
+                            sortable: true,
                             title: 'Sacos'
                         }, {
                             field: 'Kilos',
                             align: 'center',
+                            sortable: true,
                             title: 'Kilos'
                         }, {
                             field: 'Quality',
                             align: 'center',
+                            sortable: true,
                             title: 'Calidad'
                         }, {
                             field: 'Variety',
                             align: 'center',
+                            sortable: true,
                             title: 'Variedad'
                         }, {
                             field: 'Producer',
                             align: 'center',
+                            sortable: true,
                             title: 'Productor'
                         }, {
                             field: 'Batch',
                             align: 'center',
+                            sortable: true,
                             title: 'Huerta/Lote'
                         }, {
                             field: 'SampleWeight',
                             align: 'center',
+                            sortable: true,
                             title: 'Peso de la Muestra'
                         }, {
                             field: 'HumidityPercent',
                             align: 'center',
+                            sortable: true,
                             title: '% Humedad'
                         }, {
                             field: 'WalnutNumber',
                             align: 'center',
+                            sortable: true,
                             title: 'Número de nueces'
                         }, {
                             field: 'Performance',
                             align: 'center',
+                            sortable: true,
                             title: 'Rendimiento'
                         }, {
                             field: 'TotalWeightOfEdibleNuts',
                             align: 'center',
+                            sortable: true,
                             title: 'Peso total de nueces comestibles'
                         }],
                         data: row.NestedGrills
