@@ -188,7 +188,7 @@ var operateFormatterAddProcessResult;
 
         $scope.generatePDF = function () {
             var doc = new jsPDF('l', 'pt');
-            var elem = document.getElementById('SamplingReceptionTable');
+            var elem = document.getElementById('processResultManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Resultado de Proceso (Recepciones)');
             doc.autoTable(res.columns, res.data, {

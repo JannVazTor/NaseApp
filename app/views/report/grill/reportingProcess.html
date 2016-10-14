@@ -5,7 +5,7 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-sm-12 actionbar">
                         <div class="form-group">
                             <label for="isearch" class="col-sm-2 control-label">Buscar</label>
@@ -16,7 +16,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <hr>
                 <button class="btn btn-link" ng-click="reportingProcessExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
@@ -24,8 +24,37 @@
                 <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('reportingProcess'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
             </button>
-                <hr>
-                <table id="reportingProcess" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;"
+                <table id="reportingProcess" 
+                            data-toggle="table"  
+                            data-show-columns="true" 
+                            data-toolbar="#toolbar"
+                            data-unique-id="Id" 
+                            data-pagination="true" 
+                            data-search="true" 
+                            data-show-export="true" 
+                            data-page-list="[10, 50, 100, 200, TODO]">
+                        <thead>
+                            <tr>
+                                <th data-field="Variety" data-align="center" data-sortable="true">Variedad</th>
+                                <th data-field="SacksFirstSmall" data-align="center" data-sortable="true">Chicas</th>
+                                <th data-field="SacksFirstMedium" data-align="center" data-sortable="true">Medianas</th>
+                                <th data-field="SacksFirstLarge" data-align="center" data-sortable="true">Grandes</th>
+                                <th data-field="KilogramsFirstSmall" data-align="center" data-sortable="true">CH (Kg)</th>
+                                <th data-field="KilogramsFirstMedium" data-align="center" data-sortable="true">M (Kg)</th>
+                                <th data-field="KilogramsFirstLarge" data-align="center" data-sortable="true">G (Kg)</th>
+                                <th data-field="TotalKilogramsFirst" data-align="center" data-sortable="true">Kgs. Primera</th>
+                                <th data-field="TotalKilogramsSecond" data-align="center" data-sortable="true">Kgs. Segunda</th>
+                                <th data-field="TotalKilogramsThird" data-align="center" data-sortable="true">Kgs. Tercera</th>
+                                <th data-field="PercentageFirst" data-align="center" data-sortable="true">% 1ra</th>
+                                <th data-field="PercentageSecond" data-align="center" data-sortable="true">% 2da</th>
+                                <th data-field="PercentageThird" data-align="center" data-sortable="true">% 3ra</th>
+                                <th data-field="TotalKilos" data-align="center" data-sortable="true">Kilos Totales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                <!--<table id="reportingProcess" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;"
                     fixed-header>
                     <thead>
                         <tr>
@@ -63,7 +92,7 @@
                             <td>{{report.TotalKilos}}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table>-->
             </div>
         </div>
     </div>

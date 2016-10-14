@@ -225,8 +225,8 @@ var dateFormatter;
         };
 
         $scope.generatePDF = function () {
-            var doc = new jsPDF('p', 'pt');
-            var elem = document.getElementById('remissionTable');
+            var doc = new jsPDF('l', 'pt');
+            var elem = document.getElementById('remissionManageTable');
             var res = doc.autoTableHtmlToJson(elem);
             doc.text(40, 50, 'Remisiones Registradas');
             doc.autoTable(res.columns, res.data, {

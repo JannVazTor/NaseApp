@@ -23,7 +23,7 @@
         </div>
         <div class="card-body card-padding">
             <div class="table-responsive">
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-sm-12 actionbar">
                         <div class="form-group">
                             <label for="isearch" class="col-sm-2 control-label">Buscar</label>
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <hr>
                 <button class="btn btn-link" ng-click="producerReportExportPdf()">
                     <span class="glyphicon glyphicon-share"></span> Exportar PDF
@@ -42,8 +42,31 @@
                 <button class="btn btn-link" value="select genericReport" onclick="selectElementContents(document.getElementById('producerReport'))">
                     <span class="glyphicon glyphicon-share"></span> Copiar Reporte
             </button>
-                <hr>
-                <table id="producerReport" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;"
+                <table id="producerReportTable" data-toggle="table" data-show-columns="true" data-toolbar="#toolbar"
+                    data-unique-id="Id" data-pagination="true" data-search="true" data-show-export="true" data-page-list="[10, 50, 100, 200, TODO]">
+                    <thead>
+                        <tr>
+                            <th data-field="ProcessDate" data-align="center" data-sortable="true" data-formatter="dateFormatter">Fecha de Proceso</th>
+                            <th data-field="Variety" data-align="center" data-sortable="true">Variedad</th>
+                            <th data-field="Batch" data-align="center" data-sortable="true">Huerta/s</th>
+                            <th data-field="Cylinder" data-align="center" data-sortable="true">Cilindro</th>
+                            <th data-field="Folio" data-align="center" data-sortable="true">Folio</th>
+                            <th data-field="KgsOrigen" data-align="center" data-sortable="true">Kgs. Origen</th>
+                            <th data-field="SacksP" data-align="center" data-sortable="true">Sacos Primera</th>
+                            <th data-field="KilosFirst" data-align="center" data-sortable="true">Kgs. Primera</th>
+                            <th data-field="SacksS" data-align="center" data-sortable="true">Sacos Segunda</th>
+                            <th data-field="KilosSecond" data-align="center" data-sortable="true">Kgs. Segunda</th>
+                            <th data-field="KilosTotal" data-align="center" data-sortable="true">Total</th>
+                            <th data-field="SacksFirstSmall" data-align="center" data-sortable="true">Chica</th>
+                            <th data-field="SacksFirstMedium" data-align="center" data-sortable="true">Mediana</th>
+                            <th data-field="SacksFirstLarge" data-align="center" data-sortable="true">Grande</th>
+                            <th data-field="SacksFirstTotal" data-align="center" data-sortable="true">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!--<table id="producerReport" class="table table-striped table-bordered table-condensed table-hover" style="height: 70em;"
                     fixed-header>
                     <thead>
                         <tr>
@@ -83,7 +106,7 @@
                             <td>{{report.SacksFirstTotal}}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table>-->
             </div>
         </div>
     </div>
