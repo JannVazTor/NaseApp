@@ -1,7 +1,9 @@
 var dateFormatter;
+
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, reportService, producerService) {
+<<<<<<< HEAD
         $scope.dtOptions = {};
         $scope.dtColumns = [];
         $scope.reportingProcess = [];
@@ -13,6 +15,11 @@ var dateFormatter;
         $scope.genericGrillReport = [];
         $scope.secondCurrentInventory = [];
         $scope.secondGrillIssues = [];
+=======
+        $scope.reportDate = {
+            ReportDate: ""
+        };
+>>>>>>> origin/master
 
         $scope.getDailyProcessReport = function () {
             reportService.getDailyProcess().then(function (response) {
@@ -102,14 +109,11 @@ var dateFormatter;
         };
 
         $scope.getProducerReport = function (id) {
-            debugger;
             reportService.getProducerReport(id).then(function (response) {
-                if (response.data.length !== 0){
-                    $scope.producerReport = response.data;
+                if (response.data.length !== 0) {
                     fillProducerReportTable(response.data);
                 } else {
                     fillProducerReportTable(response.data);
-                    $scope.producerReport = response.data;
                     msgS.msg('info', 5);
                 }
             }, function (response) {
@@ -133,11 +137,9 @@ var dateFormatter;
         var GetReportingProcess = function () {
             reportService.getReportingProcess().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.reportingProcess = response.data;
                     fillProcessReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.reportingProcess = response.data;
                     fillProcessReportTable(response.data);
                 }
             }, function (response) {
@@ -148,11 +150,9 @@ var dateFormatter;
         var GetCurrentInventory = function () {
             reportService.getCurrentInventoryReport().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.genericGrillReport = response.data;
                     fillProcessInventoryReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.genericGrillReport = response.data;
                     fillProcessInventoryReportTable(response.data);
                 }
             }, function (response) {
@@ -163,11 +163,9 @@ var dateFormatter;
         var GetSecondCurrentInventory = function () {
             reportService.getSecondCurrentInventory().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.secondCurrentInventory = response.data;
                     fillProcessInventoryReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.secondCurrentInventory = response.data;
                     fillProcessInventoryReportTable(response.data);
                 }
             }, function (response) {
@@ -178,11 +176,9 @@ var dateFormatter;
         var GetProcessInventory = function () {
             reportService.getProcessInventory().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.genericGrillReport = response.data;
                     fillProcessInventoryReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.genericGrillReport = response.data;
                     fillProcessInventoryReportTable(response.data);
                 }
             }, function (response) {
@@ -194,11 +190,9 @@ var dateFormatter;
             var defer = $q.defer();
             reportService.getDailyProcess().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.dailyProcess = response.data;
                     fillDailyReportTable(response.data);
                     msgS.msg('info', 5);
                 } else {
-                    $scope.dailyProcess = response.data;
                     fillDailyReportTable(response.data);
                 }
             }, function (response) {
@@ -212,10 +206,8 @@ var dateFormatter;
             reportService.getReportOrigin().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 5);
-                    $scope.reportOrigin = response.data;
                     fillOriginReport(response.data);
                 } else {
-                    $scope.reportOrigin = response.data;
                     fillOriginReport(response.data);
                 }
             }, function (response) {
@@ -223,110 +215,13 @@ var dateFormatter;
             })
         };
 
-        $('#originReportTable').on('refresh.bs.table', function (params) {
-            GetOriginReport();
-        });
-
-        function fillOriginReport(originReport) {
-            var originReportColumns = [];
-            var originReportData = [];
-            var totalHectares = 0;
-            var varietyTotalProduction = 0;
-            var totalPerVariety = [];
-            var totalRenVariety = [];
-            originReportColumns.push({
-                field: 'Field',
-                align: 'center',
-                title: 'Campo'
-            });
-            originReportColumns.push({
-                field: 'Batch',
-                align: 'center',
-                title: 'Huerta/Lote'
-            });
-            originReportColumns.push({
-                field: 'Hectares',
-                align: 'center',
-                title: 'Hectareas'
-            });
-            $.each(originReport[0].Varieties, function (index, value) {
-                originReportColumns.push({
-                    field: 'Variety' + (index + 1),
-                    align: 'center',
-                    title: value.Variety
-                });
-            });
-            originReportColumns.push({
-                field: 'TotalProduction',
-                align: 'center',
-                title: 'Produccion Total'
-            });
-            originReportColumns.push({
-                field: 'PerformancePerHa',
-                align: 'center',
-                title: 'Rendimiento / Ha'
-            });
-            $.each(originReport[0].Varieties, function (index, value) {
-                originReportColumns.push({
-                    field: 'Performance' + (index + 1),
-                    align: 'center',
-                    title: value.Variety + ' (R%)'
-                });
-            });
-            $.each(originReport, function(index, value){
-                var obj = {
-                    Field: value.Field,
-                    Batch: value.Batch,
-                    Hectares: value.Hectares
-                };
-                $.each(value.Varieties, function(index, value){
-                    obj['Variety' + (index + 1)] = value.Total;
-                    totalPerVariety.push(value.Total);
-                });
-                obj.TotalProduction = value.TotalProduction;
-                obj.PerformancePerHa = value.PerformancePerHa;
-                $.each(value.Varieties, function(index, value){
-                    obj['Performance' + (index + 1)] = value.Performance;
-                    totalRenVariety.push(value.Performance);
-                });
-                totalHectares += parseFloat(value.Hectares); 
-                originReportData.push(obj);
-            });
-            var totalObj = {
-                Field: 'Total',
-                Batch: '',
-                Hectares: totalHectares
-            };
-            $.each(totalPerVariety, function(index, value){
-                totalObj['Variety' + (index + 1)] = value;
-            });
-            totalObj.TotalProduction = varietyTotalProduction;
-            totalObj.PerformancePerHa = '';
-            $.each(totalRenVariety, function(index, value){
-                totalObj['Performance' + (index + 1)] = value;
-            });
-            originReportData.push(totalObj);
-            $('#originReportTable').bootstrapTable({
-                columns: originReportColumns,
-                data: originReportData
-            });
-        };
-
         var GetGrillIssues = function () {
             reportService.getGrillIssuesReport().then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.grillIssues = response.data;
-                    //fillIssuesReportTable(response.data);
                     msgS.msg('info', 11);
+                    fillGrillIssuesReport(response.data);
                 } else {
-                    angular.forEach(response.data, function (grillIssue, key) {
-                        delete grillIssue['Id'];
-                        angular.forEach(grillIssue.Grills, function (grill, key) {
-                            delete grill['Status'];
-                        }, this);
-                    }, this);
-                    $scope.grillIssues = response.data;
-                    //fillIssuesReportTable(response.data);
+                    fillGrillIssuesReport(response.data);
                 };
             }, function (response) {
                 msgS.msg('err', 46);
@@ -337,14 +232,9 @@ var dateFormatter;
             reportService.getSecondGrillIssuesReport().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 11);
+                    fillGrillIssuesReport(response.data);
                 } else {
-                    angular.forEach(response.data, function (grillIssue, key) {
-                        delete grillIssue['Id'];
-                        angular.forEach(grillIssue.Grills, function (grill, key) {
-                            delete grill['Status'];
-                        }, this);
-                    }, this);
-                    $scope.secondGrillIssues = response.data;
+                    fillGrillIssuesReport(response.data);
                 };
             }, function (response) {
                 msgS.msg('err', 46);
@@ -470,6 +360,267 @@ var dateFormatter;
             };
         };
 
+        /* Start Origin Report */
+        $('#originReportTable').on('refresh.bs.table', function (params) {
+            GetOriginReport();
+        });
+
+        function fillOriginReport(originReport) {
+            var originReportColumns = [];
+            var originReportData = [];
+            var totalHectares = 0;
+            var varietyTotalProduction = 0;
+            var totalPerVariety = [];
+            var totalRenVariety = [];
+            originReportColumns.push({
+                field: 'Field',
+                align: 'center',
+                sortable: true,
+                title: 'Campo'
+            });
+            originReportColumns.push({
+                field: 'Batch',
+                align: 'center',
+                sortable: true,
+                title: 'Huerta/Lote'
+            });
+            originReportColumns.push({
+                field: 'Hectares',
+                align: 'center',
+                sortable: true,
+                title: 'Hectareas'
+            });
+            $.each(originReport[0].Varieties, function (index, value) {
+                originReportColumns.push({
+                    field: 'Variety' + (index + 1),
+                    sortable: true,
+                    align: 'center',
+                    title: value.Variety
+                });
+            });
+            originReportColumns.push({
+                field: 'TotalProduction',
+                align: 'center',
+                sortable: true,
+                title: 'Produccion Total'
+            });
+            originReportColumns.push({
+                field: 'PerformancePerHa',
+                align: 'center',
+                sortable: true,
+                title: 'Rendimiento / Ha'
+            });
+            $.each(originReport[0].Varieties, function (index, value) {
+                originReportColumns.push({
+                    field: 'Performance' + (index + 1),
+                    align: 'center',
+                    sortable: true,
+                    title: value.Variety + ' (R%)'
+                });
+            });
+            $.each(originReport, function (index, value) {
+                var obj = {
+                    Field: value.Field,
+                    Batch: value.Batch,
+                    Hectares: value.Hectares
+                };
+                $.each(value.Varieties, function (index, value) {
+                    obj['Variety' + (index + 1)] = value.Total;
+                    totalPerVariety.push(value.Total);
+                });
+                obj.TotalProduction = value.TotalProduction;
+                obj.PerformancePerHa = value.PerformancePerHa;
+                $.each(value.Varieties, function (index, value) {
+                    obj['Performance' + (index + 1)] = value.Performance;
+                    totalRenVariety.push(value.Performance);
+                });
+                totalHectares += parseFloat(value.Hectares);
+                originReportData.push(obj);
+            });
+            var totalObj = {
+                Field: 'Total',
+                Batch: '',
+                Hectares: totalHectares
+            };
+            $.each(totalPerVariety, function (index, value) {
+                totalObj['Variety' + (index + 1)] = value;
+            });
+            totalObj.TotalProduction = varietyTotalProduction;
+            totalObj.PerformancePerHa = '';
+            $.each(totalRenVariety, function (index, value) {
+                totalObj['Performance' + (index + 1)] = value;
+            });
+            originReportData.push(totalObj);
+            $('#originReportTable').bootstrapTable({
+                columns: originReportColumns,
+                data: originReportData
+            });
+        };
+        /* End Origin Report */
+
+        /* Start Issues Report */
+        $('#grillIssuestTable').on('refresh.bs.table', function (params) {
+            GetGrillIssues();
+        });
+
+        function fillGrillIssuesReport(grillIssues) {
+            var $grillIssuesTable = $('#grillIssuestTable');
+            var data = [];
+            $.each(grillIssues, function (index, value) {
+                var obj = {
+                    Remission: value.Remission,
+                    DateCapture: value.DateCapture,
+                    Truck: value.Truck,
+                    Driver: value.Driver,
+                    Box: value.Box,
+                    NestedGrills: []
+                };
+                var nestedData = [];
+                $.each(value.Grills, function (index, nvalue) {
+                    var nestedObj = {
+                        Folio: nvalue.Folio,
+                        DateCapture: nvalue.DateCapture,
+                        Receptions: nvalue.Receptions,
+                        Size: nvalue.Size,
+                        Sacks: nvalue.Sacks,
+                        Kilos: nvalue.Kilos,
+                        Quality: nvalue.Quality,
+                        Variety: nvalue.Variety,
+                        Producer: nvalue.Producer,
+                        Batch: nvalue.Batch,
+                        SampleWeight: nvalue.SampleWeight,
+                        HumidityPercent: nvalue.HumidityPercent,
+                        WalnutNumber: nvalue.WalnutNumber,
+                        Performance: nvalue.Performance,
+                        TotalWeightOfEdibleNuts: nvalue.TotalWeightOfEdibleNuts
+                    };
+                    nestedData.push(nestedObj);
+                });
+                obj.NestedGrills = nestedData;
+                data.push(obj);
+            });
+            $grillIssuesTable.bootstrapTable({
+                columns: [{
+                    field: 'Remission',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Remisión'
+                }, {
+                    field: 'DateCapture',
+                    align: 'center',
+                    sortable: true,
+                    formatter: 'dateFormatter',
+                    title: 'Fecha de Captura'
+                }, {
+                    field: 'Truck',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Camion'
+                }, {
+                    field: 'Driver',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Conductor'
+                }, {
+                    field: 'Box',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Caja'
+                }],
+                data: data,
+                showRefresh: true,
+                showColumns: true,
+                search: true,
+                pageList: '[10, 50, 100, 200, TODO]',
+                pagination: true,
+                toolbar: '#toolbar',
+                detailView: true,
+                onExpandRow: function (index, row, $detail) {
+                    $detail.html('<table></table>').find('table').bootstrapTable({
+                        columns: [{
+                            field: 'Folio',
+                            align: 'center',
+                            sortable: true,
+                            title: 'No. de Parrilla'
+                        }, {
+                            field: 'DateCapture',
+                            align: 'center',
+                            sortable: true,
+                            formatter: 'dateFormatter',
+                            title: 'Fecha de Captura'
+                        }, {
+                            field: 'Receptions',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Folios'
+                        }, {
+                            field: 'Size',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Tamaño'
+                        }, {
+                            field: 'Sacks',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Sacos'
+                        }, {
+                            field: 'Kilos',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Kilos'
+                        }, {
+                            field: 'Quality',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Calidad'
+                        }, {
+                            field: 'Variety',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Variedad'
+                        }, {
+                            field: 'Producer',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Productor'
+                        }, {
+                            field: 'Batch',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Huerta/Lote'
+                        }, {
+                            field: 'SampleWeight',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Peso de la Muestra'
+                        }, {
+                            field: 'HumidityPercent',
+                            align: 'center',
+                            sortable: true,
+                            title: '% Humedad'
+                        }, {
+                            field: 'WalnutNumber',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Número de nueces'
+                        }, {
+                            field: 'Performance',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Rendimiento'
+                        }, {
+                            field: 'TotalWeightOfEdibleNuts',
+                            align: 'center',
+                            sortable: true,
+                            title: 'Peso total de nueces comestibles'
+                        }],
+                        data: row.NestedGrills
+                    });
+                }
+            });
+        };
+        /* End Issues Report */
+
         /* Start Process Report Table Functions*/
         function fillProcessReportTable(process) {
             $('#reportingProcess').bootstrapTable({
@@ -507,6 +658,10 @@ var dateFormatter;
         };
         /*End Daily Report Table Functions */
 
+
+        dateFormatter = function (value) {
+            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+        };
         (function () {
             switch ($state.current.name) {
                 case 'producerReport':
