@@ -4,15 +4,15 @@ var dateFormatter;
     angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, reportService, producerService) {
         $scope.dtOptions = {};
         $scope.dtColumns = [];
-        //$scope.reportingProcess = [];
-        //$scope.dailyProcess = [];
-        //$scope.grillIssues = [];
+        $scope.reportingProcess = [];
+        $scope.dailyProcess = [];
+        $scope.grillIssues = [];
         $scope.reportDate = {
             ReportDate: ""
         };
-        //$scope.genericGrillReport = [];
-        //$scope.secondCurrentInventory = [];
-        //$scope.secondGrillIssues = [];
+        $scope.genericGrillReport = [];
+        $scope.secondCurrentInventory = [];
+        $scope.secondGrillIssues = [];
 
         $scope.getDailyProcessReport = function () {
             reportService.getDailyProcess().then(function (response) {
