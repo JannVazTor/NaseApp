@@ -283,6 +283,9 @@ var grill = {};
                     msgS.msg('info', 7);
                     fillTable(response.data);
                 } else {
+                    response.data.forEach(function (element) {
+                        element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionFolio) === -1 ? false : true;
+                    }, this);
                     fillTable(response.data);
                 };
             }, function (response) {
@@ -480,7 +483,7 @@ var grill = {};
                 var isChecked = row.IsAlreadyAssigned ? "checked" : "";
                 return [
                     '<div class="toggle-switch">',
-                    '<input id="' + row.Id + '" type="checkbox" ng-click="grill.onAddGrillToReceptionChange(this)" hidden="hidden" ' + isChecked + '>',
+                    '<input id="' + row.Id + '" type="checkbox" onclick="grill.onAddGrillToReceptionChange(this)" hidden="hidden" ' + isChecked + '>',
                     '<label for="' + row.Id + '" class="ts-helper"></label>',
                     '</div>'
                 ].join('');

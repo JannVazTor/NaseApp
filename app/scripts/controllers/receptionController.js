@@ -430,7 +430,7 @@
             };
 
             function operateFormatterIfIsReceptionToGrill(value, row, index) {
-                var isChecked = value ? "checked" : "";
+                var isChecked = row.IsAlreadyAssigned ? "checked" : "";
                 return [
                     '<div class="toggle-switch">',
                     '<input id="' + row.Id + '" type="checkbox" onclick="onAddReceptionToGrillChange(this)" hidden="hidden" ' + isChecked + '>',
