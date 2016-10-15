@@ -142,7 +142,7 @@ var grillIssues = {};
                     field: 'DateCapture',
                     align: 'center',
                     sortable: true,
-                    formatter: 'dateFormatter',
+                    formatter: dateFormatter,
                     title: 'Fecha de Captura'
                 }, {
                     field: 'Truck',
@@ -178,7 +178,7 @@ var grillIssues = {};
                             field: 'DateCapture',
                             align: 'center',
                             sortable: true,
-                            formatter: 'dateFormatter',
+                            formatter: dateFormatter,
                             title: 'Fecha de Captura'
                         }, {
                             field: 'Receptions',
@@ -264,6 +264,10 @@ var grillIssues = {};
                     '<i class="md md-reply"></i>',
                     '</button>'
                 ].join('');
+            };
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
             };
         };
 

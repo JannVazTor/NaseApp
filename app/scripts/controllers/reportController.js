@@ -1,5 +1,3 @@
-var dateFormatter;
-
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, reportService, producerService) {
@@ -125,6 +123,7 @@ var dateFormatter;
                 } else {
                     $scope.producers = response.data;
                     $scope.producer = $scope.producers[0];
+                    $scope.getProducerReport($scope.producer.Id);
                 };
             }, function (response) {
                 msgS.msg('err', 14);
@@ -514,7 +513,7 @@ var dateFormatter;
                     field: 'DateCapture',
                     align: 'center',
                     sortable: true,
-                    formatter: 'dateFormatter',
+                    formatter: dateFormatter,
                     title: 'Fecha de Captura'
                 }, {
                     field: 'Truck',
@@ -551,7 +550,7 @@ var dateFormatter;
                             field: 'DateCapture',
                             align: 'center',
                             sortable: true,
-                            formatter: 'dateFormatter',
+                            formatter: dateFormatter,
                             title: 'Fecha de Captura'
                         }, {
                             field: 'Receptions',
@@ -623,6 +622,10 @@ var dateFormatter;
                     });
                 }
             });
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
         /* End Issues Report */
 
@@ -717,12 +720,13 @@ var dateFormatter;
 
         /* Start Producer Report Table Functions*/
         function fillProducerReportTable(data) {
+            $('#producerReportTable').bootstrapTable('destroy');
             $('#producerReportTable').bootstrapTable({
                 columns: [
                     {
                         field: 'ProcessDate',
                         align: 'center',
-                        formatter: 'dateFormatter',
+                        formatter: dateFormatter,
                         sortable: 'true',
                         title: 'Fecha de Proceso'
                     }, {
@@ -807,9 +811,10 @@ var dateFormatter;
                 pageList: '[10, 50, 100, 200, TODO]',
                 data: data
             });
-        };
-        dateFormatter = function (value) {
-            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
         /*End Producer Report Table Functions */
 
@@ -824,7 +829,7 @@ var dateFormatter;
                         title: 'No. Parrilla'
                     }, {
                         field: 'DateCapture',
-                        formatter: 'dateFormatter',
+                        formatter: dateFormatter,
                         align: 'center',
                         sortable: 'true',
                         title: 'Fecha de Captura'
@@ -910,6 +915,10 @@ var dateFormatter;
                 pageList: '[10, 50, 100, 200, TODO]',
                 data: process
             });
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
 
         /*End Process Inventory Report Table Functions */
@@ -920,7 +929,7 @@ var dateFormatter;
                 columns: [
                     {
                         field: 'Date',
-                        formatter: 'dateFormatter',
+                        formatter: dateFormatter,
                         align: 'center',
                         sortable: 'true',
                         title: 'Fecha'
@@ -986,18 +995,17 @@ var dateFormatter;
                 pageList: '[10, 50, 100, 200, TODO]',
                 data: daily
             });
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
         /*End Daily Report Table Functions */
 
-
-        dateFormatter = function (value) {
-            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
-        };
         (function () {
             switch ($state.current.name) {
                 case 'producerReport':
                     GetAllProducers();
-                    $scope.getProducerReport(1);
                     break;
                 case 'reportingProcess':
                     GetReportingProcess();
