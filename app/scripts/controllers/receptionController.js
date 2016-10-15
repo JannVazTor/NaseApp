@@ -1,18 +1,13 @@
-var operateFormatter;
-var operateFormatterIfIsReceptionToGrill;
-var operateEvents;
-var onAddReceptionToGrillChange;
-
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('receptionController', function (fieldService, toastr, msgS, $filter, $scope, $state, receptionService, producerService, cylinderService, varietyService, receptionAndGrillService, clearService, $rootScope) {
         //When the load page
         $scope.selectedRole = {};
-        $scope.receptions = [];
         $scope.producers = [];
         $scope.varieties = [];
         $scope.fields = [];
         $scope.Grills = [];
+        $scope.receptions = [];
         //Data shared
         $scope.savedSuccesfully = false;
         $scope.IsGrillToReception = receptionAndGrillService.IsGrillToReception;
@@ -322,47 +317,139 @@ var onAddReceptionToGrillChange;
             doc.save("RecepcionesRegistradas.pdf");
         };
 
-        /* Start Table Functions*/
         function fillTable(receptions) {
+            var columns = [
+                {
+                    field: 'Folio',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Folio'
+                }, {
+                    field: 'Remissions',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Remisiones'
+                }, {
+                    field: 'ProducerName',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Productor'
+                }, {
+                    field: 'FieldName',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Huerta/Lote'
+                }, {
+                    field: 'Variety',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Variedad'
+                }, {
+                    field: 'Active',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Estado'
+                }, {
+                    field: 'CarRegistration',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Camion/Placas'
+                }, {
+                    field: 'ReceivedFromField',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Recibido'
+                }, {
+                    field: 'Cylinder',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Cilindro'
+                }, {
+                    field: 'EntryDate',
+                    align: 'center',
+                    sortable: true,
+                    formatter: dateFormatter,
+                    title: 'Fecha de Captura'
+                }, {
+                    field: 'HeatHoursDrying',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Horas de Secado'
+                }, {
+                    field: 'Grills',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Parrillas'
+                }];
+            if ($scope.IsGrillToReception) {
+                columns.push({
+                    field: 'assignToFolio',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Asignar Folio',
+                    formatter: operateFormatterIfIsReceptionToGrill
+                });
+            } else {
+                columns.push({
+                    field: 'options',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Opciones',
+                    formatter: operateFormatter,
+                    events: operateEvents
+                });
+            }
             $('#receptionManageTable').bootstrapTable({
+                columns: columns,
+                showRefresh: true,
+                showColumns: true,
+                toolbar: '#toolbar',
+                uniqueId: "Id",
+                pagination: true,
+                search: true,
+                showExport: true,
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: receptions
             });
+
+            function operateFormatter(value, row, index) {
+                return [
+                    '<button class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
+                    '<i class="md md-edit"></i>',
+                    '</button>',
+                    '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                    '<i class="md md-delete"></i>',
+                    '</button>',
+                    '<button class="btn btn-default redirectReceptionToGrill" href="javascript:void(0)" title="Asignar Parrillas">',
+                    '<i class="md md-view-module"></i>',
+                    '</button>',
+                    '<button class="btn btn-default redirectToAddRemission" href="javascript:void(0)" title="Agregar Remisión">',
+                    '<i class="md md-description"></i>',
+                    '</button>'
+                ].join('');
+            };
+
+            function operateFormatterIfIsReceptionToGrill(value, row, index) {
+                var isChecked = value ? "checked" : "";
+                return [
+                    '<div class="toggle-switch">',
+                    '<input id="' + row.Id + '" type="checkbox" onclick="onAddReceptionToGrillChange(this)" hidden="hidden" ' + isChecked + '>',
+                    '<label for="' + row.Id + '" class="ts-helper"></label>',
+                    '</div>'
+                ].join('');
+            };
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
+
+            $scope.onAddReceptionToGrillChange = function (checkBox) {
+                var id = $(checkBox).attr('id');
+                $scope.addReceptionToGrill(id, checkBox.checked)
+            };
         };
 
-        $('#receptionManageTable').on('refresh.bs.table', function (params) {
-            GetAllReceptions();
-        });
-
-        operateFormatter = function (value, row, index) {
-            return [
-                '<button class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
-                '<i class="md md-edit"></i>',
-                '</button>',
-                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
-                '<i class="md md-delete"></i>',
-                '</button>',
-                '<button class="btn btn-default redirectReceptionToGrill" href="javascript:void(0)" title="Asignar Parrillas">',
-                '<i class="md md-view-module"></i>',
-                '</button>',
-                '<button class="btn btn-default redirectToAddRemission" href="javascript:void(0)" title="Agregar Remisión">',
-                '<i class="md md-description"></i>',
-                '</button>'
-            ].join('');
-        };
-        operateFormatterIfIsReceptionToGrill = function (value, row, index) {
-            var isChecked = value ? "checked" : "";
-            return [
-                '<div class="toggle-switch">',
-                '<input id="' + row.Id + '" type="checkbox" onclick="onAddReceptionToGrillChange(this)" hidden="hidden" ' + isChecked + '>',
-                '<label for="' + row.Id + '" class="ts-helper"></label>',
-                '</div>'
-            ].join('');
-        };
-        onAddReceptionToGrillChange = function (checkBox) {
-            var id = $(checkBox).attr('id');
-            $scope.addReceptionToGrill(id, checkBox.checked)
-        };
-        operateEvents = {
+        window.operateEvents = {
             'click .edit': function (e, value, row, index) {
                 $scope.redirectUpdate(row.Id, row, row.Folio);
             },
@@ -377,10 +464,9 @@ var onAddReceptionToGrillChange;
             }
         };
 
-        dateFormatter = function (value) {
-            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
-        };
-        /* End Table Functions*/
+        $('#receptionManageTable').on('refresh.bs.table', function (params) {
+            GetAllReceptions();
+        });
 
         (function () {
             switch ($state.current.name) {

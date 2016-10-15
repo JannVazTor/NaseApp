@@ -1,11 +1,6 @@
-var operateFormatter; 
-var operateEvents; 
-var dateFormatter;
-
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('remissionController', function ($filter, $scope, msgS, toastr, $state, remissionService, fieldService, clearService, receptionService, $rootScope) {
-        $scope.remissions = [];
         $scope.message = "";
         $scope.folio = receptionService.folio;
         $scope.remission = {
@@ -125,12 +120,6 @@ var dateFormatter;
         var deleteRemission = function (remissionId) {
             remissionService.delete(remissionId).then(function (response) {
                 $('#remissionManageTable').bootstrapTable('removeByUniqueId', remissionId);
-                $.each($scope.remissions, function (i) {
-                    if ($scope.remissions[i].Id === remissionId) {
-                        $scope.remissions.splice(i, 1);
-                        return false;
-                    }
-                });
                 msgS.swalSuccess();
             }, function (response) {
                 msgS.msg('err', 89);
@@ -139,7 +128,6 @@ var dateFormatter;
 
         var GetAllRemissions = function () {
             remissionService.getAll().then(function (response) {
-                $scope.remissions = response.data;
                 fillTable(response.data);
             }, function (response) {
                 msgS.msg('err', 90);
@@ -257,28 +245,106 @@ var dateFormatter;
             return item;
         };
 
-        /* Start Table Functions*/
         function fillTable(remissions) {
             $('#remissionManageTable').bootstrapTable({
+                columns: [
+                    {
+                        field: 'Folio',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Folio de Recepción'
+                    }, {
+                        field: 'RemissionFolio',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Folio de Remisión',
+                    }, {
+                        field: 'DateCapture',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Fecha de Captura',
+                        formatter: dateFormatter
+                    }, {
+                        field: 'FieldName',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Campo',
+                    }, {
+                        field: 'Batch',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Huerta/Lote',
+                    }, {
+                        field: 'Box',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Cuadro',
+                    }, {
+                        field: 'Variety',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Variedad',
+                    }, {
+                        field: 'Quantity',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Cantidad',
+                    }, {
+                        field: 'Butler',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Mayordomo',
+                    }, {
+                        field: 'TransportNumber',
+                        align: 'center',
+                        sortable: true,
+                        title: 'No. de Transporte',
+                    }, {
+                        field: 'Driver',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Conductor',
+                    }, {
+                        field: 'Elaborate',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Elaboro',
+                    }, {
+                        field: 'options',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Opciones',
+                        events: operateEvents,
+                        formatter: operateFormatter
+                    }],
+                showRefresh: true,
+                showColumns: true,
+                toolbar: '#toolbar',
+                uniqueId: "Id",
+                pagination: true,
+                search: true,
+                showExport: true,
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: remissions
             });
+
+            function operateFormatter(value, row, index) {
+                return [
+                    '<button class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
+                    '<i class="md md-edit"></i>',
+                    '</button>',
+                    '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                    '<i class="md md-delete"></i>',
+                    '</button>'
+                ].join('');
+            };
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
 
-        $('#remissionManageTable').on('refresh.bs.table', function (params) {
-            GetAllRemissions()
-        });
-
-        operateFormatter = function (value, row, index) {
-            return [
-                '<button class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
-                '<i class="md md-edit"></i>',
-                '</button>',
-                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
-                '<i class="md md-delete"></i>',
-                '</button>'
-            ].join('');
-        };
-        operateEvents = {
+        window.operateEvents = {
             'click .edit': function (e, value, row, index) {
                 $scope.redirectUpdate(row.Id);
             },
@@ -287,10 +353,10 @@ var dateFormatter;
             }
         };
 
-        dateFormatter = function (value) {
-            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
-        };
-        /* End Table Functions*/
+        $('#remissionManageTable').on('refresh.bs.table', function (params) {
+            GetAllRemissions()
+        });
+
         (function () {
             switch ($state.current.name) {
                 case 'remissionManage':

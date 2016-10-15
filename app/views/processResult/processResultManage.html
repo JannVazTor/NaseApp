@@ -1,31 +1,19 @@
 <div class="animated bounceInRight">
-    <div class="card">
-        <div class="card-header">
-            <h2>Resultado de Proceso (Recepciones)</h2>
-        </div>
-        <div class="card-body card-padding">
-            <div class="table-responsive">
-                <div ng-show="samplings.length >= 0">
-                    <div id="toolbar">
-                        <button class="btn btn-link" ng-click="generatePDF()">
+	<div class="card">
+		<div class="card-header">
+			<h2>Resultado de Proceso (Recepciones)</h2>
+		</div>
+		<div class="card-body card-padding">
+			<div class="table-responsive">
+				<div id="toolbar">
+					<button class="btn btn-link" ng-click="generatePDF()">
                             <span class="glyphicon glyphicon-share"></span>Exportar PDF
                         </button>
-                    </div>
-                    <table id="processResultManageTable" 
-                        data-toggle="table" 
-                        data-show-refresh="true" 
-                        data-show-columns="true" 
-                        data-unique-id="Id"
-                        data-toolbar="#toolbar" 
-                        data-pagination="true" 
-                        data-search="true" 
-                        data-show-export="true" 
-                        data-page-list="[50, 100, 200, TODO]">
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+				<table id="processResultManageTable"></table>
+			</div>
+		</div>
+	</div>
 </div>
 <button id="fixedbuttonLeft" type="submit" class="btn bgm-teal btn-icon" data-ng-click="return()">
         <i class="md md-arrow-back"></i>

@@ -1,7 +1,3 @@
-var operateFormatter; 
-var operateEvents; 
-var dateFormatter;
-
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('samplingController', function (msgS, $scope, $filter, $state, receptionAndGrillService, samplingService, clearService, grillService, $rootScope, processResultService) {
@@ -111,8 +107,6 @@ var dateFormatter;
                     msgS.msg('info', 19);
                     fillTable(response.data);
                 } else {
-                    if ($scope.samplings.length !== 0) $scope.samplings = [];
-                    $scope.samplings = response.data;
                     fillTable(response.data);
                 }
             }, function (response) {
@@ -161,28 +155,86 @@ var dateFormatter;
             }
         });
 
-        /* Start Table Functions*/
         function fillTable(samplings) {
             $('#samplingGrillManageTable').bootstrapTable({
+                columns: [
+                    {
+                        field: 'Folio',
+                        align: 'center',
+                        sortable: true,
+                        title: 'No. de Parrilla'
+                    }, {
+                        field: 'DateCapture',
+                        align: 'center',
+                        sortable: true,
+                        formatter: dateFormatter,
+                        title: 'Fecha de Captura'
+                    }, {
+                        field: 'SampleWeight',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Peso'
+                    }, {
+                        field: 'HumidityPercent',
+                        align: 'center',
+                        sortable: true,
+                        title: '% Humedad'
+                    }, {
+                        field: 'WalnutNumber',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Número de nueces'
+                    }, {
+                        field: 'Performance',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Rendimiento'
+                    }, {
+                        field: 'TotalWeightOfEdibleNuts',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Peso total de nueces comestibles'
+                    }, {
+                        field: 'options',
+                        align: 'center',
+                        sortable: true,
+                        events: operateEvents,
+                        formatter: operateFormatter,
+                        title: 'Opciones'
+                    }
+                ],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: samplings
             });
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
+
+            function operateFormatter(value, row, index) {
+                return [
+                    '<button class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
+                    '<i class="md md-edit"></i>',
+                    '</button>',
+                    '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                    '<i class="md md-delete"></i>',
+                    '</button>'
+                ].join('');
+            };
         };
 
         $('#samplingGrillManageTable').on('refresh.bs.table', function (params) {
             GetAllGrillSamplings();
         });
 
-        operateFormatter = function (value, row, index) {
-            return [
-                '<button class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
-                '<i class="md md-edit"></i>',
-                '</button>',
-                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
-                '<i class="md md-delete"></i>',
-                '</button>'
-            ].join('');
-        };
-        operateEvents = {
+        window.operateEvents = {
             'click .edit': function (e, value, row, index) {
                 $scope.redirectUpdate(row)
             },
@@ -190,11 +242,6 @@ var dateFormatter;
                 $scope.confirmationDeleteGrill(row.Id, row.Folio)
             }
         };
-
-        dateFormatter = function (value) {
-            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
-        };
-        /* End Table Functions*/
 
         (function () {
             switch ($state.current.name) {
