@@ -450,6 +450,14 @@ var dateFormatter;
             originReportData.push(totalObj);
             $('#originReportTable').bootstrapTable({
                 columns: originReportColumns,
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: originReportData
             });
         };
@@ -624,78 +632,86 @@ var dateFormatter;
                 columns: [
                     {
                         field: 'Variety',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Variedad'
-                    },{
+                    }, {
                         field: 'SacksFirstSmall',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Chicas'
-                    },{
+                    }, {
                         field: 'SacksFirstMedium',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Medianas'
-                    },{
+                    }, {
                         field: 'SacksFirstLarge',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Grandes'
-                    },{
+                    }, {
                         field: 'KilogramsFirstSmall',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'CH (Kg)'
-                    },{
+                    }, {
                         field: 'KilogramsFirstMedium',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'M (Kg)'
-                    },{
+                    }, {
                         field: 'KilogramsFirstLarge',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'G (Kg)'
-                    },{
+                    }, {
                         field: 'TotalKilogramsFirst',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Kgs. Primera'
-                    },{
+                    }, {
                         field: 'TotalKilogramsSecond',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Kgs. Segunda'
-                    },{
+                    }, {
                         field: 'TotalKilogramsThird',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Kgs. Tercera'
-                    },{
+                    }, {
                         field: 'PercentageFirst',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: '% 1ra'
-                    },{
+                    }, {
                         field: 'PercentageSecond',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: '% 2da'
-                    },{
+                    }, {
                         field: 'PercentageThird',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: '% 3era'
-                    },{
+                    }, {
                         field: 'TotalKilos',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Kilos Totales'
                     }],
-                    data: process
-                });
-            };
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
+                data: process
+            });
+        };
 
         /*End Process Report Table Functions */
 
@@ -705,82 +721,90 @@ var dateFormatter;
                 columns: [
                     {
                         field: 'ProcessDate',
-                        align:'center',
+                        align: 'center',
                         formatter: 'dateFormatter',
                         sortable: 'true',
                         title: 'Fecha de Proceso'
-                    },{
+                    }, {
                         field: 'Variety',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Variedad'
-                    },{
+                    }, {
                         field: 'Batch',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Huerta/s'
-                    },{
+                    }, {
                         field: 'Cylinder',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Cilindro'
-                    },{
+                    }, {
                         field: 'Folio',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Folio'
-                    },{
+                    }, {
                         field: 'KgsOrigen',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Kgs. Origen'
-                    },{
+                    }, {
                         field: 'SacksP',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Sacos Primera'
-                    },{
+                    }, {
                         field: 'KilosFirst',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Kgs. Primera'
-                    },{
+                    }, {
                         field: 'SacksS',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Sacos Segunda'
-                    },{
+                    }, {
                         field: 'KilosSecond',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Kgs. Segunda'
-                    },{
+                    }, {
                         field: 'KilosTotal',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Total'
-                    },{
+                    }, {
                         field: 'SacksFirstSmall',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Chica'
-                    },{
+                    }, {
                         field: 'SacksFirstMedium',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Mediana'
-                    },{
+                    }, {
                         field: 'SacksFirstLarge',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Grande'
-                    },{
+                    }, {
                         field: 'SacksFirstTotal',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Total'
                     }
                 ],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: data
             });
         };
@@ -795,87 +819,95 @@ var dateFormatter;
                 columns: [
                     {
                         field: 'Folio',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'No. Parrilla'
-                    },{
+                    }, {
                         field: 'DateCapture',
                         formatter: 'dateFormatter',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Fecha de Captura'
-                    },{
+                    }, {
                         field: 'Receptions',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Folios'
-                    },{
+                    }, {
                         field: 'Size',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Tamaño'
-                    },{
+                    }, {
                         field: 'Sacks',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Sacos'
-                    },{
+                    }, {
                         field: 'Kilos',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Kilos'
-                    },{
+                    }, {
                         field: 'Quality',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Calidad'
-                    },{
+                    }, {
                         field: 'Variety',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Variedad'
-                    },{
+                    }, {
                         field: 'Producer',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Productor'
-                    },{
+                    }, {
                         field: 'Field',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Campo'
-                    },{
+                    }, {
                         field: 'Batch',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Huerta/Lote'
-                    },{
+                    }, {
                         field: 'SampleWeight',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Peso'
-                    },{
+                    }, {
                         field: 'HumidityPercent',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: '% Humedad'
-                    },{
+                    }, {
                         field: 'WalnutNumber',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'No. Nueces'
-                    },{
+                    }, {
                         field: 'Performance',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Rendimiento'
-                    },{
+                    }, {
                         field: 'TotalWeightOfEdibleNuts',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Total Nueces Comestibles'
                     }
-                    ],
+                ],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: process
             });
         };
@@ -889,61 +921,69 @@ var dateFormatter;
                     {
                         field: 'Date',
                         formatter: 'dateFormatter',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Fecha'
-                    },{
+                    }, {
                         field: 'Producer',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Productor'
-                    },{
+                    }, {
                         field: 'Folio',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Folio'
-                    },{
+                    }, {
                         field: 'Cylinder',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Cilindro'
-                    },{
+                    }, {
                         field: 'Variety',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Variedad'
-                    },{
+                    }, {
                         field: 'SacksFirstLarge',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Grande'
-                    },{
+                    }, {
                         field: 'SacksFirstMedium',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Mediana'
-                    },{
+                    }, {
                         field: 'SacksFirstSmall',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Chica'
-                    },{
+                    }, {
                         field: 'Total',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Total Primera'
-                    },{
+                    }, {
                         field: 'QualityPercent',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: '% Calidad'
-                    },{
+                    }, {
                         field: 'Germinated',
-                        align:'center',
+                        align: 'center',
                         sortable: 'true',
                         title: 'Total Segunda'
                     },
-                    ],
+                ],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: daily
             });
         };

@@ -161,7 +161,7 @@
                 pagination: true,
                 search: true,
                 showExport: true,
-                pageList: '[50, 100, 200, TODO]',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: humidities
             });
 
