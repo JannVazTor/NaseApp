@@ -1,8 +1,17 @@
-var dateFormatter;
-
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('reportController', function (Excel, $timeout, $filter, $q, msgS, $scope, $state, reportService, producerService) {
+        $scope.dtOptions = {};
+        $scope.dtColumns = [];
+        $scope.reportingProcess = [];
+        $scope.dailyProcess = [];
+        $scope.grillIssues = [];
+        $scope.reportDate = {
+            ReportDate: ""
+        };
+        $scope.genericGrillReport = [];
+        $scope.secondCurrentInventory = [];
+        $scope.secondGrillIssues = [];
         $scope.reportDate = {
             ReportDate: ""
         };
@@ -114,6 +123,7 @@ var dateFormatter;
                 } else {
                     $scope.producers = response.data;
                     $scope.producer = $scope.producers[0];
+                    $scope.getProducerReport($scope.producer.Id);
                 };
             }, function (response) {
                 msgS.msg('err', 14);
@@ -439,6 +449,14 @@ var dateFormatter;
             originReportData.push(totalObj);
             $('#originReportTable').bootstrapTable({
                 columns: originReportColumns,
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: originReportData
             });
         };
@@ -495,7 +513,7 @@ var dateFormatter;
                     field: 'DateCapture',
                     align: 'center',
                     sortable: true,
-                    formatter: 'dateFormatter',
+                    formatter: dateFormatter,
                     title: 'Fecha de Captura'
                 }, {
                     field: 'Truck',
@@ -532,7 +550,7 @@ var dateFormatter;
                             field: 'DateCapture',
                             align: 'center',
                             sortable: true,
-                            formatter: 'dateFormatter',
+                            formatter: dateFormatter,
                             title: 'Fecha de Captura'
                         }, {
                             field: 'Receptions',
@@ -604,12 +622,96 @@ var dateFormatter;
                     });
                 }
             });
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
         /* End Issues Report */
 
         /* Start Process Report Table Functions*/
         function fillProcessReportTable(process) {
             $('#reportingProcess').bootstrapTable({
+                columns: [
+                    {
+                        field: 'Variety',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Variedad'
+                    }, {
+                        field: 'SacksFirstSmall',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Chicas'
+                    }, {
+                        field: 'SacksFirstMedium',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Medianas'
+                    }, {
+                        field: 'SacksFirstLarge',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Grandes'
+                    }, {
+                        field: 'KilogramsFirstSmall',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'CH (Kg)'
+                    }, {
+                        field: 'KilogramsFirstMedium',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'M (Kg)'
+                    }, {
+                        field: 'KilogramsFirstLarge',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'G (Kg)'
+                    }, {
+                        field: 'TotalKilogramsFirst',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Kgs. Primera'
+                    }, {
+                        field: 'TotalKilogramsSecond',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Kgs. Segunda'
+                    }, {
+                        field: 'TotalKilogramsThird',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Kgs. Tercera'
+                    }, {
+                        field: 'PercentageFirst',
+                        align: 'center',
+                        sortable: 'true',
+                        title: '% 1ra'
+                    }, {
+                        field: 'PercentageSecond',
+                        align: 'center',
+                        sortable: 'true',
+                        title: '% 2da'
+                    }, {
+                        field: 'PercentageThird',
+                        align: 'center',
+                        sortable: 'true',
+                        title: '% 3era'
+                    }, {
+                        field: 'TotalKilos',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Kilos Totales'
+                    }],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: process
             });
         };
@@ -618,41 +720,292 @@ var dateFormatter;
 
         /* Start Producer Report Table Functions*/
         function fillProducerReportTable(data) {
+            $('#producerReportTable').bootstrapTable('destroy');
             $('#producerReportTable').bootstrapTable({
+                columns: [
+                    {
+                        field: 'ProcessDate',
+                        align: 'center',
+                        formatter: dateFormatter,
+                        sortable: 'true',
+                        title: 'Fecha de Proceso'
+                    }, {
+                        field: 'Variety',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Variedad'
+                    }, {
+                        field: 'Batch',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Huerta/s'
+                    }, {
+                        field: 'Cylinder',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Cilindro'
+                    }, {
+                        field: 'Folio',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Folio'
+                    }, {
+                        field: 'KgsOrigen',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Kgs. Origen'
+                    }, {
+                        field: 'SacksP',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Sacos Primera'
+                    }, {
+                        field: 'KilosFirst',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Kgs. Primera'
+                    }, {
+                        field: 'SacksS',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Sacos Segunda'
+                    }, {
+                        field: 'KilosSecond',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Kgs. Segunda'
+                    }, {
+                        field: 'KilosTotal',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Total'
+                    }, {
+                        field: 'SacksFirstSmall',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Chica'
+                    }, {
+                        field: 'SacksFirstMedium',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Mediana'
+                    }, {
+                        field: 'SacksFirstLarge',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Grande'
+                    }, {
+                        field: 'SacksFirstTotal',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Total'
+                    }
+                ],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: data
             });
-        };
-        dateFormatter = function (value) {
-            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
         /*End Producer Report Table Functions */
 
         /* Start Process Inventory Report Table Functions*/
         function fillProcessInventoryReportTable(process) {
             $('#genericReport').bootstrapTable({
+                columns: [
+                    {
+                        field: 'Folio',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'No. Parrilla'
+                    }, {
+                        field: 'DateCapture',
+                        formatter: dateFormatter,
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Fecha de Captura'
+                    }, {
+                        field: 'Receptions',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Folios'
+                    }, {
+                        field: 'Size',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Tamaño'
+                    }, {
+                        field: 'Sacks',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Sacos'
+                    }, {
+                        field: 'Kilos',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Kilos'
+                    }, {
+                        field: 'Quality',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Calidad'
+                    }, {
+                        field: 'Variety',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Variedad'
+                    }, {
+                        field: 'Producer',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Productor'
+                    }, {
+                        field: 'Field',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Campo'
+                    }, {
+                        field: 'Batch',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Huerta/Lote'
+                    }, {
+                        field: 'SampleWeight',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Peso'
+                    }, {
+                        field: 'HumidityPercent',
+                        align: 'center',
+                        sortable: 'true',
+                        title: '% Humedad'
+                    }, {
+                        field: 'WalnutNumber',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'No. Nueces'
+                    }, {
+                        field: 'Performance',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Rendimiento'
+                    }, {
+                        field: 'TotalWeightOfEdibleNuts',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Total Nueces Comestibles'
+                    }
+                ],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: process
             });
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
 
-        /*End Producer Report Table Functions */
+        /*End Process Inventory Report Table Functions */
 
         /* Start Daily Report Table Functions*/
         function fillDailyReportTable(daily) {
             $('#daily').bootstrapTable({
+                columns: [
+                    {
+                        field: 'Date',
+                        formatter: dateFormatter,
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Fecha'
+                    }, {
+                        field: 'Producer',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Productor'
+                    }, {
+                        field: 'Folio',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Folio'
+                    }, {
+                        field: 'Cylinder',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Cilindro'
+                    }, {
+                        field: 'Variety',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Variedad'
+                    }, {
+                        field: 'SacksFirstLarge',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Grande'
+                    }, {
+                        field: 'SacksFirstMedium',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Mediana'
+                    }, {
+                        field: 'SacksFirstSmall',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Chica'
+                    }, {
+                        field: 'Total',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Total Primera'
+                    }, {
+                        field: 'QualityPercent',
+                        align: 'center',
+                        sortable: 'true',
+                        title: '% Calidad'
+                    }, {
+                        field: 'Germinated',
+                        align: 'center',
+                        sortable: 'true',
+                        title: 'Total Segunda'
+                    },
+                ],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: daily
             });
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
         /*End Daily Report Table Functions */
 
-
-        dateFormatter = function (value) {
-            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
-        };
         (function () {
             switch ($state.current.name) {
                 case 'producerReport':
                     GetAllProducers();
-                    $scope.getProducerReport(1);
                     break;
                 case 'reportingProcess':
                     GetReportingProcess();

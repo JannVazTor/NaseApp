@@ -1,48 +1,17 @@
 <div class="animated bounceInRight">
-    <div class="card">
-        <div class="card-header">
-            <h2>Remisiones</h2>
-        </div>
-        <div class="card-body card-padding">
-            <div class="table-responsive">
-                <div ng-show="remissions.length >= 1">
-                    <div id="toolbar">
-                        <button class="btn btn-link" ng-click="generatePDF()">
+	<div class="card">
+		<div class="card-header">
+			<h2>Remisiones</h2>
+		</div>
+		<div class="card-body card-padding">
+			<div class="table-responsive">
+				<div id="toolbar">
+					<button class="btn btn-link" ng-click="generatePDF()">
                             <span class="glyphicon glyphicon-share"></span>Exportar PDF
                         </button>
-                    </div>                
-                    <table id="remissionManageTable" 
-                                data-toggle="table" 
-                                data-show-refresh="true" 
-                                data-show-columns="true" 
-                                data-toolbar="#toolbar"
-                                data-unique-id="Id" 
-                                data-pagination="true" 
-                                data-search="true" 
-                                data-show-export="true" 
-                                data-page-list="[10, 50, 100, 200, TODO]">
-                        <thead>
-                            <tr>
-                                <th data-field="Folio" data-align="center" data-sortable="true">Folio de Recepción</th>
-                                <th data-field="RemissionFolio" data-align="center" data-sortable="true">Folio de Remisión</th>
-                                <th data-field="DateCapture" data-align="center" data-sortable="true" data-formatter="dateFormatter">Fecha</th>
-                                <th data-field="FieldName" data-align="center" data-sortable="true">Campo</th>
-                                <th data-field="Batch" data-align="center" data-sortable="true">Huerta/Lote</th>
-                                <th data-field="Box" data-align="center" data-sortable="true">Cuadro</th>
-                                <th data-field="Variety" data-align="center" data-sortable="true">Variedad</th>
-                                <th data-field="Quantity" data-align="center" data-sortable="true">Cantidad</th>
-                                <th data-field="Butler" data-align="center" data-sortable="true">Mayordomo</th>
-                                <th data-field="TransportNumber" data-align="center" data-sortable="true">Transporte No.</th>
-                                <th data-field="Driver" data-align="center" data-sortable="true">Conductor</th>
-                                <th data-field="Elaborate" data-align="center" data-sortable="true">Elaboro</th>
-                                <th data-align="center" data-formatter="operateFormatter" data-events="operateEvents">Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+				<table id="remissionManageTable"></table>
+			</div>
+		</div>
+	</div>
 </div>

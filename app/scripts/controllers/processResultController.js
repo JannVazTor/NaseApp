@@ -1,12 +1,3 @@
-var operateFormatter;
-var dateFormatter;
-var operateEvents;
-
-var operateEventAddSampling; 
-var operateEventAddProcessResult;
-var operateFormatterAddSampling; 
-var operateFormatterAddProcessResult;
-
 (function () {
     'use strict'
     angular.module('naseNutAppApp').controller('processResultController', function (clearService, processResultService, $rootScope, msgS, $filter, $scope, $state, samplingService, receptionService) {
@@ -89,11 +80,11 @@ var operateFormatterAddProcessResult;
 
         $scope.saveProcessResult = function (processResult) {
             var nutTypes = [{ NutType: 1, Kilos: processResult.kilosFirst, Sacks: processResult.sacksFirst },
-                { NutType: 2, Kilos: processResult.kilosSecond, Sacks: processResult.sacksSecond },
-                { NutType: 3, Kilos: processResult.kilosThird, Sacks: processResult.sacksThird }];
+            { NutType: 2, Kilos: processResult.kilosSecond, Sacks: processResult.sacksSecond },
+            { NutType: 3, Kilos: processResult.kilosThird, Sacks: processResult.sacksThird }];
             var nutSizeProcessResult = [{ NutSize: 1, Sacks: processResult.largeSize },
-                { NutSize: 2, Sacks: processResult.mediumSize },
-                { NutSize: 3, Sacks: processResult.smallSize }];
+            { NutSize: 2, Sacks: processResult.mediumSize },
+            { NutSize: 3, Sacks: processResult.smallSize }];
             if (ValidateNutTypes(nutTypes) && ValidateNutSizeProcessResult(nutSizeProcessResult)) {
                 if (ValidateNutSizeProcessResultSum(nutSizeProcessResult, processResult.sacksFirst)) {
                     var ProcessResult = {
@@ -199,71 +190,12 @@ var operateFormatterAddProcessResult;
             doc.save("ResultadoProcesoRecepciones.pdf");
         };
 
-        /* Start Table Functions*/
-
-        operateFormatter = function (value, row, index) {
-            return [
-                '<button class="btn btn-default edit" href="javascript:void(0)" title="Editar">',
-                '<i class="md md-edit"></i>',
-                '</button>',
-                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
-                '<i class="md md-delete"></i>',
-                '</button>',
-            ].join('');
-        };
-
-        operateFormatterAddSampling = function (value, row, index) {
-            if (row.Sampling) return;
-            return [
-                '<button class="btn btn-default addSampling" href="javascript:void(0)" title="Agregar Muestreo">',
-                '<i class="md md-description"></i>',
-                '</button>'
-            ].join('');
-        };
-
-        operateFormatterAddProcessResult = function (value, row, index) {
-            if (row.ProcessResult) return;
-            return [
-                '<button class="btn btn-default addProcessResult" href="javascript:void(0)" title="Agregar Resultado de Proceso">',
-                '<i class="md md-assignment-returned"></i>',
-                '</button>'
-            ].join('');
-        };
-
-        operateEvents = {
-            'click .edit': function (e, value, row, index) {
-                $scope.redirectUpdate(row);
-            },
-            'click .delete': function (e, value, row, index) {
-                $scope.confirmationDeleteReception(row.Id, row.Folio);
-            }
-        };
-
-        operateEventAddSampling = {
-            'click .addSampling': function (e, value, row, index) {
-                $scope.redirectAddSampling(row.Id, row.Receptions);
-            }
-        };
-
-        operateEventAddProcessResult = {
-            'click .addProcessResult': function (e, value, row, index) {
-                $scope.redirectAddProcessResult(row.Id, row.Receptions);
-            }
-        };
-
-        dateFormatter = function (value) {
-            if (value === null) {
-                return '-';
-            }
-            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
-        };
-
         $('#processResultManageTable').on('refresh.bs.table', function (params) {
             GetAllReceptionSamplings();
         });
 
         $('#processResultTable').on('refresh.bs.table', function (params) {
-             GetAllReceptionEntries();
+            GetAllReceptionEntries();
         });
 
         function fillProcessResultTable(processResults) {
@@ -272,39 +204,77 @@ var operateFormatterAddProcessResult;
                     {
                         field: 'Receptions',
                         align: 'center',
+                        sortable: true,
                         title: 'Recepciones'
                     }, {
                         field: 'EntryDate',
                         align: 'center',
-                        formatter: 'dateFormatter',
+                        sortable: true,
+                        formatter: dateFormatter,
                         title: 'Fecha de Entrada'
                     }, {
                         field: 'Variety',
                         align: 'center',
+                        sortable: true,
                         title: 'Variedad'
                     }, {
                         field: 'Producer',
                         align: 'center',
+                        sortable: true,
                         title: 'Productor'
                     }, {
                         field: 'Cylinder',
                         align: 'center',
+                        sortable: true,
                         title: 'Cilindro'
                     }, {
                         field: 'addSampling',
                         align: 'center',
                         title: 'Agregar Muestreo',
                         events: 'operateEventAddSampling',
-                        formatter: 'operateFormatterAddSampling'
+                        formatter: operateFormatterAddSampling
                     }, {
                         field: 'addProcessResult',
                         align: 'center',
                         title: 'Agregar Resultado de Proceso',
                         events: 'operateEventAddProcessResult',
-                        formatter: 'operateFormatterAddProcessResult'
+                        formatter: operateFormatterAddProcessResult
                     }],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: processResults
             });
+
+            function operateFormatterAddSampling(value, row, index) {
+                if (row.Sampling) return;
+                return [
+                    '<button class="btn btn-default addSampling" href="javascript:void(0)" title="Agregar Muestreo">',
+                    '<i class="md md-description"></i>',
+                    '</button>'
+                ].join('');
+            };
+
+            function operateFormatterAddProcessResult(value, row, index) {
+                if (row.ProcessResult) return;
+                return [
+                    '<button class="btn btn-default addProcessResult" href="javascript:void(0)" title="Agregar Resultado de Proceso">',
+                    '<i class="md md-assignment-returned"></i>',
+                    '</button>'
+                ].join('');
+            };
+
+            function dateFormatter(value) {
+                if (value === null) {
+                    return '-';
+                }
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
 
         function fillProcessResultManageTable(processResults) {
@@ -313,71 +283,131 @@ var operateFormatterAddProcessResult;
                     {
                         field: 'Folio',
                         align: 'center',
+                        sortable: true,
                         title: 'Folios'
                     }, {
                         field: 'Variety',
                         align: 'center',
+                        sortable: true,
                         title: 'Variedad'
                     }, {
                         field: 'DateCapture',
                         align: 'center',
-                        formatter: 'dateFormatter',
+                        sortable: true,
+                        formatter: dateFormatter,
                         title: 'Fecha'
                     }, {
                         field: 'SampleWeight',
                         align: 'center',
+                        sortable: true,
                         title: 'Peso'
                     }, {
                         field: 'HumidityPercent',
                         align: 'center',
+                        sortable: true,
                         title: '% Humedad'
                     }, {
                         field: 'WalnutNumber',
                         align: 'center',
+                        sortable: true,
                         title: 'Número de nueces'
                     }, {
                         field: 'Performance',
                         align: 'center',
+                        sortable: true,
                         title: 'Rendimiento'
                     }, {
                         field: 'TotalWeightOfEdibleNuts',
                         align: 'center',
+                        sortable: true,
                         title: 'Peso total de nueces comestibles'
                     }, {
                         field: 'SacksFirst',
                         align: 'center',
+                        sortable: true,
                         title: 'Sacos de Primera'
                     }, {
                         field: 'KilosFirst',
                         align: 'center',
+                        sortable: true,
                         title: 'Kilos de Primera'
                     }, {
                         field: 'SacksSecond',
                         align: 'center',
+                        sortable: true,
                         title: 'Sacos de Segunda'
                     }, {
                         field: 'KilosSecond',
                         align: 'center',
+                        sortable: true,
                         title: 'Kilos de Segunda'
                     }, {
                         field: 'SacksThird',
                         align: 'center',
+                        sortable: true,
                         title: 'Sacos de Tercera'
                     }, {
                         field: 'KilosThird',
                         align: 'center',
+                        sortable: true,
                         title: 'Kilos de Tercera'
                     }, {
                         field: 'operate',
                         align: 'center',
                         title: 'Operadores',
                         events: 'operateEvents',
-                        formatter: 'operateFormatter'
+                        formatter: operateFormatter
                     }],
+                showRefresh: true,
+                showColumns: true,
+                uniqueId: 'Id',
+                pagination: true,
+                search: true,
+                showExport: true,
+                toolbar: '#toolbar',
+                pageList: '[10, 50, 100, 200, TODO]',
                 data: processResults
             });
+
+            function operateFormatter(value, row, index) {
+                return [
+                    '<button class="btn btn-default edit" href="javascript:void(0)" title="Editar">',
+                    '<i class="md md-edit"></i>',
+                    '</button>',
+                    '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                    '<i class="md md-delete"></i>',
+                    '</button>',
+                ].join('');
+            };
+
+            function dateFormatter(value) {
+                if (value === null) {
+                    return '-';
+                }
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
-        /* End Table Functions*/
+
+        window.operateEvents = {
+            'click .edit': function (e, value, row, index) {
+                $scope.redirectUpdate(row);
+            },
+            'click .delete': function (e, value, row, index) {
+                $scope.confirmationDeleteReception(row.Id, row.Folio);
+            }
+        };
+
+        window.operateEventAddSampling = {
+            'click .addSampling': function (e, value, row, index) {
+                $scope.redirectAddSampling(row.Id, row.Receptions);
+            }
+        };
+
+        window.operateEventAddProcessResult = {
+            'click .addProcessResult': function (e, value, row, index) {
+                $scope.redirectAddProcessResult(row.Id, row.Receptions);
+            }
+        };
 
         (function () {
             switch ($state.current.name) {

@@ -1,10 +1,5 @@
-var operateFormatter;
-var dateFormatter;
-var operateFormmatterIfIsGrillToReception;
-var statusFormatter;
-var onStatusChange;
-var onAddGrillToReceptionChange;
-var operateFormatterGrillCurrentInv;
+var grill = {};
+
 (function () {
     'use strict'
 
@@ -273,11 +268,9 @@ var operateFormatterGrillCurrentInv;
             grillService.getAllCurrentInv().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 7);
-                    $scope.grills = response.data;
-                    fillTable(response.data);
+                    fillTable(response.data, true);
                 } else {
-                    $scope.grills = response.data;
-                    fillTable(response.data);
+                    fillTable(response.data, true);
                 }
             }, function (response) {
                 msgS.msg('err', 19);
@@ -288,12 +281,9 @@ var operateFormatterGrillCurrentInv;
             grillService.getAll().then(function (response) {
                 if (response.data.length === 0) {
                     msgS.msg('info', 7);
-                    $scope.grills = response.data;
                     fillTable(response.data);
                 } else {
-                    $scope.grills = response.data;
                     response.data.forEach(function (element) {
-                        //checks if the reception has the grill key in his grillId field
                         element.IsAlreadyAssigned = element.Receptions.indexOf($scope.ReceptionFolio) === -1 ? false : true;
                     }, this);
                     fillTable(response.data);
@@ -337,57 +327,189 @@ var operateFormatterGrillCurrentInv;
             return true;
         };
 
-        /*Start Table Functions*/
-        function fillTable(grills) {
+        function fillTable(grills, isCurrentInv) {
+            var columns = [
+                {
+                    field: 'Folio',
+                    align: 'center',
+                    sortable: true,
+                    title: 'No. de Parrilla'
+                }, {
+                    field: 'DateCapture',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Fecha de Captura',
+                    formatter: dateFormatter
+                }, {
+                    field: 'Receptions',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Recepciones'
+                }, {
+                    field: 'Size',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Tamaño'
+                }, {
+                    field: 'Sacks',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Sacos'
+                }, {
+                    field: 'Kilos',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Kilos'
+                }, {
+                    field: 'Quality',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Calidad'
+                }, {
+                    field: 'Variety',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Variedad'
+                }, {
+                    field: 'Producer',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Productor'
+                }, {
+                    field: 'SampleWeight',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Peso de la Muestra'
+                }, {
+                    field: 'HumidityPercent',
+                    align: 'center',
+                    sortable: true,
+                    title: '% Humedad'
+                }, {
+                    field: 'WalnutNumber',
+                    align: 'center',
+                    sortable: true,
+                    title: 'No. Nueces por Kilo'
+                }, {
+                    field: 'Performance',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Rendimiento'
+                }, {
+                    field: 'TotalWeightOfEdibleNuts',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Total'
+                }];
+            if (!isCurrentInv) {
+                if ($scope.IsGrillToReception) {
+                    columns.push({
+                        field: 'Status',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Asignar Parrilla',
+                        formatter: operateFormmatterIfIsGrillToReception
+                    });
+                } else {
+                    columns.push({
+                        field: 'Status',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Estado',
+                        formatter: statusFormatter
+                    });
+                    columns.push({
+                        field: 'options',
+                        align: 'center',
+                        sortable: true,
+                        title: 'Opciones',
+                        events: operateEvents,
+                        formatter: operateFormatter
+                    });
+                }
+            } else {
+                columns.push({
+                    field: 'options',
+                    align: 'center',
+                    sortable: true,
+                    title: 'Opciones',
+                    events: operateEventsCurrentInv,
+                    formatter: operateFormatterGrillCurrentInv
+                });
+            }
+
             $('#grillManageTable').bootstrapTable({
-                data: grills
+                columns: columns,
+                showRefresh: true,
+                showColumns: true,
+                toolbar: '#toolbar',
+                uniqueId: "Id",
+                pagination: true,
+                search: true,
+                showExport: true,
+                pageList: '[10, 50, 100, 200, TODO]',
+                data: grills,
             });
+
+            function statusFormatter(value, row, index) {
+                if ($scope.IsGrillToReception) return;
+                var isChecked = value ? "checked" : "";
+                return [
+                    '<div class="toggle-switch">',
+                    '<input id="' + row.Id + '" type="checkbox" class="changeStatus" onclick="grill.onStatusChange(this)" hidden="hidden" ' + isChecked + '>',
+                    '<label for="' + row.Id + '" class="ts-helper"></label>',
+                    '</div>'
+                ].join('');
+            };
+
+            function operateFormatter(value, row, index) {
+                return [
+                    '<button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
+                    '<i class="md md-edit"></i>',
+                    '</button>',
+                    '<button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                    '<i class="md md-delete"></i>',
+                    '</button>',
+                    '<button ng- hide="currentUser.role === userRoles.qualityUser" class="btn btn-default redirectReceptionToGrill" href="javascript:void(0)" title="Agregar folio de recepción">',
+                    '<i class="md md-assignment"></i>',
+                    '</button>',
+                    '<button ng-show="grill.SampleWeight == \'\'" class="btn btn-default redirectToAddSampling" href="javascript:void(0)" title="Agregar muestreo">',
+                    '<i class="md md-description"></i>',
+                    '</button>'
+                ].join('');
+            };
+
+            function operateFormmatterIfIsGrillToReception(value, row, index) {
+                var isChecked = row.IsAlreadyAssigned ? "checked" : "";
+                return [
+                    '<div class="toggle-switch">',
+                    '<input id="' + row.Id + '" type="checkbox" onclick="grill.onAddGrillToReceptionChange(this)" hidden="hidden" ' + isChecked + '>',
+                    '<label for="' + row.Id + '" class="ts-helper"></label>',
+                    '</div>'
+                ].join('');
+            };
+
+            function operateFormatterGrillCurrentInv(valu, row, index) {
+                return [
+                    '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
+                    '<i class="md md-delete"></i>',
+                    '</button>'
+                ].join('');
+            };
+
+            function dateFormatter(value) {
+                return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
+            };
         };
 
-        statusFormatter = function (value, row, index) {
-            if ($scope.IsGrillToReception) return;
-            var isChecked = value ? "checked" : "";
-            return [
-                '<div class="toggle-switch">',
-                '<input id="' + row.Id + '" type="checkbox" class="changeStatus" onclick="onStatusChange(this)" hidden="hidden" ' + isChecked + '>',
-                '<label for="' + row.Id + '" class="ts-helper"></label>',
-                '</div>'
-            ].join('');
+        grill.onStatusChange = function (checkBox) {
+            var id = $(checkBox).attr('id');
+            $scope.changeStatus(checkBox.checked, id);
         };
 
-        operateFormatter = function (value, row, index) {
-            return [
-                '<button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default edit" href="javascript:void(0)" title="Modificar">',
-                '<i class="md md-edit"></i>',
-                '</button>',
-                '<button ng-hide="currentUser.role === userRoles.qualityUser" class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
-                '<i class="md md-delete"></i>',
-                '</button>',
-                '<button ng- hide="currentUser.role === userRoles.qualityUser" class="btn btn-default redirectReceptionToGrill" href="javascript:void(0)" title="Agregar folio de recepción">',
-                '<i class="md md-assignment"></i>',
-                '</button>',
-                '<button ng-show="grill.SampleWeight == \'\'" class="btn btn-default redirectToAddSampling" href="javascript:void(0)" title="Agregar muestreo">',
-                '<i class="md md-description"></i>',
-                '</button>'
-            ].join('');
-        };
-
-        operateFormmatterIfIsGrillToReception = function (value, row, index) {
-            var isChecked = row.IsAlreadyAssigned ? "checked" : "";
-            return [
-                '<div class="toggle-switch">',
-                '<input id="' + row.Id + '" type="checkbox" onclick="onAddGrillToReceptionChange(this)" hidden="hidden" ' + isChecked + '>',
-                '<label for="' + row.Id + '" class="ts-helper"></label>',
-                '</div>'
-            ].join('');
-        };
-
-        operateFormatterGrillCurrentInv = function (valu, row, index) {
-            return [
-                '<button class="btn btn-default delete" href="javascript:void(0)" title="Eliminar">',
-                '<i class="md md-delete"></i>',
-                '</button>'
-            ].join('');
+        grill.onAddGrillToReceptionChange = function (checkBox) {
+            var id = $(checkBox).attr('id');
+            $scope.addGrillToReception(id, checkBox.checked)
         };
 
         window.operateEventsCurrentInv = {
@@ -411,24 +533,9 @@ var operateFormatterGrillCurrentInv;
             }
         };
 
-        onStatusChange = function (checkBox) {
-            var id = $(checkBox).attr('id');
-            $scope.changeStatus(checkBox.checked, id);
-        };
-
-        onAddGrillToReceptionChange = function (checkBox) {
-            var id = $(checkBox).attr('id');
-            $scope.addGrillToReception(id, checkBox.checked)
-        };
-
         $('#grillManageTable').on('refresh.bs.table', function (params) {
             GetAllGrills();
         });
-
-        dateFormatter = function (value) {
-            return $filter('date')(value, 'dd/MM/yyyy HH:mm').toString();
-        };
-        /*End Tables Functions*/
 
         (function () {
             switch ($state.current.name) {
